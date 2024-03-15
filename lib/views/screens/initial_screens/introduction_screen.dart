@@ -1,0 +1,216 @@
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:football_shuru/generated/assets.dart';
+import 'package:football_shuru/services/route_helper.dart';
+import 'package:football_shuru/services/theme.dart';
+import 'package:football_shuru/views/base/common_button.dart';
+import 'package:football_shuru/views/base/custom_image.dart';
+import 'package:football_shuru/views/screens/auth_screens/signup_screen.dart';
+
+class IntroductionScreen extends StatefulWidget {
+  const IntroductionScreen({super.key});
+
+  @override
+  State<IntroductionScreen> createState() => _IntroductionScreenState();
+}
+
+class _IntroductionScreenState extends State<IntroductionScreen> {
+  final pageController = PageController();
+  int index = 0;
+
+  List<SliderList> introList = [
+    SliderList(
+      title: "Available your nearby football ground !",
+      subtitle:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      imageAssets: Assets.imagesBackgroundImage,
+    ),
+    SliderList(
+      title: "Available your nearby football ground !",
+      subtitle:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      imageAssets: Assets.imagesBackgroundImage,
+    ),
+    SliderList(
+      title: "Available your nearby football ground !",
+      subtitle:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      imageAssets: Assets.imagesBackgroundImage,
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            children: [
+              Container(
+                height: size.height * 0.71,
+                child: PageView.builder(
+                    onPageChanged: (int index) {
+                      setState(() {
+                        this.index = index;
+                      });
+                      log(index.toString(), name: "Log");
+                    },
+                    controller: pageController,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: introList.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          Stack(
+                            children: [
+                              Image.asset(introList[index].imageAssets),
+                              Padding(
+                                padding: const EdgeInsets.all(24.0),
+                                child: Align(
+                                  alignment: Alignment.topRight,
+                                  child: CustomImage(
+                                    path: Assets.imagesFootballLogo,
+                                    height: size.height * .11,
+                                    width: size.height * .11,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24.0, vertical: 20),
+                            child: Text(
+                              introList[index].title,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                      fontSize: 26.0,
+                                      color: textPrimary,
+                                      fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 24.0),
+                            child: Text(
+                              introList[index].subtitle,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge
+                                  ?.copyWith(
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w400,
+                                    color: textPrimary,
+                                  ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      );
+                    }),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 22.0),
+                child: Row(
+                  children: [
+                    for (var i = 0; i < introList.length; i++)
+                      Container(
+                        width: 13,
+                        height: 6,
+                        margin: const EdgeInsets.only(bottom: 4, left: 8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(60),
+                          color:
+                              i == index ? primaryColor : Colors.grey.shade800,
+                        ),
+                      )
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: CustomButton(
+                  elevation: 0,
+                  radius: 50,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Welcome Back"),
+                      SizedBox(
+                        width: 3,
+                      ),
+                      CustomImage(path: Assets.imagesArrowRight)
+                    ],
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      getCustomRoute(
+                        child: const SignUpScreen(),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                      color: Colors.grey[200],
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black.withOpacity(0.25),
+                            offset: const Offset(1, 1),
+                            blurStyle: BlurStyle.inner,
+                            blurRadius: 5),
+                      ]),
+                  child: CustomButton(
+                    color: Colors.white,
+                    elevation: 0,
+                    radius: 50,
+                    child: const Text(
+                      "Do it later, close app",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    onTap: () {},
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class SliderList {
+  String title;
+  String subtitle;
+  String imageAssets;
+  SliderList({
+    required this.title,
+    required this.subtitle,
+    required this.imageAssets,
+  });
+}
