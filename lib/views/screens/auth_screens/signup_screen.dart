@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:football_shuru/services/enums/gender.dart';
 import 'package:football_shuru/services/extensions.dart';
+import 'package:football_shuru/services/input_decoration.dart';
+import 'package:football_shuru/services/route_helper.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
+import 'package:football_shuru/views/base/date_picker_widget.dart';
+import 'package:football_shuru/views/screens/initial_screens/location.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -14,232 +19,226 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController emailIdController = TextEditingController();
+  TextEditingController dateOfBirthController = TextEditingController();
+  TextEditingController bioController = TextEditingController();
+  Gender? _gender = Gender.male;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Column(
+          child: Padding(
+            padding: EdgeInsets.all(24),
+            child: Form(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: Icon(Icons.info_outline),
+                    alignment: Alignment.centerRight,
+                    child: CustomImage(
+                      height: 24,
+                      width: 24,
+                      path: Assets.imagesMessageQuestion,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Text(
-                      "Join using the phone number",
-                      style:
-                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                  Row(
+                    children: [
+                      Text(
+                        "Welcome to",
+                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            fontSize: 30, fontWeight: FontWeight.w700),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      CustomImage(
+                          height: 70,
+                          width: 70,
+                          path: Assets.imagesFootballLogo),
+                    ],
+                  ),
+                  Text(
+                    "Create an account to explore amazing feature",
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelMedium!
+                        .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  TextFormField(
+                    controller: nameController,
+                    decoration: CustomDecoration.inputDecoration(
+                      floating: true,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                      label: "Your Name",
+                      icon: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: CustomImage(
+                          path: Assets.imagesYourName,
+                          height: 5,
+                          width: 5,
+                        ),
+                      ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    readOnly: true,
+                    controller: phoneNumberController,
+                    decoration: CustomDecoration.inputDecoration(
+                      suffix: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: CustomImage(
+                            height: 5, width: 5, path: Assets.imagesLockCircle),
+                      ),
+                      floating: true,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                      label: "Mobile Number",
+                      icon: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: CustomImage(
+                          path: Assets.imagesMobileNum,
+                          height: 5,
+                          width: 5,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    controller: emailIdController,
+                    decoration: CustomDecoration.inputDecoration(
+                      floating: true,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                      label: "Email Id",
+                      icon: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: CustomImage(
+                          path: Assets.imagesEmailId,
+                          height: 5,
+                          width: 5,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    "Gender selection",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(fontSize: 16, fontWeight: FontWeight.w400),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Text(
-                      "We have send you an One Time Password(OTP) on this mobile number !",
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelLarge
-                          ?.copyWith(fontSize: 12.0, color: textPrimary),
+                  Row(
+                    children: [
+                      Row(
+                        children: [
+                          Radio(
+                              fillColor: MaterialStateColor.resolveWith(
+                                  (states) => Color.fromRGBO(255, 154, 108, 1)),
+                              value: Gender.male,
+                              groupValue: _gender,
+                              onChanged: (value) {
+                                setState(() {
+                                  _gender = value;
+                                });
+                              }),
+                          Text(Gender.male.value),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Radio(
+                              fillColor: MaterialStateColor.resolveWith(
+                                  (states) => Color.fromRGBO(255, 154, 108, 1)),
+                              value: Gender.female,
+                              groupValue: _gender,
+                              onChanged: (value) {
+                                setState(() {
+                                  _gender = value;
+                                });
+                              }),
+                          Text(Gender.female.value),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  CustomDatePicker(
+                    onChanged: (DateTime? dateTime) {
+                      setState(() {
+                        dateOfBirthController.text =
+                            dateTime.toString().split(" ")[0];
+                      });
+                    },
+                    child: TextFormField(
+                      enabled: false,
+                      readOnly: true,
+                      controller: dateOfBirthController,
+                      decoration: CustomDecoration.inputDecoration(
+                        floating: true,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                        label: "Date of Birth",
+                        icon: Padding(
+                          padding: EdgeInsets.all(15),
+                          child: CustomImage(
+                            path: Assets.imagesCalendarTick,
+                            height: 5,
+                            width: 5,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: 20,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: CustomImage(path: Assets.imagesEnterOTPPana1),
+                  TextFormField(
+                    maxLines: 3,
+                    controller: phoneNumberController,
+                    decoration: CustomDecoration.inputDecoration(
+                      floating: true,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                      label: "About Bio",
+                    ),
                   ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(bioController.text.length.toString() + "/400"),
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  CustomButton(
+                      title: "Sign Up Now",
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          getCustomRoute(
+                            child: const LocationScreen(),
+                          ),
+                        );
+                      })
                 ],
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 24.0),
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(245, 245, 245, 1),
-                                borderRadius: BorderRadius.circular(50)),
-                            child: TextField(
-                              decoration: InputDecoration(
-                                  icon: CustomImage(
-                                    height: 24,
-                                    width: 24,
-                                    path: Assets.imagesCallCalling,
-                                  ),
-                                  hintText: "Mobile Number",
-                                  hintStyle: Theme.of(context)
-                                      .textTheme
-                                      .labelMedium!
-                                      .copyWith(fontWeight: FontWeight.w300)),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: ((context) {
-                                    return SingleChildScrollView(
-                                      child: Container(
-                                        padding: EdgeInsets.all(24),
-                                        height: 340,
-                                        child: Column(
-                                          children: [
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                "OTP Verification",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge!
-                                                    .copyWith(
-                                                        fontSize: 26,
-                                                        fontWeight:
-                                                            FontWeight.w700),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            Text(
-                                              "You receive a 6-digit code to +91 9876543210 on your number then verify next...",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .labelSmall!
-                                                  .copyWith(fontSize: 11),
-                                            ),
-                                            SizedBox(
-                                              height: 40,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Expanded(
-                                                  child: Container(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 24.0),
-                                                    decoration: BoxDecoration(
-                                                        color: Color.fromRGBO(
-                                                            245, 245, 245, 1),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(50)),
-                                                    child: TextField(
-                                                      decoration:
-                                                          InputDecoration(
-                                                              icon: CustomImage(
-                                                                height: 24,
-                                                                width: 24,
-                                                                path: Assets
-                                                                    .imagesCallCalling,
-                                                              ),
-                                                              hintText:
-                                                                  "Mobile OTP",
-                                                              hintStyle: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .labelMedium!
-                                                                  .copyWith(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w300)),
-                                                    ),
-                                                  ),
-                                                ),
-                                                GestureDetector(
-                                                  onTap: () {},
-                                                  child: Container(
-                                                    width: 50,
-                                                    height: 50,
-                                                    child: Image.asset(
-                                                      Assets.imagesArrowRight,
-                                                      color: Colors.white,
-                                                    ),
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.black,
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    50))),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "Resent Otp again... 30 sec",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .labelSmall!
-                                                    .copyWith(fontSize: 12),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  }));
-                            },
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              child: Image.asset(
-                                Assets.imagesArrowRight,
-                                color: Colors.white,
-                              ),
-                              decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(50))),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 34, right: 34, bottom: 20),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "By tapping below. you acknowledge recipe of our Privacy Notice and our E-Sign Agreement.",
-                        style: TextStyle(fontSize: 12),
-                      ),
-                    ),
-                  )
-                ],
-              )
-            ],
+            ),
           ),
         ),
       ),
