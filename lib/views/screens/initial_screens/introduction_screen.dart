@@ -8,7 +8,7 @@ import 'package:football_shuru/services/route_helper.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
-import 'package:football_shuru/views/screens/auth_screens/mobile_auth_screen.dart';
+import 'package:football_shuru/views/screens/auth_screens/signup_screen.dart';
 
 class IntroductionScreen extends StatefulWidget {
   const IntroductionScreen({super.key});
@@ -157,7 +157,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                 Navigator.push(
                   context,
                   getCustomRoute(
-                    child: const MobileAuthScreen(),
+                    child: const SignUpScreen(),
                   ),
                 );
               },

@@ -2,20 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:football_shuru/services/extensions.dart';
-import 'package:football_shuru/services/route_helper.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
-import 'package:football_shuru/views/screens/initial_screens/signup_screen.dart';
 
-class MobileAuthScreen extends StatefulWidget {
-  const MobileAuthScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<MobileAuthScreen> createState() => _MobileAuthScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _MobileAuthScreenState extends State<MobileAuthScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -174,15 +172,7 @@ class _MobileAuthScreenState extends State<MobileAuthScreen> {
                                                   ),
                                                 ),
                                                 GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.pushReplacement(
-                                                      context,
-                                                      getCustomRoute(
-                                                        child:
-                                                            const SignUpScreen(),
-                                                      ),
-                                                    );
-                                                  },
+                                                  onTap: () {},
                                                   child: Container(
                                                     width: 50,
                                                     height: 50,
