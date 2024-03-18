@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:football_shuru/views/screens/auth_screens/mobile_auth_screen.dart';
+import 'package:football_shuru/views/screens/auth_screens/signup_screen.dart';
 
 import '../../../services/route_helper.dart';
 import '../../../services/theme.dart';
@@ -111,7 +111,7 @@ class OtpVerificationScreen extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     getCustomRoute(
-                      child: const MobileAuthScreen(),
+                      child: const SignUpScreen(),
                     ),
                   );
                 },

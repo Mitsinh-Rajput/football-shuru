@@ -1,15 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:football_shuru/services/enums/gender.dart';
-import 'package:football_shuru/services/extensions.dart';
 import 'package:football_shuru/services/input_decoration.dart';
-import 'package:football_shuru/services/route_helper.dart';
-import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/base/date_picker_widget.dart';
-import 'package:football_shuru/views/screens/initial_screens/location.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -27,7 +21,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Gender? _gender = Gender.male;
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    // var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -226,20 +220,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                     height: 40,
                   ),
-                  CustomButton(
-                      title: "Sign Up Now",
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          getCustomRoute(
-                            child: const LocationScreen(),
-                          ),
-                        );
-                      })
                 ],
               ),
             ),
           ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CustomButton(
+                title: "Sign Up Now",
+                elevation: 0,
+                onTap: () {
+                  // Navigator.push(
+                  //   context,
+                  //   getCustomRoute(
+                  //     child: const LocationScreen(),
+                  //   ),
+                  // );
+                })
+          ],
         ),
       ),
     );

@@ -50,7 +50,7 @@ class _MobileAuthScreenState extends State<MobileAuthScreen> {
                   height: 50,
                 ),
                 CustomImage(
-                  path: Assets.imagesEnterOTPPana1,
+                  path: Assets.imagesEnterOTPpana1,
                   width: size.width,
                 ),
                 const SizedBox(
