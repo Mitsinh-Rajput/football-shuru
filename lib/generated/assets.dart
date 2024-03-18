@@ -37,6 +37,10 @@ class Assets {
   /// assets/images/football_logo.png
   static const String imagesFootballLogo = "assets/images/football_logo.png";
 
+  /// Assets for imagesGps
+  /// assets/images/gps.png
+  static const String imagesGps = "assets/images/gps.png";
+
   /// Assets for imagesGround
   /// assets/images/ground.png
   static const String imagesGround = "assets/images/ground.png";
@@ -48,10 +52,6 @@ class Assets {
   /// Assets for imagesLeague
   /// assets/images/league.png
   static const String imagesLeague = "assets/images/league.png";
-
-  /// Assets for imagesGps
-  /// assets/images/gps.png
-  static const String imagesGps = "assets/images/gps.png";
 
   /// Assets for imagesLockCircle
   /// assets/images/lock-circle.png
@@ -88,6 +88,10 @@ class Assets {
   /// Assets for imagesSearchNormal
   /// assets/images/search-normal.png
   static const String imagesSearchNormal = "assets/images/search-normal.png";
+
+  /// Assets for imagesSetting5
+  /// assets/images/setting-5.png
+  static const String imagesSetting5 = "assets/images/setting-5.png";
 
   /// Assets for imagesShimmer
   /// assets/images/shimmer.gif
