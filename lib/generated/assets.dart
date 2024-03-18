@@ -49,6 +49,10 @@ class Assets {
   /// assets/images/league.png
   static const String imagesLeague = "assets/images/league.png";
 
+  /// Assets for imagesGps
+  /// assets/images/gps.png
+  static const String imagesGps = "assets/images/gps.png";
+
   /// Assets for imagesLockCircle
   /// assets/images/lock-circle.png
   static const String imagesLockCircle = "assets/images/lock-circle.png";
@@ -80,6 +84,10 @@ class Assets {
   /// Assets for imagesSearch
   /// assets/images/search.png
   static const String imagesSearch = "assets/images/search.png";
+
+  /// Assets for imagesSearchNormal
+  /// assets/images/search-normal.png
+  static const String imagesSearchNormal = "assets/images/search-normal.png";
 
   /// Assets for imagesShimmer
   /// assets/images/shimmer.gif
