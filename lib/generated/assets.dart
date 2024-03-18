@@ -31,6 +31,11 @@ class Assets {
   /// assets/images/logo.png
   static const String imagesLogo = "assets/images/logo.png";
 
+  /// Assets for imagesMessageQuestion
+  /// assets/images/message-question.png
+  static const String imagesMessageQuestion =
+      "assets/images/message-question.png";
+
   /// Assets for imagesPlaceholder
   /// assets/images/placeholder.jpg
   static const String imagesPlaceholder = "assets/images/placeholder.jpg";
