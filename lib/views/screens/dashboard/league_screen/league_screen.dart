@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:football_shuru/views/base/common_button.dart';
-import 'package:football_shuru/views/base/custom_appbar.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 
 import '../../../../services/theme.dart';

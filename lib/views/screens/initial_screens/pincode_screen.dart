@@ -7,7 +7,6 @@ import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/screens/dashboard/dashboard_screen.dart';
-import 'package:football_shuru/views/screens/dashboard/home_screen/home_screen.dart';
 
 import '../../../services/route_helper.dart';
 
