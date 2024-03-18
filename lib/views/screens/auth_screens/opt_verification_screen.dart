@@ -109,18 +109,18 @@ class OtpVerificationScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   getCustomRoute(
-                  //     child: const SignUpScreen(),
-                  //   ),
-                  // );
                   Navigator.pushReplacement(
                     context,
                     getCustomRoute(
-                      child: const DashboardScreen(),
+                      child: const SignUpScreen(),
                     ),
                   );
+                  // Navigator.pushReplacement(
+                  //   context,
+                  //   getCustomRoute(
+                  //     child: const DashboardScreen(),
+                  //   ),
+                  // );
                 },
                 child: Container(
                   width: 50,

@@ -41,7 +41,8 @@ class _MobileAuthScreenState extends State<MobileAuthScreen> {
                   "Join using the phone number",
                   style: TextStyle(
                     fontSize: 40,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w900,
+                    height: 1.2,
                   ),
                 ),
                 const SizedBox(

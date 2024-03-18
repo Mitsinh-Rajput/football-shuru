@@ -5,6 +5,9 @@ import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/base/date_picker_widget.dart';
 
+import '../../../services/route_helper.dart';
+import '../initial_screens/pincode_screen.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -26,11 +29,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Form(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(
+                    height: 16,
+                  ),
                   const Align(
                     alignment: Alignment.centerRight,
                     child: CustomImage(
@@ -40,30 +46,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         "Welcome to",
                         style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                            fontSize: 30, fontWeight: FontWeight.w700),
+                              fontSize: 40,
+                              fontWeight: FontWeight.w900,
+                            ),
                       ),
                       const SizedBox(
                         width: 10,
                       ),
                       const CustomImage(
-                          height: 70,
-                          width: 70,
+                          height: 60,
+                          width: 60,
                           path: Assets.imagesFootballLogo),
                     ],
                   ),
                   Text(
                     "Create an account to explore amazing feature",
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium!
-                        .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w300,
+                        ),
                   ),
                   const SizedBox(
-                    height: 40,
+                    height: 30,
                   ),
                   TextFormField(
                     controller: nameController,
@@ -72,6 +81,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       contentPadding:
                           const EdgeInsets.symmetric(horizontal: 20),
                       label: "Your Name",
+                      hint: "Ex. name",
+                      hintStyle:
+                          Theme.of(context).textTheme.labelLarge!.copyWith(
+                                color: Colors.grey.shade300,
+                              ),
                       icon: const Padding(
                         padding: EdgeInsets.all(15),
                         child: CustomImage(
@@ -98,8 +112,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       contentPadding:
                           const EdgeInsets.symmetric(horizontal: 20),
                       label: "Mobile Number",
+                      hint: "Ex. +91 9876543210",
+                      hintStyle:
+                          Theme.of(context).textTheme.labelLarge!.copyWith(
+                                color: Colors.grey.shade300,
+                              ),
                       icon: const Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(15),
                         child: CustomImage(
                           path: Assets.imagesMobileNum,
                           height: 5,
@@ -118,6 +137,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       contentPadding:
                           const EdgeInsets.symmetric(horizontal: 20),
                       label: "Email Id",
+                      hint: "Ex. my.name@gmail.com",
+                      hintStyle:
+                          Theme.of(context).textTheme.labelLarge!.copyWith(
+                                color: Colors.grey.shade300,
+                              ),
                       icon: const Padding(
                         padding: EdgeInsets.all(15),
                         child: CustomImage(
@@ -138,9 +162,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         .bodyMedium!
                         .copyWith(fontSize: 16, fontWeight: FontWeight.w400),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
                   Row(
                     children: [
                       Row(
@@ -196,6 +220,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 20),
                         label: "Date of Birth",
+                        hint: "Ex. dd / mm / yyyy",
+                        hintStyle:
+                            Theme.of(context).textTheme.labelLarge!.copyWith(
+                                  color: Colors.grey.shade300,
+                                ),
                         icon: const Padding(
                           padding: EdgeInsets.all(15),
                           child: CustomImage(
@@ -211,19 +240,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 20,
                   ),
                   TextFormField(
+                    maxLength: 400,
                     maxLines: 3,
-                    controller: phoneNumberController,
+                    controller: bioController,
                     decoration: CustomDecoration.inputDecoration(
                       floating: true,
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 20),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
                       label: "About Bio",
+                      hint: "Ex. type short bio",
+                      hintStyle:
+                          Theme.of(context).textTheme.labelLarge!.copyWith(
+                                color: Colors.grey.shade300,
+                              ),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(bioController.text.length.toString() + "/400"),
-                  ),
+
                   const SizedBox(
                     height: 40,
                   ),
@@ -240,16 +274,41 @@ class _SignUpScreenState extends State<SignUpScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             CustomButton(
-                title: "Sign Up Now",
-                elevation: 0,
-                onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   getCustomRoute(
-                  //     child: const LocationScreen(),
-                  //   ),
-                  // );
-                })
+              // title: "Sign Up Now",
+              fontSize: 14,
+              elevation: 0,
+              radius: 10,
+              height: 50,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  getCustomRoute(
+                    child: const LocationScreen(),
+                  ),
+                );
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Sign Up Now",
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Image.asset(
+                    Assets.imagesArrowRight,
+                    height: 24,
+                    width: 24,
+                    color: Colors.white,
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),

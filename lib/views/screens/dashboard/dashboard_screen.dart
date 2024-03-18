@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
+import 'package:football_shuru/views/screens/dashboard/chats_screen/chats_screen.dart';
+import 'package:football_shuru/views/screens/dashboard/ground_screen/ground_screen.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/home_screen.dart';
+import 'package:football_shuru/views/screens/dashboard/league_screen/league_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -17,9 +20,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       body: [
         const HomeScreen(),
-        const HomeScreen(),
-        const HomeScreen(),
-        const HomeScreen(),
+        const LeagueScreen(),
+        const MyGroundScreen(),
+        const ChatsScreen(),
         const HomeScreen(),
       ][selectIndex],
       bottomNavigationBar: BottomNavigationBar(
