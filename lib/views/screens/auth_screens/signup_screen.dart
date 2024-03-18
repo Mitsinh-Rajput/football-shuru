@@ -26,12 +26,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: Form(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Align(
+                  const Align(
                     alignment: Alignment.centerRight,
                     child: CustomImage(
                       height: 24,
@@ -46,10 +46,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         style: Theme.of(context).textTheme.titleLarge!.copyWith(
                             fontSize: 30, fontWeight: FontWeight.w700),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      CustomImage(
+                      const CustomImage(
                           height: 70,
                           width: 70,
                           path: Assets.imagesFootballLogo),
@@ -62,16 +62,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         .labelMedium!
                         .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                   TextFormField(
                     controller: nameController,
                     decoration: CustomDecoration.inputDecoration(
                       floating: true,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 20),
                       label: "Your Name",
-                      icon: Padding(
+                      icon: const Padding(
                         padding: EdgeInsets.all(15),
                         child: CustomImage(
                           path: Assets.imagesYourName,
@@ -81,22 +82,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
                     readOnly: true,
                     controller: phoneNumberController,
                     decoration: CustomDecoration.inputDecoration(
-                      suffix: Padding(
-                        padding: const EdgeInsets.all(15),
+                      suffix: const Padding(
+                        padding: EdgeInsets.all(15),
                         child: CustomImage(
                             height: 5, width: 5, path: Assets.imagesLockCircle),
                       ),
                       floating: true,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 20),
                       label: "Mobile Number",
-                      icon: Padding(
+                      icon: const Padding(
                         padding: EdgeInsets.all(10),
                         child: CustomImage(
                           path: Assets.imagesMobileNum,
@@ -106,16 +108,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
                     controller: emailIdController,
                     decoration: CustomDecoration.inputDecoration(
                       floating: true,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 20),
                       label: "Email Id",
-                      icon: Padding(
+                      icon: const Padding(
                         padding: EdgeInsets.all(15),
                         child: CustomImage(
                           path: Assets.imagesEmailId,
@@ -125,7 +128,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Text(
@@ -135,7 +138,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         .bodyMedium!
                         .copyWith(fontSize: 16, fontWeight: FontWeight.w400),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -144,7 +147,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: [
                           Radio(
                               fillColor: MaterialStateColor.resolveWith(
-                                  (states) => Color.fromRGBO(255, 154, 108, 1)),
+                                  (states) =>
+                                      const Color.fromRGBO(255, 154, 108, 1)),
                               value: Gender.male,
                               groupValue: _gender,
                               onChanged: (value) {
@@ -159,7 +163,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: [
                           Radio(
                               fillColor: MaterialStateColor.resolveWith(
-                                  (states) => Color.fromRGBO(255, 154, 108, 1)),
+                                  (states) =>
+                                      const Color.fromRGBO(255, 154, 108, 1)),
                               value: Gender.female,
                               groupValue: _gender,
                               onChanged: (value) {
@@ -172,7 +177,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   CustomDatePicker(
@@ -188,9 +193,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: dateOfBirthController,
                       decoration: CustomDecoration.inputDecoration(
                         floating: true,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 20),
                         label: "Date of Birth",
-                        icon: Padding(
+                        icon: const Padding(
                           padding: EdgeInsets.all(15),
                           child: CustomImage(
                             path: Assets.imagesCalendarTick,
@@ -201,7 +207,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
@@ -209,7 +215,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     controller: phoneNumberController,
                     decoration: CustomDecoration.inputDecoration(
                       floating: true,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 20),
                       label: "About Bio",
                     ),
                   ),
@@ -217,7 +224,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     alignment: Alignment.centerRight,
                     child: Text(bioController.text.length.toString() + "/400"),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 40,
                   ),
                 ],
