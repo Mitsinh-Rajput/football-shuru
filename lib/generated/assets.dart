@@ -17,6 +17,10 @@ class Assets {
   /// assets/images/call-calling.png
   static const String imagesCallCalling = "assets/images/call-calling.png";
 
+  /// Assets for imagesChats
+  /// assets/images/chats.png
+  static const String imagesChats = "assets/images/chats.png";
+
   /// Assets for imagesEmailId
   /// assets/images/email_id.png
   static const String imagesEmailId = "assets/images/email_id.png";
@@ -33,6 +37,18 @@ class Assets {
   /// assets/images/football_logo.png
   static const String imagesFootballLogo = "assets/images/football_logo.png";
 
+  /// Assets for imagesGround
+  /// assets/images/ground.png
+  static const String imagesGround = "assets/images/ground.png";
+
+  /// Assets for imagesHome
+  /// assets/images/home.png
+  static const String imagesHome = "assets/images/home.png";
+
+  /// Assets for imagesLeague
+  /// assets/images/league.png
+  static const String imagesLeague = "assets/images/league.png";
+
   /// Assets for imagesLockCircle
   /// assets/images/lock-circle.png
   static const String imagesLockCircle = "assets/images/lock-circle.png";
@@ -40,6 +56,10 @@ class Assets {
   /// Assets for imagesLogo
   /// assets/images/logo.png
   static const String imagesLogo = "assets/images/logo.png";
+
+  /// Assets for imagesMenu
+  /// assets/images/menu.png
+  static const String imagesMenu = "assets/images/menu.png";
 
   /// Assets for imagesMessageQuestion
   /// assets/images/message-question.png
@@ -49,13 +69,25 @@ class Assets {
   /// assets/images/mobile_num.png
   static const String imagesMobileNum = "assets/images/mobile_num.png";
 
+  /// Assets for imagesNotification
+  /// assets/images/notification.png
+  static const String imagesNotification = "assets/images/notification.png";
+
   /// Assets for imagesPlaceholder
   /// assets/images/placeholder.jpg
   static const String imagesPlaceholder = "assets/images/placeholder.jpg";
 
+  /// Assets for imagesSearch
+  /// assets/images/search.png
+  static const String imagesSearch = "assets/images/search.png";
+
   /// Assets for imagesShimmer
   /// assets/images/shimmer.gif
   static const String imagesShimmer = "assets/images/shimmer.gif";
+
+  /// Assets for imagesTeams
+  /// assets/images/teams.png
+  static const String imagesTeams = "assets/images/teams.png";
 
   /// Assets for imagesYourName
   /// assets/images/your_name.png

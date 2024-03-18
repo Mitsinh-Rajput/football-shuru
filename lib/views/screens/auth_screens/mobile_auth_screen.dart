@@ -16,6 +16,17 @@ class _MobileAuthScreenState extends State<MobileAuthScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        automaticallyImplyLeading: false,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.dark,
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -24,10 +35,7 @@ class _MobileAuthScreenState extends State<MobileAuthScreen> {
               children: [
                 const Align(
                   alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: EdgeInsets.all(24.0),
-                    child: Icon(Icons.info_outline),
-                  ),
+                  child: Icon(Icons.info_outline),
                 ),
                 const Text(
                   "Join using the phone number",
@@ -54,7 +62,7 @@ class _MobileAuthScreenState extends State<MobileAuthScreen> {
                   width: size.width,
                 ),
                 const SizedBox(
-                  height: 80,
+                  height: 60,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -86,16 +86,16 @@ class _SplashScreenState extends State<SplashScreen> {
                 Text(
                   AppConstants.appNamePart1 + " ",
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontSize: 22.0,
+                      fontSize: 24.0,
                       fontWeight: FontWeight.bold,
                       color: const Color.fromRGBO(64, 66, 78, 1)),
                 ),
                 Text(
                   AppConstants.appNamePart2,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(fontSize: 22.0, color: textPrimary),
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontSize: 24.0,
+                        color: textPrimary,
+                      ),
                 ),
               ],
             ),

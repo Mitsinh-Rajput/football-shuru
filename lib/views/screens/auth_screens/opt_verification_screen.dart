@@ -5,6 +5,7 @@ import 'package:football_shuru/views/screens/auth_screens/signup_screen.dart';
 import '../../../services/route_helper.dart';
 import '../../../services/theme.dart';
 import '../../base/custom_image.dart';
+import '../dashboard/dashboard_screen.dart';
 
 class OtpVerificationDialogue {
   dialogue(context) {
@@ -108,10 +109,16 @@ class OtpVerificationScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
+                  // Navigator.pushReplacement(
+                  //   context,
+                  //   getCustomRoute(
+                  //     child: const SignUpScreen(),
+                  //   ),
+                  // );
                   Navigator.pushReplacement(
                     context,
                     getCustomRoute(
-                      child: const SignUpScreen(),
+                      child: const DashboardScreen(),
                     ),
                   );
                 },
