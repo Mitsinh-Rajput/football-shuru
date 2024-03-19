@@ -5,6 +5,7 @@ import 'package:football_shuru/views/screens/dashboard/chats_screen/chats_screen
 import 'package:football_shuru/views/screens/dashboard/ground_screen/ground_screen.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/home_screen.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/league_screen.dart';
+import 'package:football_shuru/views/screens/dashboard/teams_screen/teams_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -23,7 +24,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         const LeagueScreen(),
         const MyGroundScreen(),
         const ChatsScreen(),
-        const HomeScreen(),
+        const MyTeamsScreen(),
       ][selectIndex],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
