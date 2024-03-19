@@ -54,16 +54,16 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           Image.asset(
             Assets.imagesSearch,
-            height: 24,
-            width: 24,
+            height: 22,
+            width: 22,
           ),
           const SizedBox(
-            width: 30,
+            width: 26,
           ),
           Image.asset(
             Assets.imagesNotification,
-            height: 24,
-            width: 24,
+            height: 22,
+            width: 22,
           ),
           const SizedBox(
             width: 16,
@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     "Change Now",
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w900,
                         ),
                   ),
                 ],
