@@ -134,6 +134,7 @@ class _LeagueAndTourTileState extends State<LeagueAndTourTile> {
                         elevation: 0,
                         radius: 6,
                         type: ButtonType.secondary,
+                        borderColor: Colors.grey.shade800,
                         title: "View Details",
                         fontSize: 10,
                         onTap: () {},

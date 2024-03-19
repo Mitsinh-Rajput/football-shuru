@@ -109,6 +109,38 @@ class _LeagueScreenState extends State<LeagueScreen> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              color: primaryColor,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 4,
+                  offset: const Offset(0, 4),
+                  color: Colors.black.withOpacity(0.25),
+                ),
+              ]),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.add,
+                size: 22,
+                color: Colors.white,
+              ),
+              const SizedBox(
+                width: 6,
+              ),
+              Text(
+                "Add League",
+                style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                      color: Colors.white,
+                    ),
+              ),
+            ],
+          ),
+        ),
         body: Column(
           children: [
             const SizedBox(
@@ -363,6 +395,7 @@ class _LeagueScreenState extends State<LeagueScreen> {
                                               elevation: 0,
                                               radius: 6,
                                               type: ButtonType.secondary,
+                                              borderColor: Colors.grey.shade800,
                                               title: "View Details",
                                               fontSize: 10,
                                               onTap: () {},

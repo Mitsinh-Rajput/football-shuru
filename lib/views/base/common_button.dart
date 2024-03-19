@@ -17,6 +17,7 @@ class CustomButton extends StatelessWidget {
     this.radius = 14,
     this.elevation = 10,
     this.fontSize = 16,
+    this.borderColor,
   })  : assert(title == null || child == null,
             'Cannot provide both a title and a child\n'),
         super(key: key);
@@ -34,6 +35,7 @@ class CustomButton extends StatelessWidget {
     this.radius = 14,
     this.elevation = 10,
     this.fontSize,
+    this.borderColor,
   })  : assert(title == null || child == null,
             'Cannot provide both a title and a child\n'),
         super(key: key);
@@ -68,6 +70,9 @@ class CustomButton extends StatelessWidget {
   final double elevation;
 
   final double? fontSize;
+
+  //button border color
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +132,9 @@ class CustomButton extends StatelessWidget {
         disabledColor: disabledColor ?? Theme.of(context).disabledColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radius),
-          side: BorderSide(color: Theme.of(context).primaryColor),
+          side: BorderSide(
+              color: borderColor?.withOpacity(0.14) ??
+                  Theme.of(context).primaryColor),
         ),
         child: Center(
           child: Builder(
@@ -147,7 +154,7 @@ class CustomButton extends StatelessWidget {
                       title!,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.montserrat(
-                        color: Theme.of(context).primaryColor,
+                        color: borderColor ?? Theme.of(context).primaryColor,
                         fontSize: fontSize,
                       ),
                     ),
