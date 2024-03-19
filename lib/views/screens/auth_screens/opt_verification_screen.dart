@@ -79,6 +79,7 @@ class OtpVerificationScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(50)),
                   child: TextField(
                     style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          letterSpacing: 2,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: textPrimary,

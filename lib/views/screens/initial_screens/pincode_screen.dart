@@ -1,8 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:football_shuru/generated/assets.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
@@ -55,6 +51,7 @@ class _LocationScreenState extends State<LocationScreen> {
             Text(
               "Get your place",
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    color: Colors.black87,
                     fontSize: 30,
                     fontWeight: FontWeight.w900,
                   ),
@@ -63,18 +60,18 @@ class _LocationScreenState extends State<LocationScreen> {
               height: 6,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 26.0),
+              padding: const EdgeInsets.symmetric(horizontal: 22.0),
               child: Text(
                 textAlign: TextAlign.center,
                 "Enter the PIN code of the area in the field below and proceed further.",
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                style: Theme.of(context).textTheme.labelSmall!.copyWith(
                       fontSize: 13,
-                      fontWeight: FontWeight.w300,
+                      fontWeight: FontWeight.w200,
                     ),
               ),
             ),
             const SizedBox(
-              height: 14,
+              height: 16,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,8 +91,8 @@ class _LocationScreenState extends State<LocationScreen> {
                       decoration: InputDecoration(
                           border: InputBorder.none,
                           icon: const CustomImage(
-                            height: 24,
-                            width: 24,
+                            height: 20,
+                            width: 20,
                             path: Assets.imagesSearchNormal,
                           ),
                           hintText: "Search near pincode",
@@ -120,10 +117,15 @@ class _LocationScreenState extends State<LocationScreen> {
                     child: Image.asset(
                       Assets.imagesArrowRight,
                       color: Colors.white,
+                      height: 20,
+                      width: 20,
                     ),
                   ),
                 ),
               ],
+            ),
+            const SizedBox(
+              height: 10,
             ),
             Expanded(
               child: ListView.builder(
@@ -183,6 +185,8 @@ class _LocationScreenState extends State<LocationScreen> {
                           const CustomImage(
                             path: Assets.imagesArrowRight,
                             color: Colors.black87,
+                            height: 24,
+                            width: 24,
                           ),
                         ],
                       ),
@@ -200,22 +204,25 @@ class _LocationScreenState extends State<LocationScreen> {
           children: [
             CustomButton(
                 elevation: 0,
-                radius: 30,
+                radius: 10,
+                height: 50,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       "Welcome to home",
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelMedium!
-                          .copyWith(color: Colors.white),
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
                     ),
                     const SizedBox(
                       width: 10,
                     ),
                     const CustomImage(
-                        color: Colors.white, path: Assets.imagesArrowRight)
+                      color: Colors.white,
+                      path: Assets.imagesArrowRight,
+                    ),
                   ],
                 ),
                 onTap: () {

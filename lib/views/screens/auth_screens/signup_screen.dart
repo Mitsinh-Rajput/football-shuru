@@ -77,6 +77,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   TextFormField(
                     controller: nameController,
                     decoration: CustomDecoration.inputDecoration(
+                      borderColor: Colors.grey.shade300,
                       floating: true,
                       contentPadding:
                           const EdgeInsets.symmetric(horizontal: 20),
@@ -103,6 +104,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     readOnly: true,
                     controller: phoneNumberController,
                     decoration: CustomDecoration.inputDecoration(
+                      borderColor: Colors.grey.shade300,
                       suffix: const Padding(
                         padding: EdgeInsets.all(15),
                         child: CustomImage(
@@ -133,6 +135,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   TextFormField(
                     controller: emailIdController,
                     decoration: CustomDecoration.inputDecoration(
+                      borderColor: Colors.grey.shade300,
                       floating: true,
                       contentPadding:
                           const EdgeInsets.symmetric(horizontal: 20),
@@ -216,6 +219,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       readOnly: true,
                       controller: dateOfBirthController,
                       decoration: CustomDecoration.inputDecoration(
+                        borderColor: Colors.grey.shade300,
                         floating: true,
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 20),
@@ -241,9 +245,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   TextFormField(
                     maxLength: 400,
-                    maxLines: 3,
+                    maxLines: null,
                     controller: bioController,
                     decoration: CustomDecoration.inputDecoration(
+                      borderColor: Colors.grey.shade300,
                       floating: true,
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 20,
@@ -280,7 +285,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               radius: 10,
               height: 50,
               onTap: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   getCustomRoute(
                     child: const LocationScreen(),

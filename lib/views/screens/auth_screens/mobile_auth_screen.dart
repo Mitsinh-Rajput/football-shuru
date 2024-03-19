@@ -77,6 +77,7 @@ class _MobileAuthScreenState extends State<MobileAuthScreen> {
                         child: TextField(
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    letterSpacing: 2,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                     color: textPrimary,

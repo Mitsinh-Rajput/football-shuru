@@ -1,9 +1,5 @@
 import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:football_shuru/generated/assets.dart';
 import 'package:football_shuru/services/route_helper.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/common_button.dart';
@@ -149,13 +145,17 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                 children: [
                   Text("Welcome Back"),
                   SizedBox(
-                    width: 3,
+                    width: 8,
                   ),
-                  CustomImage(path: Assets.imagesArrowRight)
+                  CustomImage(
+                    path: Assets.imagesArrowRight,
+                    height: 24,
+                    width: 24,
+                  ),
                 ],
               ),
               onTap: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   getCustomRoute(
                     child: const MobileAuthScreen(),
