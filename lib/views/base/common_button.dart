@@ -13,11 +13,13 @@ class CustomButton extends StatelessWidget {
     this.disabledColor,
     this.color,
     this.height = 45,
+    this.minWidth,
     this.isLoading = false,
     this.radius = 14,
     this.elevation = 10,
     this.fontSize = 16,
-  })  : assert(title == null || child == null, 'Cannot provide both a title and a child\n'),
+  })  : assert(title == null || child == null,
+            'Cannot provide both a title and a child\n'),
         super(key: key);
 
   const CustomButton.tertiary({
@@ -29,11 +31,13 @@ class CustomButton extends StatelessWidget {
     this.disabledColor,
     this.color,
     this.height = 45,
+    this.minWidth,
     this.isLoading = false,
     this.radius = 14,
     this.elevation = 10,
     this.fontSize,
-  })  : assert(title == null || child == null, 'Cannot provide both a title and a child\n'),
+  })  : assert(title == null || child == null,
+            'Cannot provide both a title and a child\n'),
         super(key: key);
 
   ///Button Title text
@@ -57,6 +61,9 @@ class CustomButton extends StatelessWidget {
   ///Button Height
   final double? height;
 
+  ///Button minWidth
+  final double? minWidth;
+
   ///Button Radius
   final double radius;
 
@@ -73,7 +80,7 @@ class CustomButton extends StatelessWidget {
       return MaterialButton(
         onPressed: isLoading ? null : onTap,
         height: height,
-        minWidth: 80,
+        minWidth: minWidth ?? 80,
         elevation: elevation,
         focusElevation: 0,
         highlightElevation: 0,
@@ -96,7 +103,8 @@ class CustomButton extends StatelessWidget {
 
               return child ??
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 2, vertical: 10),
                     child: Text(
                       title!,
                       textAlign: TextAlign.center,
@@ -114,7 +122,7 @@ class CustomButton extends StatelessWidget {
       return MaterialButton(
         onPressed: isLoading ? null : onTap,
         height: height,
-        minWidth: 80,
+        minWidth: minWidth ?? 80,
         elevation: elevation,
         focusElevation: 0,
         highlightElevation: 0,
@@ -138,7 +146,8 @@ class CustomButton extends StatelessWidget {
 
               return child ??
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 2, vertical: 10),
                     child: Text(
                       title!,
                       textAlign: TextAlign.center,

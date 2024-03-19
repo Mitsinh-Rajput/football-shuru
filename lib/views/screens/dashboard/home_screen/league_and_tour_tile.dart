@@ -130,6 +130,7 @@ class _LeagueAndTourTileState extends State<LeagueAndTourTile> {
                   Row(
                     children: [
                       CustomButton(
+                        minWidth: 0,
                         height: 18,
                         elevation: 0,
                         radius: 6,
@@ -143,6 +144,7 @@ class _LeagueAndTourTileState extends State<LeagueAndTourTile> {
                       ),
                       Expanded(
                         child: CustomButton(
+                          // minWidth: 0,
                           color: primaryColor,
                           height: 18,
                           elevation: 0,
