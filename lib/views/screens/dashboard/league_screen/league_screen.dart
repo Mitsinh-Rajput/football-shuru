@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 
@@ -105,6 +106,7 @@ class _LeagueScreenState extends State<LeagueScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -132,56 +134,60 @@ class _LeagueScreenState extends State<LeagueScreen> {
             const SizedBox(
               height: 14,
             ),
-            Padding(
+            Container(
+              width: size.width,
               padding: const EdgeInsets.symmetric(
                 horizontal: 16,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  for (var i = 0; i < league_tournament.length; i++)
-                    GestureDetector(
-                      onTap: () {
-                        pageController
-                            .animateToPage(i,
-                                duration: const Duration(milliseconds: 400),
-                                curve: Curves.ease)
-                            .then((value) {
-                          setState(() {
-                            this.index = i;
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    for (var i = 0; i < league_tournament.length; i++)
+                      GestureDetector(
+                        onTap: () {
+                          pageController
+                              .animateToPage(i,
+                                  duration: const Duration(milliseconds: 400),
+                                  curve: Curves.ease)
+                              .then((value) {
+                            setState(() {
+                              this.index = i;
+                            });
                           });
-                        });
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.only(right: 14),
-                        // height: 30,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black12,
-                            width: (i == index) ? 0 : 1,
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(right: 14),
+                          // height: 30,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black12,
+                              width: (i == index) ? 0 : 1,
+                            ),
+                            borderRadius: BorderRadius.circular(30),
+                            color: i == index ? primaryColor : Colors.white,
                           ),
-                          borderRadius: BorderRadius.circular(30),
-                          color: i == index ? primaryColor : Colors.white,
-                        ),
-                        // height: 30,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 7),
-                          child: Text(
-                            league_tournament[i].title,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelMedium!
-                                .copyWith(
-                                  color: (i == index)
-                                      ? Colors.white
-                                      : Colors.black,
-                                ),
+                          // height: 30,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 7),
+                            child: Text(
+                              league_tournament[i].title,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .copyWith(
+                                    color: (i == index)
+                                        ? Colors.white
+                                        : Colors.black,
+                                  ),
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                ],
+                      )
+                  ],
+                ),
               ),
             ),
             const SizedBox(
