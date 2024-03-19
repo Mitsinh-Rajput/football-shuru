@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:football_shuru/services/route_helper.dart';
-import 'package:football_shuru/views/screens/dashboard/teams_screen/join_team.dart';
+import 'package:football_shuru/views/screens/dashboard/teams_screen/add_team.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:r_dotted_line_border/r_dotted_line_border.dart';
 
@@ -69,34 +69,45 @@ class _MyTeamsScreenState extends State<MyTeamsScreen> {
               Row(
                 children: [
                   Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 14,
-                        vertical: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: RDottedLineBorder.all(
-                          color: Colors.grey.shade300,
-                          width: 1,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          getCustomRoute(
+                            type: PageTransitionType.topToBottom,
+                            child: const AddTeamScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 10,
                         ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.add,
-                            size: 20,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: RDottedLineBorder.all(
+                            color: Colors.grey.shade300,
+                            width: 1,
                           ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            "Create new team",
-                            style: Theme.of(context).textTheme.labelMedium,
-                          ),
-                        ],
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.add,
+                              size: 20,
+                            ),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              "Create new team",
+                              style: Theme.of(context).textTheme.labelMedium,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -106,13 +117,13 @@ class _MyTeamsScreenState extends State<MyTeamsScreen> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          getCustomRoute(
-                            type: PageTransitionType.topToBottom,
-                            child: const JoinTeamScreen(),
-                          ),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   getCustomRoute(
+                        //     type: PageTransitionType.topToBottom,
+                        //     child: const JoinTeamScreen(),
+                        //   ),
+                        // );
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(

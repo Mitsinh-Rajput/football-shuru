@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:football_shuru/services/input_decoration.dart';
-
+import '../../../../generated/assets.dart';
 import '../../../../services/theme.dart';
+import '../../../base/common_button.dart';
 
-class JoinTeamScreen extends StatefulWidget {
-  const JoinTeamScreen({super.key});
+class AddTeamScreen extends StatefulWidget {
+  const AddTeamScreen({super.key});
 
   @override
-  State<JoinTeamScreen> createState() => _JoinTeamScreenState();
+  State<AddTeamScreen> createState() => _AddTeamScreenState();
 }
 
-class _JoinTeamScreenState extends State<JoinTeamScreen> {
+class _AddTeamScreenState extends State<AddTeamScreen> {
   TextEditingController team_name = TextEditingController();
   TextEditingController logo_of_team = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -118,6 +119,52 @@ class _JoinTeamScreenState extends State<JoinTeamScreen> {
               ),
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CustomButton(
+              // title: "Sign Up Now",
+              color: textPrimary,
+              fontSize: 14,
+              elevation: 0,
+              radius: 10,
+              height: 50,
+              onTap: () {
+                // Navigator.pushReplacement(
+                //   context,
+                //   getCustomRoute(
+                //     child: const LocationScreen(),
+                //   ),
+                // );
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Create Team",
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Image.asset(
+                    Assets.imagesArrowRight,
+                    height: 24,
+                    width: 24,
+                    color: Colors.white,
+                  )
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
