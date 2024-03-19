@@ -13,7 +13,6 @@ class CustomButton extends StatelessWidget {
     this.disabledColor,
     this.color,
     this.height = 45,
-    this.minWidth,
     this.isLoading = false,
     this.radius = 14,
     this.elevation = 10,
@@ -31,7 +30,6 @@ class CustomButton extends StatelessWidget {
     this.disabledColor,
     this.color,
     this.height = 45,
-    this.minWidth,
     this.isLoading = false,
     this.radius = 14,
     this.elevation = 10,
@@ -61,9 +59,6 @@ class CustomButton extends StatelessWidget {
   ///Button Height
   final double? height;
 
-  ///Button minWidth
-  final double? minWidth;
-
   ///Button Radius
   final double radius;
 
@@ -80,7 +75,7 @@ class CustomButton extends StatelessWidget {
       return MaterialButton(
         onPressed: isLoading ? null : onTap,
         height: height,
-        minWidth: minWidth ?? 80,
+        minWidth: 80,
         elevation: elevation,
         focusElevation: 0,
         highlightElevation: 0,
@@ -122,7 +117,7 @@ class CustomButton extends StatelessWidget {
       return MaterialButton(
         onPressed: isLoading ? null : onTap,
         height: height,
-        minWidth: minWidth ?? 80,
+        minWidth: 80,
         elevation: elevation,
         focusElevation: 0,
         highlightElevation: 0,

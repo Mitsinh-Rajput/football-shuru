@@ -359,7 +359,7 @@ class _LeagueScreenState extends State<LeagueScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             CustomButton(
-                                              height: 18,
+                                              height: 34,
                                               elevation: 0,
                                               radius: 6,
                                               type: ButtonType.secondary,
@@ -374,14 +374,24 @@ class _LeagueScreenState extends State<LeagueScreen> {
                                                 ? Expanded(
                                                     child: CustomButton(
                                                       color: primaryColor,
-                                                      height: 18,
+                                                      height: 34,
                                                       elevation: 0,
                                                       radius: 6,
                                                       type: ButtonType.primary,
-                                                      title:
-                                                          "23/40 Team • Participate Now",
                                                       fontSize: 10,
                                                       onTap: () {},
+                                                      // title:
+                                                      //     "23/40 Team • Participate Now",
+                                                      child: Text(
+                                                        "23/40 Team • Participate Now",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .labelSmall!
+                                                            .copyWith(
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                      ),
                                                     ),
                                                   )
                                                 : const Text("40/40 Team"),
