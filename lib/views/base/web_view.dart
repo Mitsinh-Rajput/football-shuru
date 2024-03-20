@@ -5,7 +5,8 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class CustomWebView extends StatefulWidget {
   final String url, title;
-  const CustomWebView({Key? key, required this.url, required this.title}) : super(key: key);
+
+  const CustomWebView({super.key, required this.url, required this.title});
 
   @override
   State<CustomWebView> createState() => _CustomWebViewState();
@@ -13,6 +14,8 @@ class CustomWebView extends StatefulWidget {
 
 class _CustomWebViewState extends State<CustomWebView> {
   late String url;
+  bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
@@ -29,14 +32,37 @@ class _CustomWebViewState extends State<CustomWebView> {
     log(url);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
         elevation: 0,
-        title: Text(widget.title),
+        title: Text(
+          widget.title,
+          style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                fontWeight: FontWeight.w700,
+                fontSize: 18,
+              ),
+        ),
       ),
-      body: InAppWebView(
-        initialUrlRequest: URLRequest(url: Uri.parse(url)),
-        onReceivedServerTrustAuthRequest: (controller, challenge) async {
-          return ServerTrustAuthResponse(action: ServerTrustAuthResponseAction.PROCEED);
-        },
+      body: Stack(
+        children: [
+          if (isLoading)
+            const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          InAppWebView(
+            onLoadStop: (controller, url) {
+              setState(() {
+                isLoading = false;
+              });
+            },
+            initialUrlRequest: URLRequest(url: WebUri(url)),
+            onReceivedServerTrustAuthRequest: (controller, challenge) async {
+              return ServerTrustAuthResponse(action: ServerTrustAuthResponseAction.PROCEED);
+            },
+          ),
+        ],
       ),
     );
   }
