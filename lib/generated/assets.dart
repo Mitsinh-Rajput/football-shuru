@@ -77,6 +77,10 @@ class Assets {
   /// assets/images/logo.png
   static const String imagesLogo = "assets/images/logo.png";
 
+  /// Assets for imagesMap
+  /// assets/images/map.png
+  static const String imagesMap = "assets/images/map.png";
+
   /// Assets for imagesMenu
   /// assets/images/menu.png
   static const String imagesMenu = "assets/images/menu.png";
