@@ -45,7 +45,6 @@ class _NearGroundState extends State<NearGround> {
   }
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -112,14 +111,14 @@ class _NearGroundState extends State<NearGround> {
                     fontSize: 24,
                     fontWeight: FontWeight.w700
                   ),),
-                  SizedBox(
+                  const SizedBox(
                     height: 6,
                   ),
                   Text("400614, Nerul Sports Arena, A-301, Sea Breeze Society, Sector 20, Nerul, Navi Mumbai.",style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w400
                   ),),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(
@@ -127,7 +126,7 @@ class _NearGroundState extends State<NearGround> {
                     children: [
                       Text("45K Members",style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           fontSize: 16,
-                          color: Color.fromRGBO(255, 145, 0, 1),
+                          color: const Color.fromRGBO(255, 145, 0, 1),
                           fontWeight: FontWeight.w400
                       ),),
                       CustomButton(
@@ -142,28 +141,28 @@ class _NearGroundState extends State<NearGround> {
                           onTap: (){})
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Text("Description",style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w600
                   ),),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w400
                   ),),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Text("Ground King",style: Theme.of(context).textTheme.titleSmall!.copyWith(
                       fontSize: 16,
                       fontWeight: FontWeight.w500
                   ),),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Container(
@@ -244,7 +243,7 @@ class _NearGroundState extends State<NearGround> {
                               Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: Color.fromRGBO(255, 200, 57, 1),
+                                    color: const Color.fromRGBO(255, 200, 57, 1),
                                     width: 2
                                   ),
                                     borderRadius:
@@ -274,17 +273,17 @@ class _NearGroundState extends State<NearGround> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        height: 50,
+      bottomNavigationBar: SizedBox(
+        height: 80,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CustomImage(
-                color: primaryColor,
-                height: 28,
-                width: 28,
-                path: Assets.imagesAdd),
+            const Icon(
+              Icons.add,
+              size: 22,
+              color: Colors.white,
+            ),
             Text("Join a group",style: Theme.of(context).textTheme.titleSmall!.copyWith(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
