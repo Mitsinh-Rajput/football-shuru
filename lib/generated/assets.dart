@@ -117,6 +117,10 @@ class Assets {
   /// assets/images/setting-5.png
   static const String imagesSetting5 = "assets/images/setting-5.png";
 
+  /// Assets for imagesShare
+  /// assets/images/share.png
+  static const String imagesShare = "assets/images/share.png";
+
   /// Assets for imagesShareIconUIA
   /// assets/images/Share_Icon_UIA.png
   static const String imagesShareIconUIA = "assets/images/Share_Icon_UIA.png";

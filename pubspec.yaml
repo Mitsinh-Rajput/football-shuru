@@ -30,6 +30,7 @@ dependencies:
 #  dio: ^4.0.6
   custom_refresh_indicator: ^2.2.1
   r_dotted_line_border: ^0.1.1
+  carousel_slider: ^4.2.1
 
 
 dev_dependencies:
