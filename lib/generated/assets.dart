@@ -1,6 +1,14 @@
 class Assets {
   Assets._();
   
+  /// Assets for imagesAdd
+  /// assets/images/add.png
+  static const String imagesAdd = "assets/images/add.png";
+
+  /// Assets for imagesArrowLeft
+  /// assets/images/arrow-left.png
+  static const String imagesArrowLeft = "assets/images/arrow-left.png";
+
   /// Assets for imagesArrowRight
   /// assets/images/arrow-right.png
   static const String imagesArrowRight = "assets/images/arrow-right.png";
@@ -17,9 +25,17 @@ class Assets {
   /// assets/images/call-calling.png
   static const String imagesCallCalling = "assets/images/call-calling.png";
 
+  /// Assets for imagesChat
+  /// assets/images/Chat.png
+  static const String imagesChat = "assets/images/Chat.png";
+
   /// Assets for imagesChats
   /// assets/images/chats.png
   static const String imagesChats = "assets/images/chats.png";
+
+  /// Assets for imagesEllipse68
+  /// assets/images/Ellipse68.png
+  static const String imagesEllipse68 = "assets/images/Ellipse68.png";
 
   /// Assets for imagesEmailId
   /// assets/images/email_id.png
@@ -81,6 +97,14 @@ class Assets {
   /// assets/images/placeholder.jpg
   static const String imagesPlaceholder = "assets/images/placeholder.jpg";
 
+  /// Assets for imagesReceiptText
+  /// assets/images/receipt-text.png
+  static const String imagesReceiptText = "assets/images/receipt-text.png";
+
+  /// Assets for imagesRectangle1292
+  /// assets/images/Rectangle1292.png
+  static const String imagesRectangle1292 = "assets/images/Rectangle1292.png";
+
   /// Assets for imagesSearch
   /// assets/images/search.png
   static const String imagesSearch = "assets/images/search.png";
@@ -92,6 +116,10 @@ class Assets {
   /// Assets for imagesSetting5
   /// assets/images/setting-5.png
   static const String imagesSetting5 = "assets/images/setting-5.png";
+
+  /// Assets for imagesShareIconUIA
+  /// assets/images/Share_Icon_UIA.png
+  static const String imagesShareIconUIA = "assets/images/Share_Icon_UIA.png";
 
   /// Assets for imagesShimmer
   /// assets/images/shimmer.gif

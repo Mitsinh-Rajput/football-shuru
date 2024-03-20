@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:football_shuru/services/route_helper.dart';
+import 'package:football_shuru/views/screens/dashboard/league_screen/league_details.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../../../services/theme.dart';
 import '../../../base/common_button.dart';
 
 class LeagueAndTourTile extends StatefulWidget {
-  const LeagueAndTourTile({super.key});
+  final String typesOfLeague;
+  const LeagueAndTourTile({super.key, required this.typesOfLeague});
 
   @override
   State<LeagueAndTourTile> createState() => _LeagueAndTourTileState();
@@ -81,7 +85,7 @@ class _LeagueAndTourTileState extends State<LeagueAndTourTile> {
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text(
-                              "League’s match",
+                              widget.typesOfLeague,
                               style: Theme.of(context).textTheme.labelSmall,
                             ),
                           ),
@@ -137,7 +141,16 @@ class _LeagueAndTourTileState extends State<LeagueAndTourTile> {
                         borderColor: Colors.grey.shade800,
                         title: "View Details",
                         fontSize: 10,
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            getCustomRoute(
+                              type: PageTransitionType.fade,
+                              duration: const Duration(milliseconds: 600),
+                              child: LeagueDetailsPage(typesOfLeague: widget.typesOfLeague,),
+                            ),
+                          );
+                        },
                       ),
                       const SizedBox(
                         width: 16,
@@ -150,7 +163,6 @@ class _LeagueAndTourTileState extends State<LeagueAndTourTile> {
                           elevation: 0,
                           radius: 6,
                           type: ButtonType.primary,
-                          fontSize: 10,
                           onTap: () {},
                           // title: "23/40 Team • Participate Now",
                           child: Text(
@@ -160,6 +172,7 @@ class _LeagueAndTourTileState extends State<LeagueAndTourTile> {
                                 .labelSmall!
                                 .copyWith(
                                   color: Colors.white,
+                              fontSize: 10
                                 ),
                           ),
                         ),

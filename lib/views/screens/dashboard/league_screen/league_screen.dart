@@ -411,7 +411,7 @@ class _LeagueScreenState extends State<LeagueScreen> {
                                                       elevation: 0,
                                                       radius: 6,
                                                       type: ButtonType.primary,
-                                                      fontSize: 10,
+
                                                       onTap: () {},
                                                       // title:
                                                       //     "23/40 Team • Participate Now",
@@ -423,6 +423,7 @@ class _LeagueScreenState extends State<LeagueScreen> {
                                                             .copyWith(
                                                               color:
                                                                   Colors.white,
+                                                          fontSize: 10
                                                             ),
                                                       ),
                                                     ),

@@ -15,6 +15,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List typesOfLeaguelist = [
+    "League’s match",
+    "Knock out",
+    "Round robins",
+    "League’s match"
+  ];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -343,9 +349,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: 4,
+                itemCount: typesOfLeaguelist.length,
                 itemBuilder: (context, index) {
-                  return const LeagueAndTourTile();
+                  return LeagueAndTourTile(typesOfLeague: typesOfLeaguelist[index],);
                 },
               ),
             ),

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
-import 'package:football_shuru/views/screens/auth_screens/opt_verification_screen.dart';
+
+import 'opt_verification_screen.dart';
 
 class MobileAuthScreen extends StatefulWidget {
   const MobileAuthScreen({super.key});
