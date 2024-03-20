@@ -6,7 +6,6 @@ import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/screens/auth_screens/mobile_auth_screen.dart';
 
-
 class IntroductionScreen extends StatefulWidget {
   const IntroductionScreen({super.key});
 
@@ -56,60 +55,47 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
           itemBuilder: (context, index) {
             return Column(
               children: [
-                Expanded(
-                  child: Stack(
-                    children: [
-                      Image.asset(
-                        introList[index].imageAssets,
-                        width: size.width,
-                        fit: BoxFit.fitWidth,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(24.0),
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: CustomImage(
-                            path: Assets.imagesFootballLogo,
-                            height: size.height * .14,
-                            width: size.height * .11,
-                          ),
+                Stack(
+                  children: [
+                    CustomImage(
+                      path: introList[index].imageAssets,
+                      width: size.width,
+                      fit: BoxFit.fitWidth,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: CustomImage(
+                          path: Assets.imagesFootballLogo,
+                          height: size.height * .14,
+                          width: size.height * .11,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: size.height * 0.4,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 24.0, vertical: 20),
-                        child: Text(
-                          introList[index].title,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge
-                              ?.copyWith(
-                                  fontSize: 26.0,
-                                  color: textPrimary,
-                                  fontWeight: FontWeight.bold),
-                        ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20),
+                      child: Text(
+                        introList[index].title,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 26.0, color: textPrimary, fontWeight: FontWeight.bold),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                        child: Text(
-                          introList[index].subtitle,
-                          style:
-                              Theme.of(context).textTheme.labelLarge?.copyWith(
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w400,
-                                    color: textPrimary,
-                                  ),
-                        ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                      child: Text(
+                        introList[index].subtitle,
+                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w400,
+                              color: textPrimary,
+                            ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 )
               ],
             );
@@ -140,14 +126,14 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
             CustomButton(
               elevation: 0,
               radius: 50,
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Welcome Back"),
-                  SizedBox(
-                    width: 8,
+                  Text(index < introList.length - 1 ? "Next Page" : "Welcome"),
+                  const SizedBox(
+                    width: 10,
                   ),
-                  CustomImage(
+                  const CustomImage(
                     path: Assets.imagesArrowRight,
                     height: 24,
                     width: 24,
@@ -155,28 +141,43 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                 ],
               ),
               onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  getCustomRoute(
-                    child: const MobileAuthScreen(),
-                  ),
-                );
+                if (index < introList.length - 1) {
+                  pageController.nextPage(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.ease,
+                  );
+                } else {
+                  Navigator.pushReplacement(
+                    context,
+                    getCustomRoute(
+                      child: const MobileAuthScreen(),
+                    ),
+                  );
+                }
               },
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            CustomButton(
-              type: ButtonType.secondary,
-              color: Colors.white,
-              elevation: 0,
-              radius: 50,
-              child: const Text(
-                "Do it later? Close app",
-                style: TextStyle(color: Colors.black),
+            if (index < introList.length - 1)
+              const SizedBox(
+                height: 10,
               ),
-              onTap: () {},
-            ),
+            if (index < introList.length - 1)
+              CustomButton(
+                type: ButtonType.secondary,
+                elevation: 0,
+                radius: 50,
+                child: const Text(
+                  "Skip Intro",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    getCustomRoute(
+                      child: const MobileAuthScreen(),
+                    ),
+                  );
+                },
+              ),
             const SizedBox(
               height: 10,
             ),
@@ -191,6 +192,7 @@ class SliderList {
   String title;
   String subtitle;
   String imageAssets;
+
   SliderList({
     required this.title,
     required this.subtitle,

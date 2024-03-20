@@ -1,56 +1,74 @@
+import 'dart:async';
 import 'dart:developer';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:football_shuru/services/constants.dart';
+import 'package:football_shuru/services/init.dart';
 import 'package:football_shuru/services/theme.dart';
+import 'package:football_shuru/views/screens/auth_screens/signup_screen.dart';
+import 'package:football_shuru/views/screens/initial_screens/location_screen.dart';
+import 'package:football_shuru/views/screens/initial_screens/splash_screen.dart';
+import 'package:football_shuru/views/screens/widgets/no_internet.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-import 'services/init.dart';
-import 'views/screens/initial_screens/splash_screen.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await Init().initialize();
   runApp(const MyApp());
 }
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-final GlobalKey<ScaffoldMessengerState> snackBarKey =
-    GlobalKey<ScaffoldMessengerState>();
+final GlobalKey<ScaffoldMessengerState> snackBarKey = GlobalKey<ScaffoldMessengerState>();
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  initPlatForm() async {
-    OneSignal.Debug.setLogLevel(OSLogLevel.none);
+  //
+  initPlatForm() {
+    OneSignal.initialize("a61ed62c-595d-4652-9459-6de427215bc6"); //---------------------ADD ONESIGNAL APPID
+    // OneSignal.Notifications.requestPermission(true);
+    Permission.notification.request();
+  }
 
-    OneSignal.initialize('appId'); //---------------------ADD ONESIGNAL APP ID
-    OneSignal.User.pushSubscription.optIn();
-    await OneSignal.consentRequired(true);
+  late StreamSubscription<ConnectivityResult> subscription;
+  bool isConnected = true;
+  bool isUpdateVisible = false;
 
-    OneSignal.Notifications.addForegroundWillDisplayListener(
-        (OSNotificationWillDisplayEvent event) {
-      /// preventDefault to not display the notification
-      event.preventDefault();
-
-      /// Do async work
-      /// notification.display() to display after preventing default
-      event.notification.display();
-    });
-
-    OneSignal.Notifications.addClickListener((OSNotificationClickEvent result) {
-      ///TODO:
+  //
+  checkConnection() async {
+    subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult connectivityResult) {
+      if (connectivityResult == ConnectivityResult.mobile) {
+        log("InterNet is here!"); //? ---------------++- InterNet is hare!
+        isConnected = true;
+      } else if (connectivityResult == ConnectivityResult.wifi) {
+        log("Wifi is here!!"); //? ------------------++- Wifi is hare!
+        isConnected = true;
+      } else {
+        log("InterNet are lost!"); //? --------------++- InterNet are lost!
+        isConnected = false;
+      }
+      if (mounted) {
+        setState(() {});
+      }
     });
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    subscription.cancel();
     super.dispose();
   }
 
@@ -64,9 +82,14 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    initPlatForm();
+
+    Timer.run(() async {
+      await initPlatForm();
+      await checkConnection();
+    });
   }
 
+  //
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -77,12 +100,25 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         }
       },
       child: MaterialApp(
-        title: AppConstants.appNamePart1 + AppConstants.appNamePart2,
         navigatorKey: navigatorKey,
+        debugShowCheckedModeBanner: false,
+        title: 'Football Shuru',
         themeMode: ThemeMode.light,
         theme: CustomTheme.light,
-        debugShowCheckedModeBanner: false,
         home: const SplashScreen(),
+        builder: (context, child) {
+          var data = MediaQuery.of(context);
+          return MediaQuery(
+            data: data.copyWith(textScaler: const TextScaler.linear(1.0)),
+            child: Stack(
+              children: [
+                child!,
+                //? check internet connection ----:)
+                if (!isConnected) const NoInternet(),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

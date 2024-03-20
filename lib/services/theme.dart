@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 // Color primaryColor = const Color(0xFF941f37);
 // Color secondaryColor = const Color(0xFF941f37).withOpacity(.47);
-Color primaryColor = const Color.fromRGBO(2, 191, 77, 1);
-
+Color primaryColor = const Color(0xFF02BF4D);
+Color boxColor = const Color(0xFF455A64);
 Color secondaryColor = const Color(0xFFF5F0BB);
 Color backgroundDark = const Color(0xff231F20);
 Color backgroundLight = const Color(0xffffffff);
