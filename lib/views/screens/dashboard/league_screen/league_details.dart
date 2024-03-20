@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/knock_out_matches.dart';
@@ -10,8 +9,6 @@ import 'package:football_shuru/views/screens/dashboard/league_screen/stats_secti
 import 'package:football_shuru/views/screens/dashboard/league_screen/tables_section.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/teams_section.dart';
 
-import '../../../../generated/assets.dart';
-import '../../../../services/theme.dart';
 
 class LeagueDetailsPage extends StatefulWidget {
   final String typesOfLeague;
@@ -34,26 +31,26 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
       SliderList(
           title: "Matches",
           content: (widget.typesOfLeague == "Knock out")
-              ? KnockOutPage()
-              : MatchesPage()),
+              ? const KnockOutPage()
+              : const MatchesPage()),
       SliderList(
           title: "Teams",
-          content: Teams()),
+          content: const Teams()),
       SliderList(
           title: "Tables",
-          content: TableSection()),
+          content: const TableSection()),
       SliderList(
           title: "Stats",
-          content: Stats()),
+          content: const Stats()),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(38, 50, 56, 1),
+        backgroundColor: const Color.fromRGBO(38, 50, 56, 1),
         surfaceTintColor: Colors.white,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarBrightness: Brightness.dark,
@@ -102,7 +99,7 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
       body: Column(
         children: [
           Container(
-            color: Color.fromRGBO(38, 50, 56, 1),
+            color: const Color.fromRGBO(38, 50, 56, 1),
             height: 270,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -114,7 +111,7 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
                       CustomButton(
                           height: 30,
                           radius: 4,
-                          color: Color.fromRGBO(255, 200, 57, 1),
+                          color: const Color.fromRGBO(255, 200, 57, 1),
                           child: Text(
                             widget.typesOfLeague,
                             style: Theme.of(context)
@@ -130,14 +127,14 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
                   Container(
                     height: 90,
                     width: 90,
-                    child: CustomImage(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: const Color.fromRGBO(255, 255, 255, 0.1),
+                    ),
+                    child: const CustomImage(
                       height: 50,
                       width: 50,
                       path: Assets.imagesEllipse68,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      color: Color.fromRGBO(255, 255, 255, 0.1),
                     ),
                   ),
                   Text("Ground King League’s",
@@ -145,7 +142,7 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
                           .textTheme
                           .labelLarge!
                           .copyWith(fontSize: 20, color: Colors.white)),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text(
@@ -154,7 +151,7 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
                           fontSize: 11,
                         ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(
@@ -164,8 +161,8 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
                           radius: 0,
                           child: Row(
                             children: [
-                              CustomImage(path: Assets.imagesAdd),
-                              SizedBox(
+                              const CustomImage(path: Assets.imagesAdd),
+                              const SizedBox(
                                 width: 5,
                               ),
                               Text(
@@ -184,11 +181,11 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
                           radius: 0,
                           child: Row(
                             children: [
-                              CustomImage(
+                              const CustomImage(
                                   height: 24,
                                   width: 24,
                                   path: Assets.imagesReceiptText),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
                               Text(
@@ -205,7 +202,7 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
                           onTap: () {})
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                 ],
@@ -214,7 +211,7 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
           ),
           Container(
             height: 30,
-            color: Color.fromRGBO(38, 50, 56, 1),
+            color: const Color.fromRGBO(38, 50, 56, 1),
             child: Column(
               children: [
                 Row(
@@ -233,7 +230,7 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
                                     fontWeight: FontWeight.w700,
                                     color: Colors.white),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
                           Container(
@@ -242,15 +239,15 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
                             decoration: BoxDecoration(
                                 border: Border.all(
                               color: (i == index)
-                                  ? Color.fromRGBO(255, 200, 57, 1)
-                                  : Color.fromRGBO(38, 50, 56, 1),
+                                  ? const Color.fromRGBO(255, 200, 57, 1)
+                                  : const Color.fromRGBO(38, 50, 56, 1),
                             )),
                           )
                         ],
                       ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
               ],

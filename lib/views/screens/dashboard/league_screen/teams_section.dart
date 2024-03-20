@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../../base/custom_image.dart';
@@ -22,9 +22,9 @@ class _TeamsState extends State<Teams> {
             Text("Participants Teams",style: Theme.of(context).textTheme.labelLarge!.copyWith(
               fontSize: 13,
               fontWeight: FontWeight.w600,
-              color: Color.fromRGBO(38, 50, 56, 1),
+              color: const Color.fromRGBO(38, 50, 56, 1),
             ),),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             SizedBox(
@@ -34,11 +34,11 @@ class _TeamsState extends State<Teams> {
                   itemBuilder: (context,index){
                     return Container(
                       height: 90,
-                      margin: EdgeInsets.symmetric(vertical: 10),
+                      margin: const EdgeInsets.symmetric(vertical: 10),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                              color: Color.fromRGBO(196, 196, 196, 1))),
+                              color: const Color.fromRGBO(196, 196, 196, 1))),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +47,7 @@ class _TeamsState extends State<Teams> {
                             padding: const EdgeInsets.all(15.0),
                             child: Column(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Row(
@@ -64,10 +64,10 @@ class _TeamsState extends State<Teams> {
                                                   BorderRadius.circular(20),
                                                   border: Border.all(
                                                     width: 2,
-                                                    color: Color.fromRGBO(
+                                                    color: const Color.fromRGBO(
                                                         255, 145, 0, 1),
                                                   )),
-                                              child: CustomImage(
+                                              child: const CustomImage(
                                                   radius: 20,
                                                   height: 40,
                                                   width: 40,
@@ -82,14 +82,14 @@ class _TeamsState extends State<Teams> {
                                                 height: 14,
                                                 width: 14,
                                                 decoration: BoxDecoration(
-                                                    color: Color.fromRGBO(
+                                                    color: const Color.fromRGBO(
                                                         255, 145, 0, 1),
                                                     borderRadius:
                                                     BorderRadius.circular(
                                                         20)),
-                                                child: Padding(
+                                                child: const Padding(
                                                   padding:
-                                                  const EdgeInsets.all(2.0),
+                                                  EdgeInsets.all(2.0),
                                                   child: CustomImage(
                                                       height: 8,
                                                       width: 8,
@@ -100,7 +100,7 @@ class _TeamsState extends State<Teams> {
                                             )
                                           ],
                                         ),
-                                        SizedBox(width: 10,),
+                                        const SizedBox(width: 10,),
                                         Column(
                                           children: [
                                             Text(

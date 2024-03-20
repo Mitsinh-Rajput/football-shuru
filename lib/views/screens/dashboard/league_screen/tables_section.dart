@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../../base/custom_image.dart';
 
@@ -16,7 +15,7 @@ class _TableSectionState extends State<TableSection> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(23),
+        padding: const EdgeInsets.all(23),
         child: Column(
           children: [
             Row(
@@ -38,7 +37,7 @@ class _TableSectionState extends State<TableSection> {
                         fontSize: 13,
                         fontWeight: FontWeight.w600
                     ),),
-                    SizedBox(
+                    const SizedBox(
                       width: 30,
                     ),
                     Text("W",style: Theme.of(context)
@@ -47,7 +46,7 @@ class _TableSectionState extends State<TableSection> {
                         .copyWith(
                         fontSize: 13,
                         fontWeight: FontWeight.w600
-                    ),),SizedBox(
+                    ),),const SizedBox(
                       width: 30,
                     ),
                     Text("D",style: Theme.of(context)
@@ -56,7 +55,7 @@ class _TableSectionState extends State<TableSection> {
                         .copyWith(
                         fontSize: 13,
                         fontWeight: FontWeight.w600
-                    ),),SizedBox(
+                    ),),const SizedBox(
                       width: 30,
                     ),
                     Text("L",style: Theme.of(context)
@@ -65,7 +64,7 @@ class _TableSectionState extends State<TableSection> {
                         .copyWith(
                         fontSize: 13,
                         fontWeight: FontWeight.w600
-                    ),),SizedBox(
+                    ),),const SizedBox(
                       width: 30,
                     ),
                     Text("PTS",style: Theme.of(context)
@@ -79,7 +78,7 @@ class _TableSectionState extends State<TableSection> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             SizedBox(
@@ -89,14 +88,14 @@ class _TableSectionState extends State<TableSection> {
                   itemBuilder: (context,index){
                     return Container(
                       height: 70,
-                      margin: EdgeInsets.only(bottom: 5),
+                      margin: const EdgeInsets.only(bottom: 5),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Row(
@@ -113,10 +112,10 @@ class _TableSectionState extends State<TableSection> {
                                                 BorderRadius.circular(20),
                                                 border: Border.all(
                                                   width: 2,
-                                                  color: Color.fromRGBO(
+                                                  color: const Color.fromRGBO(
                                                       255, 145, 0, 1),
                                                 )),
-                                            child: CustomImage(
+                                            child: const CustomImage(
                                                 radius: 20,
                                                 height: 30,
                                                 width: 30,
@@ -131,14 +130,14 @@ class _TableSectionState extends State<TableSection> {
                                               height: 14,
                                               width: 14,
                                               decoration: BoxDecoration(
-                                                  color: Color.fromRGBO(
+                                                  color: const Color.fromRGBO(
                                                       255, 145, 0, 1),
                                                   borderRadius:
                                                   BorderRadius.circular(
                                                       20)),
-                                              child: Padding(
+                                              child: const Padding(
                                                 padding:
-                                                const EdgeInsets.all(2.0),
+                                                EdgeInsets.all(2.0),
                                                 child: CustomImage(
                                                     height: 8,
                                                     width: 8,
@@ -149,7 +148,7 @@ class _TableSectionState extends State<TableSection> {
                                           )
                                         ],
                                       ),
-                                      SizedBox(width: 5,),
+                                      const SizedBox(width: 5,),
                                       Column(
                                         children: [
                                           Text(
@@ -186,7 +185,7 @@ class _TableSectionState extends State<TableSection> {
                                           fontSize: 13,
                                           fontWeight: FontWeight.w400
                                       ),),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 30,
                                       ),
                                       Text("8",style: Theme.of(context)
@@ -195,7 +194,7 @@ class _TableSectionState extends State<TableSection> {
                                           .copyWith(
                                           fontSize: 13,
                                           fontWeight: FontWeight.w400
-                                      ),),SizedBox(
+                                      ),),const SizedBox(
                                         width: 30,
                                       ),
                                       Text("2",style: Theme.of(context)
@@ -204,7 +203,7 @@ class _TableSectionState extends State<TableSection> {
                                           .copyWith(
                                           fontSize: 13,
                                           fontWeight: FontWeight.w400
-                                      ),),SizedBox(
+                                      ),),const SizedBox(
                                         width: 30,
                                       ),
                                       Text("3",style: Theme.of(context)
@@ -213,7 +212,7 @@ class _TableSectionState extends State<TableSection> {
                                           .copyWith(
                                           fontSize: 13,
                                           fontWeight: FontWeight.w400
-                                      ),),SizedBox(
+                                      ),),const SizedBox(
                                         width: 30,
                                       ),
                                       Text("26",style: Theme.of(context)
@@ -223,7 +222,7 @@ class _TableSectionState extends State<TableSection> {
                                           fontSize: 13,
                                           fontWeight: FontWeight.w400
                                       ),),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 5,
                                       )
                                     ],
@@ -236,7 +235,7 @@ class _TableSectionState extends State<TableSection> {
                             height: 2,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              border: Border.all(color: Color.fromRGBO(224, 224, 224, 1))
+                              border: Border.all(color: const Color.fromRGBO(224, 224, 224, 1))
                             ),
                           )
                         ],

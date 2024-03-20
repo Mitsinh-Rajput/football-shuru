@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../../base/custom_image.dart';
 
@@ -23,9 +22,9 @@ class _MatchesPageState extends State<MatchesPage> {
             Text("Participants Matches group’s",style: Theme.of(context).textTheme.labelLarge!.copyWith(
               fontSize: 13,
               fontWeight: FontWeight.w600,
-              color: Color.fromRGBO(38, 50, 56, 1),
+              color: const Color.fromRGBO(38, 50, 56, 1),
             ),),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             SizedBox(
@@ -35,11 +34,11 @@ class _MatchesPageState extends State<MatchesPage> {
                   itemBuilder: (context,index){
                 return Container(
                   height: 150,
-                  margin: EdgeInsets.symmetric(vertical: 10),
+                  margin: const EdgeInsets.symmetric(vertical: 10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
-                          color: Color.fromRGBO(196, 196, 196, 1))),
+                          color: const Color.fromRGBO(196, 196, 196, 1))),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,12 +58,12 @@ class _MatchesPageState extends State<MatchesPage> {
                                       .copyWith(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
-                                    color: Color.fromRGBO(255, 145, 0, 1),
+                                    color: const Color.fromRGBO(255, 145, 0, 1),
                                   ),
                                 ),
                                 Stack(
                                   children: [
-                                    CustomImage(
+                                    const CustomImage(
                                         height: 25,
                                         width: 65,
                                         path: Assets.imagesRectangle1292),
@@ -82,7 +81,7 @@ class _MatchesPageState extends State<MatchesPage> {
                                 )
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Row(
@@ -97,10 +96,10 @@ class _MatchesPageState extends State<MatchesPage> {
                                           BorderRadius.circular(20),
                                           border: Border.all(
                                             width: 2,
-                                            color: Color.fromRGBO(
+                                            color: const Color.fromRGBO(
                                                 255, 145, 0, 1),
                                           )),
-                                      child: CustomImage(
+                                      child: const CustomImage(
                                           radius: 20,
                                           height: 40,
                                           width: 40,
@@ -115,14 +114,14 @@ class _MatchesPageState extends State<MatchesPage> {
                                         height: 14,
                                         width: 14,
                                         decoration: BoxDecoration(
-                                            color: Color.fromRGBO(
+                                            color: const Color.fromRGBO(
                                                 255, 145, 0, 1),
                                             borderRadius:
                                             BorderRadius.circular(
                                                 20)),
-                                        child: Padding(
+                                        child: const Padding(
                                           padding:
-                                          const EdgeInsets.all(2.0),
+                                          EdgeInsets.all(2.0),
                                           child: CustomImage(
                                               height: 8,
                                               width: 8,
@@ -165,7 +164,7 @@ class _MatchesPageState extends State<MatchesPage> {
                                       .copyWith(
                                     fontSize: 26,
                                     fontWeight: FontWeight.w700,
-                                    color: Color.fromRGBO(
+                                    color: const Color.fromRGBO(
                                         217, 217, 217, 1),
                                   ),
                                 ),
@@ -197,11 +196,11 @@ class _MatchesPageState extends State<MatchesPage> {
                                 ),
                                 Container(
                                   decoration: BoxDecoration(
-                                      boxShadow: [
+                                      boxShadow: const [
                                         BoxShadow(
                                           color: Color.fromRGBO(
                                               0, 0, 0, 0.25),
-                                          offset: const Offset(
+                                          offset: Offset(
                                             1.0,
                                             1.0,
                                           ),
@@ -215,7 +214,7 @@ class _MatchesPageState extends State<MatchesPage> {
                                         color: Colors.white,
                                         width: 1,
                                       )),
-                                  child: CustomImage(
+                                  child: const CustomImage(
                                       radius: 20,
                                       height: 40,
                                       width: 40,
@@ -230,7 +229,7 @@ class _MatchesPageState extends State<MatchesPage> {
                       ),
                       Container(
                         height: 30,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             color: Color.fromRGBO(255, 145, 0, 0.25),
                             borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(10),
@@ -251,7 +250,7 @@ class _MatchesPageState extends State<MatchesPage> {
                                   fontSize: 10,
                                   fontWeight: FontWeight.w600,
                                   color:
-                                  Color.fromRGBO(64, 66, 78, 1),
+                                  const Color.fromRGBO(64, 66, 78, 1),
                                 ),
                               ),
                               Text(
@@ -263,7 +262,7 @@ class _MatchesPageState extends State<MatchesPage> {
                                   fontSize: 10,
                                   fontWeight: FontWeight.w600,
                                   color:
-                                  Color.fromRGBO(43, 63, 108, 1),
+                                  const Color.fromRGBO(43, 63, 108, 1),
                                 ),
                               ),
                             ],
