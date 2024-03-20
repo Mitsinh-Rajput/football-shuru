@@ -6,6 +6,11 @@ import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/community_near_me.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/league_and_tour_tile.dart';
+import 'package:football_shuru/views/screens/dashboard/home_screen/near_ground.dart';
+import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/tournament_chat_screen.dart';
+import 'package:page_transition/page_transition.dart';
+
+import '../../../../services/route_helper.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,12 +20,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List typesOfLeaguelist = [
-    "League’s match",
-    "Knock out",
-    "Round robins",
-    "League’s match"
-  ];
+  List typesOfLeaguelist = ["League’s match", "Knock out", "Round robins", "League’s match"];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -149,8 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 10,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color:
-                          i == 0 ? Colors.grey.shade800 : Colors.grey.shade200,
+                      color: i == 0 ? Colors.grey.shade800 : Colors.grey.shade200,
                     ),
                   ),
               ],
@@ -191,10 +190,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: 6,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding:
-                        EdgeInsets.only(right: 16, left: index == 0 ? 16 : 0),
-                    child: const CommunityNearMe(),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        getCustomRoute(
+                          type: PageTransitionType.fade,
+                          duration: const Duration(milliseconds: 600),
+                          child: const TournamentChatScreen(),
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 16, left: index == 0 ? 16 : 0),
+                      child: const CommunityNearMe(),
+                    ),
                   );
                 },
               ),
@@ -220,8 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 16,
                   ),
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                     decoration: BoxDecoration(
                       color: Colors.grey.shade200,
                     ),
@@ -266,32 +275,42 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 itemCount: 6,
                 itemBuilder: (context, index) {
-                  return Container(
-                    color: Colors.white,
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: const BoxDecoration(
-                              color: Color(0xffD6F5E3), shape: BoxShape.circle),
-                          child: const CustomImage(
-                            height: 50,
-                            width: 50,
-                            radius: 50,
-                            path:
-                                "https://5.imimg.com/data5/SELLER/Default/2021/3/TU/VP/FT/125148535/cricket-ground-development-500x500.jpg",
-                            fit: BoxFit.cover,
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        getCustomRoute(
+                          type: PageTransitionType.fade,
+                          duration: const Duration(milliseconds: 600),
+                          child: const NearGround(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      color: Colors.white,
+                      child: Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: const BoxDecoration(color: Color(0xffD6F5E3), shape: BoxShape.circle),
+                            child: const CustomImage(
+                              height: 50,
+                              width: 50,
+                              radius: 50,
+                              path: "https://5.imimg.com/data5/SELLER/Default/2021/3/TU/VP/FT/125148535/cricket-ground-development-500x500.jpg",
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 2,
-                        ),
-                        Text(
-                          "Sector 23, plot 1",
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                      ],
+                          const SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                            "Sector 23, plot 1",
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -317,8 +336,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 16,
                   ),
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                     decoration: BoxDecoration(
                       color: Colors.grey.shade200,
                     ),
@@ -351,7 +369,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 shrinkWrap: true,
                 itemCount: typesOfLeaguelist.length,
                 itemBuilder: (context, index) {
-                  return LeagueAndTourTile(typesOfLeague: typesOfLeaguelist[index],);
+                  return LeagueAndTourTile(
+                    typesOfLeague: typesOfLeaguelist[index],
+                  );
                 },
               ),
             ),

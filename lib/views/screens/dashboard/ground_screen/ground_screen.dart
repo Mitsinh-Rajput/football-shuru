@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
+import 'package:football_shuru/views/screens/dashboard/ground_screen/add_ground.dart';
 import 'package:football_shuru/views/screens/dashboard/ground_screen/my_ground_tile.dart';
+import 'package:page_transition/page_transition.dart';
+
+import '../../../../services/route_helper.dart';
 
 class MyGroundScreen extends StatefulWidget {
   const MyGroundScreen({super.key});
@@ -78,36 +82,46 @@ class _MyGroundScreenState extends State<MyGroundScreen> {
           ),
         ),
       ),
-      floatingActionButton: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: primaryColor,
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 4,
-                offset: const Offset(0, 4),
-                color: Colors.black.withOpacity(0.25),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            getCustomRoute(
+              type: PageTransitionType.fade,
+              duration: const Duration(milliseconds: 600),
+              child: const AddGround(),
+            ),
+          );
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), color: primaryColor, boxShadow: [
+            BoxShadow(
+              blurRadius: 4,
+              offset: const Offset(0, 4),
+              color: Colors.black.withOpacity(0.25),
+            ),
+          ]),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.add,
+                size: 22,
+                color: Colors.white,
               ),
-            ]),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.add,
-              size: 22,
-              color: Colors.white,
-            ),
-            const SizedBox(
-              width: 6,
-            ),
-            Text(
-              "Add Ground",
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                    color: Colors.white,
-                  ),
-            ),
-          ],
+              const SizedBox(
+                width: 6,
+              ),
+              Text(
+                "Add Ground",
+                style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                      color: Colors.white,
+                    ),
+              ),
+            ],
+          ),
         ),
       ),
       body: SingleChildScrollView(

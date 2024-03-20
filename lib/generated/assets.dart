@@ -21,6 +21,7 @@ class Assets {
   static const String imagesLeague = 'assets/images/league.png';
   static const String imagesLockCircle = 'assets/images/lock-circle.png';
   static const String imagesLogo = 'assets/images/logo.png';
+  static const String imagesMap = 'assets/images/map.png';
   static const String imagesMenu = 'assets/images/menu.png';
   static const String imagesMessageQuestion = 'assets/images/message-question.png';
   static const String imagesMobileNum = 'assets/images/mobile_num.png';
@@ -31,6 +32,7 @@ class Assets {
   static const String imagesSearch = 'assets/images/search.png';
   static const String imagesSearchNormal = 'assets/images/search-normal.png';
   static const String imagesSetting5 = 'assets/images/setting-5.png';
+  static const String imagesShare = 'assets/images/share.png';
   static const String imagesShareIconUIA = 'assets/images/Share_Icon_UIA.png';
   static const String imagesShimmer = 'assets/images/shimmer.gif';
   static const String imagesTeams = 'assets/images/teams.png';
