@@ -7,6 +7,7 @@ import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/community_near_me.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/league_and_tour_tile.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/near_ground.dart';
+import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/tournament_chat_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../../services/route_helper.dart';
@@ -202,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         getCustomRoute(
                           type: PageTransitionType.fade,
                           duration: const Duration(milliseconds: 600),
-                          child: const NearGround(),
+                          child: const TournamentChatScreen(),
                         ),
                       );
                     },

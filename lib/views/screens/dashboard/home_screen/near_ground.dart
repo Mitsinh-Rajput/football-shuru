@@ -282,7 +282,7 @@ class _NearGroundState extends State<NearGround> {
             const Icon(
               Icons.add,
               size: 22,
-              color: Colors.white,
+              color: Color.fromRGBO(2, 191, 77, 1),
             ),
             Text("Join a group",style: Theme.of(context).textTheme.titleSmall!.copyWith(
                 fontSize: 18,
