@@ -14,6 +14,7 @@ import '../services/extensions.dart';
 
 class AuthController extends GetxController implements GetxService {
   final AuthRepo authRepo;
+
   AuthController({required this.authRepo});
 
   bool _isLoading = false;
@@ -23,19 +24,18 @@ class AuthController extends GetxController implements GetxService {
   TextEditingController numberController = TextEditingController();
   TextEditingController otpController = TextEditingController();
   UserModel? _userModel;
+
   UserModel? get userModel => _userModel;
 
   bool get isLoading => _isLoading;
+
   bool get acceptTerms => _acceptTerms;
 
-  Future<ResponseModel> login(String? phone, {String? otp}) async {
+  Future<ResponseModel> login({required String token}) async {
     ResponseModel responseModel;
     log("response.body.toString()${AppConstants.baseUrl}${AppConstants.loginUri}", name: "login");
     try {
-      Response response = await authRepo.login(await authRepo.getDeviceId(), phone: phone, otp: otp);
-      /*if(response.body.containsKey('errors')){
-        return ResponseModel(false, response.statusText!,response.body['errors']);
-      }*/
+      Response response = await authRepo.login(token: token);
       log(response.statusCode.toString());
       log(response.body.toString());
       if (response.statusCode == 200) {
@@ -58,7 +58,7 @@ class AuthController extends GetxController implements GetxService {
       log('++++++++++++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++++++++++', name: "ERROR AT login()");
     }
     _isLoading = false;
-    // update();
+    update();
     return responseModel;
   }
 

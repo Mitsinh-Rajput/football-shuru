@@ -15,8 +15,25 @@ class AuthRepo {
 
   /// Methods to deal with Remote Data ///
 
-  Future<Response> login(String? deviceId, {String? phone, String? otp}) async =>
-      await apiClient.postData(AppConstants.loginUri, {"phone": phone ?? '', "device_id": await getDeviceId(), "otp": otp});
+  Future<Response> login({required String token}) async => await apiClient.postData(AppConstants.loginUri, {
+        "token": token,
+        "device_id": getDeviceId(),
+      });
+
+  Future<Response> register({
+    required String name,
+    required String gender,
+    required String email,
+    required String dob,
+    required String about,
+  }) async =>
+      await apiClient.postData(AppConstants.loginUri, {
+        "name": name,
+        "gender": gender,
+        "email": email,
+        "dob": dob,
+        "about": about,
+      });
 
   Future<Response> getUser() async => await apiClient.getData(AppConstants.profileUri);
 
@@ -56,8 +73,10 @@ class AuthRepo {
     return true;
   }
 
-  Future<String> getDeviceId() async {
-    return OneSignal.User.pushSubscription.id ?? 'null';
+  String? getDeviceId() {
+    var deviceSate = OneSignal.User.pushSubscription.id;
+    log(deviceSate.toString(), name: "Device ID");
+    return deviceSate;
   }
 
   /// Methods to deal with Local Data ///

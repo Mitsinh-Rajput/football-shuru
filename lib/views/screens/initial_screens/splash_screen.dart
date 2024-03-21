@@ -84,11 +84,8 @@ class _SplashScreenState extends State<SplashScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  AppConstants.appNamePart1 + " ",
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                      color: const Color.fromRGBO(64, 66, 78, 1)),
+                  "${AppConstants.appNamePart1} ",
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 24.0, fontWeight: FontWeight.bold, color: const Color.fromRGBO(64, 66, 78, 1)),
                 ),
                 Text(
                   AppConstants.appNamePart2,

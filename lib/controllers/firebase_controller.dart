@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 
 import '../services/custom_snackbar.dart';
 import '../services/route_helper.dart';
+import '../views/base/dialogs/failed_dialog.dart';
 import '../views/screens/dashboard/dashboard_screen.dart';
 import 'auth_controller.dart';
 
@@ -190,32 +191,31 @@ class FirebaseController extends GetxController implements GetxService {
     update();
     log("bearer token: $token", name: "Token");
     await Future.delayed(const Duration(milliseconds: 1000));
-    Navigator.pushAndRemoveUntil(context, getCustomRoute(child: const SignUpScreen()), (route) => false); //old user
 
-    // Get.find<AuthController>().login(token: token!).then((value) {
-    //   if (value.isSuccess) {
-    //     otpController.clear();
-    //
-    //     log(value.data['type'].toString(), name: "User type: ");
-    //     if (value.data["type"] == "old") {
-    //       _isLoading = false;
-    //       update();
-    //       Navigator.pushAndRemoveUntil(context, getCustomRoute(child: const DashboardScreen()), (route) => false); //old user
-    //     } else {
-    //       _isLoading = false;
-    //       update();
-    //       Navigator.pushAndRemoveUntil(context, getCustomRoute(child: const SignUpScreen()), (route) => false); //old user
-    //     }
-    //   } else {
-    //     _isLoading = false;
-    //     update();
-    //     showDialog(
-    //       context: context,
-    //       builder: (BuildContext context) {
-    //         return const FailedAlertDialog();
-    //       },
-    //     );
-    //   }
-    // });
+    Get.find<AuthController>().login(token: token!).then((value) {
+      if (value.isSuccess) {
+        otpController.clear();
+
+        log(value.data['type'].toString(), name: "User type: ");
+        if (value.data["type"] == "old") {
+          _isLoading = false;
+          update();
+          Navigator.pushAndRemoveUntil(context, getCustomRoute(child: const DashboardScreen()), (route) => false); //old user
+        } else {
+          _isLoading = false;
+          update();
+          Navigator.pushAndRemoveUntil(context, getCustomRoute(child: const SignUpScreen()), (route) => false); //old user
+        }
+      } else {
+        _isLoading = false;
+        update();
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return FailedAlertDialog(message: value.message);
+          },
+        );
+      }
+    });
   }
 }
