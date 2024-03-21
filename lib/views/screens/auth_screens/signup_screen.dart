@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:football_shuru/controllers/firebase_controller.dart';
 import 'package:football_shuru/services/enums/gender.dart';
+import 'package:football_shuru/services/extensions.dart';
 import 'package:football_shuru/services/input_decoration.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/base/date_picker_widget.dart';
+import 'package:get/get.dart';
 
+import '../../../services/date_formatters_and_converters.dart';
 import '../../../services/route_helper.dart';
-import '../initial_screens/pincode_screen.dart';
+import '../initial_screens/location_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -22,6 +26,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController dateOfBirthController = TextEditingController();
   TextEditingController bioController = TextEditingController();
   Gender? _gender = Gender.male;
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     // var size = MediaQuery.of(context).size;
@@ -31,20 +37,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Form(
+              key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
                     height: 16,
                   ),
-                  const Align(
-                    alignment: Alignment.centerRight,
-                    child: CustomImage(
-                      height: 24,
-                      width: 24,
-                      path: Assets.imagesMessageQuestion,
-                    ),
-                  ),
+
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -58,10 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const SizedBox(
                         width: 10,
                       ),
-                      const CustomImage(
-                          height: 60,
-                          width: 60,
-                          path: Assets.imagesFootballLogo),
+                      const CustomImage(height: 60, width: 60, path: Assets.imagesFootballLogo),
                     ],
                   ),
                   Text(
@@ -75,18 +72,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 30,
                   ),
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction, // Added autovalidateMode
+
+                    validator: (value) {
+                      if (value == null || value.isNotValid) {
+                        return 'Enter Your Name';
+                      }
+                      return null;
+                    },
                     controller: nameController,
                     decoration: CustomDecoration.inputDecoration(
                       borderColor: Colors.grey.shade300,
                       floating: true,
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 20),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                       label: "Your Name",
                       hint: "Ex. name",
-                      hintStyle:
-                          Theme.of(context).textTheme.labelLarge!.copyWith(
-                                color: Colors.grey.shade300,
-                              ),
+                      hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            color: Colors.grey.shade300,
+                          ),
                       icon: const Padding(
                         padding: EdgeInsets.all(15),
                         child: CustomImage(
@@ -97,54 +100,61 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    readOnly: true,
-                    controller: phoneNumberController,
-                    decoration: CustomDecoration.inputDecoration(
-                      borderColor: Colors.grey.shade300,
-                      suffix: const Padding(
-                        padding: EdgeInsets.all(15),
-                        child: CustomImage(
-                            height: 5, width: 5, path: Assets.imagesLockCircle),
-                      ),
-                      floating: true,
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 20),
-                      label: "Mobile Number",
-                      hint: "Ex. +91 9876543210",
-                      hintStyle:
-                          Theme.of(context).textTheme.labelLarge!.copyWith(
-                                color: Colors.grey.shade300,
-                              ),
-                      icon: const Padding(
-                        padding: EdgeInsets.all(15),
-                        child: CustomImage(
-                          path: Assets.imagesMobileNum,
-                          height: 5,
-                          width: 5,
+                  if (true)
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  if (true)
+                    TextFormField(
+                      readOnly: true,
+                      enabled: false,
+                      controller: Get.find<FirebaseController>().phone,
+                      decoration: CustomDecoration.inputDecoration(
+                        borderColor: Colors.grey.shade300,
+                        suffix: const Padding(
+                          padding: EdgeInsets.all(15),
+                          child: CustomImage(height: 5, width: 5, path: Assets.imagesLockCircle),
+                        ),
+                        floating: true,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                        label: "Phone Number",
+                        hint: "Ex. +91 9876543210",
+                        hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
+                              color: Colors.grey.shade300,
+                            ),
+                        icon: const Padding(
+                          padding: EdgeInsets.all(15),
+                          child: CustomImage(
+                            path: Assets.imagesMobileNum,
+                            height: 5,
+                            width: 5,
+                          ),
                         ),
                       ),
                     ),
-                  ),
                   const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction, // Added autovalidateMode
+                    validator: (value) {
+                      if (value == null || value.isNotValid) {
+                        return 'Enter Your Email Address';
+                      } else if (value.isNotEmail) {
+                        return "Enter Valid Email Address";
+                      }
+                      return null;
+                    },
                     controller: emailIdController,
                     decoration: CustomDecoration.inputDecoration(
                       borderColor: Colors.grey.shade300,
                       floating: true,
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 20),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                       label: "Email Id",
                       hint: "Ex. my.name@gmail.com",
-                      hintStyle:
-                          Theme.of(context).textTheme.labelLarge!.copyWith(
-                                color: Colors.grey.shade300,
-                              ),
+                      hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            color: Colors.grey.shade300,
+                          ),
                       icon: const Padding(
                         padding: EdgeInsets.all(15),
                         child: CustomImage(
@@ -160,10 +170,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   Text(
                     "Gender selection",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(fontSize: 16, fontWeight: FontWeight.w400),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 16, fontWeight: FontWeight.w400),
                   ),
                   // const SizedBox(
                   //   height: 10,
@@ -173,9 +180,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Row(
                         children: [
                           Radio(
-                              fillColor: MaterialStateColor.resolveWith(
-                                  (states) =>
-                                      const Color.fromRGBO(255, 154, 108, 1)),
+                              fillColor: MaterialStateColor.resolveWith((states) => const Color.fromRGBO(255, 154, 108, 1)),
                               value: Gender.male,
                               groupValue: _gender,
                               onChanged: (value) {
@@ -189,9 +194,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Row(
                         children: [
                           Radio(
-                              fillColor: MaterialStateColor.resolveWith(
-                                  (states) =>
-                                      const Color.fromRGBO(255, 154, 108, 1)),
+                              fillColor: MaterialStateColor.resolveWith((states) => const Color.fromRGBO(255, 154, 108, 1)),
                               value: Gender.female,
                               groupValue: _gender,
                               onChanged: (value) {
@@ -209,26 +212,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   CustomDatePicker(
                     onChanged: (DateTime? dateTime) {
-                      setState(() {
-                        dateOfBirthController.text =
-                            dateTime.toString().split(" ")[0];
-                      });
+                      dateOfBirthController.text = DateFormatters().yMD.format(dateTime!);
+                      setState(() {});
                     },
                     child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction, // Added autovalidateMode
+
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Select Date Of Birth';
+                        }
+                        return null; // Return null if the value is valid
+                      },
                       enabled: false,
                       readOnly: true,
                       controller: dateOfBirthController,
                       decoration: CustomDecoration.inputDecoration(
                         borderColor: Colors.grey.shade300,
                         floating: true,
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 20),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                         label: "Date of Birth",
                         hint: "Ex. dd / mm / yyyy",
-                        hintStyle:
-                            Theme.of(context).textTheme.labelLarge!.copyWith(
-                                  color: Colors.grey.shade300,
-                                ),
+                        hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
+                              color: Colors.grey.shade300,
+                            ),
                         icon: const Padding(
                           padding: EdgeInsets.all(15),
                           child: CustomImage(
@@ -244,8 +251,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 20,
                   ),
                   TextFormField(
-                    maxLength: 400,
                     maxLines: null,
+                    expands: false,
+                    keyboardType: TextInputType.multiline,
                     controller: bioController,
                     decoration: CustomDecoration.inputDecoration(
                       borderColor: Colors.grey.shade300,
@@ -256,10 +264,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       label: "About Bio",
                       hint: "Ex. type short bio",
-                      hintStyle:
-                          Theme.of(context).textTheme.labelLarge!.copyWith(
-                                color: Colors.grey.shade300,
-                              ),
+                      hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            color: Colors.grey.shade300,
+                          ),
                     ),
                   ),
 
@@ -274,23 +281,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
       bottomNavigationBar: Container(
         color: Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             CustomButton(
-              // title: "Sign Up Now",
               fontSize: 14,
               elevation: 0,
               radius: 10,
               height: 50,
               onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  getCustomRoute(
-                    child: const LocationScreen(),
-                  ),
-                );
+                if (!_formKey.currentState!.validate()) {
+                  Navigator.pushReplacement(
+                    context,
+                    getCustomRoute(
+                      child: const LocationScreen(),
+                    ),
+                  );
+                }
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,

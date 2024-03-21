@@ -1,4 +1,4 @@
-package com.example.football_shuru
+package com.footballshuru
 
 import io.flutter.embedding.android.FlutterActivity
 

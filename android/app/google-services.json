@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "768176850798",
+    "project_id": "football-shuru",
+    "storage_bucket": "football-shuru.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:768176850798:android:ee512078eeb6f7668a637f",
+        "android_client_info": {
+          "package_name": "com.footballshuru"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4TCjPuBtIgkr-2_xwca97kTgjsGEaSSU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

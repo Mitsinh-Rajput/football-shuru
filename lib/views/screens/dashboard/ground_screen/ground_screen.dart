@@ -84,7 +84,7 @@ class _MyGroundScreenState extends State<MyGroundScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: GestureDetector(
-        onTap: (){
+        onTap: () {
           Navigator.push(
             context,
             getCustomRoute(
@@ -96,16 +96,13 @@ class _MyGroundScreenState extends State<MyGroundScreen> {
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              color: primaryColor,
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 4,
-                  offset: const Offset(0, 4),
-                  color: Colors.black.withOpacity(0.25),
-                ),
-              ]),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), color: primaryColor, boxShadow: [
+            BoxShadow(
+              blurRadius: 4,
+              offset: const Offset(0, 4),
+              color: Colors.black.withOpacity(0.25),
+            ),
+          ]),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

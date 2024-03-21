@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:football_shuru/services/theme.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 enum ButtonType { primary, secondary, tertiary }
@@ -15,11 +16,10 @@ class CustomButton extends StatelessWidget {
     this.height = 45,
     this.isLoading = false,
     this.radius = 14,
-    this.elevation = 10,
+    this.elevation = 0,
     this.fontSize = 16,
     this.borderColor,
-  })  : assert(title == null || child == null,
-            'Cannot provide both a title and a child\n'),
+  })  : assert(title == null || child == null, 'Cannot provide both a title and a child\n'),
         super(key: key);
 
   const CustomButton.tertiary({
@@ -33,11 +33,10 @@ class CustomButton extends StatelessWidget {
     this.height = 45,
     this.isLoading = false,
     this.radius = 14,
-    this.elevation = 10,
+    this.elevation = 0,
     this.fontSize,
     this.borderColor,
-  })  : assert(title == null || child == null,
-            'Cannot provide both a title and a child\n'),
+  })  : assert(title == null || child == null, 'Cannot provide both a title and a child\n'),
         super(key: key);
 
   ///Button Title text
@@ -86,7 +85,7 @@ class CustomButton extends StatelessWidget {
         highlightElevation: 0,
         disabledElevation: 0,
         hoverElevation: 0,
-        color: color ?? Theme.of(context).primaryColor,
+        color: color ?? primaryColor,
         disabledColor: disabledColor ?? Theme.of(context).disabledColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radius),
@@ -103,8 +102,7 @@ class CustomButton extends StatelessWidget {
 
               return child ??
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 2, vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 10),
                     child: Text(
                       title!,
                       textAlign: TextAlign.center,
@@ -132,9 +130,7 @@ class CustomButton extends StatelessWidget {
         disabledColor: disabledColor ?? Theme.of(context).disabledColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radius),
-          side: BorderSide(
-              color: borderColor?.withOpacity(0.14) ??
-                  Theme.of(context).primaryColor),
+          side: BorderSide(color: borderColor?.withOpacity(0.14) ?? Theme.of(context).primaryColor),
         ),
         child: Center(
           child: Builder(
@@ -148,8 +144,7 @@ class CustomButton extends StatelessWidget {
 
               return child ??
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 2, vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 10),
                     child: Text(
                       title!,
                       textAlign: TextAlign.center,
