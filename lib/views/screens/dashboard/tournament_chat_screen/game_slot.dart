@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:football_shuru/services/theme.dart';
+import 'package:football_shuru/views/screens/dashboard/player_list.dart';
+import 'package:page_transition/page_transition.dart';
 
+import '../../../../services/route_helper.dart';
 import '../../../base/custom_image.dart';
 
 class GameSlot extends StatefulWidget {
@@ -79,7 +83,16 @@ class _GameSlotState extends State<GameSlot> {
                             SizedBox(
                             width: 10
                             ),
-                            Icon(size: 30,Icons.keyboard_arrow_right_outlined)
+                            IconButton(icon:Icon(size: 30,Icons.keyboard_arrow_right_outlined), onPressed: () {
+                              Navigator.push(
+                                context,
+                                getCustomRoute(
+                                  type: PageTransitionType.fade,
+                                  duration: const Duration(milliseconds: 600),
+                                  child: const PlayerListScreen(),
+                                ),
+                              );
+                            },)
                           ],
                         ),
 
@@ -199,7 +212,16 @@ class _GameSlotState extends State<GameSlot> {
                             SizedBox(
                                 width: 10
                             ),
-                            Icon(size: 30,Icons.keyboard_arrow_right_outlined)
+                            IconButton(icon:Icon(size: 30,Icons.keyboard_arrow_right_outlined), onPressed: () {
+                              Navigator.push(
+                                context,
+                                getCustomRoute(
+                                  type: PageTransitionType.fade,
+                                  duration: const Duration(milliseconds: 600),
+                                  child: const PlayerListScreen(),
+                                ),
+                              );
+                            },)
                           ],
                         ),
 
