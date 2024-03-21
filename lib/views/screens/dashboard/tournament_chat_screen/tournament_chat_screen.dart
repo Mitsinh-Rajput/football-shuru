@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/game_slot.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/ground_chatroom.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/tournament_stats_section.dart';
 
@@ -385,12 +386,12 @@ class _TournamentChatScreenState extends State<TournamentChatScreen>
                           tabs: myTabs,
                         ),
                         SizedBox(
-                          height: 400,
+                          height: 370,
                           child: TabBarView(
                             controller: _tabController,
                             children: <Widget>[
                               GroundChatroom(),
-                              Text("Game Slot"),
+                              GameSlot(),
                               TournamentStatsSection()
                             ],
                           ),

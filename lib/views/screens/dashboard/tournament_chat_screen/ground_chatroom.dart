@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
+import 'package:iconly/iconly.dart';
+
+import '../../../../services/theme.dart';
 
 class GroundChatroom extends StatefulWidget {
   const GroundChatroom({super.key});
@@ -22,9 +25,10 @@ class _GroundChatroomState extends State<GroundChatroom> {
             fontWeight: FontWeight.w600
           ),),
           SizedBox(
-            height: 250,
+            height: 230,
             width: double.infinity,
             child: ListView.builder(
+              padding: EdgeInsets.zero,
                 itemCount: 2,
                 itemBuilder: (context,index){
               return Column(
@@ -133,7 +137,48 @@ class _GroundChatroomState extends State<GroundChatroom> {
                 ],
               );
             }),
-          )
+          ),
+          SizedBox(
+              height: 15
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  decoration: BoxDecoration(color: const Color(0xFFF5F5F5), borderRadius: BorderRadius.circular(50)),
+                  child: TextField(
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                      letterSpacing: 2,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: textPrimary,
+                    ),
+
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        icon: const Icon(IconlyLight.chat),
+                        hintText: "Type message....",
+                        hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontWeight: FontWeight.w300)),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 16,
+              ),
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(color: Colors.black, borderRadius: const BorderRadius.all(Radius.circular(50))),
+                child: const CustomImage(
+                  path: Assets.imagesArrowRight,
+                  color: Colors.white,
+                ),
+              ),
+
+            ],
+          ),
         ],
       ),
     );
