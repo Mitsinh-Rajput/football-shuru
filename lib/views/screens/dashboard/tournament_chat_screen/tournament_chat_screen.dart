@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/game_slot.dart';
+import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/ground_chatroom.dart';
+import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/tournament_stats_section.dart';
 
 import '../../../../generated/assets.dart';
 import '../../../../services/theme.dart';
@@ -23,6 +26,12 @@ class _TournamentChatScreenState extends State<TournamentChatScreen>
   ];
 
   late TabController _tabController;
+
+  List tabScreen = [
+    Text("Ground Chatroom"),
+    Text("Game Slot"),
+    TournamentStatsSection(),
+  ];
 
   @override
   void initState() {
@@ -375,6 +384,17 @@ class _TournamentChatScreenState extends State<TournamentChatScreen>
                           unselectedLabelColor: Colors.grey.shade500,
                           controller: _tabController,
                           tabs: myTabs,
+                        ),
+                        SizedBox(
+                          height: 370,
+                          child: TabBarView(
+                            controller: _tabController,
+                            children: <Widget>[
+                              GroundChatroom(),
+                              GameSlot(),
+                              TournamentStatsSection()
+                            ],
+                          ),
                         ),
                       ],
                     ),

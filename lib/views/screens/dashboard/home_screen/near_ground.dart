@@ -57,11 +57,16 @@ class _NearGroundState extends State<NearGround> {
         ),
         leading: Padding(
           padding: const EdgeInsets.all(16),
-          child: Image.asset(
-            color: isScroll ? Colors.black : Colors.white,
-            Assets.imagesArrowLeft,
-            height: 24,
-            width: 24,
+          child: GestureDetector(
+            onTap: (){
+              Navigator.pop(context);
+            },
+            child: Image.asset(
+              color: isScroll ? Colors.black : Colors.white,
+              Assets.imagesArrowLeft,
+              height: 24,
+              width: 24,
+            ),
           ),
         ),
         actions: [
