@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
@@ -25,12 +27,14 @@ class _LocationScreenState extends State<LocationScreen> {
     LocationList(
       selected: false,
       title: "400056, Veera Desai Playground",
-      subtitle: "B-102, Sunshine Apartments, Veera Desai Road, Andheri West, Mumbai.",
+      subtitle:
+          "B-102, Sunshine Apartments, Veera Desai Road, Andheri West, Mumbai.",
     ),
     LocationList(
       selected: false,
       title: "400080, Airoli",
-      subtitle: "B-102, Sunshine Apartments, Veera Desai Road, Andheri West, Mumbai.",
+      subtitle:
+          "B-102, Sunshine Apartments, Veera Desai Road, Andheri West, Mumbai.",
     ),
     LocationList(
       selected: false,
@@ -70,7 +74,8 @@ class _LocationScreenState extends State<LocationScreen> {
     LocationList(
       selected: false,
       title: "500001, Gachibowli Athletic Stadium",
-      subtitle: "Gate Number 9, Gate Number 10 Road, Gachibowli, Hyderabad, Telangana.",
+      subtitle:
+          "Gate Number 9, Gate Number 10 Road, Gachibowli, Hyderabad, Telangana.",
     ),
     LocationList(
       selected: false,
@@ -85,7 +90,8 @@ class _LocationScreenState extends State<LocationScreen> {
     LocationList(
       selected: false,
       title: "600003, Jawaharlal Nehru Stadium",
-      subtitle: "Sydenhams Road, Kannappar Thidal, Periyamet, Chennai, Tamil Nadu.",
+      subtitle:
+          "Sydenhams Road, Kannappar Thidal, Periyamet, Chennai, Tamil Nadu.",
     ),
     LocationList(
       selected: false,
@@ -170,7 +176,8 @@ class _LocationScreenState extends State<LocationScreen> {
     LocationList(
       selected: false,
       title: "700043, East Bengal Ground",
-      subtitle: "Prince Gulam Mohammed Shah Road, Maidan, Kolkata, West Bengal.",
+      subtitle:
+          "Prince Gulam Mohammed Shah Road, Maidan, Kolkata, West Bengal.",
     ),
     LocationList(
       selected: false,
@@ -241,7 +248,7 @@ class _LocationScreenState extends State<LocationScreen> {
         child: Column(
           children: [
             const SizedBox(
-              height: 60,
+              height: 80,
             ),
             Text(
               "Get your place",
@@ -255,12 +262,12 @@ class _LocationScreenState extends State<LocationScreen> {
               height: 6,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 22.0),
+              padding: const EdgeInsets.symmetric(horizontal: 26.0),
               child: Text(
                 textAlign: TextAlign.center,
                 "Enter the PIN code of the area in the field below and proceed further.",
                 style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                      fontSize: 13,
+                      fontSize: 10,
                       fontWeight: FontWeight.w200,
                     ),
               ),
@@ -274,11 +281,17 @@ class _LocationScreenState extends State<LocationScreen> {
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                    decoration: BoxDecoration(color: const Color.fromRGBO(245, 245, 245, 1), borderRadius: BorderRadius.circular(50)),
+                    decoration: BoxDecoration(
+                        color: const Color.fromRGBO(245, 245, 245, 1),
+                        borderRadius: BorderRadius.circular(50)),
                     child: TextField(
                       onChanged: (value) {
                         setState(() {
-                          filteredLocations = locationlist.where((location) => location.title.toLowerCase().contains(value.toLowerCase())).toList();
+                          filteredLocations = locationlist
+                              .where((location) => location.title
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase()))
+                              .toList();
                         });
                       },
                       controller: pincodeController,
@@ -300,7 +313,10 @@ class _LocationScreenState extends State<LocationScreen> {
                             path: Assets.imagesSearchNormal,
                           ),
                           hintText: "Search near pincode",
-                          hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontWeight: FontWeight.w300)),
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .labelMedium!
+                              .copyWith(fontWeight: FontWeight.w300)),
                     ),
                   ),
                 ),
@@ -312,7 +328,9 @@ class _LocationScreenState extends State<LocationScreen> {
                   child: Container(
                     width: 50,
                     height: 50,
-                    decoration: const BoxDecoration(color: Colors.black, borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: const BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.all(Radius.circular(50))),
                     child: Image.asset(
                       Assets.imagesArrowRight,
                       color: Colors.white,
@@ -330,7 +348,8 @@ class _LocationScreenState extends State<LocationScreen> {
               child: ListView.builder(
                 padding: EdgeInsets.zero,
                 scrollDirection: Axis.vertical,
-                itemCount: filteredLocations.length, // Use filteredLocations length
+                itemCount:
+                    filteredLocations.length, // Use filteredLocations length
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
@@ -346,7 +365,8 @@ class _LocationScreenState extends State<LocationScreen> {
                             width: 40,
                             decoration: const BoxDecoration(
                               color: Color.fromRGBO(255, 244, 239, 1),
-                              borderRadius: BorderRadius.all(Radius.circular(25)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25)),
                             ),
                             child: const Padding(
                               padding: EdgeInsets.all(10.0),
@@ -363,7 +383,10 @@ class _LocationScreenState extends State<LocationScreen> {
                               children: [
                                 Text(
                                   filteredLocations[index].title,
-                                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelLarge!
+                                      .copyWith(
                                         fontSize: 13,
                                         color: Colors.black87,
                                         fontWeight: FontWeight.w700,
@@ -371,7 +394,10 @@ class _LocationScreenState extends State<LocationScreen> {
                                 ),
                                 Text(
                                   filteredLocations[index].subtitle,
-                                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelLarge!
+                                      .copyWith(
                                         fontSize: 11,
                                         fontWeight: FontWeight.w400,
                                       ),
@@ -383,9 +409,13 @@ class _LocationScreenState extends State<LocationScreen> {
                             width: 16,
                           ),
                           Icon(
-                            (filteredLocations[index].selected) ? Icons.check_circle_outline_rounded : Icons.radio_button_unchecked_rounded,
-                            size: 30,
-                            color: (filteredLocations[index].selected) ? Colors.green : Colors.grey.shade300,
+                            (filteredLocations[index].selected)
+                                ? Icons.check_circle_outline_rounded
+                                : Icons.radio_button_unchecked_rounded,
+                            size: 24,
+                            color: (filteredLocations[index].selected)
+                                ? Colors.green
+                                : Colors.grey.shade200,
                           ),
                         ],
                       ),
@@ -397,41 +427,73 @@ class _LocationScreenState extends State<LocationScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: Container(
-        color: Colors.white,
-        height: 80,
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 24),
-        child: CustomButton(
-            elevation: 0,
-            radius: 10,
-            height: 50,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+      extendBody: true,
+      bottomNavigationBar: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          IgnorePointer(
+            ignoring: true,
+            child: Container(
+              alignment: Alignment.bottomCenter,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.white.withOpacity(0.01),
+                      Colors.white,
+                      Colors.white,
+                    ]),
+              ),
+              height: 200,
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  "Get Started",
-                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
+                IgnorePointer(
+                  ignoring: false,
+                  child: CustomButton(
+                      elevation: 0,
+                      radius: 10,
+                      height: 50,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Get Started",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const CustomImage(
+                            color: Colors.white,
+                            path: Assets.imagesArrowRight,
+                          ),
+                        ],
                       ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                const CustomImage(
-                  color: Colors.white,
-                  path: Assets.imagesArrowRight,
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          getCustomRoute(
+                            child: const DashboardScreen(),
+                          ),
+                        );
+                      }),
                 ),
               ],
             ),
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                getCustomRoute(
-                  child: const DashboardScreen(),
-                ),
-              );
-            }),
+          ),
+        ],
       ),
     );
   }
@@ -442,5 +504,6 @@ class LocationList {
   String subtitle;
   bool selected;
 
-  LocationList({required this.title, required this.subtitle, required this.selected});
+  LocationList(
+      {required this.title, required this.subtitle, required this.selected});
 }

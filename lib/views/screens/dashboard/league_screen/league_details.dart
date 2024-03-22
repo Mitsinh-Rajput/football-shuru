@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:football_shuru/views/base/common_button.dart';
@@ -8,7 +7,6 @@ import 'package:football_shuru/views/screens/dashboard/league_screen/matches_sec
 import 'package:football_shuru/views/screens/dashboard/league_screen/stats_section.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/tables_section.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/teams_section.dart';
-
 
 class LeagueDetailsPage extends StatefulWidget {
   final String typesOfLeague;
@@ -33,21 +31,14 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
           content: (widget.typesOfLeague == "Knock out")
               ? const KnockOutPage()
               : const MatchesPage()),
-      SliderList(
-          title: "Teams",
-          content: const Teams()),
-      SliderList(
-          title: "Tables",
-          content: const TableSection()),
-      SliderList(
-          title: "Stats",
-          content: const Stats()),
+      SliderList(title: "Teams", content: const Teams()),
+      SliderList(title: "Tables", content: const TableSection()),
+      SliderList(title: "Stats", content: const Stats()),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(38, 50, 56, 1),
@@ -57,7 +48,7 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
           statusBarColor: Colors.transparent,
         ),
         leading: GestureDetector(
-          onTap: (){
+          onTap: () {
             Navigator.pop(context);
           },
           child: Padding(
@@ -218,32 +209,50 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     for (var i = 0; i < introList.length; i++)
-                      Column(
-                        children: [
-                          Text(
-                            introList[i].title,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .copyWith(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                            height: 2,
-                            width: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                              color: (i == index)
-                                  ? const Color.fromRGBO(255, 200, 57, 1)
-                                  : const Color.fromRGBO(38, 50, 56, 1),
-                            )),
+                      GestureDetector(
+                        onTap: () {
+                          pageController
+                              .animateToPage(
+                            i,
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.linear,
                           )
-                        ],
+                              .then((value) {
+                            setState(() {
+                              index = i;
+                            });
+                          });
+                        },
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Column(
+                            children: [
+                              Text(
+                                introList[i].title,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Container(
+                                height: 2,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                  color: (i == index)
+                                      ? const Color.fromRGBO(255, 200, 57, 1)
+                                      : const Color.fromRGBO(38, 50, 56, 1),
+                                )),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
                   ],
                 ),

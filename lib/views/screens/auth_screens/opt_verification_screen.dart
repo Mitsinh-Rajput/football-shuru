@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:football_shuru/controllers/firebase_controller.dart';
+import 'package:football_shuru/views/screens/auth_screens/signup_screen.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 
+import '../../../services/route_helper.dart';
 import '../../../services/theme.dart';
 import '../../base/custom_image.dart';
+import '../dashboard/dashboard_screen.dart';
 
 class OtpVerificationDialogue {
   dialogue(context) {
@@ -40,7 +43,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   Widget build(BuildContext context) {
     return GetBuilder<FirebaseController>(builder: (firebaseController) {
       return Container(
-        margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        margin:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         padding: const EdgeInsets.all(24),
         decoration: const BoxDecoration(
             color: Colors.white,
@@ -60,7 +64,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               alignment: Alignment.centerLeft,
               child: Text(
                 "OTP Verification",
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 26, fontWeight: FontWeight.bold),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(fontSize: 26, fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(
@@ -82,7 +89,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                    decoration: BoxDecoration(color: const Color(0xFFF5F5F5), borderRadius: BorderRadius.circular(50)),
+                    decoration: BoxDecoration(
+                        color: const Color(0xFFF5F5F5),
+                        borderRadius: BorderRadius.circular(50)),
                     child: TextField(
                       controller: Get.find<FirebaseController>().otpController,
                       style: Theme.of(context).textTheme.labelLarge!.copyWith(
@@ -110,7 +119,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                           border: InputBorder.none,
                           icon: const Icon(IconlyLight.chat),
                           hintText: "Mobile OTP",
-                          hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontWeight: FontWeight.w300)),
+                          hintStyle: Theme.of(context)
+                              .textTheme
+                              .labelMedium!
+                              .copyWith(fontWeight: FontWeight.w300)),
                     ),
                   ),
                 ),
@@ -119,29 +131,36 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    if (_showButton) {
-                      Get.find<FirebaseController>().signInWithPhoneNumber(context);
-                    } else {
-                      Fluttertoast.showToast(
-                        msg: "Enter Valid 6 Digit Code",
-                        toastLength: Toast.LENGTH_LONG,
-                      );
-                    }
+                    // if (_showButton) {
+                    //   Get.find<FirebaseController>()
+                    //       .signInWithPhoneNumber(context);
+                    // } else {
+                    //   Fluttertoast.showToast(
+                    //     msg: "Enter Valid 6 Digit Code",
+                    //     toastLength: Toast.LENGTH_LONG,
+                    //   );
+                    // }
 
-                    // Navigator.pushReplacement(
-                    //   context,
-                    //   getCustomRoute(
-                    //     child: const DashboardScreen(),
-                    //   ),
-                    // );
+                    Navigator.pushReplacement(
+                      context,
+                      getCustomRoute(
+                        child: const SignUpScreen(),
+                      ),
+                    );
                   },
                   child: Container(
                     width: 50,
                     height: 50,
-                    decoration: BoxDecoration(color: _showButton ? Colors.black : Colors.grey, borderRadius: const BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: _showButton ? Colors.black : Colors.grey,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: firebaseController.isLoading
-                        ? const Center(
-                            child: CircularProgressIndicator(),
+                        ? const Padding(
+                            padding: EdgeInsets.all(14),
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                            ),
                           )
                         : const CustomImage(
                             path: Assets.imagesArrowRight,
@@ -166,13 +185,17 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   child: RichText(
                     text: TextSpan(
                         text: "Change number? ",
-                        style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                              fontWeight: FontWeight.w400,
-                            ),
+                        style:
+                            Theme.of(context).textTheme.labelMedium!.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                ),
                         children: [
                           TextSpan(
                             text: "Back",
-                            style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .copyWith(
                                   fontWeight: FontWeight.w600,
                                   color: primaryColor,
                                 ),

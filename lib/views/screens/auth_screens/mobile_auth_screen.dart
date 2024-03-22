@@ -85,7 +85,10 @@ class _MobileAuthScreenState extends State<MobileAuthScreen> {
                       ),
                       Text(
                         "We have send you an One Time Password(OTP) on this phone number !",
-                        style: Theme.of(context).textTheme.labelLarge?.copyWith(fontSize: 12.0, color: textPrimary),
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelLarge
+                            ?.copyWith(fontSize: 12.0, color: textPrimary),
                       ),
                       const SizedBox(
                         height: 50,
@@ -107,8 +110,11 @@ class _MobileAuthScreenState extends State<MobileAuthScreen> {
                       children: [
                         Expanded(
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                            decoration: BoxDecoration(color: const Color.fromRGBO(245, 245, 245, 1), borderRadius: BorderRadius.circular(50)),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 24.0),
+                            decoration: BoxDecoration(
+                                color: const Color.fromRGBO(245, 245, 245, 1),
+                                borderRadius: BorderRadius.circular(50)),
                             child: TextFormField(
                               onChanged: (value) {
                                 setState(() {
@@ -121,7 +127,10 @@ class _MobileAuthScreenState extends State<MobileAuthScreen> {
                                 });
                               },
                               controller: Get.find<FirebaseController>().phone,
-                              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge!
+                                  .copyWith(
                                     letterSpacing: 2,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
@@ -140,7 +149,10 @@ class _MobileAuthScreenState extends State<MobileAuthScreen> {
                                     path: Assets.imagesCallCalling,
                                   ),
                                   hintText: "Phone Number",
-                                  hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontWeight: FontWeight.w300)),
+                                  hintStyle: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium!
+                                      .copyWith(fontWeight: FontWeight.w300)),
                             ),
                           ),
                         ),
@@ -149,22 +161,30 @@ class _MobileAuthScreenState extends State<MobileAuthScreen> {
                         ),
                         GestureDetector(
                           onTap: () async {
-                            if (_showButton) {
-                              //? otp screen --
-                              await Get.find<FirebaseController>().verifyPhoneNumber(context: context).then((value) {
-                                OtpVerificationDialogue().dialogue(context);
-                              });
-                            } else {
-                              Fluttertoast.showToast(
-                                msg: "Enter Valid Phone Number",
-                                toastLength: Toast.LENGTH_LONG,
-                              );
-                            }
+                            // if (_showButton) {
+                            //   //? otp screen --
+                            //   await Get.find<FirebaseController>()
+                            //       .verifyPhoneNumber(context: context)
+                            //       .then((value) {
+                            //     OtpVerificationDialogue().dialogue(context);
+                            //   });
+                            // } else {
+                            //   Fluttertoast.showToast(
+                            //     msg: "Enter Valid Phone Number",
+                            //     toastLength: Toast.LENGTH_LONG,
+                            //   );
+                            // }
+                            OtpVerificationDialogue().dialogue(context);
                           },
                           child: Container(
                             width: 50,
                             height: 50,
-                            decoration: BoxDecoration(color: !_showButton ? Colors.grey.shade300 : Colors.black, borderRadius: BorderRadius.all(Radius.circular(50))),
+                            decoration: BoxDecoration(
+                                color: !_showButton
+                                    ? Colors.grey.shade300
+                                    : Colors.black,
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(50))),
                             child: Image.asset(
                               Assets.imagesArrowRight,
                               color: _showButton ? Colors.white : Colors.grey,
@@ -181,8 +201,12 @@ class _MobileAuthScreenState extends State<MobileAuthScreen> {
                       child: RichText(
                         textAlign: TextAlign.center,
                         text: TextSpan(
-                            text: "By providing my phone number, I hereby agree and accept the ",
-                            style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            text:
+                                "By providing my phone number, I hereby agree and accept the ",
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w300,
                                 ),
@@ -200,7 +224,10 @@ class _MobileAuthScreenState extends State<MobileAuthScreen> {
                                     // );
                                   },
                                 text: "Term & condition",
-                                style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge!
+                                    .copyWith(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w500,
                                       color: primaryColor,
@@ -210,7 +237,10 @@ class _MobileAuthScreenState extends State<MobileAuthScreen> {
                               ),
                               TextSpan(
                                 text: " and ",
-                                style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge!
+                                    .copyWith(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w300,
                                     ),
@@ -228,7 +258,10 @@ class _MobileAuthScreenState extends State<MobileAuthScreen> {
                                     // );
                                   },
                                 text: "Privacy policy",
-                                style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge!
+                                    .copyWith(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w500,
                                       color: primaryColor,
@@ -238,7 +271,10 @@ class _MobileAuthScreenState extends State<MobileAuthScreen> {
                               ),
                               TextSpan(
                                 text: " in use of the Mobile App",
-                                style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge!
+                                    .copyWith(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w300,
                                     ),

@@ -28,9 +28,9 @@ class _TournamentChatScreenState extends State<TournamentChatScreen>
   late TabController _tabController;
 
   List tabScreen = [
-    Text("Ground Chatroom"),
-    Text("Game Slot"),
-    TournamentStatsSection(),
+    const Text("Ground Chatroom"),
+    const Text("Game Slot"),
+    const TournamentStatsSection(),
   ];
 
   @override
@@ -55,15 +55,20 @@ class _TournamentChatScreenState extends State<TournamentChatScreen>
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
           statusBarColor: Colors.transparent,
         ),
-        leading: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Image.asset(
-            Assets.imagesArrowLeft,
-            height: 24,
-            width: 24,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Image.asset(
+              Assets.imagesArrowLeft,
+              height: 24,
+              width: 24,
+            ),
           ),
         ),
         centerTitle: true,
@@ -76,20 +81,20 @@ class _TournamentChatScreenState extends State<TournamentChatScreen>
                   fontWeight: FontWeight.w600,
                   color: Colors.white),
             ),
-            Icon(Icons.keyboard_arrow_down_rounded),
+            const Icon(Icons.keyboard_arrow_down_rounded),
           ],
         ),
       ),
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Container(
+            SizedBox(
               height: size.height,
               child: Stack(
                 children: [
                   Container(
-                    height: 300,
-                    decoration: BoxDecoration(
+                    height: 260,
+                    decoration: const BoxDecoration(
                       color: Color(0xFF263238),
                     ),
                     child: Row(
@@ -132,11 +137,11 @@ class _TournamentChatScreenState extends State<TournamentChatScreen>
                     ),
                   ),
                   Positioned(
-                    top: 200,
+                    top: 180,
                     left: 0,
                     right: 0,
                     child: Container(
-                      height: 150,
+                      // height: 150,
                       margin: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 16),
                       decoration: BoxDecoration(
@@ -157,7 +162,7 @@ class _TournamentChatScreenState extends State<TournamentChatScreen>
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 5.0, vertical: 15),
+                                horizontal: 16, vertical: 14),
                             child: Column(
                               children: [
                                 Align(
@@ -296,7 +301,7 @@ class _TournamentChatScreenState extends State<TournamentChatScreen>
                                             borderRadius:
                                                 BorderRadius.circular(20),
                                             border: Border.all(
-                                              color: Color(0xFFE0E0E0),
+                                              color: const Color(0xFFE0E0E0),
                                               width: 1,
                                             )),
                                         child: const Icon(Icons.add)),
@@ -336,7 +341,8 @@ class _TournamentChatScreenState extends State<TournamentChatScreen>
                                                 .copyWith(
                                                     fontSize: 10,
                                                     fontWeight: FontWeight.w600,
-                                                    color: Color(0xFFFF9100)),
+                                                    color: const Color(
+                                                        0xFFFF9100)),
                                           )
                                         ]),
                                   ),
@@ -349,7 +355,7 @@ class _TournamentChatScreenState extends State<TournamentChatScreen>
                     ),
                   ),
                   Positioned(
-                    top: 370,
+                    top: 340,
                     left: 0,
                     right: 0,
                     child: Column(
@@ -364,7 +370,7 @@ class _TournamentChatScreenState extends State<TournamentChatScreen>
                                 .copyWith(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600,
-                                  color: Color(0xFFFF9100),
+                                  color: const Color(0xFFFF9100),
                                 ),
                           ),
                         ),
@@ -372,11 +378,11 @@ class _TournamentChatScreenState extends State<TournamentChatScreen>
                           indicatorColor: Colors.black,
                           dividerColor: Colors.grey.shade200,
                           indicatorSize: TabBarIndicatorSize.tab,
-                          labelStyle:
-                              Theme.of(context).textTheme.titleSmall!.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                fontSize: 13
-                                  ),
+                          labelStyle: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(
+                                  fontWeight: FontWeight.w700, fontSize: 13),
                           indicatorWeight: 3.0,
                           labelColor: Colors.black,
                           unselectedLabelStyle:
@@ -390,9 +396,9 @@ class _TournamentChatScreenState extends State<TournamentChatScreen>
                           child: TabBarView(
                             controller: _tabController,
                             children: <Widget>[
-                              GroundChatroom(),
-                              GameSlot(),
-                              TournamentStatsSection()
+                              const GroundChatroom(),
+                              const GameSlot(),
+                              const TournamentStatsSection()
                             ],
                           ),
                         ),

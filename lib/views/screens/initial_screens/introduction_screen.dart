@@ -78,10 +78,14 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                 Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24.0, vertical: 20),
                       child: Text(
                         introList[index].title,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 26.0, color: textPrimary, fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: 26.0,
+                            color: textPrimary,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                     Padding(
@@ -162,6 +166,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
               ),
             if (index < introList.length - 1)
               CustomButton(
+                borderColor: Colors.grey.shade500,
                 type: ButtonType.secondary,
                 elevation: 0,
                 radius: 50,
