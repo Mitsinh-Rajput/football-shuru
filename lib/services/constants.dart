@@ -39,7 +39,7 @@ class AppConstants {
 
   //TODO: Change Base Url
   // static String baseUrl = 'https://www.base-url.in/';
-  static String baseUrl = 'http://192.168.1.11:8000/';
+  static String baseUrl = 'http://192.168.1.25:8000/';
 
   ///USE FOR LOCAL
   //TODO: Change Base Url
@@ -51,7 +51,10 @@ class AppConstants {
   static const String loginUri = 'api/v1/user/login';
   static const String register = 'api/v1/user/register';
   static const String profileUri = 'api/v1/user/profile';
-  static const String extras = 'api/v1/extra';
+  static const String groundPincode = 'api/v1/ground';
+
+  /// Home
+  static const String slider = 'api/v1/basic/slider';
 
   // Shared Key
   static const String token = 'user_app_token';

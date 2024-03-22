@@ -1,13 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:football_shuru/controllers/homepage_controller.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/community_near_me.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/league_and_tour_tile.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/near_ground.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/tournament_chat_screen.dart';
+import 'package:football_shuru/views/screens/initial_screens/location_screen.dart';
+import 'package:football_shuru/views/screens/widgets/primarybanner_widget.dart';
+import 'package:get/instance_manager.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../../services/route_helper.dart';
@@ -20,6 +26,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Timer.run(() {
+      Get.find<HomePageController>().getSlider();
+    });
+  }
+
   List typesOfLeaguelist = ["League’s match", "Knock out", "Round robins", "League’s match"];
   @override
   Widget build(BuildContext context) {
@@ -40,22 +55,27 @@ class _HomeScreenState extends State<HomeScreen> {
             width: 24,
           ),
         ),
-        title: RichText(
-          text: TextSpan(
-              text: "Football ",
-              style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                    fontWeight: FontWeight.w800,
-                    color: textPrimary,
+        title: GestureDetector(
+          onTap: () {
+            Navigator.push(context, getCustomRoute(child: LocationScreen()));
+          },
+          child: RichText(
+            text: TextSpan(
+                text: "Football ",
+                style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                      fontWeight: FontWeight.w800,
+                      color: textPrimary,
+                    ),
+                children: [
+                  TextSpan(
+                    text: "Shuru",
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: textPrimary,
+                        ),
                   ),
-              children: [
-                TextSpan(
-                  text: "Shuru",
-                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                        fontWeight: FontWeight.w400,
-                        color: textPrimary,
-                      ),
-                ),
-              ]),
+                ]),
+          ),
         ),
         actions: [
           Image.asset(
@@ -111,6 +131,8 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 16,
             ),
             // banner
+            const PrimaryBannerWidget(), const SizedBox(height: 15),
+
             SizedBox(
               height: 160,
               child: PageView.builder(

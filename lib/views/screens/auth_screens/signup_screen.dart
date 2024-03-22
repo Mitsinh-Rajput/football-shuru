@@ -1,11 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:football_shuru/controllers/firebase_controller.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/services/enums/gender.dart';
 import 'package:football_shuru/services/extensions.dart';
 import 'package:football_shuru/services/input_decoration.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/base/date_picker_widget.dart';
+import 'package:football_shuru/views/base/dialogs/failed_dialog.dart';
 import 'package:get/get.dart';
 
 import '../../../services/date_formatters_and_converters.dart';
@@ -21,7 +25,6 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController nameController = TextEditingController();
-  TextEditingController phoneNumberController = TextEditingController();
   TextEditingController emailIdController = TextEditingController();
   TextEditingController dateOfBirthController = TextEditingController();
   TextEditingController bioController = TextEditingController();
@@ -100,38 +103,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                   ),
-                  if (true)
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  if (true)
-                    TextFormField(
-                      readOnly: true,
-                      enabled: false,
-                      controller: Get.find<FirebaseController>().phone,
-                      decoration: CustomDecoration.inputDecoration(
-                        borderColor: Colors.grey.shade300,
-                        suffix: const Padding(
-                          padding: EdgeInsets.all(15),
-                          child: CustomImage(height: 5, width: 5, path: Assets.imagesLockCircle),
-                        ),
-                        floating: true,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-                        label: "Phone Number",
-                        hint: "Ex. +91 9876543210",
-                        hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                              color: Colors.grey.shade300,
-                            ),
-                        icon: const Padding(
-                          padding: EdgeInsets.all(15),
-                          child: CustomImage(
-                            path: Assets.imagesMobileNum,
-                            height: 5,
-                            width: 5,
-                          ),
-                        ),
-                      ),
-                    ),
+                  // if (true)
+                  //   const SizedBox(
+                  //     height: 20,
+                  //   ),
+                  // if (true)
+                  //   TextFormField(
+                  //     readOnly: true,
+                  //     enabled: false,
+                  //     controller: Get.find<FirebaseController>().phone,
+                  //     decoration: CustomDecoration.inputDecoration(
+                  //       borderColor: Colors.grey.shade300,
+                  //       suffix: const Padding(
+                  //         padding: EdgeInsets.all(15),
+                  //         child: CustomImage(height: 5, width: 5, path: Assets.imagesLockCircle),
+                  //       ),
+                  //       floating: true,
+                  //       contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                  //       label: "Phone Number",
+                  //       hint: "Ex. +91 9876543210",
+                  //       hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
+                  //             color: Colors.grey.shade300,
+                  //           ),
+                  //       icon: const Padding(
+                  //         padding: EdgeInsets.all(15),
+                  //         child: CustomImage(
+                  //           path: Assets.imagesMobileNum,
+                  //           height: 5,
+                  //           width: 5,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -216,7 +219,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       setState(() {});
                     },
                     child: TextFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction, // Added autovalidateMode
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      // Added autovalidateMode
 
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -251,6 +255,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 20,
                   ),
                   TextFormField(
+                    validator: (value) {
+                      if (value.isNotValid) {
+                        return 'Enter About Bio Data';
+                      }
+                      return null; // Return null if the value is valid
+                    },
                     maxLines: null,
                     expands: false,
                     keyboardType: TextInputType.multiline,
@@ -280,48 +290,78 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
       bottomNavigationBar: Container(
-        color: Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x3F000000),
+              blurRadius: 4,
+              offset: Offset(0, -2),
+              spreadRadius: 0,
+            )
+          ],
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CustomButton(
-              fontSize: 14,
-              elevation: 0,
-              radius: 10,
-              height: 50,
-              onTap: () {
-                if (!_formKey.currentState!.validate()) {
-                  Navigator.pushReplacement(
-                    context,
-                    getCustomRoute(
-                      child: const LocationScreen(),
+            GetBuilder<AuthController>(builder: (authController) {
+              return CustomButton(
+                fontSize: 14,
+                elevation: 0,
+                radius: 10,
+                height: 50,
+                onTap: () {
+                  log(_gender!.value.toString(), name: "Gender");
+                  if (_formKey.currentState!.validate()) {
+                    authController
+                        .register(
+                            name: nameController.text,
+                            gender: _gender!.value.toLowerCase(),
+                            email: emailIdController.text,
+                            dob: dateOfBirthController.text,
+                            about: bioController.text)
+                        .then((value) {
+                      if (value.isSuccess) {
+                        Navigator.pushReplacement(
+                          context,
+                          getCustomRoute(
+                            child: const LocationScreen(),
+                          ),
+                        );
+                      } else {
+                        FailedAlertDialog(
+                          message: value.message,
+                        );
+                      }
+                    });
+                  } else {
+                    Fluttertoast.showToast(msg: "Above Field Empty", toastLength: Toast.LENGTH_LONG);
+                  }
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Sign Up Now",
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
                     ),
-                  );
-                }
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    "Sign Up Now",
-                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Image.asset(
-                    Assets.imagesArrowRight,
-                    height: 24,
-                    width: 24,
-                    color: Colors.white,
-                  )
-                ],
-              ),
-            )
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Image.asset(
+                      Assets.imagesArrowRight,
+                      height: 24,
+                      width: 24,
+                      color: Colors.white,
+                    )
+                  ],
+                ),
+              );
+            })
           ],
         ),
       ),

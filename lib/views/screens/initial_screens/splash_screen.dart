@@ -1,12 +1,20 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:football_shuru/data/repositories/auth_repo.dart';
 import 'package:football_shuru/services/constants.dart';
+import 'package:football_shuru/services/extensions.dart';
 import 'package:football_shuru/services/route_helper.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
+import 'package:football_shuru/views/screens/auth_screens/mobile_auth_screen.dart';
+import 'package:football_shuru/views/screens/auth_screens/signup_screen.dart';
+import 'package:football_shuru/views/screens/dashboard/home_screen/home_screen.dart';
 import 'package:football_shuru/views/screens/initial_screens/introduction_screen.dart';
+import 'package:get/instance_manager.dart';
 import 'package:page_transition/page_transition.dart';
+
+import '../dashboard/dashboard_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -21,14 +29,25 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer.run(() {
       Future.delayed(const Duration(seconds: 3), () {
-        Navigator.pushReplacement(
-          context,
-          getCustomRoute(
-            type: PageTransitionType.fade,
-            duration: const Duration(milliseconds: 600),
-            child: const IntroductionScreen(),
-          ),
-        );
+        if (Get.find<AuthRepo>().getUserToken().isValid) {
+          Navigator.pushReplacement(
+            context,
+            getCustomRoute(
+              type: PageTransitionType.fade,
+              duration: const Duration(milliseconds: 600),
+              child: const DashboardScreen(),
+            ),
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            getCustomRoute(
+              type: PageTransitionType.fade,
+              duration: const Duration(milliseconds: 600),
+              child: const MobileAuthScreen(),
+            ),
+          );
+        }
       });
 
       /*if (Get.find<AuthController>().isLoggedIn()) {

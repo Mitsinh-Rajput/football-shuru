@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:football_shuru/data/models/response/grounds_model.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
@@ -62,6 +64,35 @@ class AuthController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  Future<ResponseModel> register({
+    required String name,
+    required String gender,
+    required String email,
+    required String dob,
+    required String about,
+  }) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.register}", name: "register");
+    try {
+      Response response = await authRepo.register(name: name, gender: gender, email: email, dob: dob, about: about);
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "register");
+      if (response.statusCode == 200) {
+        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT register()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
   Future<ResponseModel> getUserProfileData() async {
     ResponseModel responseModel;
     _isLoading = true;
@@ -88,6 +119,43 @@ class AuthController extends GetxController implements GetxService {
     _isLoading = false;
     update();
     return responseModel;
+  }
+
+  List<Grounds> grounds = [];
+
+  Future<ResponseModel> getgrounds() async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.groundPincode}", name: "getgrounds");
+    try {
+      Response response = await authRepo.groundPincode();
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "getgrounds");
+      if (response.statusCode == 200) {
+        grounds = groundsFromJson(jsonEncode(response.body['data']));
+        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT getgrounds()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  void selectLocation(int index) {
+    for (int i = 0; i < grounds.length; i++) {
+      if (i == index) {
+        grounds[i].isSelected = true;
+      } else {
+        grounds[i].isSelected = false;
+      }
+    }
+    update();
   }
 
   void toggleTerms() {
