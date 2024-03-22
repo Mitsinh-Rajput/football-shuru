@@ -27,7 +27,7 @@ class AuthRepo {
     required String dob,
     required String about,
   }) async =>
-      await apiClient.postData(AppConstants.loginUri, {
+      await apiClient.postData(AppConstants.register, {
         "name": name,
         "gender": gender,
         "email": email,
@@ -37,7 +37,7 @@ class AuthRepo {
 
   Future<Response> getUser() async => await apiClient.getData(AppConstants.profileUri);
 
-  Future<Response> getExtras() async => await apiClient.getData(AppConstants.extras);
+  Future<Response> groundPincode() async => await apiClient.getData(AppConstants.groundPincode);
 
   /// Methods to deal with Remote Data ///
 

@@ -1,11 +1,22 @@
+<<<<<<< HEAD
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+=======
+import 'dart:async';
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:football_shuru/controllers/auth_controller.dart';
+import 'package:football_shuru/data/models/response/grounds_model.dart';
+>>>>>>> 6b3e6e6bf56c3d7ac33d10e7b5e7dc97abe33e2c
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/screens/dashboard/dashboard_screen.dart';
+import 'package:get/get.dart';
 
 import '../../../services/route_helper.dart';
 
@@ -17,6 +28,7 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
+<<<<<<< HEAD
   TextEditingController pincodeController = TextEditingController();
   List<LocationList> locationlist = [
     LocationList(
@@ -222,27 +234,26 @@ class _LocationScreenState extends State<LocationScreen> {
   ];
   List<LocationList> filteredLocations = [];
 
+=======
+>>>>>>> 6b3e6e6bf56c3d7ac33d10e7b5e7dc97abe33e2c
   @override
   void initState() {
-    filteredLocations = locationlist;
+    // TODO: implement initState
     super.initState();
-  }
-
-  void selectLocation(int index) {
-    setState(() {
-      for (int i = 0; i < filteredLocations.length; i++) {
-        if (i == index) {
-          filteredLocations[i].selected = true;
-        } else {
-          filteredLocations[i].selected = false;
-        }
-      }
+    Timer.run(() async {
+      await Get.find<AuthController>().getgrounds().then((value) {
+        filteredLocations = Get.find<AuthController>().grounds;
+      });
     });
   }
+
+  TextEditingController pincodeController = TextEditingController();
+  List<Grounds> filteredLocations = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
@@ -303,15 +314,93 @@ class _LocationScreenState extends State<LocationScreen> {
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: textPrimary,
+=======
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await Get.find<AuthController>().getgrounds();
+        },
+        child: GetBuilder<AuthController>(builder: (authController) {
+          if (false || authController.isLoading) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 60,
+                  ),
+                  Text(
+                    "Get your place",
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          color: Colors.black87,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w900,
+                        ),
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 22.0),
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      "Enter the PIN code of the area in the field below and proceed further.",
+                      style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w200,
+>>>>>>> 6b3e6e6bf56c3d7ac33d10e7b5e7dc97abe33e2c
                           ),
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          icon: const CustomImage(
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                          decoration: BoxDecoration(color: const Color.fromRGBO(245, 245, 245, 1), borderRadius: BorderRadius.circular(50)),
+                          child: TextField(
+                            controller: pincodeController,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(6),
+                            ],
+                            style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: textPrimary,
+                                ),
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                icon: const CustomImage(
+                                  height: 20,
+                                  width: 20,
+                                  path: Assets.imagesSearchNormal,
+                                ),
+                                hintText: "Search near pincode",
+                                hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontWeight: FontWeight.w300)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: const BoxDecoration(color: Colors.black, borderRadius: BorderRadius.all(Radius.circular(50))),
+                          child: Image.asset(
+                            Assets.imagesArrowRight,
+                            color: Colors.white,
                             height: 20,
                             width: 20,
-                            path: Assets.imagesSearchNormal,
                           ),
+<<<<<<< HEAD
                           hintText: "Search near pincode",
                           hintStyle: Theme.of(context)
                               .textTheme
@@ -400,11 +489,78 @@ class _LocationScreenState extends State<LocationScreen> {
                                       .copyWith(
                                         fontSize: 11,
                                         fontWeight: FontWeight.w400,
+=======
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      scrollDirection: Axis.vertical,
+                      itemCount: filteredLocations.length, // Use filteredLocations length
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            margin: const EdgeInsets.only(top: 16),
+                            color: Colors.white,
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: const BoxDecoration(
+                                    color: Color.fromRGBO(255, 244, 239, 1),
+                                    borderRadius: BorderRadius.all(Radius.circular(25)),
+                                  ),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: CustomImage(path: Assets.imagesGps),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 16,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        "400080, Airoli",
+                                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                                              fontSize: 13,
+                                              color: Colors.black87,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+>>>>>>> 6b3e6e6bf56c3d7ac33d10e7b5e7dc97abe33e2c
                                       ),
+                                      Text(
+                                        "B-102, Sunshine Apartments, Veera Desai Road, Andheri West, Mumbai.",
+                                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 16,
+                                ),
+                                Icon(
+                                  (false) ? Icons.check_circle_outline_rounded : Icons.radio_button_unchecked_rounded,
+                                  size: 30,
+                                  color: (false) ? Colors.green : Colors.grey.shade300,
                                 ),
                               ],
                             ),
                           ),
+<<<<<<< HEAD
                           const SizedBox(
                             width: 16,
                           ),
@@ -419,13 +575,180 @@ class _LocationScreenState extends State<LocationScreen> {
                           ),
                         ],
                       ),
+=======
+                        );
+                      },
+>>>>>>> 6b3e6e6bf56c3d7ac33d10e7b5e7dc97abe33e2c
                     ),
-                  );
-                },
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
+            );
+          } else {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 60,
+                  ),
+                  Text(
+                    "Get your place",
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          color: Colors.black87,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w900,
+                        ),
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 22.0),
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      "Enter the PIN code of the area in the field below and proceed further.",
+                      style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w200,
+                          ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                          decoration: BoxDecoration(color: const Color.fromRGBO(245, 245, 245, 1), borderRadius: BorderRadius.circular(50)),
+                          child: TextField(
+                            onChanged: (value) {
+                              setState(() {
+                                // filteredLocations = locationlist.where((location) => location.title.toLowerCase().contains(value.toLowerCase())).toList();
+                              });
+                            },
+                            controller: pincodeController,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(6),
+                            ],
+                            style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: textPrimary,
+                                ),
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                icon: const CustomImage(
+                                  height: 20,
+                                  width: 20,
+                                  path: Assets.imagesSearchNormal,
+                                ),
+                                hintText: "Search near pincode",
+                                hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontWeight: FontWeight.w300)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: const BoxDecoration(color: Colors.black, borderRadius: BorderRadius.all(Radius.circular(50))),
+                          child: Image.asset(
+                            Assets.imagesArrowRight,
+                            color: Colors.white,
+                            height: 20,
+                            width: 20,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      scrollDirection: Axis.vertical,
+                      itemCount: filteredLocations.length, // Use filteredLocations length
+                      itemBuilder: (context, index) {
+                        final ground = filteredLocations[index];
+                        return GestureDetector(
+                          onTap: () {
+                            authController.selectLocation(index);
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(top: 16),
+                            color: Colors.white,
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: const BoxDecoration(
+                                    color: Color.fromRGBO(255, 244, 239, 1),
+                                    borderRadius: BorderRadius.all(Radius.circular(25)),
+                                  ),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: CustomImage(path: Assets.imagesGps),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 16,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        "${ground.pincode ?? ""}, ${ground.title}",
+                                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                                              fontSize: 13,
+                                              color: Colors.black87,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                      ),
+                                      Text(
+                                        ground.address ?? "",
+                                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 16,
+                                ),
+                                Icon(
+                                  (ground.isSelected) ? Icons.check_circle_outline_rounded : Icons.radio_button_unchecked_rounded,
+                                  size: 30,
+                                  color: (ground.isSelected) ? Colors.green : Colors.grey.shade300,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+        }),
       ),
       extendBody: true,
       bottomNavigationBar: Stack(
@@ -498,6 +821,7 @@ class _LocationScreenState extends State<LocationScreen> {
     );
   }
 }
+<<<<<<< HEAD
 
 class LocationList {
   String title;
@@ -507,3 +831,5 @@ class LocationList {
   LocationList(
       {required this.title, required this.subtitle, required this.selected});
 }
+=======
+>>>>>>> 6b3e6e6bf56c3d7ac33d10e7b5e7dc97abe33e2c

@@ -6,8 +6,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:football_shuru/services/init.dart';
 import 'package:football_shuru/services/theme.dart';
-import 'package:football_shuru/views/screens/auth_screens/signup_screen.dart';
-import 'package:football_shuru/views/screens/initial_screens/location_screen.dart';
 import 'package:football_shuru/views/screens/initial_screens/splash_screen.dart';
 import 'package:football_shuru/views/screens/widgets/no_internet.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
