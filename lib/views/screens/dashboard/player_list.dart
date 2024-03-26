@@ -17,13 +17,12 @@ class _PlayerListScreenState extends State<PlayerListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarBrightness: Brightness.dark,
-          statusBarColor: Colors.transparent,
+          statusBarColor: Colors.white,
         ),
         titleSpacing: 0.0,
         title:  Transform(
@@ -60,14 +59,16 @@ class _PlayerListScreenState extends State<PlayerListScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: ListView.builder(
+          padding: EdgeInsets.symmetric(vertical: 16),
+          shrinkWrap: true,
             itemCount: 6,
             itemBuilder: (context,index){
           return Column(
             children: [
               ListTile(
+                visualDensity: VisualDensity(vertical: -4),
+                contentPadding: EdgeInsets.symmetric(horizontal: 15),
                 leading: Container(
-                  height: 30,
-                  width: 30,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
                       border: Border.all(color: Colors.white),
@@ -81,6 +82,8 @@ class _PlayerListScreenState extends State<PlayerListScreen> {
                   ),
                   child: const CustomImage(
                     radius: 50,
+                    height: 24,
+                    width: 24,
                     path: "https://s3-alpha-sig.figma.com/img/edbc/827e/ddd9eb8d1b1f8a34ea7de88255893a11?Expires=1711929600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=L33otg20rmNDjbv2godV47V2VKD4bEukiEVlI0FAICF2D9vNJwX7HfLaWAJ1vfLzFeMPrMqP4lIpanRlxkvL6ayojKlAqsfWlzGzAKsg0NfGPjDrYmpnIsnvBOC3pQh8yy2HwEABL9tuszzm3vQPqW4WM2THrgjgyEu4SVPv0xA12IpmPpSUU2Gr5N2MLAloiEm43dNrdxbwWbVWqnfusKUybziAqaN89X4yECYFEQTSF5lwj1zx~RnOYf5-O48vKnh3QdgjGeoD2paa7mMYC8d9IPsC3vKOMV9~pBcKjz3uYYyygvqTbTB7Lw7-0jm259hn~BVtt5C-YkpAeFxPvA__",),
                 ),
               title: Text("Ground Member",style: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -97,8 +100,8 @@ class _PlayerListScreenState extends State<PlayerListScreen> {
                   color: const Color(0xFFFF9100),
                         ),),
               ),
-              const Divider(
-                color: Color(0xFFE0E0E0),
+              Divider(
+                color: Colors.grey.shade200,
               ),
             ],
           );
