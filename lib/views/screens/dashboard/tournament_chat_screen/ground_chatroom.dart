@@ -32,6 +32,7 @@ class _GroundChatroomState extends State<GroundChatroom> {
               height: 230,
               width: double.infinity,
               child: ListView.builder(
+                shrinkWrap: true,
                   padding: EdgeInsets.zero,
                   itemCount: 2,
                   itemBuilder: (context, index) {

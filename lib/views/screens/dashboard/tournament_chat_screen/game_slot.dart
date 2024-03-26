@@ -72,47 +72,48 @@ class _GameSlotState extends State<GameSlot> {
                               .copyWith(
                                   fontSize: 13, fontWeight: FontWeight.w600),
                         ),
-                        Row(
-                          children: [
-                            RichText(
-                                text: TextSpan(
-                                    text: "230+",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .copyWith(
-                                            fontSize: 18,
-                                            height: 0,
-                                            fontWeight: FontWeight.w700),
-                                    children: [
-                                  TextSpan(
-                                    text: "\nPlayers shown interest",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .copyWith(
-                                            fontSize: 8,
-                                            height: 0,
-                                            fontWeight: FontWeight.w400),
-                                  ),
-                                ])),
-                            const SizedBox(width: 10),
-                            IconButton(
-                              icon: const Icon(
-                                  size: 30,
-                                  Icons.keyboard_arrow_right_outlined),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  getCustomRoute(
-                                    type: PageTransitionType.fade,
-                                    duration: const Duration(milliseconds: 600),
-                                    child: const PlayerListScreen(),
-                                  ),
-                                );
-                              },
-                            )
-                          ],
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              getCustomRoute(
+                                type: PageTransitionType.fade,
+                                duration: const Duration(milliseconds: 600),
+                                child: const PlayerListScreen(),
+                              ),
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              RichText(
+                                  text: TextSpan(
+                                      text: "230+",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!
+                                          .copyWith(
+                                              fontSize: 18,
+                                              height: 0,
+                                              fontWeight: FontWeight.w700),
+                                      children: [
+                                    TextSpan(
+                                      text: "\nPlayers shown interest",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!
+                                          .copyWith(
+                                              fontSize: 8,
+                                              height: 0,
+                                              fontWeight: FontWeight.w400),
+                                    ),
+                                  ])),
+                              const SizedBox(width: 10),
+                              Icon(
+                                    size: 30,
+                                    Icons.keyboard_arrow_right_outlined),
+
+                            ],
+                          ),
                         ),
                       ],
                     ),
