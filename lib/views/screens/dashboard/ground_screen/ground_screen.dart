@@ -96,13 +96,16 @@ class _MyGroundScreenState extends State<MyGroundScreen> {
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(50), color: primaryColor, boxShadow: [
-            BoxShadow(
-              blurRadius: 4,
-              offset: const Offset(0, 4),
-              color: Colors.black.withOpacity(0.25),
-            ),
-          ]),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              color: primaryColor,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 4,
+                  offset: const Offset(0, 4),
+                  color: Colors.black.withOpacity(0.25),
+                ),
+              ]),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -172,7 +175,7 @@ class _MyGroundScreenState extends State<MyGroundScreen> {
                 },
               ),
               const SizedBox(
-                height: 30,
+                height: 60,
               ),
             ],
           ),

@@ -61,7 +61,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const SizedBox(
                         width: 10,
                       ),
-                      const CustomImage(height: 60, width: 60, path: Assets.imagesFootballLogo),
+                      const CustomImage(
+                          height: 60,
+                          width: 60,
+                          path: Assets.imagesFootballLogo),
                     ],
                   ),
                   Text(
@@ -75,7 +78,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 30,
                   ),
                   TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction, // Added autovalidateMode
+                    autovalidateMode: AutovalidateMode
+                        .onUserInteraction, // Added autovalidateMode
 
                     validator: (value) {
                       if (value == null || value.isNotValid) {
@@ -87,12 +91,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     decoration: CustomDecoration.inputDecoration(
                       borderColor: Colors.grey.shade300,
                       floating: true,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 20),
                       label: "Your Name",
                       hint: "Ex. name",
-                      hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                            color: Colors.grey.shade300,
-                          ),
+                      hintStyle:
+                          Theme.of(context).textTheme.labelLarge!.copyWith(
+                                color: Colors.grey.shade300,
+                              ),
                       icon: const Padding(
                         padding: EdgeInsets.all(15),
                         child: CustomImage(
@@ -139,7 +145,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 20,
                   ),
                   TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction, // Added autovalidateMode
+                    autovalidateMode: AutovalidateMode
+                        .onUserInteraction, // Added autovalidateMode
                     validator: (value) {
                       if (value == null || value.isNotValid) {
                         return 'Enter Your Email Address';
@@ -152,12 +159,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     decoration: CustomDecoration.inputDecoration(
                       borderColor: Colors.grey.shade300,
                       floating: true,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 20),
                       label: "Email Id",
                       hint: "Ex. my.name@gmail.com",
-                      hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                            color: Colors.grey.shade300,
-                          ),
+                      hintStyle:
+                          Theme.of(context).textTheme.labelLarge!.copyWith(
+                                color: Colors.grey.shade300,
+                              ),
                       icon: const Padding(
                         padding: EdgeInsets.all(15),
                         child: CustomImage(
@@ -173,7 +182,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   Text(
                     "Gender selection",
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 16, fontWeight: FontWeight.w400),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(fontSize: 16, fontWeight: FontWeight.w400),
                   ),
                   // const SizedBox(
                   //   height: 10,
@@ -183,7 +195,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Row(
                         children: [
                           Radio(
-                              fillColor: MaterialStateColor.resolveWith((states) => const Color.fromRGBO(255, 154, 108, 1)),
+                              fillColor: MaterialStateColor.resolveWith(
+                                  (states) =>
+                                      const Color.fromRGBO(255, 154, 108, 1)),
                               value: Gender.male,
                               groupValue: _gender,
                               onChanged: (value) {
@@ -197,7 +211,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Row(
                         children: [
                           Radio(
-                              fillColor: MaterialStateColor.resolveWith((states) => const Color.fromRGBO(255, 154, 108, 1)),
+                              fillColor: MaterialStateColor.resolveWith(
+                                  (states) =>
+                                      const Color.fromRGBO(255, 154, 108, 1)),
                               value: Gender.female,
                               groupValue: _gender,
                               onChanged: (value) {
@@ -215,7 +231,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   CustomDatePicker(
                     onChanged: (DateTime? dateTime) {
-                      dateOfBirthController.text = DateFormatters().yMD.format(dateTime!);
+                      dateOfBirthController.text =
+                          DateFormatters().yMD.format(dateTime!);
                       setState(() {});
                     },
                     child: TextFormField(
@@ -234,12 +251,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       decoration: CustomDecoration.inputDecoration(
                         borderColor: Colors.grey.shade300,
                         floating: true,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 20),
                         label: "Date of Birth",
                         hint: "Ex. dd / mm / yyyy",
-                        hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                              color: Colors.grey.shade300,
-                            ),
+                        hintStyle:
+                            Theme.of(context).textTheme.labelLarge!.copyWith(
+                                  color: Colors.grey.shade300,
+                                ),
                         icon: const Padding(
                           padding: EdgeInsets.all(15),
                           child: CustomImage(
@@ -274,9 +293,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       label: "About Bio",
                       hint: "Ex. type short bio",
-                      hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                            color: Colors.grey.shade300,
-                          ),
+                      hintStyle:
+                          Theme.of(context).textTheme.labelLarge!.copyWith(
+                                color: Colors.grey.shade300,
+                              ),
                     ),
                   ),
 
@@ -312,32 +332,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 radius: 10,
                 height: 50,
                 onTap: () {
-                  log(_gender!.value.toString(), name: "Gender");
-                  if (_formKey.currentState!.validate()) {
-                    authController
-                        .register(
-                            name: nameController.text,
-                            gender: _gender!.value.toLowerCase(),
-                            email: emailIdController.text,
-                            dob: dateOfBirthController.text,
-                            about: bioController.text)
-                        .then((value) {
-                      if (value.isSuccess) {
-                        Navigator.pushReplacement(
-                          context,
-                          getCustomRoute(
-                            child: const LocationScreen(),
-                          ),
-                        );
-                      } else {
-                        FailedAlertDialog(
-                          message: value.message,
-                        );
-                      }
-                    });
-                  } else {
-                    Fluttertoast.showToast(msg: "Above Field Empty", toastLength: Toast.LENGTH_LONG);
-                  }
+                  Navigator.pushReplacement(
+                      context,
+                      getCustomRoute(
+                        child: const LocationScreen(),
+                      ));
+
+                  // log(_gender!.value.toString(), name: "Gender");
+                  // if (_formKey.currentState!.validate()) {
+                  //   authController
+                  //       .register(
+                  //           name: nameController.text,
+                  //           gender: _gender!.value.toLowerCase(),
+                  //           email: emailIdController.text,
+                  //           dob: dateOfBirthController.text,
+                  //           about: bioController.text)
+                  //       .then((value) {
+                  //     if (value.isSuccess) {
+                  //       Navigator.pushReplacement(
+                  //         context,
+                  //         getCustomRoute(
+                  //           child: const LocationScreen(),
+                  //         ),
+                  //       );
+                  //     } else {
+                  //       FailedAlertDialog(
+                  //         message: value.message,
+                  //       );
+                  //     }
+                  //   });
+                  // } else {
+                  //   Fluttertoast.showToast(msg: "Above Field Empty", toastLength: Toast.LENGTH_LONG);
+                  // }
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,

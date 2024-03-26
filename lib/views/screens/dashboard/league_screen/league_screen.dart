@@ -109,6 +109,7 @@ class _LeagueScreenState extends State<LeagueScreen> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Container(
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
           decoration: BoxDecoration(
@@ -237,6 +238,7 @@ class _LeagueScreenState extends State<LeagueScreen> {
                   itemCount: league_tournament.length,
                   itemBuilder: (context, index) {
                     return ListView.builder(
+                        padding: const EdgeInsets.only(bottom: 50),
                         itemCount: league_tournament[index].content.length,
                         itemBuilder: (context, i) {
                           return Container(
@@ -421,10 +423,9 @@ class _LeagueScreenState extends State<LeagueScreen> {
                                                             .textTheme
                                                             .labelSmall!
                                                             .copyWith(
-                                                              color:
-                                                                  Colors.white,
-                                                          fontSize: 10
-                                                            ),
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 10),
                                                       ),
                                                     ),
                                                   )
