@@ -1,7 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
+import 'package:football_shuru/views/screens/dashboard/promote_team_dialogue.dart';
 
 
 class PlayerListScreen extends StatefulWidget {
@@ -101,6 +103,30 @@ class _PlayerListScreenState extends State<PlayerListScreen> {
             ],
           );
         }),
+      ),
+      bottomNavigationBar: GestureDetector(
+        onTap: (){
+          PromoteTeamDialogue().dialogue(context);
+        },
+        child: Container(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(color: primaryColor,Icons.add),
+                  Text("Promote your team",style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                    color: primaryColor
+                          ),),
+                ],
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -28,11 +28,16 @@ class _AddGroundState extends State<AddGround> {
         ),
         leading: Padding(
           padding: const EdgeInsets.all(16),
-          child: Image.asset(
-            color: Colors.black,
-            Assets.imagesArrowLeft,
-            height: 24,
-            width: 24,
+          child: GestureDetector(
+            onTap: (){
+              Navigator.pop(context);
+            },
+            child: Image.asset(
+              color: Colors.black,
+              Assets.imagesArrowLeft,
+              height: 24,
+              width: 24,
+            ),
           ),
         ),
         title: Text("Add Ground",style: Theme.of(context).textTheme.titleLarge!.copyWith(
