@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
+import 'package:football_shuru/views/screens/dashboard/ground_screen/add_ground.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/community_near_me.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/league_and_tour_tile.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/near_ground.dart';
@@ -233,25 +234,37 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     width: 16,
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.add,
-                          size: 20,
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        getCustomRoute(
+                          type: PageTransitionType.fade,
+                          duration: const Duration(milliseconds: 600),
+                          child: const AddGround(),
                         ),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        Text(
-                          "Add Ground",
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                      ],
+                      );
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.add,
+                            size: 20,
+                          ),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          Text(
+                            "Add Ground",
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   const Spacer(),
