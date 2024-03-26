@@ -55,6 +55,9 @@ flutter:
     - assets/images/
     - assets/lotties/
     - assets/svgs/
+    - assets/
+    - assets/audios/
+    - assets/videos/
 flutter_assets:
   assets_path: assets/
   output_path: lib/generated/
