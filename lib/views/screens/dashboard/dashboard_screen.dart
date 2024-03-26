@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/screens/dashboard/chats_screen/chats_screen.dart';
@@ -6,6 +9,10 @@ import 'package:football_shuru/views/screens/dashboard/ground_screen/ground_scre
 import 'package:football_shuru/views/screens/dashboard/home_screen/home_screen.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/league_screen.dart';
 import 'package:football_shuru/views/screens/dashboard/teams_screen/teams_screen.dart';
+import 'package:get/get.dart';
+
+import '../../../controllers/homepage_controller.dart';
+import 'drawer.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -15,10 +22,22 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Timer.run(() async {
+      await Get.find<HomePageController>().getSlider();
+      await Get.find<AuthController>().getProfile();
+    });
+  }
+
   int selectIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DrawerScreen(),
       body: [
         const HomeScreen(),
         const LeagueScreen(),

@@ -46,62 +46,55 @@ class ShowImageOptions extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              InkWell(
+              GestureDetector(
                 onTap: () async {
                   var navigator = Navigator.of(context);
                   File? data = await ServiceController().pickImage(ImageSource.gallery, context);
                   navigator.pop(data);
                 },
-                child: Ink(
-                  color: Colors.transparent,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.image,
-                        size: 25.0,
-                        color: Theme.of(context).primaryColor,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.image,
+                      size: 25.0,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      "Gallery",
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14.0,
+                        color: Colors.grey[800],
                       ),
-                      const SizedBox(width: 10),
-                      Text(
-                        "Gallery",
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                          color: Colors.grey[800],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              Container(height: 30, width: 1, color: Colors.grey.shade400),
-              InkWell(
+              GestureDetector(
                 onTap: () async {
                   var navigator = Navigator.of(context);
                   File? data = await ServiceController().pickImage(ImageSource.camera, context);
 
                   navigator.pop(data);
                 },
-                child: Ink(
-                  color: Colors.transparent,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.camera,
-                        size: 25.0,
-                        color: Theme.of(context).primaryColor,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.camera,
+                      size: 25.0,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      "Camera",
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14.0,
+                        color: Colors.grey[800],
                       ),
-                      const SizedBox(width: 10),
-                      Text(
-                        "Camera",
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 14.0,
-                          color: Colors.grey[800],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],

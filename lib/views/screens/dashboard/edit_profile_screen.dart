@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -16,32 +17,72 @@ import 'package:get/get.dart';
 
 import '../../../services/date_formatters_and_converters.dart';
 import '../../../services/route_helper.dart';
-import '../initial_screens/location_screen.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class EditProfileScreen extends StatefulWidget {
+  const EditProfileScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailIdController = TextEditingController();
   TextEditingController dateOfBirthController = TextEditingController();
   TextEditingController bioController = TextEditingController();
   TextEditingController pincodeController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   Gender? _gender = Gender.male;
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Timer.run(() async {
+      await Get.find<AuthController>().getProfile().then((value) {
+        if (value.isSuccess) {
+          nameController.text = Get.find<AuthController>().profile?.name ?? "";
+          phoneController.text = Get.find<AuthController>().profile?.phone ?? "";
+          emailIdController.text = Get.find<AuthController>().profile?.email ?? "";
+          bioController.text = Get.find<AuthController>().profile?.about ?? "";
+          dateOfBirthController.text = Get.find<AuthController>().profile?.dob != null ? DateFormatters().yMD.format(Get.find<AuthController>().profile!.dob!) : "";
+          pincodeController.text = Get.find<AuthController>().profile?.pincode ?? "";
+          _gender = (Get.find<AuthController>().profile?.gender == 'male') ? Gender.male : Gender.female;
+          setState(() {});
+        } else {
+          Fluttertoast.showToast(msg: value.message);
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     // var size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+        ),
+        title: Text(
+          "Profile",
+          style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.w700, fontSize: 18, color: Colors.black87),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Form(
               key: _formKey,
               child: Column(
@@ -51,32 +92,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 16,
                   ),
 
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Welcome to",
-                        style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                              fontSize: 40,
-                              fontWeight: FontWeight.w900,
-                            ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const CustomImage(height: 60, width: 60, path: Assets.imagesFootballLogo),
-                    ],
-                  ),
-                  Text(
-                    "Create an account to explore amazing feature",
-                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w300,
-                        ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction, // Added autovalidateMode
 
@@ -106,38 +121,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                   ),
-                  // if (true)
-                  //   const SizedBox(
-                  //     height: 20,
-                  //   ),
-                  // if (true)
-                  //   TextFormField(
-                  //     readOnly: true,
-                  //     enabled: false,
-                  //     controller: Get.find<FirebaseController>().phone,
-                  //     decoration: CustomDecoration.inputDecoration(
-                  //       borderColor: Colors.grey.shade300,
-                  //       suffix: const Padding(
-                  //         padding: EdgeInsets.all(15),
-                  //         child: CustomImage(height: 5, width: 5, path: Assets.imagesLockCircle),
-                  //       ),
-                  //       floating: true,
-                  //       contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-                  //       label: "Phone Number",
-                  //       hint: "Ex. +91 9876543210",
-                  //       hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                  //             color: Colors.grey.shade300,
-                  //           ),
-                  //       icon: const Padding(
-                  //         padding: EdgeInsets.all(15),
-                  //         child: CustomImage(
-                  //           path: Assets.imagesMobileNum,
-                  //           height: 5,
-                  //           width: 5,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
+                  if (true)
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  if (true)
+                    TextFormField(
+                      readOnly: true,
+                      enabled: false,
+                      controller: phoneController,
+                      decoration: CustomDecoration.inputDecoration(
+                        borderColor: Colors.grey.shade300,
+                        suffix: const Padding(
+                          padding: EdgeInsets.all(15),
+                          child: CustomImage(height: 5, width: 5, path: Assets.imagesLockCircle),
+                        ),
+                        floating: true,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                        label: "Phone Number",
+                        hint: "Ex. +91 9876543210",
+                        hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
+                              color: Colors.grey.shade300,
+                            ),
+                        icon: const Padding(
+                          padding: EdgeInsets.all(15),
+                          child: CustomImage(
+                            path: Assets.imagesMobileNum,
+                            height: 5,
+                            width: 5,
+                          ),
+                        ),
+                      ),
+                    ),
                   const SizedBox(
                     height: 20,
                   ),
@@ -350,7 +365,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   log(_gender!.value.toString(), name: "Gender");
                   if (_formKey.currentState!.validate()) {
                     authController
-                        .register(
+                        .updateProfile(
                             pincode: pincodeController.text,
                             name: nameController.text,
                             gender: _gender!.value.toLowerCase(),
@@ -379,21 +394,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "Sign Up Now",
+                      "Update Profile",
                       style: Theme.of(context).textTheme.labelLarge!.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
                           ),
                     ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Image.asset(
-                      Assets.imagesArrowRight,
-                      height: 24,
-                      width: 24,
-                      color: Colors.white,
-                    )
                   ],
                 ),
               );

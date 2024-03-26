@@ -20,8 +20,15 @@ class AuthRepo {
         "device_id": getDeviceId(),
       });
 
+  Future<Response> updatePincode({required String pincode}) async => await apiClient.postData(AppConstants.updatePincode, {
+        "pincode": pincode,
+      });
+
+  Future<Response> profile() async => await apiClient.getData(AppConstants.getProfile);
+
   Future<Response> register({
     required String name,
+    required String pincode,
     required String gender,
     required String email,
     required String dob,
@@ -31,11 +38,27 @@ class AuthRepo {
         "name": name,
         "gender": gender,
         "email": email,
+        'pincode': pincode,
         "dob": dob,
         "about": about,
       });
 
-  Future<Response> getUser() async => await apiClient.getData(AppConstants.profileUri);
+  Future<Response> updateProfile({
+    required String name,
+    required String pincode,
+    required String gender,
+    required String email,
+    required String dob,
+    required String about,
+  }) async =>
+      await apiClient.postData(AppConstants.updateProfile, {
+        "name": name,
+        "gender": gender,
+        "email": email,
+        'pincode': pincode,
+        "dob": dob,
+        "about": about,
+      });
 
   Future<Response> groundPincode() async => await apiClient.getData(AppConstants.groundPincode);
 
@@ -52,22 +75,12 @@ class AuthRepo {
     return sharedPreferences.getString(AppConstants.token) ?? "";
   }
 
-  Future<bool> saveUserId(String id) async {
-    log(getUserId());
-    return await sharedPreferences.setString(AppConstants.userId, id);
-  }
-
-  String getUserId() {
-    return sharedPreferences.getString(AppConstants.userId) ?? "";
-  }
-
   bool isLoggedIn() {
     return sharedPreferences.containsKey(AppConstants.token);
   }
 
   bool clearSharedData() {
     sharedPreferences.remove(AppConstants.token);
-    sharedPreferences.remove(AppConstants.userId);
     apiClient.token = null;
     apiClient.updateHeader(null);
     return true;

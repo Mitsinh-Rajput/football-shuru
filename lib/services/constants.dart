@@ -50,16 +50,16 @@ class AppConstants {
 
   static const String loginUri = 'api/v1/user/login';
   static const String register = 'api/v1/user/register';
-  static const String profileUri = 'api/v1/user/profile';
+  static const String getProfile = 'api/v1/user/profile/get';
+  static const String updateProfile = 'api/v1/user/profile/update';
+  static const String updatePincode = 'api/v1/user/profile/update/pincode';
   static const String groundPincode = 'api/v1/ground';
+  static const String joinGround = 'api/v1/ground/chat/join';
+  static const String leaveGround = 'api/v1/ground/chat/leave';
 
   /// Home
   static const String slider = 'api/v1/basic/slider';
 
   // Shared Key
   static const String token = 'user_app_token';
-  static const String userId = 'user_app_id';
-  static const String razorpayKey = 'razorpay_key';
-  static const String recentOrders = 'recent_orders';
-  static const String isUser = 'is_user';
 }

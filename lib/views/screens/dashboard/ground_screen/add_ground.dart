@@ -1,11 +1,14 @@
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:football_shuru/services/input_decoration.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
+import 'package:iconly/iconly.dart';
 
 import '../../../../services/theme.dart';
+import '../../../base/image_picker_sheet.dart';
 
 class AddGround extends StatefulWidget {
   const AddGround({super.key});
@@ -15,6 +18,8 @@ class AddGround extends StatefulWidget {
 }
 
 class _AddGroundState extends State<AddGround> {
+  List<File?> images = [];
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -35,11 +40,10 @@ class _AddGroundState extends State<AddGround> {
             width: 24,
           ),
         ),
-        title: Text("Add Ground",style: Theme.of(context).textTheme.titleLarge!.copyWith(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          color: const Color(0xFF40424E)
-        ),),
+        title: Text(
+          "Add Ground",
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 16, fontWeight: FontWeight.w600, color: const Color(0xFF40424E)),
+        ),
         bottom: PreferredSize(
           preferredSize: Size(size.width, 1),
           child: Container(
@@ -48,47 +52,30 @@ class _AddGroundState extends State<AddGround> {
             width: size.width,
           ),
         ),
-
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(36.0),
+          padding: const EdgeInsets.all(20.0),
           child: Form(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(6),
+                  ],
                   decoration: CustomDecoration.inputDecoration(
-                    icon: const Icon(Icons.location_on_outlined),
+                    icon: const Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: CustomImage(height: 24, width: 24, path: Assets.imagesPincode),
+                    ),
                     floating: true,
                     label: "Enter pincode",
                     hint: "Ex. 4143905",
-                    hintStyle: const TextStyle(
-                        fontSize: 14
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  decoration: CustomDecoration.inputDecoration(
-                      icon: const Icon(Icons.person_add_alt_1_outlined),
-                      floating: true,
-                      label: "Name of ground",
-                      hint: "Ex. Taloja mallonium ground",
-                    hintStyle: const TextStyle(
-                      fontSize: 14
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  maxLines: 3,
-                  decoration: CustomDecoration.inputDecoration(
-                      floating: true,
-                      label: "Ground Description",
+                    hintStyle: const TextStyle(fontSize: 14),
                   ),
                 ),
                 const SizedBox(
@@ -97,103 +84,193 @@ class _AddGroundState extends State<AddGround> {
                 TextFormField(
                   decoration: CustomDecoration.inputDecoration(
                     icon: const Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: CustomImage(
-                          height: 24,
-                          width: 24,
-                          path: Assets.imagesMap),
+                      padding: EdgeInsets.all(12.0),
+                      child: CustomImage(height: 24, width: 24, path: Assets.imagesNameofground),
                     ),
                     floating: true,
-                    label: "Map Location (Lat/Long)",
-                    hint: "4i94.554.44/4933.333.233",
-                    hintStyle: const TextStyle(
-                        fontSize: 14
-                    ),
+                    label: "Name of ground",
+                    hint: "Ex. Taloja mallonium ground",
+                    hintStyle: const TextStyle(fontSize: 14),
                   ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Ground Images",style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600
-                  ),),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 TextFormField(
-                  onTap: (){
-
-                  },
-                  enabled: false,
                   decoration: CustomDecoration.inputDecoration(
-                    suffix: const Icon(
-                        color: Colors.red,
-                        Icons.disabled_by_default_outlined),
-                    icon: const Icon(Icons.image_outlined),
-                    floating: true,
-                    label: "Main Images",
-                    hint: "logo/image.png",
-                    hintStyle: const TextStyle(
-                        fontSize: 14
+                    icon: const Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: CustomImage(height: 24, width: 24, path: Assets.imagesAddress),
                     ),
+                    floating: true,
+                    label: "Ground address",
+                    hint: "Ex. Vashi Sector 9a, Navi Mumbai - 400703 (Behind Father Agnel Basket Ball Court)",
+                    hintStyle: const TextStyle(fontSize: 14),
                   ),
                 ),
-                const SizedBox(height: 20,),
-                Row(
-                  children: [
-                    Icon(Icons.add,color: primaryColor,),
-                    const SizedBox(width: 10,),
-                    Text("Add Other Images",style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                        color: primaryColor
-                    ),),
-
-                  ],
+                const SizedBox(
+                  height: 20,
                 ),
-                Row(
+                TextFormField(
+                  maxLines: 3,
+                  decoration: CustomDecoration.inputDecoration(
+                    floating: true,
+                    label: "Ground Description",
+                    hintStyle: const TextStyle(fontSize: 14),
+                    hint:
+                        "Ex. Located in Navi Mumbai, Father Agnel Sports Complex is a distinguished sports club. Situated in Vashi Sector 9a, this establishment brings years of expertise to the realm of health, fitness, and sports, establishing itself as a trusted destination for individuals seeking a holistic approach to wellness.",
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  decoration: CustomDecoration.inputDecoration(
+                    icon: const Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: CustomImage(height: 24, width: 24, path: Assets.imagesMap),
+                    ),
+                    floating: true,
+                    label: "Google Map Location",
+                    hint: "3XGV+QC9 Navi Mumbai, Maharashtra",
+                    hintStyle: const TextStyle(fontSize: 14),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Ground Images",
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Stack(
+                    Wrap(
                       children: [
-                        Container(
-                          height: 70,
-                          width: 70,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: const Color(0xFFEBEBEB).withOpacity(0.1)),
-                              borderRadius: BorderRadius.circular(10),
-                              color: const Color(0xFFEBEBEB).withOpacity(0.1)
-                          ),
+                        if (images.isNotEmpty)
+                          ...List.generate(images.length, (index) {
+                            return Container(
+                              margin: const EdgeInsets.only(top: 0, right: 10, bottom: 25),
+                              child: Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.file(
+                                      images[index]!,
+                                      height: 100,
+                                      width: 100,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                  Positioned(
+                                      bottom: -15,
+                                      right: 2,
+                                      left: 2,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          images.removeAt(index);
+                                          setState(() {});
+                                        },
+                                        child: const CircleAvatar(
+                                          backgroundColor: Colors.white,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(2.0),
+                                            child: CircleAvatar(
+                                              backgroundColor: Colors.red,
+                                              child: Icon(
+                                                IconlyLight.delete,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ))
+                                ],
+                              ),
+                            );
+                          }),
+                        GestureDetector(
+                          onTap: () async {
+                            File? groundPic = await getImageBottomSheet(context);
+                            if (groundPic != null) {
+                              images.add(groundPic);
+                            }
+                            setState(() {});
+                          },
+                          child: Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: Colors.grey.shade300)),
+                              child: const Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    CustomImage(
+                                      path: Assets.imagesAddimage,
+                                      color: Colors.grey,
+                                      height: 30,
+                                      width: 30,
+                                    ),
+                                    SizedBox(height: 6),
+                                    Text("Add Image")
+                                  ],
+                                ),
+                              )),
                         ),
-                        const Positioned(
-                            top: 25,
-                            left: 25,
-                            child: Icon(Icons.image_outlined,color: Color(0xFFA5A5A5),))
                       ],
                     ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    const Icon(Icons.add)
                   ],
                 ),
-                const SizedBox(height: 50,),
-                CustomButton(
-                    elevation: 0,
-                    radius: 50,
-                  color: const Color(0xFF263238),
-                    child: Text("Submit",style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                      color: Colors.white
-                ),),onTap: (){})
+                // TextFormField(
+                //   onTap: () {},
+                //   enabled: false,
+                //   decoration: CustomDecoration.inputDecoration(
+                //     suffix: const Icon(color: Colors.red, Icons.disabled_by_default_outlined),
+                //     icon: const Icon(Icons.image_outlined),
+                //     floating: true,
+                //     label: "Main Images",
+                //     hint: "logo/image.png",
+                //     hintStyle: const TextStyle(fontSize: 14),
+                //   ),
+                // ),
+                const SizedBox(
+                  height: 20,
+                ),
               ],
             ),
           ),
         ),
+      ),
+      bottomNavigationBar: Container(
+        height: 80,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Color(0x3F000000),
+              blurRadius: 4,
+              offset: Offset(0, -2),
+              spreadRadius: 0,
+            )
+          ],
+        ),
+        child: CustomButton(
+            elevation: 0,
+            radius: 50,
+            color: const Color(0xFF263238),
+            child: Text(
+              "Submit",
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white),
+            ),
+            onTap: () {}),
       ),
     );
   }

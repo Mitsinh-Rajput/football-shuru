@@ -2,7 +2,10 @@
 class Assets {
   Assets._();
 
+  static const String assetsImagesArrowRight = 'assets/images/arrow_right.png';
   static const String imagesAdd = 'assets/images/add.png';
+  static const String imagesAddimage = 'assets/images/addimage.png';
+  static const String imagesAddress = 'assets/images/address.png';
   static const String imagesArrowLeft = 'assets/images/arrow-left.png';
   static const String imagesArrowRight = 'assets/images/arrow-right.png';
   static const String imagesBackgroundImage = 'assets/images/BackgroundImage.png';
@@ -10,6 +13,7 @@ class Assets {
   static const String imagesCallCalling = 'assets/images/call-calling.png';
   static const String imagesChat = 'assets/images/Chat.png';
   static const String imagesChats = 'assets/images/chats.png';
+  static const String imagesContctUs = 'assets/images/contct_us.png';
   static const String imagesEllipse68 = 'assets/images/Ellipse68.png';
   static const String imagesEmailId = 'assets/images/email_id.png';
   static const String imagesEnterOTPpana1 = 'assets/images/EnterOTPpana1.png';
@@ -21,11 +25,14 @@ class Assets {
   static const String imagesLeague = 'assets/images/league.png';
   static const String imagesLockCircle = 'assets/images/lock-circle.png';
   static const String imagesLogo = 'assets/images/logo.png';
+  static const String imagesLogout = 'assets/images/Logout.png';
   static const String imagesMap = 'assets/images/map.png';
   static const String imagesMenu = 'assets/images/menu.png';
   static const String imagesMessageQuestion = 'assets/images/message-question.png';
   static const String imagesMobileNum = 'assets/images/mobile_num.png';
+  static const String imagesNameofground = 'assets/images/nameofground.png';
   static const String imagesNotification = 'assets/images/notification.png';
+  static const String imagesPincode = 'assets/images/pincode.png';
   static const String imagesPlaceholder = 'assets/images/placeholder.jpg';
   static const String imagesReceiptText = 'assets/images/receipt-text.png';
   static const String imagesRectangle1292 = 'assets/images/Rectangle1292.png';
@@ -34,8 +41,13 @@ class Assets {
   static const String imagesSetting5 = 'assets/images/setting-5.png';
   static const String imagesShare = 'assets/images/share.png';
   static const String imagesShareIconUIA = 'assets/images/Share_Icon_UIA.png';
+  static const String imagesShareapp = 'assets/images/shareapp.png';
   static const String imagesShimmer = 'assets/images/shimmer.gif';
+  static const String imagesStar1 = 'assets/images/star1.png';
+  static const String imagesSupport = 'assets/images/support.png';
   static const String imagesTeams = 'assets/images/teams.png';
+  static const String imagesTermAndCondition = 'assets/images/term_and_condition.png';
+  static const String imagesUser = 'assets/images/user.png';
   static const String imagesYourName = 'assets/images/your_name.png';
   static const String lottiesNoInternet = 'assets/lotties/no_internet.json';
 }

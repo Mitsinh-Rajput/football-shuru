@@ -8,6 +8,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 
 import '../data/api/api_checker.dart';
 import '../data/models/contact_number.dart';
+import '../data/models/response/profile_model.dart';
 import '../data/models/response/response_model.dart';
 import '../data/models/response/user_model.dart';
 import '../data/repositories/auth_repo.dart';
@@ -28,6 +29,7 @@ class AuthController extends GetxController implements GetxService {
   UserModel? _userModel;
 
   UserModel? get userModel => _userModel;
+  bool drawercheck = false;
 
   bool get isLoading => _isLoading;
 
@@ -66,6 +68,7 @@ class AuthController extends GetxController implements GetxService {
 
   Future<ResponseModel> register({
     required String name,
+    required String pincode,
     required String gender,
     required String email,
     required String dob,
@@ -76,7 +79,7 @@ class AuthController extends GetxController implements GetxService {
     update();
     log("response.body.toString()${AppConstants.baseUrl}${AppConstants.register}", name: "register");
     try {
-      Response response = await authRepo.register(name: name, gender: gender, email: email, dob: dob, about: about);
+      Response response = await authRepo.register(pincode: pincode, name: name, gender: gender, email: email, dob: dob, about: about);
       log(response.statusCode.toString());
       log(response.body.toString(), name: "register");
       if (response.statusCode == 200) {
@@ -93,29 +96,83 @@ class AuthController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  Future<ResponseModel> getUserProfileData() async {
+  Future<ResponseModel> updateProfile({
+    required String name,
+    required String pincode,
+    required String gender,
+    required String email,
+    required String dob,
+    required String about,
+  }) async {
     ResponseModel responseModel;
     _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.updateProfile}", name: "updateProfile");
     try {
-      Response response = await authRepo.getUser();
-      // log(response.bodyString ?? "NULL", name: "UserModel");
-      // log(response.statusCode.toString(), name: "statusCode");
+      Response response = await authRepo.updateProfile(pincode: pincode, name: name, gender: gender, email: email, dob: dob, about: about);
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "register");
       if (response.statusCode == 200) {
-        log(response.bodyString!, name: "UserModel");
-        // log(response.statusCode.toString(), name: "statusCode");
-        _userModel = userModelFromJson(response.bodyString!);
-        authRepo.saveUserId('${_userModel!.user.id}');
-        update();
-        responseModel = ResponseModel(true, 'success');
+        getProfile();
+        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
       } else {
-        ApiChecker.checkApi(response);
-        responseModel = ResponseModel(false, "${response.statusText}");
+        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
       }
     } catch (e) {
-      log('---- ${e.toString()} ----', name: "ERROR AT getUserProfileData()");
-      responseModel = ResponseModel(false, "$e");
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT updateProfile()");
     }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
 
+  Future<ResponseModel> updatePincode({required String pincode}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.updatePincode}", name: "updatePincode");
+    try {
+      Response response = await authRepo.updatePincode(pincode: pincode);
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "updatePincode");
+      if (response.statusCode == 200) {
+        getProfile();
+
+        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT updatePincode()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Profile? profile;
+
+  Future<ResponseModel> getProfile() async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.getProfile}", name: "myPackageBookings");
+    try {
+      Response response = await authRepo.profile();
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "getProfile");
+      if (response.statusCode == 200) {
+        profile = profileFromJson(jsonEncode(response.body['data']));
+        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT getProfile()");
+    }
     _isLoading = false;
     update();
     return responseModel;
@@ -147,14 +204,15 @@ class AuthController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  void selectLocation(int index) {
-    for (int i = 0; i < grounds.length; i++) {
-      if (i == index) {
-        grounds[i].isSelected = true;
+  void selectLocation(int? id) {
+    for (var element in grounds) {
+      if (element.id == id) {
+        element.isSelected = true;
       } else {
-        grounds[i].isSelected = false;
+        element.isSelected = false;
       }
     }
+
     update();
   }
 

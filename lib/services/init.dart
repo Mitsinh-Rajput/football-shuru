@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controllers/auth_controller.dart';
 import '../controllers/firebase_controller.dart';
+import '../controllers/permission_controller.dart';
 import '../data/api/api_calls.dart';
 import '../data/api/api_client.dart';
 import '../data/repositories/auth_repo.dart';
@@ -36,7 +37,7 @@ class Init {
       // Get.lazyPut(() => CartRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
       // Get.lazyPut(() => SplashRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
 
-      // Get.lazyPut(() => PermissionController());
+      Get.lazyPut(() => PermissionController());
       Get.lazyPut(() => AuthController(authRepo: Get.find()));
       Get.lazyPut(() => HomePageController(homeRepo: Get.find()));
       Get.lazyPut(() => FirebaseController());
