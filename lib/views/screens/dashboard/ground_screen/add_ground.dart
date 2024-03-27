@@ -1,10 +1,15 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:football_shuru/controllers/auth_controller.dart';
+import 'package:football_shuru/services/extensions.dart';
 import 'package:football_shuru/services/input_decoration.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
+import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 
 import '../../../../services/theme.dart';
@@ -18,7 +23,13 @@ class AddGround extends StatefulWidget {
 }
 
 class _AddGroundState extends State<AddGround> {
-  List<File?> images = [];
+  TextEditingController pincodeController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController descController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
+  List<File> images = [];
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +45,7 @@ class _AddGroundState extends State<AddGround> {
         leading: Padding(
           padding: const EdgeInsets.all(16),
           child: GestureDetector(
-            onTap: (){
+            onTap: () {
               Navigator.pop(context);
             },
             child: Image.asset(
@@ -62,16 +73,26 @@ class _AddGroundState extends State<AddGround> {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Form(
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(
+                  controller: pincodeController,
                   keyboardType: TextInputType.number,
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                     LengthLimitingTextInputFormatter(6),
                   ],
+                  validator: (value) {
+                    if (value.isNotValid) {
+                      return 'Enter Pincode';
+                    } else if (value?.length != 6) {
+                      return "Enter 6 Digit Pincode";
+                    }
+                    return null; // Return null if the value is valid
+                  },
                   decoration: CustomDecoration.inputDecoration(
                     icon: const Padding(
                       padding: EdgeInsets.all(12.0),
@@ -87,6 +108,12 @@ class _AddGroundState extends State<AddGround> {
                   height: 20,
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value.isNotValid) {
+                      return 'Enter Name Of Ground';
+                    } // Return null if the value is valid
+                  },
+                  controller: nameController,
                   decoration: CustomDecoration.inputDecoration(
                     icon: const Padding(
                       padding: EdgeInsets.all(12.0),
@@ -102,6 +129,12 @@ class _AddGroundState extends State<AddGround> {
                   height: 20,
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value.isNotValid) {
+                      return 'Enter Ground Address';
+                    } // Return null if the value is valid
+                  },
+                  controller: addressController,
                   decoration: CustomDecoration.inputDecoration(
                     icon: const Padding(
                       padding: EdgeInsets.all(12.0),
@@ -117,6 +150,12 @@ class _AddGroundState extends State<AddGround> {
                   height: 20,
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value.isNotValid) {
+                      return 'Enter Ground Description';
+                    } // Return null if the value is valid
+                  },
+                  controller: descController,
                   maxLines: 3,
                   decoration: CustomDecoration.inputDecoration(
                     floating: true,
@@ -130,6 +169,12 @@ class _AddGroundState extends State<AddGround> {
                   height: 20,
                 ),
                 TextFormField(
+                  validator: (value) {
+                    if (value.isNotValid) {
+                      return 'Enter Google Map Location';
+                    } // Return null if the value is valid
+                  },
+                  controller: locationController,
                   decoration: CustomDecoration.inputDecoration(
                     icon: const Padding(
                       padding: EdgeInsets.all(12.0),
@@ -253,30 +298,52 @@ class _AddGroundState extends State<AddGround> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        height: 80,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Color(0x3F000000),
-              blurRadius: 4,
-              offset: Offset(0, -2),
-              spreadRadius: 0,
-            )
-          ],
-        ),
-        child: CustomButton(
-            elevation: 0,
-            radius: 50,
-            color: const Color(0xFF263238),
-            child: Text(
-              "Submit",
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white),
-            ),
-            onTap: () {}),
-      ),
+      bottomNavigationBar: GetBuilder<AuthController>(builder: (authController) {
+        return Container(
+          height: 80,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Color(0x3F000000),
+                blurRadius: 4,
+                offset: Offset(0, -2),
+                spreadRadius: 0,
+              )
+            ],
+          ),
+          child: CustomButton(
+              isLoading: authController.isLoading,
+              elevation: 0,
+              radius: 50,
+              color: const Color(0xFF263238),
+              child: Text(
+                "Submit",
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white),
+              ),
+              onTap: () {
+                if (_formKey.currentState!.validate() && images.isNotEmpty) {
+                  authController
+                      .storeGround(
+                    pincode: pincodeController.text,
+                    name: nameController.text,
+                    address: addressController.text,
+                    desc: descController.text,
+                    location: locationController.text,
+                    images: images,
+                  )
+                      .then((value) {
+                    if (value.isSuccess) {
+                      Navigator.pop(context);
+                    }
+                  });
+                } else {
+                  Fluttertoast.showToast(msg: "Above Field Empty", toastLength: Toast.LENGTH_LONG);
+                }
+              }),
+        );
+      }),
     );
   }
 }

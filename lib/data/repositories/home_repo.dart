@@ -10,7 +10,7 @@ class HomeRepo {
 
   Future<Response> slider() async => await apiClient.getData(AppConstants.slider);
 
-  Future<Response> joinGround({required int groundId}) async => await apiClient.postData(AppConstants.joinGround, {"ground_id"});
+  Future<Response> joinGround({required int groundId}) async => await apiClient.postData(AppConstants.joinGround, {"ground_id": groundId});
 
-  Future<Response> leaveGround({required int groundId}) async => await apiClient.postData(AppConstants.leaveGround, {"ground_id"});
+  Future<Response> leaveGround({required int groundId}) async => await apiClient.postData(AppConstants.leaveGround, {"ground_id": groundId});
 }

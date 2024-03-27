@@ -35,6 +35,7 @@ String getStringFromList(List<dynamic>? data) {
 
 class AppConstants {
   String get getBaseUrl => baseUrl;
+
   set setBaseUrl(String url) => baseUrl = url;
 
   //TODO: Change Base Url
@@ -53,9 +54,11 @@ class AppConstants {
   static const String getProfile = 'api/v1/user/profile/get';
   static const String updateProfile = 'api/v1/user/profile/update';
   static const String updatePincode = 'api/v1/user/profile/update/pincode';
-  static const String groundPincode = 'api/v1/ground';
+  static const String ground = 'api/v1/ground';
   static const String joinGround = 'api/v1/ground/chat/join';
   static const String leaveGround = 'api/v1/ground/chat/leave';
+  static const String loadChats = 'api/v1/ground/chat/messages/load';
+  static const String sendMessage = 'api/v1/ground/chat/messages/send';
 
   /// Home
   static const String slider = 'api/v1/basic/slider';

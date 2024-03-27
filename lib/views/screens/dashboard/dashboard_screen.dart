@@ -12,6 +12,7 @@ import 'package:football_shuru/views/screens/dashboard/teams_screen/teams_screen
 import 'package:get/get.dart';
 
 import '../../../controllers/homepage_controller.dart';
+import '../../../controllers/chat_controller.dart';
 import 'drawer.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -28,7 +29,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
     Timer.run(() async {
       await Get.find<HomePageController>().getSlider();
-      await Get.find<AuthController>().getProfile();
+      await Get.find<AuthController>().getProfile().then((value) {
+        Get.find<ChatController>().initilizePusher(userID: Get.find<AuthController>().profile!.id!);
+      });
+      await Get.find<AuthController>().getgrounds();
     });
   }
 

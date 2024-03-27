@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:football_shuru/data/models/response/grounds_model.dart';
+import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
@@ -184,7 +186,7 @@ class AuthController extends GetxController implements GetxService {
     ResponseModel responseModel;
     _isLoading = true;
     update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.groundPincode}", name: "getgrounds");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.ground}", name: "getgrounds");
     try {
       Response response = await authRepo.groundPincode();
       log(response.statusCode.toString());
@@ -198,6 +200,57 @@ class AuthController extends GetxController implements GetxService {
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
       log('++++ ${e.toString()} +++++++', name: "ERROR AT getgrounds()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> storeGround(
+      {required String pincode, required String name, required String address, required String desc, required String location, required List<File> images}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.ground}", name: "storeGround");
+    try {
+      Map<String, dynamic> data = {};
+      data.addAll({
+        "pincode": pincode,
+      });
+      data.addAll({
+        "title": name,
+      });
+      data.addAll({
+        "address": address,
+      });
+      data.addAll({
+        "map_location": location,
+      });
+      data.addAll({
+        "description": desc,
+      });
+      log(images.toString(), name: "Images");
+      if (images.isNotEmpty) {
+        for (int i = 0; i < images.length; i++) {
+          data.addAll({
+            'images[$i]': MultipartFile(images[i], filename: images[i].path.fileName),
+          });
+        }
+      }
+      print(data);
+      log(data.toString(), name: "Data");
+      Response response = await authRepo.storeGround(data);
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "storeGround");
+      if (response.statusCode == 200) {
+        getgrounds();
+        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT storeGround()");
     }
     _isLoading = false;
     update();

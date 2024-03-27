@@ -3,29 +3,32 @@ import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:football_shuru/controllers/homepage_controller.dart';
+import 'package:football_shuru/data/models/response/grounds_model.dart';
+import 'package:football_shuru/services/route_helper.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
+import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/tournament_chat_screen.dart';
+import 'package:get/get.dart';
 import 'package:r_dotted_line_border/r_dotted_line_border.dart';
 
 import '../../../../services/theme.dart';
 
-class NearGround extends StatefulWidget {
-  const NearGround({super.key});
+class SelectedNearGround extends StatefulWidget {
+  final Grounds selectedGround;
+
+  const SelectedNearGround({super.key, required this.selectedGround});
 
   @override
-  State<NearGround> createState() => _NearGroundState();
+  State<SelectedNearGround> createState() => _SelectedNearGroundState();
 }
 
-class _NearGroundState extends State<NearGround> {
+class _SelectedNearGroundState extends State<SelectedNearGround> {
   bool isScroll = false;
 
   final ScrollController _scrollController = ScrollController();
 
-  List carouselImages = [
-    "https://s3-alpha-sig.figma.com/img/3b4f/4fed/548fb7ac6924256a535b3354183b482f?Expires=1711929600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nnL47N2PFLTT8liroPB55kWLTHd9hR5F4CCg68mq5galzkIvwso6aYhvDCrvx3-3-13yc3wEIkpZLZ1FmIAuDJfj01zdyluTEMbkS7jqPE7aGev1KtvdWaeJliTOJKYkPd1UtcfrYJtIZvW1FZ0M~eOoZX7V0wVaZwb-dGeP04ZvMiWLm7Ejn7UGKKeNm7vBu8-9bXFNrXJxvrYYMjN0JCSflYlx5z-SqrXB3e4dP7A3eW3BAobAq3ncl-V9tuCxOstLOkpFV3BF5mgt4ZPqWQuvx1PpjK8hR3~QxHdJayGVv2G3HRxGakMPs81~hY8fKlXHZt5~ireWzwhg8EJTNQ__",
-    "https://s3-alpha-sig.figma.com/img/3b4f/4fed/548fb7ac6924256a535b3354183b482f?Expires=1711929600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nnL47N2PFLTT8liroPB55kWLTHd9hR5F4CCg68mq5galzkIvwso6aYhvDCrvx3-3-13yc3wEIkpZLZ1FmIAuDJfj01zdyluTEMbkS7jqPE7aGev1KtvdWaeJliTOJKYkPd1UtcfrYJtIZvW1FZ0M~eOoZX7V0wVaZwb-dGeP04ZvMiWLm7Ejn7UGKKeNm7vBu8-9bXFNrXJxvrYYMjN0JCSflYlx5z-SqrXB3e4dP7A3eW3BAobAq3ncl-V9tuCxOstLOkpFV3BF5mgt4ZPqWQuvx1PpjK8hR3~QxHdJayGVv2G3HRxGakMPs81~hY8fKlXHZt5~ireWzwhg8EJTNQ__",
-    "https://s3-alpha-sig.figma.com/img/3b4f/4fed/548fb7ac6924256a535b3354183b482f?Expires=1711929600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nnL47N2PFLTT8liroPB55kWLTHd9hR5F4CCg68mq5galzkIvwso6aYhvDCrvx3-3-13yc3wEIkpZLZ1FmIAuDJfj01zdyluTEMbkS7jqPE7aGev1KtvdWaeJliTOJKYkPd1UtcfrYJtIZvW1FZ0M~eOoZX7V0wVaZwb-dGeP04ZvMiWLm7Ejn7UGKKeNm7vBu8-9bXFNrXJxvrYYMjN0JCSflYlx5z-SqrXB3e4dP7A3eW3BAobAq3ncl-V9tuCxOstLOkpFV3BF5mgt4ZPqWQuvx1PpjK8hR3~QxHdJayGVv2G3HRxGakMPs81~hY8fKlXHZt5~ireWzwhg8EJTNQ__"
-  ];
   @override
   void initState() {
     // TODO: implement initState
@@ -43,6 +46,8 @@ class _NearGroundState extends State<NearGround> {
       }
     });
   }
+
+  int _currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -76,14 +81,14 @@ class _NearGroundState extends State<NearGround> {
             child: CustomImage(color: isScroll ? Colors.black : Colors.white, height: 24, width: 24, path: Assets.imagesShareapp),
           )
         ],
-        title: Text(
-          "Near Ground",
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                color: isScroll ? Colors.black : Colors.white,
-              ),
-        ),
+        // title: Text(
+        //   "${widget.selectedGround.title ?? ""}",
+        //   style: Theme.of(context).textTheme.titleLarge!.copyWith(
+        //         fontSize: 20,
+        //         fontWeight: FontWeight.w700,
+        //         color: isScroll ? Colors.black : Colors.white,
+        //       ),
+        // ),
       ),
       body: SingleChildScrollView(
         controller: _scrollController,
@@ -92,35 +97,62 @@ class _NearGroundState extends State<NearGround> {
           children: [
             CarouselSlider(
               options: CarouselOptions(
-                height: 400.0,
-                viewportFraction: 1.0,
-                enlargeCenterPage: false,
-              ),
-              items: carouselImages.map((i) {
+                  onPageChanged: (int index, reason) {
+                    setState(() {
+                      _currentPage = index;
+                    });
+                  },
+                  height: 400.0,
+                  viewportFraction: 1.0,
+                  scrollPhysics: widget.selectedGround.images.length == 1 ? NeverScrollableScrollPhysics() : AlwaysScrollableScrollPhysics()),
+              items: widget.selectedGround.images.map((i) {
                 return Builder(
                   builder: (BuildContext context) {
                     return CustomImage(
-                      fit: BoxFit.fitHeight,
+                      fit: BoxFit.fill,
                       path: i,
                     );
                   },
                 );
               }).toList(),
             ),
+            if (widget.selectedGround.images.length.isGreaterThan(1))
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 15.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      for (int i = 0; i < widget.selectedGround.images.length; i++)
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 3),
+                          height: _currentPage == i ? 12 : 8,
+                          width: _currentPage == i ? 12 : 8,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: _currentPage == i ? Colors.grey.shade800 : Colors.grey.shade200,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(18.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Football Prime Cup 2024",
+                    widget.selectedGround.title ?? "",
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 24, fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(
                     height: 6,
                   ),
                   Text(
-                    "400614, Nerul Sports Arena, A-301, Sea Breeze Society, Sector 20, Nerul, Navi Mumbai.",
+                    widget.selectedGround.address ?? '',
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14, fontWeight: FontWeight.w400),
                   ),
                   const SizedBox(
@@ -133,15 +165,32 @@ class _NearGroundState extends State<NearGround> {
                         "45K Members",
                         style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 16, color: const Color.fromRGBO(255, 145, 0, 1), fontWeight: FontWeight.w400),
                       ),
-                      CustomButton(
-                          height: 35,
-                          elevation: 0,
-                          radius: 0,
-                          child: Text(
-                            "Join Now",
-                            style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w600),
-                          ),
-                          onTap: () {})
+                      if (widget.selectedGround.hasUser == null)
+                        GetBuilder<HomePageController>(builder: (homePageController) {
+                          return CustomButton(
+                              isLoading: homePageController.isLoading,
+                              height: 35,
+                              elevation: 0,
+                              radius: 0,
+                              child: Text(
+                                "Join Now",
+                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w600),
+                              ),
+                              onTap: () {
+                                homePageController.joinGround(groundId: widget.selectedGround.id!).then((value) {
+                                  if (value.isSuccess) {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        getCustomRoute(
+                                            child: TournamentChatScreen(
+                                          groundId: widget.selectedGround.id!,
+                                        )));
+                                  } else {
+                                    Fluttertoast.showToast(msg: value.message, toastLength: Toast.LENGTH_LONG);
+                                  }
+                                });
+                              });
+                        })
                     ],
                   ),
                   const SizedBox(
@@ -155,7 +204,7 @@ class _NearGroundState extends State<NearGround> {
                     height: 5,
                   ),
                   Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                    widget.selectedGround.description ?? "",
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14, fontWeight: FontWeight.w400),
                   ),
                   const SizedBox(
@@ -251,30 +300,66 @@ class _NearGroundState extends State<NearGround> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 15),
                 ],
               ),
             )
           ],
         ),
       ),
-      bottomNavigationBar: SizedBox(
-        height: 80,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.add,
-              size: 22,
-              color: Color.fromRGBO(2, 191, 77, 1),
+      bottomNavigationBar: GetBuilder<HomePageController>(builder: (homePageController) {
+        if (widget.selectedGround.hasUser == null) {
+          return const SizedBox.shrink();
+          // return Container(
+          //   height: 80,
+          //   padding: EdgeInsets.all(15),
+          //   child: CustomButton(
+          //     isLoading: homePageController.isLoading,
+          //     onTap: () {
+          //       homePageController.joinGround(groundId: widget.selectedGround.id!).then((value) {
+          //         if (value.isSuccess) {
+          //         } else {
+          //           Fluttertoast.showToast(msg: value.message, toastLength: Toast.LENGTH_LONG);
+          //         }
+          //       });
+          //     },
+          //     child: Row(
+          //       mainAxisSize: MainAxisSize.min,
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       crossAxisAlignment: CrossAxisAlignment.center,
+          //       children: [
+          //         const Icon(
+          //           Icons.add,
+          //           size: 22,
+          //           color: Colors.white,
+          //         ),
+          //         const SizedBox(width: 15),
+          //         Text(
+          //           "Join a group",
+          //           style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white),
+          //         )
+          //       ],
+          //     ),
+          //   ),
+          // );
+        } else {
+          return Container(
+            height: 80,
+            padding: const EdgeInsets.all(15),
+            child: CustomButton(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    getCustomRoute(
+                        child: TournamentChatScreen(
+                      groundId: widget.selectedGround.id!,
+                    )));
+              },
+              title: "View Group",
             ),
-            Text(
-              "Join a group",
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 18, fontWeight: FontWeight.w600, color: primaryColor),
-            )
-          ],
-        ),
-      ),
+          );
+        }
+      }),
     );
   }
 }

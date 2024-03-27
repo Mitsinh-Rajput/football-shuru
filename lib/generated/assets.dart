@@ -9,11 +9,13 @@ class Assets {
   static const String imagesArrowLeft = 'assets/images/arrow-left.png';
   static const String imagesArrowRight = 'assets/images/arrow-right.png';
   static const String imagesBackgroundImage = 'assets/images/BackgroundImage.png';
+  static const String imagesBarcode = 'assets/images/barcode.png';
   static const String imagesCalendarTick = 'assets/images/calendar-tick.png';
   static const String imagesCallCalling = 'assets/images/call-calling.png';
   static const String imagesChat = 'assets/images/Chat.png';
   static const String imagesChats = 'assets/images/chats.png';
   static const String imagesContctUs = 'assets/images/contct_us.png';
+  static const String imagesCopy = 'assets/images/copy.png';
   static const String imagesEllipse68 = 'assets/images/Ellipse68.png';
   static const String imagesEmailId = 'assets/images/email_id.png';
   static const String imagesEnterOTPpana1 = 'assets/images/EnterOTPpana1.png';

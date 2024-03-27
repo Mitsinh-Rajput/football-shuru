@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:football_shuru/controllers/homepage_controller.dart';
+import 'package:football_shuru/controllers/chat_controller.dart';
 import 'package:football_shuru/data/repositories/home_repo.dart';
 import 'package:get/instance_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,6 +39,7 @@ class Init {
       // Get.lazyPut(() => SplashRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
 
       Get.lazyPut(() => PermissionController());
+      Get.lazyPut(() => ChatController(authRepo: Get.find()));
       Get.lazyPut(() => AuthController(authRepo: Get.find()));
       Get.lazyPut(() => HomePageController(homeRepo: Get.find()));
       Get.lazyPut(() => FirebaseController());
