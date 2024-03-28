@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
+import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/data/models/response/chat_model.dart';
+import 'package:football_shuru/data/models/response/profile_model.dart';
 import 'package:get/get.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
@@ -28,6 +31,7 @@ class ChatController extends GetxController implements GetxService {
 
   bool get isLoading => _isLoading;
   PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
+  var scrollController = ScrollController();
 
   Future<void> initilizePusher({required int userID}) async {
     log('initilizePusher called');
@@ -55,16 +59,22 @@ class ChatController extends GetxController implements GetxService {
     if (event.eventName == 'chatting-event') {
       final requiredData = json.decode(event.data);
       log(requiredData.toString());
-      _allChats.insert(
-        0,
-        ChatModel(
-          id: requiredData['userId'],
-          message: requiredData['message'],
-          createdAt: DateTime.now(),
-        ),
-      );
-
-      update();
+      try {
+        _allChats.insert(
+          0,
+          ChatModel(
+            id: requiredData['userId'],
+            message: requiredData['message'],
+            user: Profile.fromJson((requiredData['userData'])),
+            userId: requiredData['userData']['id'],
+            createdAt: DateTime.now(),
+          ),
+        );
+        log(_allChats.toString(), name: "ALL Chats");
+        update();
+      } catch (e) {
+        log(e.toString(), name: "Error");
+      }
     }
   }
 
@@ -102,6 +112,17 @@ class ChatController extends GetxController implements GetxService {
       log(response.statusCode.toString());
       log(response.body.toString(), name: "sendMessage");
       if (response.statusCode == 200) {
+        final requiredData = response.body['data'];
+        log(Get.find<AuthController>().profile!.id.toString());
+        _allChats.insert(
+          0,
+          ChatModel(
+            id: requiredData['id'],
+            userId: Get.find<AuthController>().profile?.id,
+            message: requiredData['message'],
+            createdAt: DateTime.now(),
+          ),
+        );
         responseModel = ResponseModel(true, '${response.body['message']}', response.body);
       } else {
         responseModel = ResponseModel(false, '${response.body['message']}', response.body);

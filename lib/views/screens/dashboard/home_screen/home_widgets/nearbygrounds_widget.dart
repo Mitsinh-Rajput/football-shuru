@@ -4,7 +4,6 @@ import 'package:football_shuru/views/base/shimmer.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../../../generated/assets.dart';
 import '../../../../../services/route_helper.dart';
 import '../../../../base/custom_image.dart';
 import '../../ground_screen/add_ground.dart';
@@ -21,7 +20,7 @@ class _NearbyGroundsState extends State<NearbyGrounds> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AuthController>(builder: (authController) {
-      if (authController.isLoading) {
+      if (authController.isLoading && authController.grounds.isEmpty) {
         return CustomShimmer(
           child: Column(
             children: [
@@ -122,7 +121,7 @@ class _NearbyGroundsState extends State<NearbyGrounds> {
             ],
           ),
         );
-      } else if (authController.grounds.isEmpty) {
+      } else if (!authController.isLoading && authController.grounds.isEmpty) {
         return const SizedBox.shrink();
       }
       return Column(

@@ -22,6 +22,7 @@ import 'package:football_shuru/views/screens/widgets/primarybanner_widget.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../../../../controllers/homepage_controller.dart';
 import '../../../../services/route_helper.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -67,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         title: GestureDetector(
           onTap: () {
-            Navigator.push(context, getCustomRoute(child: const LocationScreen()));
+            // Navigator.push(context, getCustomRoute(child: const LocationScreen()));
           },
           child: RichText(
             text: TextSpan(
@@ -89,11 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           GestureDetector(
-            onTap: () {
-              Get.find<AuthController>().clearSharedData();
-
-              Navigator.push(context, getCustomRoute(child: const SplashScreen()));
-            },
+            onTap: () {},
             child: Image.asset(
               Assets.imagesSearch,
               height: 22,
@@ -156,135 +153,141 @@ class _HomeScreenState extends State<HomeScreen> {
             })),
         //
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 16,
-            ),
-            // banner
-            const PrimaryBannerWidget(), const SizedBox(height: 15),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await Get.find<HomePageController>().getSlider();
+          await Get.find<AuthController>().getgrounds();
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 16,
+              ),
+              // banner
+              const PrimaryBannerWidget(), const SizedBox(height: 15),
 
-            //! Community ground --
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      "Ground community near me",
+              //! Community ground --
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        "Ground community near me",
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey.shade800,
+                            ),
+                      ),
+                    ),
+                    Image.asset(
+                      Assets.imagesArrowRight,
+                      height: 24,
+                      width: 24,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 14,
+              ),
+              SizedBox(
+                height: 150,
+                width: size.width,
+                child: ListView.builder(
+                  itemCount: 6,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          getCustomRoute(
+                            type: PageTransitionType.fade,
+                            duration: const Duration(milliseconds: 600),
+                            child: TournamentChatScreen(
+                              groundId: 5,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(right: 16, left: index == 0 ? 16 : 0),
+                        child: const CommunityNearMe(),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              //
+              const SizedBox(
+                height: 30,
+              ),
+              //! Nearby ground --
+              NearbyGrounds(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Text(
+                      "League’s / Tournament",
                       style: Theme.of(context).textTheme.labelLarge!.copyWith(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Colors.grey.shade800,
                           ),
                     ),
-                  ),
-                  Image.asset(
-                    Assets.imagesArrowRight,
-                    height: 24,
-                    width: 24,
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 14,
-            ),
-            SizedBox(
-              height: 150,
-              width: size.width,
-              child: ListView.builder(
-                itemCount: 6,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        getCustomRoute(
-                          type: PageTransitionType.fade,
-                          duration: const Duration(milliseconds: 600),
-                          child: TournamentChatScreen(
-                            groundId: 5,
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.add,
+                            size: 20,
                           ),
-                        ),
-                      );
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 16, left: index == 0 ? 16 : 0),
-                      child: const CommunityNearMe(),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          Text(
+                            "Add League",
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                        ],
+                      ),
                     ),
-                  );
-                },
+                  ],
+                ),
               ),
-            ),
-            //
-            const SizedBox(
-              height: 30,
-            ),
-            //! Nearby ground --
-            NearbyGrounds(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  Text(
-                    "League’s / Tournament",
-                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.grey.shade800,
-                        ),
-                  ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.add,
-                          size: 20,
-                        ),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        Text(
-                          "Add League",
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+              const SizedBox(
+                height: 14,
               ),
-            ),
-            const SizedBox(
-              height: 14,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: typesOfLeaguelist.length,
-                itemBuilder: (context, index) {
-                  return LeagueAndTourTile(
-                    typesOfLeague: typesOfLeaguelist[index],
-                  );
-                },
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: typesOfLeaguelist.length,
+                  itemBuilder: (context, index) {
+                    return LeagueAndTourTile(
+                      typesOfLeague: typesOfLeaguelist[index],
+                    );
+                  },
+                ),
               ),
-            ),
-            // bottom
-            const SizedBox(
-              height: 30,
-            ),
-          ],
+              // bottom
+              const SizedBox(
+                height: 30,
+              ),
+            ],
+          ),
         ),
       ),
     );

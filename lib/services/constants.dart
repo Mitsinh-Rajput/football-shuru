@@ -57,6 +57,7 @@ class AppConstants {
   static const String ground = 'api/v1/ground';
   static const String joinGround = 'api/v1/ground/chat/join';
   static const String leaveGround = 'api/v1/ground/chat/leave';
+  static const String joinedGrounds = 'api/v1/ground/chat/joined';
   static const String loadChats = 'api/v1/ground/chat/messages/load';
   static const String sendMessage = 'api/v1/ground/chat/messages/send';
 

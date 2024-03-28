@@ -40,6 +40,8 @@ dependencies:
   r_dotted_line_border: ^0.1.1
   iconly: ^1.0.1
   flutter_switch: ^0.3.2
+  pointycastle: ^3.7.4
+  crypto: ^3.0.0
 
 
 dev_dependencies:
