@@ -1,22 +1,16 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:football_shuru/controllers/auth_controller.dart';
-import 'package:football_shuru/controllers/chat_controller.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
-import 'package:football_shuru/views/screens/dashboard/ground_screen/add_ground.dart';
+import 'package:football_shuru/views/base/snack_bar.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/community_near_me.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/home_widgets/nearbygrounds_widget.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/league_and_tour_tile.dart';
-import 'package:football_shuru/views/screens/dashboard/home_screen/selected_ground.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/tournament_chat_screen.dart';
-import 'package:football_shuru/views/screens/initial_screens/location_screen.dart';
-import 'package:football_shuru/views/screens/initial_screens/splash_screen.dart';
 import 'package:football_shuru/views/screens/widgets/changepincode_bottomsheet.dart';
 import 'package:football_shuru/views/screens/widgets/primarybanner_widget.dart';
 import 'package:get/get.dart';
@@ -68,6 +62,15 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         title: GestureDetector(
           onTap: () {
+            showSnackBar(context,
+                content: "Something went wrong, Please try again",
+                snackBarAction: SnackBarAction(
+                  label: 'Retry',
+                  onPressed: () {
+                    log("Geklfskl");
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  },
+                ));
             // Navigator.push(context, getCustomRoute(child: const LocationScreen()));
           },
           child: RichText(
@@ -207,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           getCustomRoute(
                             type: PageTransitionType.fade,
                             duration: const Duration(milliseconds: 600),
-                            child: TournamentChatScreen(
+                            child: const TournamentChatScreen(
                               groundId: 5,
                             ),
                           ),
@@ -226,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 30,
               ),
               //! Nearby ground --
-              NearbyGrounds(),
+              const NearbyGrounds(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(

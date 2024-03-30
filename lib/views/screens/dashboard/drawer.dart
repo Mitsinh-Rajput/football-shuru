@@ -1,24 +1,21 @@
 import 'dart:async';
-import 'dart:collection';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:football_shuru/services/extensions.dart';
+import 'package:football_shuru/views/screens/auth_screens/mobile_auth_screen.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../controllers/auth_controller.dart';
-import '../../../services/extra_methods.dart';
 import '../../../services/route_helper.dart';
 import '../../../services/theme.dart';
 import '../../base/common_button.dart';
 import '../../base/custom_image.dart';
 import '../../base/dialogs/deleteaccount_dialog.dart';
-import '../../base/web_view.dart';
 import 'dashboard_screen.dart';
 import 'edit_profile_screen.dart';
 
@@ -185,7 +182,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           padding: const EdgeInsets.all(10),
                           child: Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.home,
                               ),
                               const SizedBox(
@@ -426,38 +423,37 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     ),
                   ),
                 ),
-                if (authController.getUserToken().isValid)
-                  GestureDetector(
-                    onTap: () async {
-                      await FirebaseAuth.instance.signOut();
-                      Get.find<AuthController>().clearSharedData();
-                      Get.find<AuthController>().profile = null;
-                      Fluttertoast.showToast(msg: "Account Deleted Successfully");
-                      Navigator.pushAndRemoveUntil(context, getCustomRoute(child: const DashboardScreen()), (route) => false);
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 4),
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                      color: Colors.transparent,
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            Assets.imagesLogout,
-                            height: 24,
-                            color: primaryColor,
-                            width: 24,
-                          ),
-                          const SizedBox(
-                            width: 14,
-                          ),
-                          Text(
-                            "Logout",
-                            style: Theme.of(context).textTheme.labelLarge,
-                          )
-                        ],
-                      ),
+                // if (authController.getUserToken().isValid)
+                GestureDetector(
+                  onTap: () async {
+                    FirebaseAuth.instance.signOut();
+                    authController.clearSharedData();
+                    authController.profile = null;
+                    Fluttertoast.showToast(msg: "Logout Successful");
+                    Navigator.pushAndRemoveUntil(context, getCustomRoute(child: const MobileAuthScreen()), (route) => false);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 4),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    color: Colors.transparent,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.logout_sharp,
+                          size: 24,
+                        ),
+                        const SizedBox(
+                          width: 14,
+                        ),
+                        Text(
+                          "Logout",
+                          style: Theme.of(context).textTheme.labelLarge,
+                        )
+                      ],
                     ),
                   ),
+                ),
+
                 if (Platform.isIOS)
                   // if (Platform.isIOS && authController.getUserToken().isValid ? (authController.businessSettings?.iosOnProduction != 'on') : false)
                   GestureDetector(

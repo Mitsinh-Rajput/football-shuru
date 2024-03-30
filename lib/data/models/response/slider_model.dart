@@ -4,18 +4,18 @@
 
 import 'dart:convert';
 
-List<Slider> sliderFromJson(String str) => List<Slider>.from(json.decode(str).map((x) => Slider.fromJson(x)));
+List<SliderModel> sliderFromJson(String str) => List<SliderModel>.from(json.decode(str).map((x) => SliderModel.fromJson(x)));
 
-String sliderToJson(List<Slider> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String sliderToJson(List<SliderModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Slider {
+class SliderModel {
   final String? image;
 
-  Slider({
+  SliderModel({
     this.image,
   });
 
-  factory Slider.fromJson(Map<String, dynamic> json) => Slider(
+  factory SliderModel.fromJson(Map<String, dynamic> json) => SliderModel(
         image: json["image"],
       );
 

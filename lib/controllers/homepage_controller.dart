@@ -1,14 +1,17 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/data/models/response/grounds_model.dart';
 import 'package:football_shuru/data/models/response/slider_model.dart';
 import 'package:football_shuru/data/repositories/home_repo.dart';
+import 'package:football_shuru/main.dart';
 import 'package:get/get.dart';
 
 import '../data/models/response/response_model.dart';
 import '../services/constants.dart';
+import '../views/base/snack_bar.dart';
 
 class HomePageController extends GetxController implements GetxService {
   final HomeRepo homeRepo;
@@ -19,7 +22,7 @@ class HomePageController extends GetxController implements GetxService {
 
   bool get isLoading => _isLoading;
 
-  List<Slider> slider = [];
+  List<SliderModel> slider = [];
 
   Future<ResponseModel> getSlider() async {
     ResponseModel responseModel;
@@ -34,6 +37,16 @@ class HomePageController extends GetxController implements GetxService {
         slider = sliderFromJson(jsonEncode(response.body['data']));
         responseModel = ResponseModel(true, '${response.body['message']}', response.body);
       } else {
+        showSnackBar(navigatorKey.currentContext!,
+            content: "Something went wrong, Please try again",
+            snackBarAction: SnackBarAction(
+              label: 'Retry',
+              onPressed: () {
+                getSlider();
+                log("Geklfskl");
+                ScaffoldMessenger.of(navigatorKey.currentContext!).hideCurrentSnackBar();
+              },
+            ));
         responseModel = ResponseModel(false, '${response.body['message']}', response.body);
       }
     } catch (e) {
@@ -58,6 +71,18 @@ class HomePageController extends GetxController implements GetxService {
         Get.find<AuthController>().getgrounds();
         responseModel = ResponseModel(true, '${response.body['message']}', response.body);
       } else {
+        showSnackBar(
+          navigatorKey.currentContext!,
+          content: "Something went wrong, Please try again",
+          snackBarAction: SnackBarAction(
+            label: 'Retry',
+            onPressed: () {
+              joinGround(groundId: groundId);
+              log("Geklfskl");
+              ScaffoldMessenger.of(navigatorKey.currentContext!).hideCurrentSnackBar();
+            },
+          ),
+        );
         responseModel = ResponseModel(false, '${response.body['message']}', response.body);
       }
     } catch (e) {
