@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
-import 'package:football_shuru/views/base/snack_bar.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/community_near_me.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/home_widgets/nearbygrounds_widget.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/league_and_tour_tile.dart';
@@ -18,6 +16,7 @@ import 'package:page_transition/page_transition.dart';
 
 import '../../../../controllers/homepage_controller.dart';
 import '../../../../services/route_helper.dart';
+import '../../initial_screens/location_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -62,16 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         title: GestureDetector(
           onTap: () {
-            showSnackBar(context,
-                content: "Something went wrong, Please try again",
-                snackBarAction: SnackBarAction(
-                  label: 'Retry',
-                  onPressed: () {
-                    log("Geklfskl");
-                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                  },
-                ));
-            // Navigator.push(context, getCustomRoute(child: const LocationScreen()));
+            Navigator.push(context, getCustomRoute(child: const LocationScreen()));
           },
           child: RichText(
             text: TextSpan(

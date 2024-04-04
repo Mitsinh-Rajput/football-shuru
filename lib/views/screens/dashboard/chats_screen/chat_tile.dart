@@ -20,14 +20,12 @@ class _MyChatTileState extends State<MyChatTile> {
         right: 16,
         bottom: 6,
       ),
-      color: Colors.white,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const CustomImage(
             radius: 50,
-            path:
-                "https://content.jdmagicbox.com/comp/mumbai/p8/022pxx22.xx22.220811180605.h5p8/catalogue/enc-sports-turf-jk-gram-thane-west-mumbai-yhq2pyqds4.jpg?clr=145229",
+            path: "https://content.jdmagicbox.com/comp/mumbai/p8/022pxx22.xx22.220811180605.h5p8/catalogue/enc-sports-turf-jk-gram-thane-west-mumbai-yhq2pyqds4.jpg?clr=145229",
             height: 50,
             width: 50,
             fit: BoxFit.cover,
@@ -40,36 +38,45 @@ class _MyChatTileState extends State<MyChatTile> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Cooperage Football Ground",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                        color: textPrimary,
-                        fontWeight: FontWeight.w600,
-                      ),
+                Container(
+                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                  child: Text(
+                    "Cooperage Football Ground",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          color: textPrimary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
                 ),
                 const SizedBox(
                   height: 4,
                 ),
-                Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temaliqua.",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                        color: textPrimary,
-                        fontWeight: FontWeight.w300,
-                      ),
+                Container(
+                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                  child: Text(
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temaliqua.",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                          color: textPrimary,
+                          fontWeight: FontWeight.w300,
+                        ),
+                  ),
                 ),
                 const SizedBox(
                   height: 4,
                 ),
-                Text(
-                  "12 Team •  48k members".toUpperCase(),
-                  style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                        color: const Color(0xffFF9100),
-                        fontWeight: FontWeight.w600,
-                      ),
+                Container(
+                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                  child: Text(
+                    "12 Team •  48k members".toUpperCase(),
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                          color: const Color(0xffFF9100),
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
                 ),
               ],
             ),
@@ -80,11 +87,14 @@ class _MyChatTileState extends State<MyChatTile> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                "12:21 PM",
-                style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+              Container(
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                child: Text(
+                  "12:21 PM",
+                  style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
               ),
               const SizedBox(
                 height: 4,

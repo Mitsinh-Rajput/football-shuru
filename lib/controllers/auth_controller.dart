@@ -5,10 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:football_shuru/data/models/response/grounds_model.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 
-import '../data/api/api_checker.dart';
 import '../data/models/contact_number.dart';
 import '../data/models/response/profile_model.dart';
 import '../data/models/response/response_model.dart';
@@ -257,17 +254,17 @@ class AuthController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  void selectLocation(int? id) {
-    for (var element in grounds) {
-      if (element.id == id) {
-        element.isSelected = true;
-      } else {
-        element.isSelected = false;
-      }
-    }
-
-    update();
-  }
+  // void selectLocation(int? id) {
+  //   for (var element in grounds) {
+  //     if (element.id == id) {
+  //       element.isSelected = true;
+  //     } else {
+  //       element.isSelected = false;
+  //     }
+  //   }
+  //
+  //   update();
+  // }
 
   void toggleTerms() {
     _acceptTerms = !_acceptTerms;

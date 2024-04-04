@@ -1,20 +1,19 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/base/shimmer.dart';
-import 'package:football_shuru/views/screens/dashboard/dashboard_screen.dart';
 import 'package:football_shuru/views/screens/dashboard/ground_screen/add_ground.dart';
 import 'package:get/get.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../../controllers/auth_controller.dart';
 import '../../../data/models/response/grounds_model.dart';
 import '../../../services/route_helper.dart';
+import '../dashboard/home_screen/selected_ground.dart';
 
 class LocationScreen extends StatefulWidget {
   const LocationScreen({super.key});
@@ -51,7 +50,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   height: 60,
                 ),
                 Text(
-                  "Get your place",
+                  "Check your place",
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: Colors.black87,
                         fontSize: 30,
@@ -65,7 +64,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 26.0),
                   child: Text(
                     textAlign: TextAlign.center,
-                    "Enter the PIN code of the area in the field below and proceed further.",
+                    "Enter the PIN code of the area in the field below to check nearby grounds.",
                     style: Theme.of(context).textTheme.labelSmall!.copyWith(
                           fontSize: 10,
                           fontWeight: FontWeight.w200,
@@ -217,7 +216,7 @@ class _LocationScreenState extends State<LocationScreen> {
                     height: 60,
                   ),
                   Text(
-                    "Get your place",
+                    "Check your place",
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: Colors.black87,
                           fontSize: 30,
@@ -231,7 +230,7 @@ class _LocationScreenState extends State<LocationScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 26.0),
                     child: Text(
                       textAlign: TextAlign.center,
-                      "Enter the PIN code of the area in the field below and proceed further.",
+                      "Enter the PIN code of the area in the field below to check nearby grounds.",
                       style: Theme.of(context).textTheme.labelSmall!.copyWith(
                             fontSize: 10,
                             fontWeight: FontWeight.w200,
@@ -305,7 +304,16 @@ class _LocationScreenState extends State<LocationScreen> {
                         final ground = filteredGrounds[index];
                         return GestureDetector(
                           onTap: () {
-                            authController.selectLocation(ground.id);
+                            Navigator.push(
+                              context,
+                              getCustomRoute(
+                                type: PageTransitionType.fade,
+                                duration: const Duration(milliseconds: 600),
+                                child: SelectedNearGround(
+                                  selectedGround: ground,
+                                ),
+                              ),
+                            );
                           },
                           child: Container(
                             margin: const EdgeInsets.only(top: 16),
@@ -350,14 +358,6 @@ class _LocationScreenState extends State<LocationScreen> {
                                     ],
                                   ),
                                 ),
-                                const SizedBox(
-                                  width: 16,
-                                ),
-                                Icon(
-                                  (ground.isSelected) ? Icons.check_circle_outline_rounded : Icons.radio_button_unchecked_rounded,
-                                  size: 24,
-                                  color: (ground.isSelected) ? Colors.green : Colors.grey.shade300,
-                                ),
                               ],
                             ),
                           ),
@@ -399,13 +399,13 @@ class _LocationScreenState extends State<LocationScreen> {
                   type: ButtonType.secondary,
                   radius: 50,
                   onTap: () {
-                    Navigator.push(context, getCustomRoute(child: AddGround()));
+                    Navigator.push(context, getCustomRoute(child: const AddGround()));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.add,
                         color: Colors.black87,
                       ),
@@ -413,48 +413,13 @@ class _LocationScreenState extends State<LocationScreen> {
                         width: 10,
                       ),
                       Text(
-                        "Add Ground",
+                        "Add New Ground",
                         style: Theme.of(context).textTheme.labelLarge!.copyWith(
                               color: Colors.black87,
                             ),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(height: 10),
-                IgnorePointer(
-                  ignoring: false,
-                  child: CustomButton(
-                      elevation: 0,
-                      radius: 50,
-                      height: 50,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Get Started",
-                            style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const CustomImage(
-                            color: Colors.white,
-                            path: Assets.imagesArrowRight,
-                          ),
-                        ],
-                      ),
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          getCustomRoute(
-                            child: const DashboardScreen(),
-                          ),
-                        );
-                      }),
                 ),
               ],
             ),

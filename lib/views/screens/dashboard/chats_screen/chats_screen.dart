@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/screens/dashboard/chats_screen/chat_tile.dart';
+import 'package:football_shuru/views/screens/dashboard/chats_screen/groundchats_screen.dart';
+import 'package:get/get.dart';
 
+import '../../../../controllers/homepage_controller.dart';
 import '../../../../generated/assets.dart';
 
 class ChatsScreen extends StatefulWidget {
@@ -14,8 +18,7 @@ class ChatsScreen extends StatefulWidget {
   State<ChatsScreen> createState() => _ChatsScreenState();
 }
 
-class _ChatsScreenState extends State<ChatsScreen>
-    with SingleTickerProviderStateMixin {
+class _ChatsScreenState extends State<ChatsScreen> with SingleTickerProviderStateMixin {
   static const List<Tab> myTabs = <Tab>[
     Tab(text: 'Grounds'),
     Tab(text: 'League Chatroom'),
@@ -27,6 +30,9 @@ class _ChatsScreenState extends State<ChatsScreen>
   @override
   void initState() {
     super.initState();
+    Timer.run(() async {
+      await Get.find<HomePageController>().getJoinedGrounds();
+    });
     _tabController = TabController(vsync: this, length: myTabs.length);
   }
 
@@ -72,31 +78,46 @@ class _ChatsScreenState extends State<ChatsScreen>
             width: 16,
           ),
         ],
-        bottom: TabBar(
-          dividerColor: Colors.grey.shade200,
-          indicatorSize: TabBarIndicatorSize.tab,
-          labelStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
-          indicatorWeight: 3.0,
-          labelColor: primaryColor,
-          unselectedLabelStyle: Theme.of(context).textTheme.labelLarge,
-          unselectedLabelColor: Colors.grey.shade500,
-          controller: _tabController,
-          tabs: myTabs,
-        ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: myTabs.map((Tab tab) {
-          // final String label = tab.text!.toLowerCase();
-          return ListView.builder(
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return const MyChatTile();
-            },
-          );
-        }).toList(),
+      body: Column(
+        children: [
+          Theme(
+            data: ThemeData(useMaterial3: false),
+            child: TabBar(
+              isScrollable: true,
+              indicatorColor: primaryColor,
+              dividerColor: Colors.grey.shade200,
+              indicatorSize: TabBarIndicatorSize.tab,
+              labelStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+              indicatorWeight: 3.0,
+              labelColor: primaryColor,
+              unselectedLabelStyle: Theme.of(context).textTheme.labelLarge,
+              unselectedLabelColor: Colors.grey.shade500,
+              controller: _tabController,
+              tabs: myTabs,
+            ),
+          ),
+          Expanded(
+            child: TabBarView(controller: _tabController, children: [
+              // final String label = tab.text!.toLowerCase();
+              const GroundChatScreen(),
+              ListView.builder(
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return const MyChatTile();
+                },
+              ),
+              ListView.builder(
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return const MyChatTile();
+                },
+              ),
+            ]),
+          ),
+        ],
       ),
     );
   }

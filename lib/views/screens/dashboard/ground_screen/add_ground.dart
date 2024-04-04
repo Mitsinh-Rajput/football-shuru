@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +11,6 @@ import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 
-import '../../../../services/theme.dart';
 import '../../../base/image_picker_sheet.dart';
 
 class AddGround extends StatefulWidget {
@@ -79,6 +77,7 @@ class _AddGroundState extends State<AddGround> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: pincodeController,
                   keyboardType: TextInputType.number,
                   inputFormatters: [
@@ -108,6 +107,7 @@ class _AddGroundState extends State<AddGround> {
                   height: 20,
                 ),
                 TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value.isNotValid) {
                       return 'Enter Name Of Ground';
@@ -129,6 +129,7 @@ class _AddGroundState extends State<AddGround> {
                   height: 20,
                 ),
                 TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value.isNotValid) {
                       return 'Enter Ground Address';
@@ -150,6 +151,7 @@ class _AddGroundState extends State<AddGround> {
                   height: 20,
                 ),
                 TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value.isNotValid) {
                       return 'Enter Ground Description';
@@ -169,6 +171,7 @@ class _AddGroundState extends State<AddGround> {
                   height: 20,
                 ),
                 TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value.isNotValid) {
                       return 'Enter Google Map Location';
@@ -323,23 +326,28 @@ class _AddGroundState extends State<AddGround> {
                 style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white),
               ),
               onTap: () {
-                if (_formKey.currentState!.validate() && images.isNotEmpty) {
-                  authController
-                      .storeGround(
-                    pincode: pincodeController.text,
-                    name: nameController.text,
-                    address: addressController.text,
-                    desc: descController.text,
-                    location: locationController.text,
-                    images: images,
-                  )
-                      .then((value) {
-                    if (value.isSuccess) {
-                      Navigator.pop(context);
-                    }
-                  });
+                if (_formKey.currentState!.validate()) {
+                  if (images.isNotEmpty) {
+                    authController
+                        .storeGround(
+                      pincode: pincodeController.text,
+                      name: nameController.text,
+                      address: addressController.text,
+                      desc: descController.text,
+                      location: locationController.text,
+                      images: images,
+                    )
+                        .then((value) {
+                      if (value.isSuccess) {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      }
+                    });
+                  } else {
+                    Fluttertoast.showToast(msg: "Please add at least one image", toastLength: Toast.LENGTH_LONG);
+                  }
                 } else {
-                  Fluttertoast.showToast(msg: "Above Field Empty", toastLength: Toast.LENGTH_LONG);
+                  Fluttertoast.showToast(msg: "Please fill in all required fields", toastLength: Toast.LENGTH_LONG);
                 }
               }),
         );

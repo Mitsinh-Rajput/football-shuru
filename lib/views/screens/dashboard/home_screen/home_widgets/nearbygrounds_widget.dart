@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/views/base/shimmer.dart';
+import 'package:football_shuru/views/screens/initial_screens/location_screen.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../../../services/route_helper.dart';
 import '../../../../base/custom_image.dart';
-import '../../ground_screen/add_ground.dart';
 import '../selected_ground.dart';
 
 class NearbyGrounds extends StatefulWidget {
@@ -148,7 +148,7 @@ class _NearbyGroundsState extends State<NearbyGrounds> {
                       getCustomRoute(
                         type: PageTransitionType.fade,
                         duration: const Duration(milliseconds: 600),
-                        child: const AddGround(),
+                        child: const LocationScreen(),
                       ),
                     );
                   },
@@ -197,7 +197,7 @@ class _NearbyGroundsState extends State<NearbyGrounds> {
                 mainAxisSpacing: 16,
                 crossAxisSpacing: 16,
               ),
-              itemCount: authController.grounds.length,
+              itemCount: authController.grounds.length.isGreaterThan(8) ? 8 : authController.grounds.length,
               itemBuilder: (context, index) {
                 final ground = authController.grounds[index];
                 return GestureDetector(

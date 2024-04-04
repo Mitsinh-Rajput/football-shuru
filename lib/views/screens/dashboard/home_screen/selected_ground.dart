@@ -104,7 +104,7 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                   },
                   height: 400.0,
                   viewportFraction: 1.0,
-                  scrollPhysics: widget.selectedGround.images.length == 1 ? NeverScrollableScrollPhysics() : AlwaysScrollableScrollPhysics()),
+                  scrollPhysics: widget.selectedGround.images.length == 1 ? const NeverScrollableScrollPhysics() : const AlwaysScrollableScrollPhysics()),
               items: widget.selectedGround.images.map((i) {
                 return Builder(
                   builder: (BuildContext context) {
