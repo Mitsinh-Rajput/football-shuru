@@ -99,7 +99,7 @@ class _GroundChatScreenState extends State<GroundChatScreen> {
                           height: 4,
                         ),
                         Text(
-                          "12 Team •  48k members".toUpperCase(),
+                          "12 Team •  ${ground.userCount ?? 1} members".toUpperCase(),
                           style: Theme.of(context).textTheme.labelMedium!.copyWith(
                                 color: const Color(0xffFF9100),
                                 fontWeight: FontWeight.w600,
@@ -123,20 +123,21 @@ class _GroundChatScreenState extends State<GroundChatScreen> {
                       const SizedBox(
                         height: 4,
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(6),
-                        decoration: const BoxDecoration(
-                          color: Colors.green,
-                          shape: BoxShape.circle,
+                      if ((ground.unReadMessages ?? 0).isGreaterThan(1))
+                        Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: const BoxDecoration(
+                            color: Colors.green,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text(
+                            "${ground.unReadMessages}",
+                            style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
                         ),
-                        child: Text(
-                          "6",
-                          style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                        ),
-                      ),
                     ],
                   )
                 ],

@@ -108,7 +108,7 @@ class DeleteAccountDialogState extends State<DeleteAccountDialog> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(width: 15),
                   Expanded(
                     child: CustomButton(
                       radius: 6,

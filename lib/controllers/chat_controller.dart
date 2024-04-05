@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:football_shuru/controllers/auth_controller.dart';
+import 'package:football_shuru/controllers/homepage_controller.dart';
 import 'package:football_shuru/data/models/response/chat_model.dart';
 import 'package:football_shuru/data/models/response/profile_model.dart';
 import 'package:get/get.dart';
@@ -55,7 +56,7 @@ class ChatController extends GetxController implements GetxService {
     log('messageHandler UserId- ${event.userId}');
     log('messageHandler eventData - ${event.data}');
     log(event.eventName, name: 'event name');
-
+    Get.find<HomePageController>().getJoinedGrounds();
     if (event.eventName == 'chatting-event') {
       final requiredData = json.decode(event.data);
       log(requiredData.toString());
@@ -70,7 +71,6 @@ class ChatController extends GetxController implements GetxService {
             createdAt: DateTime.now(),
           ),
         );
-        log(_allChats.toString(), name: "ALL Chats");
         update();
       } catch (e) {
         log(e.toString(), name: "Error");

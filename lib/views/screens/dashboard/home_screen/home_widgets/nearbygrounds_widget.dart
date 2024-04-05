@@ -7,6 +7,7 @@ import 'package:page_transition/page_transition.dart';
 
 import '../../../../../services/route_helper.dart';
 import '../../../../base/custom_image.dart';
+import '../../tournament_chat_screen/tournament_chat_screen.dart';
 import '../selected_ground.dart';
 
 class NearbyGrounds extends StatefulWidget {
@@ -202,16 +203,25 @@ class _NearbyGroundsState extends State<NearbyGrounds> {
                 final ground = authController.grounds[index];
                 return GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      getCustomRoute(
-                        type: PageTransitionType.fade,
-                        duration: const Duration(milliseconds: 600),
-                        child: SelectedNearGround(
-                          selectedGround: ground,
+                    if (ground.hasUser != null) {
+                      Navigator.push(
+                          context,
+                          getCustomRoute(
+                              child: TournamentChatScreen(
+                            groundId: ground.id!,
+                          )));
+                    } else {
+                      Navigator.push(
+                        context,
+                        getCustomRoute(
+                          type: PageTransitionType.fade,
+                          duration: const Duration(milliseconds: 600),
+                          child: SelectedNearGround(
+                            selectedGround: ground,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    }
                   },
                   child: Container(
                     color: Colors.white,

@@ -13,15 +13,20 @@ class Grounds {
   final String? title;
   final String? address;
   final int? pincode;
+  final int? userCount;
+  final int? unReadMessages;
   final List<String> images; // Changed to List<String> type
   final String? description;
   final String? groundKing;
+
   final HasUser? hasUser;
 
   bool isSelected;
 
   Grounds({
     this.id,
+    this.userCount,
+    this.unReadMessages,
     this.title,
     this.address,
     this.pincode,
@@ -35,6 +40,8 @@ class Grounds {
   factory Grounds.fromJson(Map<String, dynamic> json) => Grounds(
         id: json["id"],
         title: json["title"],
+        userCount: json["users_count"],
+        unReadMessages: json["unread_messages_count"],
         address: json["address"],
         pincode: json["pincode"],
         images: json['image'] == null ? [] : (json["image"] as String).split(','),
@@ -47,6 +54,8 @@ class Grounds {
   Map<String, dynamic> toJson() => {
         "id": id,
         "title": title,
+        "unread_messages_count": unReadMessages,
+        "users_count": userCount,
         "address": address,
         "pincode": pincode,
         "image": images, // Joining the list of image URLs into a single string

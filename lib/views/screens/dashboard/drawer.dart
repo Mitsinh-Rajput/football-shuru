@@ -475,7 +475,6 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           Icon(
                             Icons.delete,
                             size: 24,
-                            color: primaryColor,
                           ),
                           const SizedBox(
                             width: 14,
