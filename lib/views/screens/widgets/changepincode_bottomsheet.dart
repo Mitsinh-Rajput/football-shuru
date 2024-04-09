@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/services.dart';
+import 'package:football_shuru/services/input_decoration.dart';
 import 'package:get/get.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:iconly/iconly.dart';
 
 import '../../../controllers/auth_controller.dart';
-import '../../../services/route_helper.dart';
 import '../../../services/theme.dart';
 import '../../base/common_button.dart';
 
@@ -32,27 +32,25 @@ class ChangePincodeScreen extends StatefulWidget {
 }
 
 class _ChangePincodeScreenState extends State<ChangePincodeScreen> {
+  bool _showButton = false;
+
   TextEditingController pincodeController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(
-        top: 16,
-        left: 16,
-        right: 16,
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-      ),
-      width: double.infinity,
-      color: Colors.white,
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+        padding: EdgeInsets.only(
+          top: 16,
+          left: 16,
+          right: 16,
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        width: double.infinity,
+        color: Colors.white,
+        child: Form(
+          key: _formKey,
+          child: Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start, children: [
             Align(
               alignment: Alignment.topRight,
               child: GestureDetector(
@@ -90,41 +88,43 @@ class _ChangePincodeScreenState extends State<ChangePincodeScreen> {
             const SizedBox(
               height: 15,
             ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: PinCodeTextField(
-                controller: pincodeController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Enter Pincode";
-                  } else if (value.length != 6) {
-                    return "Enter 6 Digit Pincode";
+            TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Enter Pincode";
+                } else if (value.length != 6) {
+                  return "Enter 6 Digit Pincode";
+                }
+                return null;
+              },
+              controller: pincodeController,
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                    letterSpacing: 2,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: textPrimary,
+                  ),
+              onChanged: (value) {
+                setState(() {
+                  if (value.length == 6) {
+                    _showButton = true;
+                    FocusScope.of(context).unfocus();
+                  } else {
+                    _showButton = false;
                   }
-                  return null;
-                },
-                showCursor: true,
-                cursorColor: Colors.grey.withOpacity(0.5),
-                cursorHeight: 14,
-                autoDisposeControllers: false,
-                appContext: context,
-                length: 6,
-                onCompleted: (value) async {},
-                pinTheme: PinTheme(
-                  shape: PinCodeFieldShape.box,
-                  borderRadius: BorderRadius.circular(15),
-                  fieldHeight: 50,
-                  fieldWidth: MediaQuery.of(context).size.width * 0.13,
-                  activeFillColor: Colors.white,
-                  activeColor: boxColor,
-                  inactiveColor: boxColor,
-                  inactiveFillColor: Colors.white,
-                  selectedFillColor: Colors.white,
-                  selectedColor: boxColor,
-                ),
-                keyboardType: TextInputType.number,
-                animationType: AnimationType.fade,
-                animationDuration: const Duration(milliseconds: 300),
-              ),
+                });
+              },
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(6),
+              ],
+              decoration: CustomDecoration.inputDecoration(
+                  borderColor: Colors.grey.shade400,
+                  bgColor: Color(0xFFF5F5F5),
+                  icon: const Icon(IconlyLight.location),
+                  hint: "Enter Pincode",
+                  hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontWeight: FontWeight.w300)),
             ),
             const SizedBox(
               height: 10,
@@ -159,10 +159,8 @@ class _ChangePincodeScreenState extends State<ChangePincodeScreen> {
             ),
             const SizedBox(
               height: 16,
-            )
-          ],
-        ),
-      ),
-    );
+            ),
+          ]),
+        ));
   }
 }

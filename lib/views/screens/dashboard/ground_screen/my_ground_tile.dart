@@ -244,7 +244,7 @@ class _MyGroundsState extends State<MyGrounds> {
                                   width: 6,
                                 ),
                                 Text(
-                                  "5,00 member",
+                                  "${ground.userCount ?? 1} Member",
                                   style: Theme.of(context).textTheme.labelLarge!.copyWith(
                                         color: textPrimary,
                                         fontWeight: FontWeight.w600,

@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:football_shuru/controllers/team_controller.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/screens/dashboard/chats_screen/chat_tile.dart';
 import 'package:football_shuru/views/screens/dashboard/chats_screen/groundchats_screen.dart';
+import 'package:football_shuru/views/screens/dashboard/chats_screen/teamchat_screen.dart';
 import 'package:get/get.dart';
 
 import '../../../../controllers/homepage_controller.dart';
@@ -32,6 +34,7 @@ class _ChatsScreenState extends State<ChatsScreen> with SingleTickerProviderStat
     super.initState();
     Timer.run(() async {
       await Get.find<HomePageController>().getJoinedGrounds();
+      await Get.find<TeamControllor>().getJoinedTeam();
     });
     _tabController = TabController(vsync: this, length: myTabs.length);
   }
@@ -52,12 +55,17 @@ class _ChatsScreenState extends State<ChatsScreen> with SingleTickerProviderStat
           statusBarColor: Colors.transparent,
           statusBarBrightness: Brightness.dark,
         ),
-        leading: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Image.asset(
-            Assets.imagesMenu,
-            height: 24,
-            width: 24,
+        leading: GestureDetector(
+          onTap: () {
+            Scaffold.of(context).openDrawer();
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Image.asset(
+              Assets.imagesMenu,
+              height: 24,
+              width: 24,
+            ),
           ),
         ),
         centerTitle: true,
@@ -109,12 +117,7 @@ class _ChatsScreenState extends State<ChatsScreen> with SingleTickerProviderStat
                   return const MyChatTile();
                 },
               ),
-              ListView.builder(
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return const MyChatTile();
-                },
-              ),
+              TeamChatScreen(),
             ]),
           ),
         ],

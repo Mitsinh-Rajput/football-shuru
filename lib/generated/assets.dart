@@ -8,6 +8,7 @@ class Assets {
   static const String imagesAddress = 'assets/images/address.png';
   static const String imagesArrowLeft = 'assets/images/arrow-left.png';
   static const String imagesArrowRight = 'assets/images/arrow-right.png';
+  static const String imagesAward1 = 'assets/images/award1.png';
   static const String imagesBackgroundImage = 'assets/images/BackgroundImage.png';
   static const String imagesBarcode = 'assets/images/barcode.png';
   static const String imagesCalendarTick = 'assets/images/calendar-tick.png';
@@ -51,5 +52,6 @@ class Assets {
   static const String imagesTermAndCondition = 'assets/images/term_and_condition.png';
   static const String imagesUser = 'assets/images/user.png';
   static const String imagesYourName = 'assets/images/your_name.png';
+  static const String lottiesEmpty = 'assets/lotties/empty.json';
   static const String lottiesNoInternet = 'assets/lotties/no_internet.json';
 }

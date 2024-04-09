@@ -135,4 +135,27 @@ class ChatController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+
+  Future<ResponseModel> lastSeenUpdate({required int groundId}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.updateLastSeen}", name: "lastSeenUpdate");
+    try {
+      Response response = await authRepo.updateLastSeen(groundId: groundId);
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "lastSeenUpdate");
+      if (response.statusCode == 200) {
+        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT lastSeenUpdate()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
 }

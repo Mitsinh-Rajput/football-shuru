@@ -1,11 +1,13 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+import 'package:football_shuru/controllers/team_controller.dart';
 import 'package:football_shuru/services/route_helper.dart';
 import 'package:football_shuru/views/screens/dashboard/teams_screen/add_team.dart';
 import 'package:football_shuru/views/screens/dashboard/teams_screen/join_team.dart';
 import 'package:football_shuru/views/screens/dashboard/teams_screen/teams_screen_tile.dart';
+import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:r_dotted_line_border/r_dotted_line_border.dart';
 
@@ -22,6 +24,15 @@ class MyTeamsScreen extends StatefulWidget {
 
 class _MyTeamsScreenState extends State<MyTeamsScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Timer.run(() async {
+      await Get.find<TeamControllor>().getJoinedTeam();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -32,12 +43,17 @@ class _MyTeamsScreenState extends State<MyTeamsScreen> {
           statusBarBrightness: Brightness.dark,
           statusBarColor: Colors.transparent,
         ),
-        leading: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Image.asset(
-            Assets.imagesMenu,
-            height: 24,
-            width: 24,
+        leading: GestureDetector(
+          onTap: () {
+            Scaffold.of(context).openDrawer();
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Image.asset(
+              Assets.imagesMenu,
+              height: 24,
+              width: 24,
+            ),
           ),
         ),
         centerTitle: true,
@@ -147,10 +163,7 @@ class _MyTeamsScreenState extends State<MyTeamsScreen> {
                             ),
                             Text(
                               "Join Team",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .copyWith(
+                              style: Theme.of(context).textTheme.labelMedium!.copyWith(
                                     color: Colors.green[700],
                                   ),
                             ),
@@ -164,24 +177,7 @@ class _MyTeamsScreenState extends State<MyTeamsScreen> {
               const SizedBox(
                 height: 30,
               ),
-              Text(
-                "My List of Teams",
-                style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                      color: textPrimary,
-                      fontWeight: FontWeight.w800,
-                    ),
-              ),
-              const SizedBox(
-                width: 16,
-              ),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  return const TeamsScreenTile();
-                },
-              ),
+              const TeamsScreenTile(),
             ],
           ),
         ),

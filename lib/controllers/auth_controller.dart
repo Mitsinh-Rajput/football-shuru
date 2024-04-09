@@ -179,13 +179,13 @@ class AuthController extends GetxController implements GetxService {
 
   List<Grounds> grounds = [];
 
-  Future<ResponseModel> getgrounds() async {
+  Future<ResponseModel> getgrounds({String? pincode}) async {
     ResponseModel responseModel;
     _isLoading = true;
     update();
     log("response.body.toString()${AppConstants.baseUrl}${AppConstants.ground}", name: "getgrounds");
     try {
-      Response response = await authRepo.groundPincode();
+      Response response = await authRepo.groundPincode(pincode: pincode);
       log(response.statusCode.toString());
       log(response.body.toString(), name: "getgrounds");
       if (response.statusCode == 200) {

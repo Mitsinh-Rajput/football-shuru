@@ -40,12 +40,17 @@ class _MyGroundScreenState extends State<MyGroundScreen> {
           statusBarColor: Colors.transparent,
           statusBarBrightness: Brightness.dark,
         ),
-        leading: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Image.asset(
-            Assets.imagesMenu,
-            height: 24,
-            width: 24,
+        leading: GestureDetector(
+          onTap: () {
+            Scaffold.of(context).openDrawer();
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Image.asset(
+              Assets.imagesMenu,
+              height: 24,
+              width: 24,
+            ),
           ),
         ),
         titleSpacing: 0,
@@ -150,7 +155,7 @@ class _MyGroundScreenState extends State<MyGroundScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  MyGrounds(),
+                  const MyGrounds(),
                   const SizedBox(
                     height: 30,
                   ),

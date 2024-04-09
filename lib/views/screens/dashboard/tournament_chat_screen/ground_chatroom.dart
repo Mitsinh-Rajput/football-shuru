@@ -157,7 +157,6 @@ class _GroundChatroomState extends State<GroundChatroom> {
                         chatController.sendMessage(groundId: widget.groundId, message: messageController.text).then((value) {
                           if (value.isSuccess) {
                             messageController.clear();
-                            FocusScope.of(context).unfocus();
                           }
                         });
                       }
@@ -175,7 +174,7 @@ class _GroundChatroomState extends State<GroundChatroom> {
                   child: Container(
                     width: 50,
                     height: 50,
-                    decoration: BoxDecoration(color: Colors.black, borderRadius: const BorderRadius.all(Radius.circular(50))),
+                    decoration: const BoxDecoration(color: Colors.black, borderRadius: BorderRadius.all(Radius.circular(50))),
                     child: chatController.isLoading
                         ? const Padding(
                             padding: EdgeInsets.all(14),

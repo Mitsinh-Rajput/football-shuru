@@ -1,9 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:football_shuru/controllers/team_controller.dart';
+import 'package:football_shuru/services/extensions.dart';
 import 'package:football_shuru/services/input_decoration.dart';
+import 'package:get/get.dart';
+
 import '../../../../generated/assets.dart';
+import '../../../../main.dart';
 import '../../../../services/theme.dart';
 import '../../../base/common_button.dart';
+import '../../../base/image_picker_sheet.dart';
+import '../../../base/snack_bar.dart';
 
 class AddTeamScreen extends StatefulWidget {
   const AddTeamScreen({super.key});
@@ -15,7 +25,8 @@ class AddTeamScreen extends StatefulWidget {
 class _AddTeamScreenState extends State<AddTeamScreen> {
   TextEditingController team_name = TextEditingController();
   TextEditingController logo_of_team = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  File? logo;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -60,17 +71,22 @@ class _AddTeamScreenState extends State<AddTeamScreen> {
               const SizedBox(
                 height: 16,
               ),
-              const Text(
-                  "Note: Upload your new ground team name or related brand logo or image"),
+              const Text("Note: Upload your new ground team name and related logo"),
               const SizedBox(
-                height: 16,
+                height: 20,
               ),
               TextFormField(
+                validator: (value) {
+                  if (value.isNotValid) {
+                    return "Enter name of team";
+                  }
+                  return null;
+                },
                 controller: team_name,
                 decoration: CustomDecoration.inputDecoration(
                   floating: true,
                   label: "Team name",
-                  hint: "Ex. Winn will",
+                  hint: "Ex. Avenger",
                   hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
                         color: Colors.grey.shade300,
                       ),
@@ -90,11 +106,24 @@ class _AddTeamScreenState extends State<AddTeamScreen> {
                 height: 16,
               ),
               TextFormField(
+                onTap: () async {
+                  logo = await getImageBottomSheet(context);
+                  if (logo != null) {
+                    logo_of_team.text = logo!.path.fileName;
+                  }
+                  setState(() {});
+                },
+                readOnly: true,
+                validator: (value) {
+                  if (value.isNotValid) {
+                    return "Enter logo of team";
+                  }
+                  return null;
+                },
                 controller: logo_of_team,
-                enabled: false,
                 decoration: CustomDecoration.inputDecoration(
                   floating: true,
-                  label: "logo of team",
+                  label: "Logo of team",
                   hint: "Click upload File",
                   hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
                         color: Colors.grey.shade300,
@@ -127,43 +156,57 @@ class _AddTeamScreenState extends State<AddTeamScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CustomButton(
-              // title: "Sign Up Now",
-              color: textPrimary,
-              fontSize: 14,
-              elevation: 0,
-              radius: 10,
-              height: 50,
-              onTap: () {
-                // Navigator.pushReplacement(
-                //   context,
-                //   getCustomRoute(
-                //     child: const LocationScreen(),
-                //   ),
-                // );
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    "Create Team",
-                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Image.asset(
-                    Assets.imagesArrowRight,
-                    height: 24,
-                    width: 24,
-                    color: Colors.white,
-                  )
-                ],
-              ),
-            )
+            GetBuilder<TeamControllor>(builder: (teamController) {
+              return CustomButton(
+                isLoading: teamController.isLoading,
+                color: textPrimary,
+                fontSize: 14,
+                elevation: 0,
+                radius: 10,
+                height: 50,
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
+                    print(logo);
+                    teamController.createTeam(name: team_name.text.trim(), image: logo!).then((value) {
+                      if (value.isSuccess) {
+                        Fluttertoast.showToast(msg: value.message, toastLength: Toast.LENGTH_LONG);
+                        Navigator.pop(context);
+                      } else {
+                        showSnackBar(navigatorKey.currentContext!,
+                            content: value.message,
+                            snackBarAction: SnackBarAction(
+                              label: 'Close',
+                              onPressed: () {
+                                ScaffoldMessenger.of(navigatorKey.currentContext!).hideCurrentSnackBar();
+                              },
+                            ));
+                      }
+                    });
+                  }
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Create Team",
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Image.asset(
+                      Assets.imagesArrowRight,
+                      height: 24,
+                      width: 24,
+                      color: Colors.white,
+                    )
+                  ],
+                ),
+              );
+            })
           ],
         ),
       ),

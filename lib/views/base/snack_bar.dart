@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import '../../main.dart';
 
 void showSnackBar(BuildContext context, {required String content, SnackBarAction? snackBarAction}) {
   final scaffold = ScaffoldMessenger.of(context);

@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/screens/dashboard/player_list.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -19,6 +16,7 @@ class GameSlot extends StatefulWidget {
 class _GameSlotState extends State<GameSlot> {
   bool isSwitchOn = false;
   bool switchbutton = true;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -29,10 +27,7 @@ class _GameSlotState extends State<GameSlot> {
             Container(
               height: 170,
               width: double.infinity,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                      color: const Color(0xFF455A64).withOpacity(0.4))),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color(0xFF455A64).withOpacity(0.4))),
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
@@ -41,23 +36,11 @@ class _GameSlotState extends State<GameSlot> {
                     RichText(
                       text: TextSpan(
                           text: "12 Feb 2024 10:12 AM",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  color: const Color(0xFFFF9100)),
+                          style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14, fontWeight: FontWeight.w700, color: const Color(0xFFFF9100)),
                           children: [
                             TextSpan(
                               text: "\nSchedule",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w400,
-                                      color: const Color(0xFF455A64)),
+                              style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11, fontWeight: FontWeight.w400, color: const Color(0xFF455A64)),
                             ),
                           ]),
                     ),
@@ -66,11 +49,7 @@ class _GameSlotState extends State<GameSlot> {
                       children: [
                         Text(
                           "Football  match",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(
-                                  fontSize: 13, fontWeight: FontWeight.w600),
+                          style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 13, fontWeight: FontWeight.w600),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -88,30 +67,15 @@ class _GameSlotState extends State<GameSlot> {
                               RichText(
                                   text: TextSpan(
                                       text: "230+",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .copyWith(
-                                              fontSize: 18,
-                                              height: 0,
-                                              fontWeight: FontWeight.w700),
+                                      style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 18, height: 0, fontWeight: FontWeight.w700),
                                       children: [
                                     TextSpan(
                                       text: "\nPlayers shown interest",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .copyWith(
-                                              fontSize: 8,
-                                              height: 0,
-                                              fontWeight: FontWeight.w400),
+                                      style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 8, height: 0, fontWeight: FontWeight.w400),
                                     ),
                                   ])),
                               const SizedBox(width: 10),
-                              Icon(
-                                    size: 30,
-                                    Icons.keyboard_arrow_right_outlined),
-
+                              Icon(size: 30, Icons.keyboard_arrow_right_outlined),
                             ],
                           ),
                         ),
@@ -134,21 +98,11 @@ class _GameSlotState extends State<GameSlot> {
                               children: [
                                 Text(
                                   "Darrell Steward",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w600),
+                                  style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 13, fontWeight: FontWeight.w600),
                                 ),
                                 Text(
                                   "Posted on 10 Feb 2024",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w400),
+                                  style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 10, fontWeight: FontWeight.w400),
                                 )
                               ],
                             ),
@@ -182,10 +136,7 @@ class _GameSlotState extends State<GameSlot> {
             Container(
               height: 170,
               width: double.infinity,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                      color: const Color(0xFF455A64).withOpacity(0.4))),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color(0xFF455A64).withOpacity(0.4))),
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
@@ -194,23 +145,11 @@ class _GameSlotState extends State<GameSlot> {
                     RichText(
                       text: TextSpan(
                           text: "12 Feb 2024 10:12 AM",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: const Color(0xFFFF9100)),
+                          style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 16, fontWeight: FontWeight.w700, color: const Color(0xFFFF9100)),
                           children: [
                             TextSpan(
                               text: "\nschedule",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w400,
-                                      color: const Color(0xFF455A64)),
+                              style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11, fontWeight: FontWeight.w400, color: const Color(0xFF455A64)),
                             ),
                           ]),
                     ),
@@ -219,39 +158,20 @@ class _GameSlotState extends State<GameSlot> {
                       children: [
                         Text(
                           "Football  match",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(
-                                  fontSize: 13, fontWeight: FontWeight.w600),
+                          style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 13, fontWeight: FontWeight.w600),
                         ),
                         Row(
                           children: [
                             RichText(
-                                text: TextSpan(
-                                    text: "230+",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .copyWith(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w700),
-                                    children: [
-                                  TextSpan(
-                                    text: "\nPlayers shown interest",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall!
-                                        .copyWith(
-                                            fontSize: 8,
-                                            fontWeight: FontWeight.w400),
-                                  ),
-                                ])),
+                                text: TextSpan(text: "230+", style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 18, fontWeight: FontWeight.w700), children: [
+                              TextSpan(
+                                text: "\nPlayers shown interest",
+                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 8, fontWeight: FontWeight.w400),
+                              ),
+                            ])),
                             const SizedBox(width: 10),
                             IconButton(
-                              icon: const Icon(
-                                  size: 30,
-                                  Icons.keyboard_arrow_right_outlined),
+                              icon: const Icon(size: 30, Icons.keyboard_arrow_right_outlined),
                               onPressed: () {
                                 Navigator.push(
                                   context,
@@ -283,21 +203,11 @@ class _GameSlotState extends State<GameSlot> {
                               children: [
                                 Text(
                                   "Darrell Steward",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w600),
+                                  style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 13, fontWeight: FontWeight.w600),
                                 ),
                                 Text(
                                   "Posted on 10 Feb 2024",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w400),
+                                  style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 10, fontWeight: FontWeight.w400),
                                 )
                               ],
                             ),

@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -61,7 +60,7 @@ class AuthRepo {
         "about": about,
       });
 
-  Future<Response> groundPincode() async => await apiClient.getData(AppConstants.ground);
+  Future<Response> groundPincode({String? pincode}) async => await apiClient.getData("${AppConstants.ground}${pincode != null ? "?pincode=$pincode" : ""}");
 
   Future<Response> loadChats({required int groundId}) async => await apiClient.getData("${AppConstants.loadChats}?ground_id=$groundId");
 
@@ -69,6 +68,7 @@ class AuthRepo {
       await apiClient.postData(AppConstants.sendMessage, {"ground_id": groundId, "message": message});
 
   Future<Response> storeGround(Map<String, dynamic> data) async => await apiClient.postData(AppConstants.ground, FormData(data));
+  Future<Response> updateLastSeen({required int groundId}) async => await apiClient.postData(AppConstants.updateLastSeen, {"ground_id": groundId});
 
   /// Methods to deal with Local Data ///
   Future<bool> saveUserToken(String token) async {

@@ -5,14 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
-import 'package:football_shuru/views/screens/dashboard/home_screen/community_near_me.dart';
+import 'package:football_shuru/views/screens/dashboard/home_screen/home_widgets/communitynear_screen.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/home_widgets/nearbygrounds_widget.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/league_and_tour_tile.dart';
-import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/tournament_chat_screen.dart';
 import 'package:football_shuru/views/screens/widgets/changepincode_bottomsheet.dart';
 import 'package:football_shuru/views/screens/widgets/primarybanner_widget.dart';
 import 'package:get/get.dart';
-import 'package:page_transition/page_transition.dart';
 
 import '../../../../controllers/homepage_controller.dart';
 import '../../../../services/route_helper.dart';
@@ -106,40 +104,40 @@ class _HomeScreenState extends State<HomeScreen> {
             preferredSize: Size(size.width, 30),
             child: GetBuilder<AuthController>(builder: (authController) {
               return Align(
-                child: Container(
-                  height: 30,
-                  color: const Color(0xffFFF4EF),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: RichText(
-                        text: TextSpan(
-                          text: 'Your Pincode: ',
-                          style: Theme.of(context).textTheme.labelMedium!.copyWith(color: const Color(0xffFF9A6C), fontWeight: FontWeight.w300),
-                          children: [
-                            TextSpan(
-                              text: authController.profile?.pincode ?? "",
-                              style: Theme.of(context).textTheme.labelMedium!.copyWith(color: const Color(0xffFF9A6C)),
-                            ),
-                          ],
-                        ),
-                      )),
-                      const SizedBox(width: 15),
-                      GestureDetector(
-                        onTap: () {
-                          ChangePincodeBottomSheet().dialogue(context);
-                        },
-                        child: Text(
+                child: GestureDetector(
+                  onTap: () {
+                    ChangePincodeBottomSheet().dialogue(context);
+                  },
+                  child: Container(
+                    height: 30,
+                    color: const Color(0xffFFF4EF),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: RichText(
+                          text: TextSpan(
+                            text: 'Your Pincode: ',
+                            style: Theme.of(context).textTheme.labelMedium!.copyWith(color: const Color(0xffFF9A6C), fontWeight: FontWeight.w300),
+                            children: [
+                              TextSpan(
+                                text: authController.profile?.pincode ?? "",
+                                style: Theme.of(context).textTheme.labelMedium!.copyWith(color: const Color(0xffFF9A6C)),
+                              ),
+                            ],
+                          ),
+                        )),
+                        const SizedBox(width: 15),
+                        Text(
                           "Change Now",
                           style: Theme.of(context).textTheme.labelMedium!.copyWith(
                                 fontWeight: FontWeight.w900,
                               ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );
@@ -161,63 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const PrimaryBannerWidget(), const SizedBox(height: 15),
 
               //! Community ground --
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Ground community near me",
-                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey.shade800,
-                            ),
-                      ),
-                    ),
-                    Image.asset(
-                      Assets.imagesArrowRight,
-                      height: 24,
-                      width: 24,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 14,
-              ),
-              SizedBox(
-                height: 150,
-                width: size.width,
-                child: ListView.builder(
-                  itemCount: 6,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          getCustomRoute(
-                            type: PageTransitionType.fade,
-                            duration: const Duration(milliseconds: 600),
-                            child: const TournamentChatScreen(
-                              groundId: 5,
-                            ),
-                          ),
-                        );
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 16, left: index == 0 ? 16 : 0),
-                        child: const CommunityNearMe(),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              //
-              const SizedBox(
-                height: 30,
-              ),
+CommunityNearMeScreen(),
               //! Nearby ground --
               const NearbyGrounds(),
               Padding(

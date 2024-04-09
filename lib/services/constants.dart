@@ -62,6 +62,12 @@ class AppConstants {
   static const String sendMessage = 'api/v1/ground/chat/messages/send';
   static const String updateLastSeen = 'api/v1/ground/chat/messages/update-last-seen';
 
+  /// Team
+
+  static const String createTeam = 'api/v1/team';
+  static const String joinTeam = 'api/v1/team/chat/join';
+  static const String joinedTeam = 'api/v1/team/chat/joined';
+
   /// Home
   static const String slider = 'api/v1/basic/slider';
 

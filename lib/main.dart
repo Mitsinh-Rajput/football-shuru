@@ -1,24 +1,30 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:football_shuru/services/init.dart';
 import 'package:football_shuru/services/theme.dart';
-import 'package:football_shuru/views/screens/initial_screens/splash_screen.dart';
+import 'package:football_shuru/views/screens/dashboard/dashboard_screen.dart';
 import 'package:football_shuru/views/screens/widgets/no_internet.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'controllers/notifications/awesomenotification_controller.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await AwesomeNotificationsController.initializeLocalNotifications();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await Init().initialize();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   runApp(const MyApp());
 }
 
@@ -32,6 +38,13 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling a background messageId: ${message.messageId}");
+  print("Handling a background Data: ${message.data}");
+  AwesomeNotifications().createNotificationFromJsonData(message.data);
+}
+
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   //
   initPlatForm() {
@@ -43,8 +56,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   late StreamSubscription<ConnectivityResult> subscription;
   bool isConnected = true;
   bool isUpdateVisible = false;
+  String? fcmToken;
 
-  //
   checkConnection() async {
     subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult connectivityResult) {
       if (connectivityResult == ConnectivityResult.mobile) {
@@ -80,11 +93,36 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    AwesomeNotificationsController.initializeNotificationsEventListeners();
+    getFCMToken();
+    _initializeFirebaseMessaging();
 
     Timer.run(() async {
       await initPlatForm();
       await checkConnection();
     });
+  }
+
+  void _initializeFirebaseMessaging() {
+    // Request permission for receiving notifications if not granted already
+    FirebaseMessaging.instance.requestPermission();
+
+    // Listen to incoming messages while the app is in the foreground
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("Foreground message received: ${message.data.toString()}");
+      AwesomeNotifications().createNotificationFromJsonData(message.data);
+
+      // Handle the message as needed
+      // You can display a notification, update UI, etc.
+    });
+  }
+
+  Future<void> getFCMToken() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    setState(() {
+      fcmToken = token;
+    });
+    print('FCM Token: $fcmToken');
   }
 
   //
@@ -103,7 +141,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         title: 'Football Shuru',
         themeMode: ThemeMode.light,
         theme: CustomTheme.light,
-        home: const SplashScreen(),
+        home: const DashboardScreen(),
         builder: (context, child) {
           var data = MediaQuery.of(context);
           return MediaQuery(

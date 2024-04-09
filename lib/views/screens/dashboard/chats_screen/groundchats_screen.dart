@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:football_shuru/controllers/homepage_controller.dart';
+import 'package:football_shuru/services/extensions.dart';
 import 'package:football_shuru/views/base/shimmer.dart';
 import 'package:get/get.dart';
 
@@ -38,12 +39,13 @@ class _GroundChatScreenState extends State<GroundChatScreen> {
           },
         ));
       }
-      return ListView.builder(
+      return ListView.separated(
         itemCount: homePageController.joinedGrounds.length,
         itemBuilder: (context, index) {
           final ground = homePageController.joinedGrounds[index];
           return GestureDetector(
             onTap: () {
+              ground.unReadMessages = 0;
               Navigator.push(context, getCustomRoute(child: TournamentChatScreen(groundId: ground.id!)));
             },
             child: Container(
@@ -86,24 +88,37 @@ class _GroundChatScreenState extends State<GroundChatScreen> {
                         const SizedBox(
                           height: 4,
                         ),
-                        Text(
-                          ground.description ?? "",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                                color: textPrimary,
-                                fontWeight: FontWeight.w300,
-                              ),
-                        ),
+                        if (ground.lastMessageDate?.message?.isValid ?? false)
+                          Text(
+                            ground.lastMessageDate?.message ?? "",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                                  color: textPrimary,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                          ),
                         const SizedBox(
                           height: 4,
                         ),
-                        Text(
-                          "12 Team •  ${ground.userCount ?? 1} members".toUpperCase(),
-                          style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                                color: const Color(0xffFF9100),
-                                fontWeight: FontWeight.w600,
-                              ),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.people_outline_rounded,
+                              size: 20,
+                              color: Color(0xffFF9100),
+                            ),
+                            const SizedBox(
+                              width: 6,
+                            ),
+                            Text(
+                              " ${ground.userCount ?? 1} • members".toUpperCase(),
+                              style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                                    color: const Color(0xffFF9100),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -115,7 +130,7 @@ class _GroundChatScreenState extends State<GroundChatScreen> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        "12:21 PM",
+                        ground.lastMessageDate?.createdAt?.hMA ?? "",
                         style: Theme.of(context).textTheme.labelMedium!.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
@@ -143,6 +158,13 @@ class _GroundChatScreenState extends State<GroundChatScreen> {
                 ],
               ),
             ),
+          );
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return Container(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            height: 1,
+            color: Colors.grey.shade200,
           );
         },
       );

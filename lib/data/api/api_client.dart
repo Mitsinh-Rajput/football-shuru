@@ -1,5 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages, no_leading_underscores_for_local_identifiers
 
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
@@ -9,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../services/constants.dart';
 import '../models/response/error_response.dart';
+import 'api_checker.dart';
 
 class ApiClient extends GetConnect implements GetxService {
   final String appBaseUrl;
@@ -60,7 +62,8 @@ class ApiClient extends GetConnect implements GetxService {
         decoder: decoder,
       );
       // log('aasdas'+response.bodyString!+'aasdas',name: '$uri');
-
+      JsonEncoder jsonEncoder = const JsonEncoder.withIndent("  ");
+      ApiChecker.checkApi(response);
       log('====> GetX Response: [${response.statusCode}] $uri\n${response.body}');
       response = handleResponse(response);
       if (kDebugMode) {
@@ -96,9 +99,10 @@ class ApiClient extends GetConnect implements GetxService {
         decoder: decoder,
         uploadProgress: uploadProgress,
       );
+      JsonEncoder jsonEncoder = const JsonEncoder.withIndent("  ");
+      ApiChecker.checkApi(response);
       log('====> GetX Response: [${response.statusCode}] $uri\n${response.body}');
       response = handleResponse(response);
-      log('====> GetX Response: [${response.statusCode}] $uri');
       if (kDebugMode) {
         // print('====> GetX Response: [${response.statusCode}] $uri\n${response.body}');
       }

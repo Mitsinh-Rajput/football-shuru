@@ -14,12 +14,13 @@ class Grounds {
   final String? address;
   final int? pincode;
   final int? userCount;
-  final int? unReadMessages;
+  int? unReadMessages;
   final List<String> images; // Changed to List<String> type
   final String? description;
   final String? groundKing;
 
   final HasUser? hasUser;
+  final LastMessageDate? lastMessageDate;
 
   bool isSelected;
 
@@ -35,6 +36,7 @@ class Grounds {
     this.groundKing,
     this.hasUser,
     this.isSelected = false,
+    this.lastMessageDate,
   });
 
   factory Grounds.fromJson(Map<String, dynamic> json) => Grounds(
@@ -49,6 +51,7 @@ class Grounds {
         description: json["description"],
         groundKing: json["ground_king"],
         hasUser: json["hasUser"] == null ? null : HasUser.fromJson(json["hasUser"]),
+        lastMessageDate: json["last_message_date"] == null ? null : LastMessageDate.fromJson(json["last_message_date"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -61,6 +64,7 @@ class Grounds {
         "image": images, // Joining the list of image URLs into a single string
         "description": description,
         "ground_king": groundKing, "hasUser": hasUser?.toJson(),
+        "last_message_date": lastMessageDate?.toJson(),
       };
 }
 
@@ -91,6 +95,46 @@ class HasUser {
         "id": id,
         "user_id": userId,
         "ground_id": groundId,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+      };
+}
+
+class LastMessageDate {
+  final int? id;
+  final String? message;
+  final int? groundId;
+  final int? userId;
+  final dynamic file;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  LastMessageDate({
+    this.id,
+    this.message,
+    this.groundId,
+    this.userId,
+    this.file,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory LastMessageDate.fromJson(Map<String, dynamic> json) => LastMessageDate(
+        id: json["id"],
+        message: json["message"],
+        groundId: json["ground_id"],
+        userId: json["user_id"],
+        file: json["file"],
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]).toLocal(),
+        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]).toLocal(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "message": message,
+        "ground_id": groundId,
+        "user_id": userId,
+        "file": file,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
       };

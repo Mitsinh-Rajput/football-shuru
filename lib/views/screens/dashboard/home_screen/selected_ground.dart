@@ -232,11 +232,10 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                             children: [
                               Row(
                                 children: [
-                                  const CustomImage(
+                                  CustomImage(
                                     height: 46,
                                     width: 46,
-                                    path:
-                                        "https://s3-alpha-sig.figma.com/img/e71e/dd39/f0381e877f12d1bbe1f8e2dd60ad924a?Expires=1711929600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=DGc8vJkrvx56JBOhrtiDQLalObrufH5xu9wCpQi~WNHNK3WkFLsoxvjxh1gg4vXUHvAu2qGTqUTwtQ6hpO3KNpzMT3z3aU35ESe78daMj5iDslIWBCezzYkXYJyCVuj1brecpvVjBtktBQCJb4IRevGMJICF1w5Ut~fqCzTrNnVjJB-TRLwlVUk0CRYpokCc--VBvQ3OZj007mf1rEA8EUwrM6tmIodcPYle2o3rWl4hHx7JUJ5NOK2sp11k5ALdydgO8FX5EODnaIlZGUcxytutA7IflKuUaM-GvDklp4aYy~2jVyWG6sWqrImVtHl6KpSsFXDO-GCyFVtIm~-24g__",
+                                    path: Assets.imagesAward1,
                                   ),
                                   const SizedBox(
                                     width: 10,
@@ -348,7 +347,7 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
             padding: const EdgeInsets.all(15),
             child: CustomButton(
               onTap: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                     context,
                     getCustomRoute(
                         child: TournamentChatScreen(
