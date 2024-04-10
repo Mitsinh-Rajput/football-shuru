@@ -169,6 +169,7 @@ class _AddTeamScreenState extends State<AddTeamScreen> {
                     print(logo);
                     teamController.createTeam(name: team_name.text.trim(), image: logo!).then((value) {
                       if (value.isSuccess) {
+                        teamController.getJoinedTeam();
                         Fluttertoast.showToast(msg: value.message, toastLength: Toast.LENGTH_LONG);
                         Navigator.pop(context);
                       } else {

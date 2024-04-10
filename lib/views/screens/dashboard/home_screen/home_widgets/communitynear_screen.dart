@@ -29,7 +29,7 @@ class _CommunityNearMeScreenState extends State<CommunityNearMeScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return GetBuilder<HomePageController>(builder: (homePageController) {
-      if (homePageController.isLoading) {
+      if (homePageController.isLoading && homePageController.joinedGrounds.isEmpty) {
         return CustomShimmer(
           child: Column(
             children: [
@@ -68,23 +68,9 @@ class _CommunityNearMeScreenState extends State<CommunityNearMeScreen> {
                   itemCount: 6,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          getCustomRoute(
-                            type: PageTransitionType.fade,
-                            duration: const Duration(milliseconds: 600),
-                            child: const TournamentChatScreen(
-                              groundId: 5,
-                            ),
-                          ),
-                        );
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 16, left: index == 0 ? 16 : 0),
-                        child: const CommunityNearMe(),
-                      ),
+                    return Padding(
+                      padding: EdgeInsets.only(right: 16, left: index == 0 ? 16 : 0),
+                      child: const CommunityNearMe(),
                     );
                   },
                 ),
@@ -96,6 +82,8 @@ class _CommunityNearMeScreenState extends State<CommunityNearMeScreen> {
             ],
           ),
         );
+      } else if (!homePageController.isLoading && homePageController.joinedGrounds.isEmpty) {
+        return SizedBox.shrink();
       }
       return Column(
         children: [
@@ -131,6 +119,7 @@ class _CommunityNearMeScreenState extends State<CommunityNearMeScreen> {
               itemCount: homePageController.joinedGrounds.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
+                final ground = homePageController.joinedGrounds[index];
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -138,8 +127,9 @@ class _CommunityNearMeScreenState extends State<CommunityNearMeScreen> {
                       getCustomRoute(
                         type: PageTransitionType.fade,
                         duration: const Duration(milliseconds: 600),
-                        child: const TournamentChatScreen(
-                          groundId: 5,
+                        child: SelectGroundChatScreen(
+                          selectedGround: ground,
+                          groundId: ground.id!,
                         ),
                       ),
                     );
@@ -161,18 +151,19 @@ class _CommunityNearMeScreenState extends State<CommunityNearMeScreen> {
                         children: [
                           Row(
                             children: [
-                              const CustomImage(
-                                radius: 40,
-                                path: "https://d1csarkz8obe9u.cloudfront.net/posterpreviews/football-design-template-bfb989731fb80ee4ce47f503a041888e_screen.jpg?ts=1650102760",
-                                height: 30,
-                                width: 30,
-                                fit: BoxFit.cover,
-                              ),
+                              if (ground.images.isNotEmpty)
+                                CustomImage(
+                                  radius: 40,
+                                  path: ground.images[0],
+                                  height: 30,
+                                  width: 30,
+                                  fit: BoxFit.cover,
+                                ),
                               const SizedBox(
                                 width: 16,
                               ),
                               Text(
-                                "Club of Madras Knights",
+                                ground.title ?? '',
                                 style: Theme.of(context).textTheme.labelLarge!.copyWith(
                                       fontWeight: FontWeight.w800,
                                       color: Colors.black87,
@@ -186,13 +177,13 @@ class _CommunityNearMeScreenState extends State<CommunityNearMeScreen> {
                           RichText(
                             maxLines: 3,
                             text: TextSpan(
-                                text: "Address & more : ",
+                                text: "Address: ",
                                 style: Theme.of(context).textTheme.labelMedium!.copyWith(
                                       fontWeight: FontWeight.w600,
                                     ),
                                 children: [
                                   TextSpan(
-                                    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                                    text: ground.address ?? "",
                                     style: Theme.of(context).textTheme.labelSmall!.copyWith(
                                           fontWeight: FontWeight.w300,
                                         ),
@@ -218,7 +209,7 @@ class _CommunityNearMeScreenState extends State<CommunityNearMeScreen> {
                                 width: 16,
                               ),
                               Text(
-                                "23K Members",
+                                "${ground.userCount ?? 1} Members",
                                 style: Theme.of(context).textTheme.labelSmall,
                               ),
                             ],

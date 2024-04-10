@@ -268,6 +268,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       dateOfBirthController.text = DateFormatters().yMD.format(dateTime!);
                       setState(() {});
                     },
+                    today: false,
                     child: TextFormField(
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       // Added autovalidateMode

@@ -12,6 +12,7 @@ import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 import '../data/models/response/response_model.dart';
 import '../data/repositories/auth_repo.dart';
 import '../services/constants.dart';
+import 'gameslot_controller.dart';
 
 class ChatController extends GetxController implements GetxService {
   final AuthRepo authRepo;
@@ -75,6 +76,11 @@ class ChatController extends GetxController implements GetxService {
       } catch (e) {
         log(e.toString(), name: "Error");
       }
+    } else if (event.eventName == 'game-slot') {
+      final requiredData = json.decode(event.data);
+
+      log(event.data.toString(), name: "Game Slo jdsndbsdjt");
+      Get.find<GameSlotController>().getGameSlotDetails(groundId: requiredData["groundId"]);
     }
   }
 

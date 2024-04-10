@@ -159,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const PrimaryBannerWidget(), const SizedBox(height: 15),
 
               //! Community ground --
-CommunityNearMeScreen(),
+              CommunityNearMeScreen(),
               //! Nearby ground --
               const NearbyGrounds(),
               Padding(

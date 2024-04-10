@@ -16,7 +16,6 @@ import 'package:get/get.dart';
 
 import '../../../services/date_formatters_and_converters.dart';
 import '../../../services/route_helper.dart';
-import '../initial_screens/location_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -249,6 +248,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 20,
                   ),
                   CustomDatePicker(
+                    today: false,
                     onChanged: (DateTime? dateTime) {
                       dateOfBirthController.text = DateFormatters().yMD.format(dateTime!);
                       setState(() {});

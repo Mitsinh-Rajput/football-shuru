@@ -8,7 +8,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:football_shuru/services/init.dart';
 import 'package:football_shuru/services/theme.dart';
-import 'package:football_shuru/views/screens/dashboard/dashboard_screen.dart';
+import 'package:football_shuru/views/screens/initial_screens/splash_screen.dart';
 import 'package:football_shuru/views/screens/widgets/no_internet.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -141,7 +141,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         title: 'Football Shuru',
         themeMode: ThemeMode.light,
         theme: CustomTheme.light,
-        home: const DashboardScreen(),
+        home: const SplashScreen(),
         builder: (context, child) {
           var data = MediaQuery.of(context);
           return MediaQuery(

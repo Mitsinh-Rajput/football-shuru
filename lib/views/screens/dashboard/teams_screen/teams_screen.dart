@@ -73,112 +73,118 @@ class _MyTeamsScreenState extends State<MyTeamsScreen> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          getCustomRoute(
-                            type: PageTransitionType.topToBottom,
-                            child: const AddTeamScreen(),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await Get.find<TeamControllor>().getJoinedTeam();
+        },
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            getCustomRoute(
+                              type: PageTransitionType.topToBottom,
+                              child: const AddTeamScreen(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 10,
                           ),
-                        );
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 14,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: RDottedLineBorder.all(
-                            color: Colors.grey.shade300,
-                            width: 1,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: RDottedLineBorder.all(
+                              color: Colors.grey.shade300,
+                              width: 1,
+                            ),
                           ),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.add,
-                              size: 20,
-                            ),
-                            const SizedBox(
-                              width: 4,
-                            ),
-                            Text(
-                              "Create new team",
-                              style: Theme.of(context).textTheme.labelMedium,
-                            ),
-                          ],
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.add,
+                                size: 20,
+                              ),
+                              const SizedBox(
+                                width: 4,
+                              ),
+                              Text(
+                                "Create new team",
+                                style: Theme.of(context).textTheme.labelMedium,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        SearchAndJoinedDialogue().dialogue(context);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 14,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: RDottedLineBorder.all(
-                            color: Colors.grey.shade300,
-                            width: 1,
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          SearchAndJoinedDialogue().dialogue(context);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 10,
                           ),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.add,
-                              size: 20,
-                              color: Colors.green[700],
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: RDottedLineBorder.all(
+                              color: Colors.grey.shade300,
+                              width: 1,
                             ),
-                            const SizedBox(
-                              width: 4,
-                            ),
-                            Text(
-                              "Join Team",
-                              style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                                    color: Colors.green[700],
-                                  ),
-                            ),
-                          ],
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.add,
+                                size: 20,
+                                color: Colors.green[700],
+                              ),
+                              const SizedBox(
+                                width: 4,
+                              ),
+                              Text(
+                                "Join Team",
+                                style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                                      color: Colors.green[700],
+                                    ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              const TeamsScreenTile(),
-            ],
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                const TeamsScreenTile(),
+              ],
+            ),
           ),
         ),
       ),

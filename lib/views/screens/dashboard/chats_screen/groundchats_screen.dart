@@ -46,7 +46,7 @@ class _GroundChatScreenState extends State<GroundChatScreen> {
           return GestureDetector(
             onTap: () {
               ground.unReadMessages = 0;
-              Navigator.push(context, getCustomRoute(child: TournamentChatScreen(groundId: ground.id!)));
+              Navigator.push(context, getCustomRoute(child: SelectGroundChatScreen(selectedGround: ground, groundId: ground.id!)));
             },
             child: Container(
               margin: const EdgeInsets.only(

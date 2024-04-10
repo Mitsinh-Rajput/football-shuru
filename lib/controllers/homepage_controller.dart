@@ -58,6 +58,32 @@ class HomePageController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  Grounds? groundsDetail;
+
+  Future<ResponseModel> getgroundsDetail({required int groundId}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.groundDetail}", name: "getgroundsDetail");
+    try {
+      Response response = await homeRepo.groundDetail(groundId: groundId);
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "getgroundsDetail");
+      if (response.statusCode == 200) {
+        groundsDetail = groundsFromJson(jsonEncode(response.body['data']));
+        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT getgroundsDetail()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
   Future<ResponseModel> joinGround({required int groundId}) async {
     ResponseModel responseModel;
     _isLoading = true;
@@ -69,6 +95,7 @@ class HomePageController extends GetxController implements GetxService {
       log(response.body.toString(), name: "joinGround");
       if (response.statusCode == 200) {
         Get.find<AuthController>().getgrounds();
+        getJoinedGrounds();
         responseModel = ResponseModel(true, '${response.body['message']}', response.body);
       } else {
         showSnackBar(
@@ -123,9 +150,10 @@ class HomePageController extends GetxController implements GetxService {
     return responseModel;
   }
 
+  bool logoutloading = false;
   Future<ResponseModel> leaveGround({required int groundId}) async {
     ResponseModel responseModel;
-    _isLoading = true;
+    logoutloading = true;
     update();
     log("response.body.toString()${AppConstants.baseUrl}${AppConstants.leaveGround}", name: "leaveGround");
     try {
@@ -141,7 +169,7 @@ class HomePageController extends GetxController implements GetxService {
       responseModel = ResponseModel(false, "CATCH");
       log('++++ ${e.toString()} +++++++', name: "ERROR AT leaveGround()");
     }
-    _isLoading = false;
+    logoutloading = false;
     update();
     return responseModel;
   }

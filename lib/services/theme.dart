@@ -55,7 +55,7 @@ class CustomTheme {
       onSurface: Colors.black,
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: primaryColor,
+      backgroundColor: Colors.white,
       actionsIconTheme: IconThemeData(
         color: backgroundLight,
       ),

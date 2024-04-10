@@ -113,4 +113,28 @@ class TeamControllor extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+
+  Future<ResponseModel> leaveTeam({required int teamId}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.leaveTeam}", name: "leaveTeam");
+    try {
+      Response response = await teamRepo.leaveTeam(teamId: teamId);
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "leaveTeam");
+      if (response.statusCode == 200) {
+        getJoinedTeam();
+        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT leaveTeam()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
 }

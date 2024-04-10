@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-List<Grounds> groundsFromJson(String str) => List<Grounds>.from(json.decode(str).map((x) => Grounds.fromJson(x)));
+List<Grounds> groundsListFromJson(String str) => List<Grounds>.from(json.decode(str).map((x) => Grounds.fromJson(x)));
+Grounds groundsFromJson(String str) => Grounds.fromJson(json.decode(str));
 
 String groundsToJson(List<Grounds> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 

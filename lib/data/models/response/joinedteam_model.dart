@@ -13,7 +13,11 @@ class JoinedTeam {
   final TeamJoined? team;
   final DateTime? createdAt;
 
-  JoinedTeam({this.id, this.team, this.createdAt});
+  JoinedTeam({
+    this.id,
+    this.team,
+    this.createdAt,
+  });
 
   factory JoinedTeam.fromJson(Map<String, dynamic> json) => JoinedTeam(
         id: json["id"],
@@ -97,7 +101,7 @@ class LastMessage {
         file: json["file"],
         teamId: json["team_id"],
         userId: json["user_id"],
-        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]).toLocal(),
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
         updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
       );
 

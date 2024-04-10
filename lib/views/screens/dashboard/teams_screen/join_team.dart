@@ -106,6 +106,7 @@ class _SearchAndJoinTeamState extends State<SearchAndJoinTeam> {
                   teamControllor.joinTeam(code: teamSearchController.text.toUpperCase());
                 }
               },
+              maxLength: 6,
               decoration: CustomDecoration.inputDecoration(
                 floating: true,
                 label: "Join team code",
@@ -225,7 +226,9 @@ class _SearchAndJoinTeamState extends State<SearchAndJoinTeam> {
                             onTap: () {
                               teamControllor.joinTeam(teamId: teamControllor.joinTeamInfo?.teamData?.id).then((value) {
                                 if (value.isSuccess) {
+                                  teamControllor.getJoinedTeam();
                                   Navigator.pop(context);
+
                                   Fluttertoast.showToast(msg: value.message, toastLength: Toast.LENGTH_LONG);
                                 } else {
                                   showSnackBar(navigatorKey.currentContext!,

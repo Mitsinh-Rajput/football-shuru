@@ -162,7 +162,7 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "45K Members",
+                        "${widget.selectedGround?.userCount ?? "1"} Members",
                         style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 16, color: const Color.fromRGBO(255, 145, 0, 1), fontWeight: FontWeight.w400),
                       ),
                       if (widget.selectedGround.hasUser == null)
@@ -182,7 +182,7 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                                     Navigator.pushReplacement(
                                         context,
                                         getCustomRoute(
-                                            child: TournamentChatScreen(
+                                            child: SelectGroundChatScreen(
                                           groundId: widget.selectedGround.id!,
                                         )));
                                   } else {
@@ -350,7 +350,8 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                 Navigator.pushReplacement(
                     context,
                     getCustomRoute(
-                        child: TournamentChatScreen(
+                        child: SelectGroundChatScreen(
+                      selectedGround: widget.selectedGround,
                       groundId: widget.selectedGround.id!,
                     )));
               },

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:football_shuru/controllers/team_controller.dart';
 import 'package:football_shuru/services/date_formatters_and_converters.dart';
+import 'package:football_shuru/services/route_helper.dart';
 import 'package:football_shuru/views/base/shimmer.dart';
 import 'package:get/get.dart';
 
 import '../../../../services/theme.dart';
 import '../../../base/custom_image.dart';
+import '../player_list.dart';
 
 class TeamsScreenTile extends StatefulWidget {
   const TeamsScreenTile({super.key});
@@ -129,6 +131,8 @@ class _TeamsScreenTileState extends State<TeamsScreenTile> {
             ],
           ),
         );
+      } else if (!teamControllor.isLoading && teamControllor.joinedTeam.isEmpty) {
+        return const SizedBox.shrink();
       }
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -150,80 +154,90 @@ class _TeamsScreenTileState extends State<TeamsScreenTile> {
             itemCount: teamControllor.joinedTeam.length,
             itemBuilder: (context, index) {
               final team = teamControllor.joinedTeam[index];
-              return Container(
-                margin: const EdgeInsets.only(
-                  top: 16,
-                ),
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                    width: 1,
-                    color: Colors.grey.shade300,
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      getCustomRoute(
+                          child: PlayerListScreen(
+                        selectedTeam: team,
+                      )));
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(
+                    top: 16,
                   ),
-                ),
-                child: Row(
-                  children: [
-                    CustomImage(
-                      radius: 50,
-                      path: "${team.team?.logo ?? ''}",
-                      height: 50,
-                      width: 50,
-                      fit: BoxFit.cover,
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      width: 1,
+                      color: Colors.grey.shade300,
                     ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Team Ground king 1".toUpperCase(),
-                            style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                                  fontWeight: FontWeight.w300,
-                                ),
-                          ),
-                          const SizedBox(
-                            height: 3,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  team.team?.name ?? "",
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                                        color: textPrimary,
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                ),
-                              ),
-                              RichText(
-                                text: TextSpan(
-                                    text: "Joined Date -\n",
-                                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                  ),
+                  child: Row(
+                    children: [
+                      CustomImage(
+                        radius: 50,
+                        path: team.team?.logo ?? '',
+                        height: 50,
+                        width: 50,
+                        fit: BoxFit.cover,
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Text(
+                            //   "Team Ground king 1".toUpperCase(),
+                            //   style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                            //         fontWeight: FontWeight.w300,
+                            //       ),
+                            // ),
+                            // const SizedBox(
+                            //   height: 3,
+                            // ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    team.team?.name ?? "",
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
                                           color: textPrimary,
                                           fontWeight: FontWeight.w900,
                                         ),
-                                    children: [
-                                      TextSpan(
-                                        text: "${DateFormatters().dateTime.format(team.createdAt!)}",
-                                        style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                                              color: textPrimary,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                      ),
-                                    ]),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+                                  ),
+                                ),
+                                RichText(
+                                  text: TextSpan(
+                                      text: "Joined Date -\n",
+                                      style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                                            color: textPrimary,
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                      children: [
+                                        TextSpan(
+                                          text: DateFormatters().dateTime.format(team.createdAt ?? DateTime.now()),
+                                          style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                                                color: textPrimary,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                        ),
+                                      ]),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               );
             },

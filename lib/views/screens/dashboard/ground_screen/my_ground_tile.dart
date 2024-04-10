@@ -19,7 +19,7 @@ class _MyGroundsState extends State<MyGrounds> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomePageController>(builder: (homePageController) {
-      if (homePageController.isLoading) {
+      if (homePageController.isLoading && homePageController.joinedGrounds.isEmpty) {
         return CustomShimmer(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -147,6 +147,8 @@ class _MyGroundsState extends State<MyGrounds> {
             ],
           ),
         );
+      } else if (!homePageController.isLoading && homePageController.joinedGrounds.isEmpty) {
+        return SizedBox.shrink();
       }
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -171,7 +173,7 @@ class _MyGroundsState extends State<MyGrounds> {
               final ground = homePageController.joinedGrounds[index];
               return GestureDetector(
                 onTap: () {
-                  Navigator.push(context, getCustomRoute(child: TournamentChatScreen(groundId: ground.id!)));
+                  Navigator.push(context, getCustomRoute(child: SelectGroundChatScreen(selectedGround: ground, groundId: ground.id!)));
                 },
                 child: Container(
                   margin: const EdgeInsets.only(top: 16),

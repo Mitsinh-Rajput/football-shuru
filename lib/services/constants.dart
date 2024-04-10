@@ -39,8 +39,8 @@ class AppConstants {
   set setBaseUrl(String url) => baseUrl = url;
 
   //TODO: Change Base Url
-  // static String baseUrl = 'https://www.base-url.in/';
-  static String baseUrl = 'http://192.168.1.25:8000/';
+  static String baseUrl = 'https://footballshuru.heenahealth.in/admin/';
+  // static String baseUrl = 'http://192.168.1.25:8000/';
 
   ///USE FOR LOCAL
   //TODO: Change Base Url
@@ -56,17 +56,22 @@ class AppConstants {
   static const String updatePincode = 'api/v1/user/profile/update/pincode';
   static const String ground = 'api/v1/ground';
   static const String joinGround = 'api/v1/ground/chat/join';
+  static const String groundDetail = 'api/v1/ground/detail';
   static const String leaveGround = 'api/v1/ground/chat/leave';
   static const String joinedGrounds = 'api/v1/ground/chat/joined';
   static const String loadChats = 'api/v1/ground/chat/messages/load';
   static const String sendMessage = 'api/v1/ground/chat/messages/send';
   static const String updateLastSeen = 'api/v1/ground/chat/messages/update-last-seen';
+  static const String gameSlot = 'api/v1/ground/game-slot';
+  static const String createGameSlot = 'api/v1/ground/game-slot/create';
+  static const String gameSlotAttenance = 'api/v1/ground/game-slot/attendance';
 
   /// Team
 
   static const String createTeam = 'api/v1/team';
   static const String joinTeam = 'api/v1/team/chat/join';
   static const String joinedTeam = 'api/v1/team/chat/joined';
+  static const String leaveTeam = 'api/v1/team/chat/leave';
 
   /// Home
   static const String slider = 'api/v1/basic/slider';

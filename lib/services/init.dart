@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:football_shuru/controllers/chat_controller.dart';
+import 'package:football_shuru/controllers/gameslot_controller.dart';
 import 'package:football_shuru/controllers/homepage_controller.dart';
 import 'package:football_shuru/controllers/team_controller.dart';
+import 'package:football_shuru/data/repositories/gameslot_repo.dart';
 import 'package:football_shuru/data/repositories/home_repo.dart';
 import 'package:football_shuru/data/repositories/team_repo.dart';
 import 'package:get/instance_manager.dart';
@@ -36,6 +38,7 @@ class Init {
       Get.lazyPut(() => AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
       Get.lazyPut(() => HomeRepo(apiClient: Get.find()));
       Get.lazyPut(() => TeamRepo(apiClient: Get.find()));
+      Get.lazyPut(() => GameSlotRepo(apiClient: Get.find()));
       // Get.lazyPut(() => LeadsRepo(apiClient: Get.find()));
       // Get.lazyPut(() => AdminRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
       // Get.lazyPut(() => CartRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
@@ -46,6 +49,7 @@ class Init {
       Get.lazyPut(() => AuthController(authRepo: Get.find()));
       Get.lazyPut(() => HomePageController(homeRepo: Get.find()));
       Get.lazyPut(() => TeamControllor(teamRepo: Get.find()));
+      Get.lazyPut(() => GameSlotController(gameSlotRepo: Get.find()));
       Get.lazyPut(() => FirebaseController());
       // Get.lazyPut(() => LeadsController(leadsRepo: Get.find()));
       // Get.lazyPut(() => AdminController(adminRepo: Get.find()));

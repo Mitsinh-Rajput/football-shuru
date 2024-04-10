@@ -48,6 +48,7 @@ class Assets {
   static const String imagesShimmer = 'assets/images/shimmer.gif';
   static const String imagesStar1 = 'assets/images/star1.png';
   static const String imagesSupport = 'assets/images/support.png';
+  static const String imagesTeamlistplayer = 'assets/images/teamlistplayer.png';
   static const String imagesTeams = 'assets/images/teams.png';
   static const String imagesTermAndCondition = 'assets/images/term_and_condition.png';
   static const String imagesUser = 'assets/images/user.png';

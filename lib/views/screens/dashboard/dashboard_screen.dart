@@ -11,8 +11,8 @@ import 'package:football_shuru/views/screens/dashboard/league_screen/league_scre
 import 'package:football_shuru/views/screens/dashboard/teams_screen/teams_screen.dart';
 import 'package:get/get.dart';
 
-import '../../../controllers/homepage_controller.dart';
 import '../../../controllers/chat_controller.dart';
+import '../../../controllers/homepage_controller.dart';
 import 'drawer.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -27,6 +27,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     Timer.run(() async {
       await Get.find<HomePageController>().getSlider();
       await Get.find<AuthController>().getProfile().then((value) {

@@ -189,7 +189,7 @@ class AuthController extends GetxController implements GetxService {
       log(response.statusCode.toString());
       log(response.body.toString(), name: "getgrounds");
       if (response.statusCode == 200) {
-        grounds = groundsFromJson(jsonEncode(response.body['data']));
+        grounds = groundsListFromJson(jsonEncode(response.body['data']));
         responseModel = ResponseModel(true, '${response.body['message']}', response.body);
       } else {
         responseModel = ResponseModel(false, '${response.body['message']}', response.body);

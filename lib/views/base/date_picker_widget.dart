@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 
+import '../../services/theme.dart';
+
 class CustomDatePicker extends StatelessWidget {
   const CustomDatePicker({
-    Key? key,
+    super.key,
     required this.child,
+    required this.today,
     required this.onChanged,
     this.getTime = false,
     this.years = 0,
     this.enabled,
-  }) : super(key: key);
+  });
 
   final Widget child;
+  final bool today;
   final bool getTime;
   final bool? enabled;
   final int years;
@@ -24,7 +28,7 @@ class CustomDatePicker extends StatelessWidget {
           showDatePicker(
             context: context,
             initialDate: DateTime.now().subtract(Duration(days: 356 * years)),
-            firstDate: DateTime(1940),
+            firstDate: today ? DateTime.now() : DateTime(1940),
             lastDate: years == 0 ? DateTime.now().add(const Duration(days: 356 * 10)) : DateTime.now().subtract(Duration(days: 356 * years)),
             builder: (context, child) {
               return Theme(
@@ -35,13 +39,13 @@ class CustomDatePicker extends StatelessWidget {
                         ),
                   ),
                   colorScheme: ColorScheme.light(
-                    primary: Theme.of(context).primaryColor, // header background color
+                    primary: Colors.green, // header background color
                     onPrimary: Colors.white, // header text color
-                    onSurface: Theme.of(context).primaryColor, // body text color
+                    onSurface: primaryColor, // body text color
                   ),
                   textButtonTheme: TextButtonThemeData(
                     style: TextButton.styleFrom(
-                      foregroundColor: Theme.of(context).primaryColor,
+                      foregroundColor: primaryColor,
                     ),
                   ),
                 ),
@@ -57,18 +61,18 @@ class CustomDatePicker extends StatelessWidget {
                   return Theme(
                     data: Theme.of(context).copyWith(
                       textTheme: TextTheme(
-                        headlineMedium: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontSize: 20.0,
-                            ),
+                        headlineMedium: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 20.0, color: Colors.black87),
                       ),
                       colorScheme: ColorScheme.light(
-                        primary: Theme.of(context).primaryColor, // header background color
+                        secondary: primaryColor,
+
+                        primary: primaryColor, // header background color
                         onPrimary: Colors.white, // header text color
-                        onSurface: Theme.of(context).primaryColor, // body text color
+                        onSurface: primaryColor, // body text color
                       ),
                       textButtonTheme: TextButtonThemeData(
                         style: TextButton.styleFrom(
-                          foregroundColor: Theme.of(context).primaryColor,
+                          foregroundColor: primaryColor,
                         ),
                       ),
                     ),

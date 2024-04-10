@@ -155,7 +155,7 @@ class _MyGroundScreenState extends State<MyGroundScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const MyGrounds(),
+                  MyGrounds(),
                   const SizedBox(
                     height: 30,
                   ),
