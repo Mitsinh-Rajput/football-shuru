@@ -5,12 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:football_shuru/controllers/homepage_controller.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
-import 'package:football_shuru/views/screens/dashboard/ground_screen/add_ground.dart';
 import 'package:football_shuru/views/screens/dashboard/ground_screen/my_ground_tile.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../../services/route_helper.dart';
+import '../../initial_screens/location_screen.dart';
 
 class MyGroundScreen extends StatefulWidget {
   const MyGroundScreen({super.key});
@@ -107,8 +107,8 @@ class _MyGroundScreenState extends State<MyGroundScreen> {
             context,
             getCustomRoute(
               type: PageTransitionType.fade,
-              duration: const Duration(milliseconds: 600),
-              child: const AddGround(),
+              duration: const Duration(milliseconds: 400),
+              child: const LocationScreen(),
             ),
           );
         },
@@ -155,7 +155,7 @@ class _MyGroundScreenState extends State<MyGroundScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  MyGrounds(),
+                  const MyGrounds(),
                   const SizedBox(
                     height: 30,
                   ),
