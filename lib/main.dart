@@ -6,10 +6,12 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:football_shuru/data/repositories/auth_repo.dart';
 import 'package:football_shuru/services/init.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/screens/initial_screens/splash_screen.dart';
 import 'package:football_shuru/views/screens/widgets/no_internet.dart';
+import 'package:get/get.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -19,6 +21,8 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AwesomeNotificationsController.initializeLocalNotifications();
+  await Permission.notification.request();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -47,10 +51,26 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   //
-  initPlatForm() {
-    OneSignal.initialize("a61ed62c-595d-4652-9459-6de427215bc6"); //---------------------ADD ONESIGNAL APPID
-    // OneSignal.Notifications.requestPermission(true);
-    Permission.notification.request();
+  initPlatForm() async {
+    log("${await Permission.notification.status}", name: "OneSignal Notification Status");
+
+    OneSignal.initialize("a61ed62c-595d-4652-9459-6de427215bc6");
+    await Future.delayed(const Duration(seconds: 10), () async {
+      await Get.find<AuthRepo>().getDeviceId();
+    });
+
+    // OneSignal.Notifications.addForegroundWillDisplayListener((OSNotificationWillDisplayEvent event) {
+    //   /// preventDefault to not display the notification
+    //   event.preventDefault();
+    //
+    //   /// Do async work
+    //   /// notification.display() to display after preventing default
+    //   event.notification.display();
+    // });
+
+    // OneSignal.Notifications.addClickListener((OSNotificationClickEvent result) {
+    //   ///TODO:
+    // });
   }
 
   late StreamSubscription<ConnectivityResult> subscription;

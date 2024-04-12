@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/services/extensions.dart';
 import 'package:football_shuru/services/input_decoration.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
+import 'package:football_shuru/views/base/snack_bar.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 
@@ -111,7 +111,8 @@ class _AddGroundState extends State<AddGround> {
                   validator: (value) {
                     if (value.isNotValid) {
                       return 'Enter Name Of Ground';
-                    } // Return null if the value is valid
+                    }
+                    return null; // Return null if the value is valid
                   },
                   controller: nameController,
                   decoration: CustomDecoration.inputDecoration(
@@ -133,7 +134,8 @@ class _AddGroundState extends State<AddGround> {
                   validator: (value) {
                     if (value.isNotValid) {
                       return 'Enter Ground Address';
-                    } // Return null if the value is valid
+                    }
+                    return null; // Return null if the value is valid
                   },
                   controller: addressController,
                   decoration: CustomDecoration.inputDecoration(
@@ -155,7 +157,8 @@ class _AddGroundState extends State<AddGround> {
                   validator: (value) {
                     if (value.isNotValid) {
                       return 'Enter Ground Description';
-                    } // Return null if the value is valid
+                    }
+                    return null; // Return null if the value is valid
                   },
                   controller: descController,
                   maxLines: 3,
@@ -175,7 +178,8 @@ class _AddGroundState extends State<AddGround> {
                   validator: (value) {
                     if (value.isNotValid) {
                       return 'Enter Google Map Location';
-                    } // Return null if the value is valid
+                    }
+                    return null; // Return null if the value is valid
                   },
                   controller: locationController,
                   decoration: CustomDecoration.inputDecoration(
@@ -215,7 +219,7 @@ class _AddGroundState extends State<AddGround> {
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: Image.file(
-                                      images[index]!,
+                                      images[index],
                                       height: 100,
                                       width: 100,
                                       fit: BoxFit.fill,
@@ -344,10 +348,10 @@ class _AddGroundState extends State<AddGround> {
                       }
                     });
                   } else {
-                    Fluttertoast.showToast(msg: "Please add at least one image", toastLength: Toast.LENGTH_LONG);
+                    showSnackBar(context, content: "Please add at least one image");
                   }
                 } else {
-                  Fluttertoast.showToast(msg: "Please fill in all required fields", toastLength: Toast.LENGTH_LONG);
+                  showSnackBar(context, content: "Please fill in all required fields");
                 }
               }),
         );

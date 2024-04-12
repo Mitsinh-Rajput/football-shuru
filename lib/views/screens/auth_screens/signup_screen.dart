@@ -342,6 +342,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           children: [
             GetBuilder<AuthController>(builder: (authController) {
               return CustomButton(
+                isLoading: authController.isLoading,
                 fontSize: 14,
                 elevation: 0,
                 radius: 10,

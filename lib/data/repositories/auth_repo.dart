@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:football_shuru/services/extensions.dart';
 import 'package:get/get.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,7 +18,7 @@ class AuthRepo {
 
   Future<Response> login({required String token}) async => await apiClient.postData(AppConstants.loginUri, {
         "token": token,
-        "device_id": getDeviceId(),
+        "device_id": await getDeviceId(),
       });
 
   Future<Response> updatePincode({required String pincode}) async => await apiClient.postData(AppConstants.updatePincode, {
@@ -92,10 +93,12 @@ class AuthRepo {
     return true;
   }
 
-  String? getDeviceId() {
-    var deviceSate = OneSignal.User.pushSubscription.id;
-    log(deviceSate.toString(), name: "Device ID");
-    return deviceSate;
+  Future<String> getDeviceId() async {
+    // OneSignal.initialize('5f0b072e-529f-4df9-af7b-86a35a0259cb');
+    log('${OneSignal.User.pushSubscription.optedIn}', name: "OneSignal.User.pushSubscription.optedIn");
+    log('${OneSignal.User.pushSubscription.token}', name: "OneSignal.User.pushSubscription.token");
+
+    return OneSignal.User.pushSubscription.id.isValid ? OneSignal.User.pushSubscription.id! : 'null';
   }
 
   /// Methods to deal with Local Data ///

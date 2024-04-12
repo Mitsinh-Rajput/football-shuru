@@ -39,7 +39,7 @@ class AppConstants {
   set setBaseUrl(String url) => baseUrl = url;
 
   //TODO: Change Base Url
-  static String baseUrl = 'https://footballshuru.heenahealth.in/admin/';
+  static String baseUrl = 'https://footballshuru.heenahealth.in/';
   // static String baseUrl = 'http://192.168.1.25:8000/';
 
   ///USE FOR LOCAL

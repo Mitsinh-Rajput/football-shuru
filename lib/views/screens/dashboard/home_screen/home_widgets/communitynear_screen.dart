@@ -83,7 +83,7 @@ class _CommunityNearMeScreenState extends State<CommunityNearMeScreen> {
           ),
         );
       } else if (!homePageController.isLoading && homePageController.joinedGrounds.isEmpty) {
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
       }
       return Column(
         children: [
@@ -138,7 +138,6 @@ class _CommunityNearMeScreenState extends State<CommunityNearMeScreen> {
                     padding: EdgeInsets.only(right: 16, left: index == 0 ? 16 : 0),
                     child: Container(
                       padding: const EdgeInsets.all(12),
-                      height: 140,
                       width: size.width * 0.8,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -162,12 +161,14 @@ class _CommunityNearMeScreenState extends State<CommunityNearMeScreen> {
                               const SizedBox(
                                 width: 16,
                               ),
-                              Text(
-                                ground.title ?? '',
-                                style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                                      fontWeight: FontWeight.w800,
-                                      color: Colors.black87,
-                                    ),
+                              Expanded(
+                                child: Text(
+                                  ground.title ?? '',
+                                  style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                                        fontWeight: FontWeight.w800,
+                                        color: Colors.black87,
+                                      ),
+                                ),
                               )
                             ],
                           ),
