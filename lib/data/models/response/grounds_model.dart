@@ -19,6 +19,8 @@ class Grounds {
   final List<String> images; // Changed to List<String> type
   final String? description;
   final String? groundKing;
+  final dynamic groundKingTeam;
+  final GroundKingChallenge? groundKingChallenge;
 
   final HasUser? hasUser;
   final LastMessageDate? lastMessageDate;
@@ -38,6 +40,8 @@ class Grounds {
     this.hasUser,
     this.isSelected = false,
     this.lastMessageDate,
+    this.groundKingTeam,
+    this.groundKingChallenge,
   });
 
   factory Grounds.fromJson(Map<String, dynamic> json) => Grounds(
@@ -51,6 +55,8 @@ class Grounds {
         // Splitting the image string into a list of URLs
         description: json["description"],
         groundKing: json["ground_king"],
+        groundKingTeam: json["ground_king_team"],
+        groundKingChallenge: json["ground_king_challenge"] == null ? null : GroundKingChallenge.fromJson(json["ground_king_challenge"]),
         hasUser: json["hasUser"] == null ? null : HasUser.fromJson(json["hasUser"]),
         lastMessageDate: json["last_message_date"] == null ? null : LastMessageDate.fromJson(json["last_message_date"]),
       );
@@ -64,6 +70,8 @@ class Grounds {
         "pincode": pincode,
         "image": images, // Joining the list of image URLs into a single string
         "description": description,
+        "ground_king_team": groundKingTeam,
+        "ground_king_challenge": groundKingChallenge?.toJson(),
         "ground_king": groundKing, "hasUser": hasUser?.toJson(),
         "last_message_date": lastMessageDate?.toJson(),
       };
@@ -136,6 +144,122 @@ class LastMessageDate {
         "ground_id": groundId,
         "user_id": userId,
         "file": file,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+      };
+}
+
+GroundKingChallenge groundKingChallengeFromJson(String str) => GroundKingChallenge.fromJson(json.decode(str));
+
+String groundKingChallengeToJson(GroundKingChallenge data) => json.encode(data.toJson());
+
+class GroundKingChallenge {
+  final int? id;
+  final int? teamId;
+  final int? groundId;
+  final dynamic opponentTeamId;
+  final dynamic scheduledTime;
+  final dynamic scheduledBy;
+  final String? scheduledStatus;
+  final dynamic winnerTeam;
+  final dynamic winnerTeamResponseByUser;
+  final String? winningTeamConfirmation;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final Team? opponentTeam;
+  final Team? team;
+
+  GroundKingChallenge({
+    this.id,
+    this.teamId,
+    this.groundId,
+    this.opponentTeamId,
+    this.scheduledTime,
+    this.scheduledBy,
+    this.scheduledStatus,
+    this.winnerTeam,
+    this.winnerTeamResponseByUser,
+    this.winningTeamConfirmation,
+    this.createdAt,
+    this.updatedAt,
+    this.opponentTeam,
+    this.team,
+  });
+
+  factory GroundKingChallenge.fromJson(Map<String, dynamic> json) => GroundKingChallenge(
+        id: json["id"],
+        teamId: json["team_id"],
+        groundId: json["ground_id"],
+        opponentTeamId: json["opponent_team_id"],
+        scheduledTime: json["scheduled_time"],
+        scheduledBy: json["scheduled_by"],
+        scheduledStatus: json["scheduled_status"],
+        winnerTeam: json["winner_team"],
+        winnerTeamResponseByUser: json["winner_team_response_by_user"],
+        winningTeamConfirmation: json["winning_team_confirmation"],
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+        opponentTeam: json["opponent_team"] == null ? null : Team.fromJson(json["opponent_team"]),
+        team: json["team"] == null ? null : Team.fromJson(json["team"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "team_id": teamId,
+        "ground_id": groundId,
+        "opponent_team_id": opponentTeamId,
+        "scheduled_time": scheduledTime,
+        "scheduled_by": scheduledBy,
+        "scheduled_status": scheduledStatus,
+        "winner_team": winnerTeam,
+        "winner_team_response_by_user": winnerTeamResponseByUser,
+        "winning_team_confirmation": winningTeamConfirmation,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "opponent_team": opponentTeam?.toJson(),
+        "team": team?.toJson(),
+      };
+}
+
+class Team {
+  final int? id;
+  final String? name;
+  final String? logo;
+  final String? code;
+  final int? captain;
+  final int? createdBy;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  Team({
+    this.id,
+    this.name,
+    this.logo,
+    this.code,
+    this.captain,
+    this.createdBy,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory Team.fromJson(Map<String, dynamic> json) => Team(
+        id: json["id"],
+        name: json["name"],
+        logo: json["logo"],
+        code: json["code"],
+        captain: json["captain"],
+        createdBy: json["created_by"],
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "logo": logo,
+        "code": code,
+        "captain": captain,
+        "created_by": createdBy,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
       };

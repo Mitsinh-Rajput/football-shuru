@@ -39,8 +39,8 @@ class AppConstants {
   set setBaseUrl(String url) => baseUrl = url;
 
   //TODO: Change Base Url
-  static String baseUrl = 'https://footballshuru.heenahealth.in/';
-  // static String baseUrl = 'http://192.168.1.25:8000/';
+  // static String baseUrl = 'https://footballshuru.heenahealth.in/';
+  static String baseUrl = 'http://192.168.1.16:8000/';
 
   ///USE FOR LOCAL
   //TODO: Change Base Url
@@ -65,6 +65,14 @@ class AppConstants {
   static const String gameSlot = 'api/v1/ground/game-slot';
   static const String createGameSlot = 'api/v1/ground/game-slot/create';
   static const String gameSlotAttenance = 'api/v1/ground/game-slot/attendance';
+
+  /// Ground King Challenge
+
+  static const String getMyTeam = 'api/v1/team/my-teams';
+  static const String createChallenge = 'api/v1/ground/king-challenge/create';
+  static const String setOpponent = 'api/v1/ground/king-challenge/set-opponent';
+  static const String scheduleTime = 'api/v1/ground/king-challenge/schedule-time';
+  static const String approveSchedule = 'api/v1/ground/king-challenge/approve-schedule';
 
   /// Team
 

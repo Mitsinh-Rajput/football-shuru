@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:football_shuru/controllers/auth_controller.dart';
+import 'package:football_shuru/controllers/kingchallenge_controller.dart';
 import 'package:football_shuru/data/models/response/grounds_model.dart';
 import 'package:football_shuru/data/models/response/slider_model.dart';
 import 'package:football_shuru/data/repositories/home_repo.dart';
@@ -68,9 +69,12 @@ class HomePageController extends GetxController implements GetxService {
     try {
       Response response = await homeRepo.groundDetail(groundId: groundId);
       log(response.statusCode.toString());
-      log(response.body.toString(), name: "getgroundsDetail");
+      log(jsonEncode(response.body), name: "getgroundsDetail");
       if (response.statusCode == 200) {
         groundsDetail = groundsFromJson(jsonEncode(response.body['data']));
+        if (groundsDetail?.groundKingChallenge != null) {
+          Get.find<KingChallengeController>().teamId = groundsDetail?.groundKingChallenge?.teamId;
+        }
         responseModel = ResponseModel(true, '${response.body['message']}', response.body);
       } else {
         responseModel = ResponseModel(false, '${response.body['message']}', response.body);
@@ -127,7 +131,7 @@ class HomePageController extends GetxController implements GetxService {
     ResponseModel responseModel;
     _isLoading = true;
     update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.joinedGrounds}", name: "getJoinedGrounds");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.joinedGrounds}", name: "gedGrounds");
     try {
       Response response = await homeRepo.joinedGround();
       log(response.statusCode.toString());

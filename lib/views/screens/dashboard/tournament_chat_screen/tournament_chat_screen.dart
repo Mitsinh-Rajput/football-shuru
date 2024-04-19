@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,9 +8,11 @@ import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/controllers/chat_controller.dart';
 import 'package:football_shuru/controllers/gameslot_controller.dart';
 import 'package:football_shuru/controllers/homepage_controller.dart';
+import 'package:football_shuru/controllers/kingchallenge_controller.dart';
 import 'package:football_shuru/data/models/response/grounds_model.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/game_slot.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/ground_chatroom.dart';
+import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/ground_king_champion_tile.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/tournament_stats_section.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
@@ -53,6 +56,7 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen> with Si
           _ground = Get.find<HomePageController>().groundsDetail;
         }
       });
+      Get.find<KingChallengeController>().getGroundTeamList(groundId: widget.groundId);
       setState(() {});
     });
     _tabController = TabController(vsync: this, length: 3);
@@ -129,11 +133,13 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen> with Si
                 child: Column(
                   children: [
                     Container(
-                      height: 170,
-                      color: const Color(0xFF263238),
+                      height: 170 + 100,
                       child: Stack(
-                        clipBehavior: Clip.none,
                         children: [
+                          Container(
+                            height: 170,
+                            color: const Color(0xFF263238),
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(top: 5.0),
                             child: Row(
@@ -165,172 +171,12 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen> with Si
                             ),
                           ),
                           Positioned(
-                            bottom: -70,
+                            bottom: 0,
                             left: 0,
                             right: 0,
-                            child: Container(
-                              height: 150,
-                              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                              decoration: BoxDecoration(boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 4,
-                                  offset: const Offset(0, 4),
-                                  color: Colors.black.withOpacity(0.25),
-                                ),
-                              ], color: Colors.white, borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color.fromRGBO(196, 196, 196, 1))),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
-                                    child: Column(
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            "Ground King Champion",
-                                            style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: const Color.fromRGBO(255, 145, 0, 1),
-                                                ),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Stack(
-                                              children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(20),
-                                                      border: Border.all(
-                                                        width: 2,
-                                                        color: const Color.fromRGBO(255, 145, 0, 1),
-                                                      )),
-                                                  child: const CustomImage(
-                                                      radius: 20,
-                                                      height: 40,
-                                                      width: 40,
-                                                      fit: BoxFit.fill,
-                                                      path:
-                                                          "https://s3-alpha-sig.figma.com/img/4350/319e/ccd2879e061c826355e07a93a56087c5?Expires=1711929600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=JISvq4ZHQLpf~~ponap2y~Uq-hqnAwnfl87oYIy4CuSDBH682Ey19MFaR9c9wLIz1DEnfGHfKE15ceYZstHTSh2be9KY2JuulOHADPPTRMLm5tCbfxqQrjyN5d2agIcu9PxufWHWhkxTXlJTQ-RaBmDjXCjt6f7Xyp6S8N9l5-e4Dhg7QMAgwlfzQdGS7FmVnfF3PcKnVEDK2s-fIDS-dOZ1UOzeJug5r9h84gOcILh2VOuMI6E0ScJ9NI7hDFLa47kc58-0mmNMQJ32bbKtiWGUCGUjrELZNO7Yr7HpAkVMF0S7ddAUcZo2k6q0mDKWw7W0pNWJ5RTt7hJC41HMoA__"),
-                                                ),
-                                                Positioned(
-                                                  bottom: 0,
-                                                  right: 0,
-                                                  child: Container(
-                                                    height: 14,
-                                                    width: 14,
-                                                    decoration: BoxDecoration(color: const Color.fromRGBO(255, 145, 0, 1), borderRadius: BorderRadius.circular(20)),
-                                                    child: const Padding(
-                                                      padding: EdgeInsets.all(2.0),
-                                                      child: CustomImage(
-                                                          height: 8,
-                                                          width: 8,
-                                                          path:
-                                                              "https://s3-alpha-sig.figma.com/img/c204/f10b/24cfa8d945c30d47cf12a3615b909ff1?Expires=1711929600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=OyeffN2kYlSmiVZpDr24eIsDH2uRwisZU2Ty-7ERVj0fK0zKEfA4Zi4JBGTiy8sSmX-lKKc~KBFmiIK8gg622QcH3NAQ5GJfdOv7LTVofihpMMN3y3ym0nDwMu4np37Bqx-baUFcPbRCKXbMFI-HJ0zV5vRJu1FqYISnPMh6u-QeN~62qj1TYHPm53iEVvPo1OA46COKzp9A9iCqhoL3A24FOmFqzbsK6H-8dXfExexPcglxwRbcPnEBVjpHjg12f8nBqJVphqQ~7p-5Z2yaecsSiYQzxZJZFEyVNYmHV8ztWc30XCSy1V3DHGWg5GjkYAtHjKrQE6Y0ph1sc5R0aA__"),
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  "Team Ground king",
-                                                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                                        fontSize: 8,
-                                                        fontWeight: FontWeight.w400,
-                                                      ),
-                                                ),
-                                                Text(
-                                                  "Club Of Thane \nCenter",
-                                                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                                        fontSize: 11,
-                                                        fontWeight: FontWeight.w700,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                            Text(
-                                              "Vs",
-                                              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                                    fontSize: 26,
-                                                    fontWeight: FontWeight.w700,
-                                                    color: const Color.fromRGBO(217, 217, 217, 1),
-                                                  ),
-                                            ),
-                                            Column(
-                                              children: [
-                                                Align(
-                                                  alignment: Alignment.centerRight,
-                                                  child: Text(
-                                                    "OTHER TEAM",
-                                                    textAlign: TextAlign.end,
-                                                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                                          fontSize: 8,
-                                                          fontWeight: FontWeight.w400,
-                                                        ),
-                                                  ),
-                                                ),
-                                                Text(
-                                                  "Club of madras \nKnights",
-                                                  textAlign: TextAlign.end,
-                                                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                                        fontSize: 11,
-                                                        fontWeight: FontWeight.w700,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                            Container(
-                                                height: 40,
-                                                width: 40,
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(20),
-                                                    border: Border.all(
-                                                      color: const Color(0xFFE0E0E0),
-                                                      width: 1,
-                                                    )),
-                                                child: const Icon(Icons.add)),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 30,
-                                    decoration: const BoxDecoration(
-                                        color: Color.fromRGBO(255, 145, 0, 0.1),
-                                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          RichText(
-                                            text: TextSpan(
-                                                text: "Challenge Club of Thane Centre?",
-                                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 10, fontWeight: FontWeight.w600),
-                                                children: [
-                                                  TextSpan(
-                                                    text: " Challenge Now",
-                                                    style:
-                                                        Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: const Color(0xFFFF9100)),
-                                                  )
-                                                ]),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            child: GroundKingChampion(
+                              groundKingChallenge: _ground?.groundKingChallenge,
+                              groundId: _ground?.id ?? 0,
                             ),
                           ),
                         ],
@@ -343,7 +189,7 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen> with Si
             SliverFillRemaining(
               child: Column(
                 children: [
-                  const SizedBox(height: 75),
+                  // const SizedBox(height: 25),
                   Align(
                     alignment: Alignment.center,
                     child: Text(

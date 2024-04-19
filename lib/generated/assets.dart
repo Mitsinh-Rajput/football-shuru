@@ -25,6 +25,7 @@ class Assets {
   static const String imagesGps = 'assets/images/gps.png';
   static const String imagesGround = 'assets/images/ground.png';
   static const String imagesHome = 'assets/images/home.png';
+  static const String imagesInfoCircle = 'assets/images/info-circle.png';
   static const String imagesLeague = 'assets/images/league.png';
   static const String imagesLockCircle = 'assets/images/lock-circle.png';
   static const String imagesLogo = 'assets/images/logo.png';
