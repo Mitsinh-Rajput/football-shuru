@@ -1,13 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:football_shuru/controllers/homepage_controller.dart';
 import 'package:football_shuru/data/models/response/grounds_model.dart';
 import 'package:football_shuru/services/constants.dart';
+import 'package:football_shuru/services/extensions.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/date_picker_widget.dart';
-import 'package:football_shuru/views/base/shimmer.dart';
 import 'package:get/get.dart';
 
 import '../../../../controllers/kingchallenge_controller.dart';
@@ -27,62 +25,430 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
   int? _teamId;
   int? _opponentTeamId;
   int index = 0;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    await Future.delayed(const Duration(seconds: 2));
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<KingChallengeController>(builder: (kingChallengeController) {
       if (widget.groundKingChallenge == null) {
-        for (int i = 0; i < kingChallengeController.groundTeamList.length; i++) {
-          log(kingChallengeController.groundTeamList[i].team?.name ?? "", name: "Elements");
-        }
-        return Container(
-          height: 150,
-          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-          decoration: BoxDecoration(boxShadow: [
-            BoxShadow(
-              blurRadius: 4,
-              offset: const Offset(0, 4),
-              color: Colors.black.withOpacity(0.25),
-            ),
-          ], color: Colors.white, borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color.fromRGBO(196, 196, 196, 1))),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
+        return isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Container(
+                height: 150,
+                margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                decoration: BoxDecoration(boxShadow: [
+                  BoxShadow(
+                    blurRadius: 4,
+                    offset: const Offset(0, 4),
+                    color: Colors.black.withOpacity(0.25),
+                  ),
+                ], color: Colors.white, borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color.fromRGBO(196, 196, 196, 1))),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Row(
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
+                      child: Column(
                         children: [
-                          Text(
-                            "Ground King Champion",
-                            style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color.fromRGBO(255, 145, 0, 1),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Ground King Champion",
+                                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: const Color.fromRGBO(255, 145, 0, 1),
+                                      ),
                                 ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                const CustomImage(
+                                  path: Assets.imagesInfoCircle,
+                                  height: 18,
+                                )
+                              ],
+                            ),
                           ),
                           const SizedBox(
-                            width: 5,
+                            height: 10,
                           ),
-                          const CustomImage(
-                            path: Assets.imagesInfoCircle,
-                            height: 18,
-                          )
+                          if (_teamId == null)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Stack(
+                                  children: [
+                                    Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                            border: Border.all(
+                                              color: const Color(0xFFE0E0E0),
+                                              width: 1,
+                                            )),
+                                        child: const Icon(Icons.add)),
+                                    Positioned(
+                                      bottom: 0,
+                                      right: 0,
+                                      child: Container(
+                                        height: 14,
+                                        width: 14,
+                                        decoration: BoxDecoration(color: const Color(0xFFFF9100), borderRadius: BorderRadius.circular(20)),
+                                        child: const Padding(
+                                          padding: EdgeInsets.all(2.0),
+                                          child: CustomImage(
+                                              height: 8,
+                                              width: 8,
+                                              path:
+                                                  "https://s3-alpha-sig.figma.com/img/c204/f10b/24cfa8d945c30d47cf12a3615b909ff1?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KtgSPjADbFef0XclcRL4-HfqDdzt0Peoi~9I2iBlSq-deQeJtZb6RcisiIdvgKaOnTNXKo5x8wMEzgUWFAe4YTh2omCmwJH6x1HqTsCaouEZbEP1VWSb1d14gjiz1zMpVlmdFqCXvKodrACJAffKBKmUumRbXItn5W2jTw4dX-6tBk6b4-CskgkBKl-dZImpgJ0B1MnUgYYp8X0H7kTJeE9Gmrx9ofHkLHarlbeApCnvwVa-QqKK2JajNJlrsJLBN1zZEUwC2t70GmqpD-Mbb3MnPtL4tugqrCCrMELmOGjVp2phbwhNZ6YB7YHOsbWpjoQ8FPIowv64esDaKaUGJQ__"),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text(
+                                      "ADD Team A",
+                                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                            fontSize: 8,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                    ),
+                                    Text(
+                                      "Apply for Ground King",
+                                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  height: 28,
+                                  width: 100,
+                                  padding: const EdgeInsets.only(left: 9),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(color: Colors.black12),
+                                  ),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton(
+                                      dropdownColor: Colors.white,
+                                      underline: null,
+                                      value: _teamId,
+                                      hint: Text(
+                                        'Select Team',
+                                        style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 10),
+                                      ),
+                                      items: kingChallengeController.groundTeamList.map((GroundTeam item) {
+                                        return DropdownMenuItem(
+                                          value: item.team!.id,
+                                          child: Text(
+                                            item.team?.name ?? "",
+                                            style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 10),
+                                          ),
+                                        );
+                                      }).toList(),
+                                      onChanged: (newValue) {
+                                        setState(() {
+                                          _teamId = newValue as int;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )
+                          else
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Stack(
+                                  children: [
+                                    Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                            border: Border.all(
+                                              color: const Color(0xFFFF9100),
+                                              width: 1,
+                                            )),
+                                        child: CustomImage(
+                                          path:
+                                              "${AppConstants.baseUrl}${kingChallengeController.groundTeamList.where((element) => element.teamId == _teamId).toList()[index].team!.logo}",
+                                          radius: 50,
+                                          fit: BoxFit.fitWidth,
+                                        )),
+                                    Positioned(
+                                      bottom: 0,
+                                      right: 0,
+                                      child: Container(
+                                        height: 14,
+                                        width: 14,
+                                        decoration: BoxDecoration(color: const Color.fromRGBO(255, 145, 0, 1), borderRadius: BorderRadius.circular(20)),
+                                        child: const Padding(
+                                          padding: EdgeInsets.all(2.0),
+                                          child: CustomImage(
+                                              height: 8,
+                                              width: 8,
+                                              path:
+                                                  "https://s3-alpha-sig.figma.com/img/c204/f10b/24cfa8d945c30d47cf12a3615b909ff1?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KtgSPjADbFef0XclcRL4-HfqDdzt0Peoi~9I2iBlSq-deQeJtZb6RcisiIdvgKaOnTNXKo5x8wMEzgUWFAe4YTh2omCmwJH6x1HqTsCaouEZbEP1VWSb1d14gjiz1zMpVlmdFqCXvKodrACJAffKBKmUumRbXItn5W2jTw4dX-6tBk6b4-CskgkBKl-dZImpgJ0B1MnUgYYp8X0H7kTJeE9Gmrx9ofHkLHarlbeApCnvwVa-QqKK2JajNJlrsJLBN1zZEUwC2t70GmqpD-Mbb3MnPtL4tugqrCCrMELmOGjVp2phbwhNZ6YB7YHOsbWpjoQ8FPIowv64esDaKaUGJQ__"),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    Text(
+                                      "ADD Team A",
+                                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                            fontSize: 8,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                    ),
+                                    Text(
+                                      kingChallengeController.groundTeamList.where((element) => element.teamId == _teamId).toList()[index].team?.name ?? "",
+                                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                                CustomButton(
+                                  height: 28,
+                                  onTap: () {
+                                    kingChallengeController.createChallenge(groundId: widget.groundId, teamId: _teamId!).then((value) {
+                                      if (value.isSuccess) {
+                                        Fluttertoast.showToast(msg: value.message);
+                                        Navigator.pop(context);
+                                      }
+                                    });
+                                  },
+                                  type: ButtonType.primary,
+                                  radius: 20,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Submit",
+                                        style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white, fontSize: 10),
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      const Icon(
+                                        Icons.check_circle_outline,
+                                        color: Colors.white,
+                                        size: 12,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                CustomButton(
+                                  height: 28,
+                                  onTap: () {
+                                    _teamId = null;
+                                    setState(() {});
+                                  },
+                                  type: ButtonType.primary,
+                                  color: const Color(0xFFFF6B6B),
+                                  radius: 20,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Cancel",
+                                        style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white, fontSize: 10),
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      const Icon(
+                                        Icons.check_circle_outline,
+                                        color: Colors.white,
+                                        size: 12,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            )
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    Container(
+                      height: 30,
+                      decoration: const BoxDecoration(
+                          color: Color.fromRGBO(255, 145, 0, 0.1), borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                  text: (_teamId != null) ? "Apply by completing the Ground King Challenge and submitting" : "Post a challenge to become a ground king?",
+                                  style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 9, fontWeight: FontWeight.w500),
+                                  children: [
+                                    (_teamId != null)
+                                        ? const TextSpan()
+                                        : TextSpan(
+                                            text: " Post a challenge!",
+                                            style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: const Color(0xFFFF9100)),
+                                          ),
+                                  ]),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    if (_teamId == null)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  ],
+                ),
+              );
+      } else if (widget.groundKingChallenge?.opponentTeamId == null) {
+        return isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Container(
+                height: 150,
+                margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                decoration: BoxDecoration(boxShadow: [
+                  BoxShadow(
+                    blurRadius: 4,
+                    offset: const Offset(0, 4),
+                    color: Colors.black.withOpacity(0.25),
+                  ),
+                ], color: Colors.white, borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color.fromRGBO(196, 196, 196, 1))),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
+                      child: Column(
                         children: [
-                          Stack(
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Ground King Champion",
+                                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: const Color.fromRGBO(255, 145, 0, 1),
+                                      ),
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                const CustomImage(
+                                  path: Assets.imagesInfoCircle,
+                                  height: 18,
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
+                              Stack(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                          width: 2,
+                                          color: const Color.fromRGBO(255, 145, 0, 1),
+                                        )),
+                                    child: CustomImage(radius: 20, height: 40, width: 40, fit: BoxFit.fill, path: AppConstants.baseUrl + widget.groundKingChallenge!.team!.logo!),
+                                  ),
+                                  Positioned(
+                                    bottom: 0,
+                                    right: 0,
+                                    child: Container(
+                                      height: 14,
+                                      width: 14,
+                                      decoration: BoxDecoration(color: const Color.fromRGBO(255, 145, 0, 1), borderRadius: BorderRadius.circular(20)),
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(2.0),
+                                        child: CustomImage(
+                                            height: 8,
+                                            width: 8,
+                                            path:
+                                                "https://s3-alpha-sig.figma.com/img/c204/f10b/24cfa8d945c30d47cf12a3615b909ff1?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KtgSPjADbFef0XclcRL4-HfqDdzt0Peoi~9I2iBlSq-deQeJtZb6RcisiIdvgKaOnTNXKo5x8wMEzgUWFAe4YTh2omCmwJH6x1HqTsCaouEZbEP1VWSb1d14gjiz1zMpVlmdFqCXvKodrACJAffKBKmUumRbXItn5W2jTw4dX-6tBk6b4-CskgkBKl-dZImpgJ0B1MnUgYYp8X0H7kTJeE9Gmrx9ofHkLHarlbeApCnvwVa-QqKK2JajNJlrsJLBN1zZEUwC2t70GmqpD-Mbb3MnPtL4tugqrCCrMELmOGjVp2phbwhNZ6YB7YHOsbWpjoQ8FPIowv64esDaKaUGJQ__"),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    "Team A",
+                                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          fontSize: 8,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                  ),
+                                  Text(
+                                    widget.groundKingChallenge!.team!.name!,
+                                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                "Vs",
+                                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                      fontSize: 26,
+                                      fontWeight: FontWeight.w700,
+                                      color: const Color.fromRGBO(217, 217, 217, 1),
+                                    ),
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    "Team B",
+                                    // textAlign: TextAlign.end,
+                                    style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 8, fontWeight: FontWeight.w400, color: const Color(0xFFA5A5A5)),
+                                  ),
+                                  Text(
+                                    kingChallengeController.groundTeamList[index].teamId == kingChallengeController.teamId ? "Waiting for \nopponent" : "Challenge \nGround King",
+                                    textAlign: TextAlign.end,
+                                    style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11, fontWeight: FontWeight.w700, color: const Color(0xFFA5A5A5)),
+                                  ),
+                                ],
+                              ),
                               Container(
                                   height: 40,
                                   width: 40,
@@ -93,667 +459,542 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                         width: 1,
                                       )),
                                   child: const Icon(Icons.add)),
-                              Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: Container(
-                                  height: 14,
-                                  width: 14,
-                                  decoration: BoxDecoration(color: const Color(0xFFFF9100), borderRadius: BorderRadius.circular(20)),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(2.0),
-                                    child: CustomImage(
-                                        height: 8,
-                                        width: 8,
-                                        path:
-                                            "https://s3-alpha-sig.figma.com/img/c204/f10b/24cfa8d945c30d47cf12a3615b909ff1?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KtgSPjADbFef0XclcRL4-HfqDdzt0Peoi~9I2iBlSq-deQeJtZb6RcisiIdvgKaOnTNXKo5x8wMEzgUWFAe4YTh2omCmwJH6x1HqTsCaouEZbEP1VWSb1d14gjiz1zMpVlmdFqCXvKodrACJAffKBKmUumRbXItn5W2jTw4dX-6tBk6b4-CskgkBKl-dZImpgJ0B1MnUgYYp8X0H7kTJeE9Gmrx9ofHkLHarlbeApCnvwVa-QqKK2JajNJlrsJLBN1zZEUwC2t70GmqpD-Mbb3MnPtL4tugqrCCrMELmOGjVp2phbwhNZ6YB7YHOsbWpjoQ8FPIowv64esDaKaUGJQ__"),
-                                  ),
-                                ),
-                              )
                             ],
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                "ADD Team A",
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                      fontSize: 8,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                              ),
-                              Text(
-                                "Apply for Ground King",
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            height: 28,
-                            width: 100,
-                            padding: const EdgeInsets.only(left: 9),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(color: Colors.black12),
-                            ),
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton(
-                                dropdownColor: Colors.white,
-                                underline: null,
-                                value: _teamId,
-                                hint: Text(
-                                  'Select Team',
-                                  style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 10),
-                                ),
-                                items: kingChallengeController.groundTeamList.map((GroundTeam item) {
-                                  return DropdownMenuItem(
-                                    value: item.team!.id,
-                                    child: Text(
-                                      item.team?.name ?? "",
-                                      style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 10),
-                                    ),
-                                  );
-                                }).toList(),
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    _teamId = newValue as int;
-                                  });
-                                },
-                              ),
-                            ),
                           )
                         ],
-                      )
-                    else
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Stack(
-                            children: [
-                              Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                        color: const Color(0xFFFF9100),
-                                        width: 1,
-                                      )),
-                                  child: CustomImage(
-                                    path:
-                                        "${AppConstants.baseUrl}${kingChallengeController.groundTeamList.where((element) => element.teamId == _teamId).toList()[index].team!.logo}",
-                                    radius: 50,
-                                    fit: BoxFit.fitWidth,
-                                  )),
-                              Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: Container(
-                                  height: 14,
-                                  width: 14,
-                                  decoration: BoxDecoration(color: const Color.fromRGBO(255, 145, 0, 1), borderRadius: BorderRadius.circular(20)),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(2.0),
-                                    child: CustomImage(
-                                        height: 8,
-                                        width: 8,
-                                        path:
-                                            "https://s3-alpha-sig.figma.com/img/c204/f10b/24cfa8d945c30d47cf12a3615b909ff1?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KtgSPjADbFef0XclcRL4-HfqDdzt0Peoi~9I2iBlSq-deQeJtZb6RcisiIdvgKaOnTNXKo5x8wMEzgUWFAe4YTh2omCmwJH6x1HqTsCaouEZbEP1VWSb1d14gjiz1zMpVlmdFqCXvKodrACJAffKBKmUumRbXItn5W2jTw4dX-6tBk6b4-CskgkBKl-dZImpgJ0B1MnUgYYp8X0H7kTJeE9Gmrx9ofHkLHarlbeApCnvwVa-QqKK2JajNJlrsJLBN1zZEUwC2t70GmqpD-Mbb3MnPtL4tugqrCCrMELmOGjVp2phbwhNZ6YB7YHOsbWpjoQ8FPIowv64esDaKaUGJQ__"),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                "ADD Team A",
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                      fontSize: 8,
-                                      fontWeight: FontWeight.w400,
-                                    ),
+                      ),
+                    ),
+                    Container(
+                      height: 30,
+                      decoration: const BoxDecoration(
+                          color: Color.fromRGBO(255, 145, 0, 0.1), borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                text: kingChallengeController.groundTeamList[index].teamId == kingChallengeController.teamId
+                                    ? "Wait for opponent"
+                                    : _opponentTeamId == null
+                                        ? "Team A has posted a challenge for ground king?"
+                                        : "Confirmation (${kingChallengeController.groundTeamList.where((element) => element.teamId == _opponentTeamId).toList()[0].team?.name} ):",
+                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 9, fontWeight: FontWeight.w500),
                               ),
-                              Text(
-                                kingChallengeController.groundTeamList.where((element) => element.teamId == _teamId).toList()[index].team?.name ?? "",
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                              ),
-                            ],
-                          ),
-                          CustomButton(
-                            height: 28,
-                            onTap: () {
-                              kingChallengeController.createChallenge(groundId: widget.groundId, teamId: _teamId!).then((value) {
-                                if (value.isSuccess) {
-                                  Fluttertoast.showToast(msg: value.message);
-                                  Navigator.pop(context);
-                                }
-                              });
-                            },
-                            type: ButtonType.primary,
-                            radius: 20,
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Submit",
-                                  style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white, fontSize: 10),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                const Icon(
-                                  Icons.check_circle_outline,
-                                  color: Colors.white,
-                                  size: 12,
-                                )
-                              ],
                             ),
-                          ),
-                          CustomButton(
-                            height: 28,
-                            onTap: () {
-                              _teamId = null;
-                              setState(() {});
-                            },
-                            type: ButtonType.primary,
-                            color: const Color(0xFFFF6B6B),
-                            radius: 20,
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Cancel",
-                                  style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white, fontSize: 10),
-                                ),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                const Icon(
-                                  Icons.check_circle_outline,
-                                  color: Colors.white,
-                                  size: 12,
-                                )
-                              ],
+                            const SizedBox(
+                              width: 5,
                             ),
-                          ),
-                        ],
-                      )
+                            kingChallengeController.groundTeamList[index].teamId == kingChallengeController.teamId
+                                ? const SizedBox.shrink()
+                                : _opponentTeamId == null
+                                    ? DropdownButtonHideUnderline(
+                                        child: DropdownButton(
+                                          dropdownColor: Colors.white,
+                                          value: _opponentTeamId,
+                                          hint: Text(
+                                            'Select Team',
+                                            style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 10),
+                                          ),
+                                          items: kingChallengeController.groundTeamList.map((GroundTeam item) {
+                                            return DropdownMenuItem(
+                                              value: item.team?.id,
+                                              child: Text(
+                                                item.team?.name ?? "",
+                                                style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 10),
+                                              ),
+                                            );
+                                          }).toList(),
+                                          onChanged: (newValue) {
+                                            setState(() {
+                                              _opponentTeamId = newValue as int;
+                                            });
+                                          },
+                                        ),
+                                      )
+                                    : Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                                        child: Row(
+                                          children: [
+                                            CustomButton(
+                                              height: 28,
+                                              onTap: () {
+                                                kingChallengeController
+                                                    .setOpponent(groundId: widget.groundId, teamId: kingChallengeController.teamId!, opponentTeamId: _opponentTeamId!)
+                                                    .then((value) {
+                                                  if (value.isSuccess) {
+                                                    Fluttertoast.showToast(msg: value.message);
+                                                    Navigator.pop(context);
+                                                  }
+                                                });
+                                              },
+                                              type: ButtonType.primary,
+                                              radius: 10,
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    "Submit",
+                                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white, fontSize: 10),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  const Icon(
+                                                    Icons.check_circle_outline,
+                                                    color: Colors.white,
+                                                    size: 12,
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            CustomButton(
+                                              height: 28,
+                                              onTap: () {
+                                                _opponentTeamId = null;
+                                                setState(() {});
+                                              },
+                                              type: ButtonType.primary,
+                                              color: const Color(0xFFFF6B6B),
+                                              radius: 10,
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    "Cancel",
+                                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white, fontSize: 10),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  const Icon(
+                                                    Icons.check_circle_outline,
+                                                    color: Colors.white,
+                                                    size: 12,
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              Container(
-                height: 30,
-                decoration: const BoxDecoration(
-                    color: Color.fromRGBO(255, 145, 0, 0.1), borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                            text: (_teamId != null) ? "Apply by completing the Ground King Challenge and submitting" : "Post a challenge to become a ground king?",
-                            style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 9, fontWeight: FontWeight.w500),
-                            children: [
-                              (_teamId != null)
-                                  ? const TextSpan()
-                                  : TextSpan(
-                                      text: " Post a challenge!",
-                                      style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 10, fontWeight: FontWeight.w600, color: const Color(0xFFFF9100)),
-                                    ),
-                            ]),
-                      ),
-                    ],
+              );
+      } else if (widget.groundKingChallenge?.scheduledStatus == "rejected") {
+        return isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Container(
+                height: 150,
+                margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                decoration: BoxDecoration(boxShadow: [
+                  BoxShadow(
+                    blurRadius: 4,
+                    offset: const Offset(0, 4),
+                    color: Colors.black.withOpacity(0.25),
                   ),
-                ),
-              ),
-            ],
-          ),
-        );
-      } else if (widget.groundKingChallenge?.opponentTeamId == null) {
-        return Container(
-          height: 150,
-          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-          decoration: BoxDecoration(boxShadow: [
-            BoxShadow(
-              blurRadius: 4,
-              offset: const Offset(0, 4),
-              color: Colors.black.withOpacity(0.25),
-            ),
-          ], color: Colors.white, borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color.fromRGBO(196, 196, 196, 1))),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
+                ], color: Colors.white, borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color.fromRGBO(196, 196, 196, 1))),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Row(
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
+                      child: Column(
                         children: [
-                          Text(
-                            "Ground King Champion",
-                            style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color.fromRGBO(255, 145, 0, 1),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Ground King Champion",
+                                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: const Color.fromRGBO(255, 145, 0, 1),
+                                      ),
                                 ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                const CustomImage(
+                                  path: Assets.imagesInfoCircle,
+                                  height: 18,
+                                )
+                              ],
+                            ),
                           ),
                           const SizedBox(
-                            width: 5,
+                            height: 10,
                           ),
-                          const CustomImage(
-                            path: Assets.imagesInfoCircle,
-                            height: 18,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Stack(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                          width: 2,
+                                          color: const Color.fromRGBO(255, 145, 0, 1),
+                                        )),
+                                    child: CustomImage(radius: 20, height: 40, width: 40, fit: BoxFit.fill, path: AppConstants.baseUrl + widget.groundKingChallenge!.team!.logo!),
+                                  ),
+                                  Positioned(
+                                    bottom: 0,
+                                    right: 0,
+                                    child: Container(
+                                      height: 14,
+                                      width: 14,
+                                      decoration: BoxDecoration(color: const Color.fromRGBO(255, 145, 0, 1), borderRadius: BorderRadius.circular(20)),
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(2.0),
+                                        child: CustomImage(
+                                            height: 8,
+                                            width: 8,
+                                            path:
+                                                "https://s3-alpha-sig.figma.com/img/c204/f10b/24cfa8d945c30d47cf12a3615b909ff1?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KtgSPjADbFef0XclcRL4-HfqDdzt0Peoi~9I2iBlSq-deQeJtZb6RcisiIdvgKaOnTNXKo5x8wMEzgUWFAe4YTh2omCmwJH6x1HqTsCaouEZbEP1VWSb1d14gjiz1zMpVlmdFqCXvKodrACJAffKBKmUumRbXItn5W2jTw4dX-6tBk6b4-CskgkBKl-dZImpgJ0B1MnUgYYp8X0H7kTJeE9Gmrx9ofHkLHarlbeApCnvwVa-QqKK2JajNJlrsJLBN1zZEUwC2t70GmqpD-Mbb3MnPtL4tugqrCCrMELmOGjVp2phbwhNZ6YB7YHOsbWpjoQ8FPIowv64esDaKaUGJQ__"),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    "Team A",
+                                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          fontSize: 8,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                  ),
+                                  Text(
+                                    widget.groundKingChallenge!.team!.name!,
+                                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                "Vs",
+                                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                      fontSize: 26,
+                                      fontWeight: FontWeight.w700,
+                                      color: const Color.fromRGBO(217, 217, 217, 1),
+                                    ),
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    "Team B",
+                                    // textAlign: TextAlign.end,
+                                    style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 8, fontWeight: FontWeight.w400),
+                                  ),
+                                  Text(
+                                    Get.find<HomePageController>().groundsDetail?.groundKingChallenge?.opponentTeam?.name ?? "",
+                                    textAlign: TextAlign.end,
+                                    style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11, fontWeight: FontWeight.w700),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: const Color(0xFFE0E0E0),
+                                      width: 1,
+                                    )),
+                                child:
+                                    CustomImage(radius: 20, height: 40, width: 40, fit: BoxFit.fill, path: AppConstants.baseUrl + widget.groundKingChallenge!.opponentTeam!.logo!),
+                              ),
+                            ],
                           )
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Stack(
+                    Container(
+                      height: 30,
+                      decoration: const BoxDecoration(
+                          color: Color.fromRGBO(255, 145, 0, 0.1), borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    width: 2,
-                                    color: const Color.fromRGBO(255, 145, 0, 1),
-                                  )),
-                              child: CustomImage(radius: 20, height: 40, width: 40, fit: BoxFit.fill, path: AppConstants.baseUrl + widget.groundKingChallenge!.team!.logo!),
-                            ),
-                            Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: Container(
-                                height: 14,
-                                width: 14,
-                                decoration: BoxDecoration(color: const Color.fromRGBO(255, 145, 0, 1), borderRadius: BorderRadius.circular(20)),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(2.0),
-                                  child: CustomImage(
-                                      height: 8,
-                                      width: 8,
-                                      path:
-                                          "https://s3-alpha-sig.figma.com/img/c204/f10b/24cfa8d945c30d47cf12a3615b909ff1?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KtgSPjADbFef0XclcRL4-HfqDdzt0Peoi~9I2iBlSq-deQeJtZb6RcisiIdvgKaOnTNXKo5x8wMEzgUWFAe4YTh2omCmwJH6x1HqTsCaouEZbEP1VWSb1d14gjiz1zMpVlmdFqCXvKodrACJAffKBKmUumRbXItn5W2jTw4dX-6tBk6b4-CskgkBKl-dZImpgJ0B1MnUgYYp8X0H7kTJeE9Gmrx9ofHkLHarlbeApCnvwVa-QqKK2JajNJlrsJLBN1zZEUwC2t70GmqpD-Mbb3MnPtL4tugqrCCrMELmOGjVp2phbwhNZ6YB7YHOsbWpjoQ8FPIowv64esDaKaUGJQ__"),
-                                ),
+                            RichText(
+                              text: TextSpan(
+                                text: kingChallengeController.groundTeamList[index].teamId != widget.groundKingChallenge?.scheduledBy &&
+                                        widget.groundKingChallenge?.scheduledBy != null
+                                    ? "${DateTime.parse(widget.groundKingChallenge?.scheduledTime).dayDateTime}?"
+                                    : "Team A has accepted for ground king challenge?",
+                                style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 8),
                               ),
-                            )
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              "Team A",
-                              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                    fontSize: 8,
-                                    fontWeight: FontWeight.w400,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 5.0),
+                              child: CustomDatePicker(
+                                getTime: true,
+                                onChanged: (value) {
+                                  kingChallengeController
+                                      .scheduleTime(
+                                          groundId: widget.groundKingChallenge!.id!,
+                                          scheduledBy: kingChallengeController.groundTeamList[index].teamId!,
+                                          scheduledTime: value!.toString())
+                                      .then((value) {
+                                    if (value.isSuccess) {
+                                      Fluttertoast.showToast(msg: value.message);
+                                      Navigator.pop(context);
+                                    }
+                                  });
+                                  // log(value.toString());
+                                },
+                                today: false,
+                                child: Container(
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: const Color(0xFF40424E),
                                   ),
-                            ),
-                            Text(
-                              widget.groundKingChallenge!.team!.name!,
-                              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          "Vs",
-                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                fontSize: 26,
-                                fontWeight: FontWeight.w700,
-                                color: const Color.fromRGBO(217, 217, 217, 1),
-                              ),
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              "Team B",
-                              // textAlign: TextAlign.end,
-                              style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 8, fontWeight: FontWeight.w400, color: const Color(0xFFA5A5A5)),
-                            ),
-                            Text(
-                              kingChallengeController.groundTeamList[index].teamId == kingChallengeController.teamId ? "Waiting for \nopponent" : "Challenge \nGround King",
-                              textAlign: TextAlign.end,
-                              style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11, fontWeight: FontWeight.w700, color: const Color(0xFFA5A5A5)),
-                            ),
-                          ],
-                        ),
-                        Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                  color: const Color(0xFFE0E0E0),
-                                  width: 1,
-                                )),
-                            child: const Icon(Icons.add)),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                height: 30,
-                decoration: const BoxDecoration(
-                    color: Color.fromRGBO(255, 145, 0, 0.1), borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          text: kingChallengeController.groundTeamList[index].teamId == kingChallengeController.teamId
-                              ? "Wait for opponent"
-                              : _opponentTeamId == null
-                                  ? "Team A has posted a challenge for ground king?"
-                                  : "Confirmation (${kingChallengeController.groundTeamList.where((element) => element.teamId == _opponentTeamId).toList()[0].team?.name} ):",
-                          style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 9, fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      kingChallengeController.groundTeamList[index].teamId == kingChallengeController.teamId
-                          ? const SizedBox.shrink()
-                          : _opponentTeamId == null
-                              ? DropdownButtonHideUnderline(
-                                  child: DropdownButton(
-                                    dropdownColor: Colors.white,
-                                    value: _opponentTeamId,
-                                    hint: Text(
-                                      'Select Team',
-                                      style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 10),
-                                    ),
-                                    items: kingChallengeController.groundTeamList.map((GroundTeam item) {
-                                      return DropdownMenuItem(
-                                        value: item.team?.id,
-                                        child: Text(
-                                          item.team?.name ?? "",
-                                          style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 10),
-                                        ),
-                                      );
-                                    }).toList(),
-                                    onChanged: (newValue) {
-                                      setState(() {
-                                        _opponentTeamId = newValue as int;
-                                      });
-                                    },
-                                  ),
-                                )
-                              : Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 5.0),
                                   child: Row(
                                     children: [
-                                      CustomButton(
-                                        height: 28,
-                                        onTap: () {
-                                          kingChallengeController
-                                              .setOpponent(groundId: widget.groundId, teamId: kingChallengeController.teamId!, opponentTeamId: _opponentTeamId!)
-                                              .then((value) {
-                                            if (value.isSuccess) {
-                                              Fluttertoast.showToast(msg: value.message);
-                                              Navigator.pop(context);
-                                            }
-                                          });
-                                        },
-                                        type: ButtonType.primary,
-                                        radius: 10,
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              "Submit",
-                                              style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white, fontSize: 10),
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            const Icon(
-                                              Icons.check_circle_outline,
-                                              color: Colors.white,
-                                              size: 12,
-                                            )
-                                          ],
-                                        ),
+                                      Text(
+                                        kingChallengeController.groundTeamList[index].teamId != widget.groundKingChallenge?.scheduledBy &&
+                                                widget.groundKingChallenge?.scheduledBy != null
+                                            ? "Reschedule"
+                                            : "Select Time Slot",
+                                        style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white, fontSize: 9),
                                       ),
                                       const SizedBox(
-                                        width: 10,
+                                        width: 5,
                                       ),
-                                      CustomButton(
-                                        height: 28,
-                                        onTap: () {
-                                          _opponentTeamId = null;
-                                          setState(() {});
-                                        },
-                                        type: ButtonType.primary,
-                                        color: const Color(0xFFFF6B6B),
-                                        radius: 10,
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              "Cancel",
-                                              style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white, fontSize: 10),
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            const Icon(
-                                              Icons.check_circle_outline,
-                                              color: Colors.white,
-                                              size: 12,
-                                            )
-                                          ],
-                                        ),
-                                      ),
+                                      const Icon(
+                                        Icons.calendar_month,
+                                        color: Colors.white,
+                                        size: 12,
+                                      )
                                     ],
                                   ),
-                                )
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      } else {
-        return Container(
-          height: 150,
-          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-          decoration: BoxDecoration(boxShadow: [
-            BoxShadow(
-              blurRadius: 4,
-              offset: const Offset(0, 4),
-              color: Colors.black.withOpacity(0.25),
-            ),
-          ], color: Colors.white, borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color.fromRGBO(196, 196, 196, 1))),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
-                child: Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Row(
-                        children: [
-                          Text(
-                            "Ground King Champion",
-                            style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color.fromRGBO(255, 145, 0, 1),
                                 ),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          const CustomImage(
-                            path: Assets.imagesInfoCircle,
-                            height: 18,
-                          )
-                        ],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            if (kingChallengeController.groundTeamList[index].teamId != widget.groundKingChallenge?.scheduledBy && widget.groundKingChallenge?.scheduledBy != null)
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 5.0),
+                                child: CustomButton(
+                                  onTap: () {
+                                    kingChallengeController.approveSchedule(groundChallengeId: widget.groundKingChallenge!.id!).then((value) {
+                                      if (value.isSuccess) {
+                                        Fluttertoast.showToast(msg: value.message);
+                                        Navigator.pop(context);
+                                      }
+                                    });
+                                  },
+                                  type: ButtonType.primary,
+                                  radius: 5,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Accept",
+                                        style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white, fontSize: 10),
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      const Icon(
+                                        Icons.check_circle_outline,
+                                        color: Colors.white,
+                                        size: 12,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Stack(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(
-                                    width: 2,
-                                    color: const Color.fromRGBO(255, 145, 0, 1),
-                                  )),
-                              child: CustomImage(radius: 20, height: 40, width: 40, fit: BoxFit.fill, path: AppConstants.baseUrl + widget.groundKingChallenge!.team!.logo!),
-                            ),
-                            Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: Container(
-                                height: 14,
-                                width: 14,
-                                decoration: BoxDecoration(color: const Color.fromRGBO(255, 145, 0, 1), borderRadius: BorderRadius.circular(20)),
-                                child: const Padding(
-                                  padding: EdgeInsets.all(2.0),
-                                  child: CustomImage(
-                                      height: 8,
-                                      width: 8,
-                                      path:
-                                          "https://s3-alpha-sig.figma.com/img/c204/f10b/24cfa8d945c30d47cf12a3615b909ff1?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KtgSPjADbFef0XclcRL4-HfqDdzt0Peoi~9I2iBlSq-deQeJtZb6RcisiIdvgKaOnTNXKo5x8wMEzgUWFAe4YTh2omCmwJH6x1HqTsCaouEZbEP1VWSb1d14gjiz1zMpVlmdFqCXvKodrACJAffKBKmUumRbXItn5W2jTw4dX-6tBk6b4-CskgkBKl-dZImpgJ0B1MnUgYYp8X0H7kTJeE9Gmrx9ofHkLHarlbeApCnvwVa-QqKK2JajNJlrsJLBN1zZEUwC2t70GmqpD-Mbb3MnPtL4tugqrCCrMELmOGjVp2phbwhNZ6YB7YHOsbWpjoQ8FPIowv64esDaKaUGJQ__"),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              "Team A",
-                              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                    fontSize: 8,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                            ),
-                            Text(
-                              widget.groundKingChallenge!.team!.name!,
-                              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          "Vs",
-                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                                fontSize: 26,
-                                fontWeight: FontWeight.w700,
-                                color: const Color.fromRGBO(217, 217, 217, 1),
-                              ),
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              "Team B",
-                              // textAlign: TextAlign.end,
-                              style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 8, fontWeight: FontWeight.w400),
-                            ),
-                            Text(
-                              Get.find<HomePageController>().groundsDetail?.groundKingChallenge?.opponentTeam?.name ?? "",
-                              textAlign: TextAlign.end,
-                              style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11, fontWeight: FontWeight.w700),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: const Color(0xFFE0E0E0),
-                                width: 1,
-                              )),
-                          child: CustomImage(radius: 20, height: 40, width: 40, fit: BoxFit.fill, path: AppConstants.baseUrl + widget.groundKingChallenge!.opponentTeam!.logo!),
-                        ),
-                      ],
-                    )
                   ],
                 ),
-              ),
-              Container(
-                height: 30,
-                decoration: const BoxDecoration(
-                    color: Color.fromRGBO(255, 145, 0, 0.1), borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          text: "AFC has accepted for ground king challenge?",
-                          style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 8),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5.0),
-                        child: CustomDatePicker(
-                          onChanged: (value) {},
-                          today: false,
-                          child: Container(
-                            padding: EdgeInsets.all(4),
-                            // decoration: Bo,
-                            color: Color(0xFF40424E),
+              );
+      } else {
+        return isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Container(
+                height: 150,
+                margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                decoration: BoxDecoration(boxShadow: [
+                  BoxShadow(
+                    blurRadius: 4,
+                    offset: const Offset(0, 4),
+                    color: Colors.black.withOpacity(0.25),
+                  ),
+                ], color: Colors.white, borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color.fromRGBO(196, 196, 196, 1))),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
                             child: Row(
                               children: [
                                 Text(
-                                  "Select Time Slot",
-                                  style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white, fontSize: 9),
+                                  "Ground King Champion",
+                                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: const Color.fromRGBO(255, 145, 0, 1),
+                                      ),
                                 ),
                                 const SizedBox(
                                   width: 5,
                                 ),
-                                const Icon(
-                                  Icons.calendar_month,
-                                  color: Colors.white,
-                                  size: 12,
+                                const CustomImage(
+                                  path: Assets.imagesInfoCircle,
+                                  height: 18,
                                 )
                               ],
                             ),
                           ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Stack(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                          width: 2,
+                                          color: const Color.fromRGBO(255, 145, 0, 1),
+                                        )),
+                                    child: CustomImage(radius: 20, height: 40, width: 40, fit: BoxFit.fill, path: AppConstants.baseUrl + widget.groundKingChallenge!.team!.logo!),
+                                  ),
+                                  Positioned(
+                                    bottom: 0,
+                                    right: 0,
+                                    child: Container(
+                                      height: 14,
+                                      width: 14,
+                                      decoration: BoxDecoration(color: const Color.fromRGBO(255, 145, 0, 1), borderRadius: BorderRadius.circular(20)),
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(2.0),
+                                        child: CustomImage(
+                                            height: 8,
+                                            width: 8,
+                                            path:
+                                                "https://s3-alpha-sig.figma.com/img/c204/f10b/24cfa8d945c30d47cf12a3615b909ff1?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KtgSPjADbFef0XclcRL4-HfqDdzt0Peoi~9I2iBlSq-deQeJtZb6RcisiIdvgKaOnTNXKo5x8wMEzgUWFAe4YTh2omCmwJH6x1HqTsCaouEZbEP1VWSb1d14gjiz1zMpVlmdFqCXvKodrACJAffKBKmUumRbXItn5W2jTw4dX-6tBk6b4-CskgkBKl-dZImpgJ0B1MnUgYYp8X0H7kTJeE9Gmrx9ofHkLHarlbeApCnvwVa-QqKK2JajNJlrsJLBN1zZEUwC2t70GmqpD-Mbb3MnPtL4tugqrCCrMELmOGjVp2phbwhNZ6YB7YHOsbWpjoQ8FPIowv64esDaKaUGJQ__"),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    "Team A",
+                                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          fontSize: 8,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                  ),
+                                  Text(
+                                    widget.groundKingChallenge!.team!.name!,
+                                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                "Vs",
+                                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                      fontSize: 26,
+                                      fontWeight: FontWeight.w700,
+                                      color: const Color.fromRGBO(217, 217, 217, 1),
+                                    ),
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    "Team B",
+                                    // textAlign: TextAlign.end,
+                                    style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 8, fontWeight: FontWeight.w400),
+                                  ),
+                                  Text(
+                                    Get.find<HomePageController>().groundsDetail?.groundKingChallenge?.opponentTeam?.name ?? "",
+                                    textAlign: TextAlign.end,
+                                    style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11, fontWeight: FontWeight.w700),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: const Color(0xFFE0E0E0),
+                                      width: 1,
+                                    )),
+                                child:
+                                    CustomImage(radius: 20, height: 40, width: 40, fit: BoxFit.fill, path: AppConstants.baseUrl + widget.groundKingChallenge!.opponentTeam!.logo!),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 30,
+                      decoration: const BoxDecoration(
+                          color: Color.fromRGBO(255, 145, 0, 0.1), borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                text: "Wait for Game Day",
+                                style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 8),
+                              ),
+                            ),
+                          ],
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-        );
+              );
       }
     });
   }
