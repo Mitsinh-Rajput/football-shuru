@@ -17,6 +17,7 @@ class Assets {
   static const String imagesChats = 'assets/images/chats.png';
   static const String imagesContctUs = 'assets/images/contct_us.png';
   static const String imagesCopy = 'assets/images/copy.png';
+  static const String imagesDribbble = 'assets/images/dribbble.png';
   static const String imagesEllipse68 = 'assets/images/Ellipse68.png';
   static const String imagesEmailId = 'assets/images/email_id.png';
   static const String imagesEnterOTPpana1 = 'assets/images/EnterOTPpana1.png';

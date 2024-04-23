@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,6 +37,8 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen> with Si
 
   final ScrollController _scrollController = ScrollController();
 
+  bool isLoading = true;
+
   // bool isScroll = true;
 
   @override
@@ -54,9 +55,10 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen> with Si
       Get.find<HomePageController>().getgroundsDetail(groundId: widget.groundId).then((value) {
         if (value.isSuccess) {
           _ground = Get.find<HomePageController>().groundsDetail;
+          isLoading = false;
         }
       });
-      Get.find<KingChallengeController>().getGroundTeamList(groundId: widget.groundId);
+      await Get.find<KingChallengeController>().getGroundTeamList(groundId: widget.groundId);
       setState(() {});
     });
     _tabController = TabController(vsync: this, length: 3);
@@ -95,6 +97,7 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen> with Si
           controller: _scrollController,
           slivers: [
             GetBuilder<HomePageController>(builder: (homePageController) {
+              // isLoading = homePageController.isLoading;
               return SliverAppBar(
                 systemOverlayStyle: const SystemUiOverlayStyle(
                   statusBarBrightness: Brightness.dark,
@@ -129,10 +132,11 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen> with Si
               );
             }),
             GetBuilder<HomePageController>(builder: (homePageController) {
+              // isLoading = homePageController.isLoading;
               return SliverToBoxAdapter(
                 child: Column(
                   children: [
-                    Container(
+                    SizedBox(
                       height: 170 + 100,
                       child: Stack(
                         children: [
@@ -170,15 +174,23 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen> with Si
                               ],
                             ),
                           ),
-                          Positioned(
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            child: GroundKingChampion(
-                              groundKingChallenge: _ground?.groundKingChallenge,
-                              groundId: _ground?.id ?? 0,
-                            ),
-                          ),
+                          // GestureDetector(
+                          //   onTap: () {
+                          //     Navigator.push(context, getCustomRoute(child: SetWinnerScreen()));
+                          //   },
+                          //   child: Text("Set Winner"),
+                          // ),
+                          isLoading
+                              ? const Center(child: CircularProgressIndicator())
+                              : Positioned(
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                  child: GroundKingChampion(
+                                    // groundKingChallenge: _ground?.groundKingChallenge,
+                                    groundId: _ground?.id ?? 0,
+                                  ),
+                                ),
                         ],
                       ),
                     ),
