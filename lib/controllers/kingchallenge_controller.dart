@@ -26,21 +26,26 @@ class KingChallengeController extends GetxController implements GetxService {
 
   int? opponentTeamId;
 
+  List scorecardDataList = [];
+
   Future<ResponseModel> getGroundTeamList({required int groundId}) async {
     ResponseModel responseModel;
     _isLoading = true;
     update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.getMyTeam}", name: "getTeamList Details");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.getMyTeam}",
+        name: "getTeamList Details");
     try {
       Response response = await kingChallengeRepo.getMyTeam(groundId: groundId);
       log(response.statusCode.toString());
       log(response.body.toString(), name: "getTeamList");
       if (response.statusCode == 200) {
         groundTeamList = groundTeamFromJson(jsonEncode(response.body['data']));
-        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
         update();
       } else {
-        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
@@ -51,21 +56,53 @@ class KingChallengeController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  Future<ResponseModel> createChallenge({required int groundId, required int teamId}) async {
+  Future<ResponseModel> scorecard(Map<String, dynamic> data) async {
     ResponseModel responseModel;
     _isLoading = true;
     update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.createChallenge}", name: "createChallenge Details");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.scorecard}",
+        name: "scorecard Details");
     try {
-      Response response = await kingChallengeRepo.createChallenge(groundId: groundId, teamId: teamId);
+      Response response = await kingChallengeRepo.scorecard(data);
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "scorecard");
+      if (response.statusCode == 200) {
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
+        update();
+      } else {
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT scorecard()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> createChallenge(
+      {required int groundId, required int teamId}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.createChallenge}",
+        name: "createChallenge Details");
+    try {
+      Response response = await kingChallengeRepo.createChallenge(
+          groundId: groundId, teamId: teamId);
       log(response.statusCode.toString());
       log(response.body.toString(), name: "createChallenge");
       if (response.statusCode == 200) {
         this.teamId = teamId;
-        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
         update();
       } else {
-        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
@@ -76,11 +113,15 @@ class KingChallengeController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  Future<ResponseModel> setOpponent({required int groundId, required int teamId, required int opponentTeamId}) async {
+  Future<ResponseModel> setOpponent(
+      {required int groundId,
+      required int teamId,
+      required int opponentTeamId}) async {
     ResponseModel responseModel;
     _isLoading = true;
     update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.createChallenge}", name: "createChallenge Details");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.createChallenge}",
+        name: "createChallenge Details");
     try {
       Response response = await kingChallengeRepo.setOpponent(
         groundId: groundId,
@@ -91,10 +132,12 @@ class KingChallengeController extends GetxController implements GetxService {
       log(response.body.toString(), name: "createChallenge");
       if (response.statusCode == 200) {
         this.teamId = teamId;
-        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
         update();
       } else {
-        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
@@ -105,11 +148,15 @@ class KingChallengeController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  Future<ResponseModel> scheduleTime({required int groundId, required int scheduledBy, required String scheduledTime}) async {
+  Future<ResponseModel> scheduleTime(
+      {required int groundId,
+      required int scheduledBy,
+      required String scheduledTime}) async {
     ResponseModel responseModel;
     _isLoading = true;
     update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.createChallenge}", name: "scheduleTime Details");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.createChallenge}",
+        name: "scheduleTime Details");
     try {
       Response response = await kingChallengeRepo.scheduleTime(
         groundChallengeId: groundId,
@@ -120,10 +167,12 @@ class KingChallengeController extends GetxController implements GetxService {
       log(response.body.toString(), name: "scheduleTime");
       if (response.statusCode == 200) {
         this.teamId = teamId;
-        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
         update();
       } else {
-        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
@@ -134,11 +183,13 @@ class KingChallengeController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  Future<ResponseModel> approveSchedule({required int groundChallengeId}) async {
+  Future<ResponseModel> approveSchedule(
+      {required int groundChallengeId}) async {
     ResponseModel responseModel;
     _isLoading = true;
     update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.createChallenge}", name: "scheduleTime Details");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.createChallenge}",
+        name: "scheduleTime Details");
     try {
       Response response = await kingChallengeRepo.approveSchedule(
         groundChallengeId: groundChallengeId,
@@ -147,10 +198,12 @@ class KingChallengeController extends GetxController implements GetxService {
       log(response.body.toString(), name: "scheduleTime");
       if (response.statusCode == 200) {
         this.teamId = teamId;
-        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
         update();
       } else {
-        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");

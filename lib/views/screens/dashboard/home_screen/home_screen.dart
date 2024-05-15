@@ -8,6 +8,7 @@ import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/home_widgets/communitynear_screen.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/home_widgets/nearbygrounds_widget.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/league_and_tour_tile.dart';
+import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/setwinner_screen.dart';
 import 'package:football_shuru/views/screens/widgets/changepincode_bottomsheet.dart';
 import 'package:football_shuru/views/screens/widgets/primarybanner_widget.dart';
 import 'package:get/get.dart';
@@ -31,7 +32,12 @@ class _HomeScreenState extends State<HomeScreen> {
     Timer.run(() {});
   }
 
-  List typesOfLeaguelist = ["League’s match", "Knock out", "Round robins", "League’s match"];
+  List typesOfLeaguelist = [
+    "League’s match",
+    "Knock out",
+    "Round robins",
+    "League’s match"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         title: GestureDetector(
           onTap: () {
-            Navigator.push(context, getCustomRoute(child: const LocationScreen()));
+            Navigator.push(
+                context, getCustomRoute(child: const LocationScreen()));
           },
           child: RichText(
             text: TextSpan(
@@ -81,7 +88,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context, getCustomRoute(child: SetWinnerScreen(groundId: 0)));
+            },
             child: Image.asset(
               Assets.imagesSearch,
               height: 22,
@@ -120,11 +130,19 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: RichText(
                           text: TextSpan(
                             text: 'Your Pincode: ',
-                            style: Theme.of(context).textTheme.labelMedium!.copyWith(color: const Color(0xffFF9A6C), fontWeight: FontWeight.w300),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .copyWith(
+                                    color: const Color(0xffFF9A6C),
+                                    fontWeight: FontWeight.w300),
                             children: [
                               TextSpan(
                                 text: authController.profile?.pincode ?? "",
-                                style: Theme.of(context).textTheme.labelMedium!.copyWith(color: const Color(0xffFF9A6C)),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(color: const Color(0xffFF9A6C)),
                               ),
                             ],
                           ),
@@ -132,9 +150,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         const SizedBox(width: 15),
                         Text(
                           "Change Now",
-                          style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                                fontWeight: FontWeight.w900,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.labelMedium!.copyWith(
+                                    fontWeight: FontWeight.w900,
+                                  ),
                         ),
                       ],
                     ),
@@ -178,7 +197,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 16,
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 6),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
                       ),

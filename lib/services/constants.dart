@@ -40,7 +40,7 @@ class AppConstants {
 
   //TODO: Change Base Url
   // static String baseUrl = 'https://footballshuru.heenahealth.in/';
-  static String baseUrl = 'http://192.168.1.16:8000/';
+  static String baseUrl = 'http://192.168.1.17:8001/';
 
   ///USE FOR LOCAL
   //TODO: Change Base Url
@@ -57,11 +57,13 @@ class AppConstants {
   static const String ground = 'api/v1/ground';
   static const String joinGround = 'api/v1/ground/chat/join';
   static const String groundDetail = 'api/v1/ground/detail';
+
   static const String leaveGround = 'api/v1/ground/chat/leave';
   static const String joinedGrounds = 'api/v1/ground/chat/joined';
   static const String loadChats = 'api/v1/ground/chat/messages/load';
   static const String sendMessage = 'api/v1/ground/chat/messages/send';
-  static const String updateLastSeen = 'api/v1/ground/chat/messages/update-last-seen';
+  static const String updateLastSeen =
+      'api/v1/ground/chat/messages/update-last-seen';
   static const String gameSlot = 'api/v1/ground/game-slot';
   static const String createGameSlot = 'api/v1/ground/game-slot/create';
   static const String gameSlotAttenance = 'api/v1/ground/game-slot/attendance';
@@ -71,8 +73,12 @@ class AppConstants {
   static const String getMyTeam = 'api/v1/team/my-teams';
   static const String createChallenge = 'api/v1/ground/king-challenge/create';
   static const String setOpponent = 'api/v1/ground/king-challenge/set-opponent';
-  static const String scheduleTime = 'api/v1/ground/king-challenge/schedule-time';
-  static const String approveSchedule = 'api/v1/ground/king-challenge/approve-schedule';
+  static const String scheduleTime =
+      'api/v1/ground/king-challenge/schedule-time';
+  static const String approveSchedule =
+      'api/v1/ground/king-challenge/approve-schedule';
+  static const String setWinner = 'api/v1/ground/king-challenge/set-winner';
+  static const String scorecard = 'api/v1/ground/scorecard/store';
 
   /// Team
 

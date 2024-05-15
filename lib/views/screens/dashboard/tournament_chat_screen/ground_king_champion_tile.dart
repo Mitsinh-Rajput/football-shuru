@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:football_shuru/controllers/homepage_controller.dart';
-import 'package:football_shuru/data/models/response/grounds_model.dart';
 import 'package:football_shuru/services/constants.dart';
 import 'package:football_shuru/services/extensions.dart';
 import 'package:football_shuru/views/base/common_button.dart';
@@ -30,44 +29,60 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<KingChallengeController>(builder: (kingChallengeController) {
+    return GetBuilder<KingChallengeController>(
+        builder: (kingChallengeController) {
       return kingChallengeController.isLoading
-          ? const Align(alignment: Alignment.topCenter, child: CircularProgressIndicator())
+          ? const Align(
+              alignment: Alignment.topCenter,
+              child: CircularProgressIndicator())
           : GetBuilder<HomePageController>(builder: (homePageController) {
-              if (homePageController.groundsDetail?.groundKingChallenge == null) {
+              if (homePageController.groundsDetail?.groundKingChallenge ==
+                  null) {
                 return homePageController.isLoading
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
                     : Container(
                         height: 150,
-                        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                        decoration: BoxDecoration(boxShadow: [
-                          BoxShadow(
-                            blurRadius: 4,
-                            offset: const Offset(0, 4),
-                            color: Colors.black.withOpacity(0.25),
-                          ),
-                        ], color: Colors.white, borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color.fromRGBO(196, 196, 196, 1))),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 16),
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 4,
+                                offset: const Offset(0, 4),
+                                color: Colors.black.withOpacity(0.25),
+                              ),
+                            ],
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                color: const Color.fromRGBO(196, 196, 196, 1))),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 5.0, vertical: 15),
                               child: Column(
                                 children: [
                                   Align(
                                     alignment: Alignment.centerLeft,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           "Post a challenge to become a ground king",
-                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w600,
-                                                color: const Color.fromRGBO(255, 145, 0, 1),
+                                                color: const Color.fromRGBO(
+                                                    255, 145, 0, 1),
                                               ),
                                         ),
                                       ],
@@ -78,7 +93,8 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                   ),
                                   if (_teamId == null)
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Stack(
                                           children: [
@@ -86,9 +102,12 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                 height: 40,
                                                 width: 40,
                                                 decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(20),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
                                                     border: Border.all(
-                                                      color: const Color(0xFFE0E0E0),
+                                                      color: const Color(
+                                                          0xFFE0E0E0),
                                                       width: 1,
                                                     )),
                                                 child: const Icon(Icons.add)),
@@ -98,7 +117,12 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                               child: Container(
                                                 height: 14,
                                                 width: 14,
-                                                decoration: BoxDecoration(color: const Color(0xFFFF9100), borderRadius: BorderRadius.circular(20)),
+                                                decoration: BoxDecoration(
+                                                    color:
+                                                        const Color(0xFFFF9100),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
                                                 child: const Padding(
                                                   padding: EdgeInsets.all(2.0),
                                                   child: CustomImage(
@@ -115,14 +139,20 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                           children: [
                                             Text(
                                               "ADD Team A",
-                                              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .copyWith(
                                                     fontSize: 8,
                                                     fontWeight: FontWeight.w400,
                                                   ),
                                             ),
                                             Text(
                                               "Apply for Ground King",
-                                              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .copyWith(
                                                     fontSize: 11,
                                                     fontWeight: FontWeight.w700,
                                                   ),
@@ -132,10 +162,13 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                         Container(
                                           height: 28,
                                           width: 100,
-                                          padding: const EdgeInsets.only(left: 9),
+                                          padding:
+                                              const EdgeInsets.only(left: 9),
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(20),
-                                            border: Border.all(color: Colors.black12),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            border: Border.all(
+                                                color: Colors.black12),
                                           ),
                                           child: DropdownButtonHideUnderline(
                                             child: DropdownButton(
@@ -144,14 +177,22 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                               value: _teamId,
                                               hint: Text(
                                                 'Select Team',
-                                                style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 10),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelLarge!
+                                                    .copyWith(fontSize: 10),
                                               ),
-                                              items: kingChallengeController.groundTeamList.map((GroundTeam item) {
+                                              items: kingChallengeController
+                                                  .groundTeamList
+                                                  .map((GroundTeam item) {
                                                 return DropdownMenuItem(
                                                   value: item.team!.id,
                                                   child: Text(
                                                     item.team?.name ?? "",
-                                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 10),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .labelLarge!
+                                                        .copyWith(fontSize: 10),
                                                   ),
                                                 );
                                               }).toList(),
@@ -167,7 +208,8 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                     )
                                   else
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Stack(
                                           children: [
@@ -175,9 +217,12 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                 height: 40,
                                                 width: 40,
                                                 decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(20),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
                                                     border: Border.all(
-                                                      color: const Color(0xFFFF9100),
+                                                      color: const Color(
+                                                          0xFFFF9100),
                                                       width: 1,
                                                     )),
                                                 child: CustomImage(
@@ -192,7 +237,12 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                               child: Container(
                                                 height: 14,
                                                 width: 14,
-                                                decoration: BoxDecoration(color: const Color.fromRGBO(255, 145, 0, 1), borderRadius: BorderRadius.circular(20)),
+                                                decoration: BoxDecoration(
+                                                    color: const Color.fromRGBO(
+                                                        255, 145, 0, 1),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
                                                 child: const Padding(
                                                   padding: EdgeInsets.all(2.0),
                                                   child: CustomImage(
@@ -209,14 +259,28 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                           children: [
                                             Text(
                                               "ADD Team A",
-                                              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .copyWith(
                                                     fontSize: 8,
                                                     fontWeight: FontWeight.w400,
                                                   ),
                                             ),
                                             Text(
-                                              Get.find<KingChallengeController>().groundTeamList.where((element) => element.teamId == _teamId).toList()[index].team?.name ?? "",
-                                              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                              Get.find<KingChallengeController>()
+                                                      .groundTeamList
+                                                      .where((element) =>
+                                                          element.teamId ==
+                                                          _teamId)
+                                                      .toList()[index]
+                                                      .team
+                                                      ?.name ??
+                                                  "",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .copyWith(
                                                     fontSize: 11,
                                                     fontWeight: FontWeight.w700,
                                                   ),
@@ -226,11 +290,19 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                         CustomButton(
                                           height: 28,
                                           onTap: () {
-                                            kingChallengeController.createChallenge(groundId: widget.groundId, teamId: _teamId!).then((value) {
+                                            kingChallengeController
+                                                .createChallenge(
+                                                    groundId: widget.groundId,
+                                                    teamId: _teamId!)
+                                                .then((value) {
                                               if (value.isSuccess) {
-                                                Fluttertoast.showToast(msg: value.message);
+                                                Fluttertoast.showToast(
+                                                    msg: value.message);
                                                 // Navigator.pop(context);
-                                                homePageController.getgroundsDetail(groundId: widget.groundId);
+                                                homePageController
+                                                    .getgroundsDetail(
+                                                        groundId:
+                                                            widget.groundId);
                                               }
                                             });
                                           },
@@ -240,7 +312,12 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                             children: [
                                               Text(
                                                 "Submit",
-                                                style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white, fontSize: 10),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelLarge!
+                                                    .copyWith(
+                                                        color: Colors.white,
+                                                        fontSize: 10),
                                               ),
                                               const SizedBox(
                                                 width: 5,
@@ -266,7 +343,12 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                             children: [
                                               Text(
                                                 "Cancel",
-                                                style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white, fontSize: 10),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelLarge!
+                                                    .copyWith(
+                                                        color: Colors.white,
+                                                        fontSize: 10),
                                               ),
                                               const SizedBox(
                                                 width: 5,
@@ -287,9 +369,13 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                             Container(
                               height: 30,
                               decoration: const BoxDecoration(
-                                  color: Color.fromRGBO(255, 145, 0, 0.1), borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
+                                  color: Color.fromRGBO(255, 145, 0, 0.1),
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10))),
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -298,7 +384,12 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                           text: (_teamId != null)
                                               ? "Apply by completing the Ground King Challenge and submitting"
                                               : "Welcome to ${homePageController.groundsDetail?.title}",
-                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 9, fontWeight: FontWeight.w500),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
+                                                  fontSize: 9,
+                                                  fontWeight: FontWeight.w500),
                                           children: [
                                             // (_teamId != null)
                                             //     ? const TextSpan()
@@ -316,40 +407,54 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                           ],
                         ),
                       );
-              } else if (homePageController.groundsDetail?.groundKingChallenge?.opponentTeamId == null) {
+              } else if (homePageController
+                      .groundsDetail?.groundKingChallenge?.opponentTeamId ==
+                  null) {
                 return homePageController.isLoading
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
                     : Container(
                         height: 150,
-                        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                        decoration: BoxDecoration(boxShadow: [
-                          BoxShadow(
-                            blurRadius: 4,
-                            offset: const Offset(0, 4),
-                            color: Colors.black.withOpacity(0.25),
-                          ),
-                        ], color: Colors.white, borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color.fromRGBO(196, 196, 196, 1))),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 16),
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 4,
+                                offset: const Offset(0, 4),
+                                color: Colors.black.withOpacity(0.25),
+                              ),
+                            ],
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                color: const Color.fromRGBO(196, 196, 196, 1))),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 5.0, vertical: 15),
                               child: Column(
                                 children: [
                                   Align(
                                     alignment: Alignment.centerLeft,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           "${homePageController.groundsDetail?.groundKingChallenge?.team?.name ?? ""} has posted a challenge",
-                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w600,
-                                                color: const Color.fromRGBO(255, 145, 0, 1),
+                                                color: const Color.fromRGBO(
+                                                    255, 145, 0, 1),
                                               ),
                                         ),
                                       ],
@@ -359,23 +464,27 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                     height: 10,
                                   ),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Stack(
                                         children: [
                                           Container(
                                             decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(20),
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
                                                 border: Border.all(
                                                   width: 2,
-                                                  color: const Color.fromRGBO(255, 145, 0, 1),
+                                                  color: const Color.fromRGBO(
+                                                      255, 145, 0, 1),
                                                 )),
                                             child: CustomImage(
                                                 radius: 20,
                                                 height: 40,
                                                 width: 40,
                                                 fit: BoxFit.fill,
-                                                path: '${AppConstants.baseUrl}${homePageController.groundsDetail?.groundKingChallenge?.team?.logo ?? ""}'),
+                                                path:
+                                                    '${AppConstants.baseUrl}${homePageController.groundsDetail?.groundKingChallenge?.team?.logo ?? ""}'),
                                           ),
                                           Positioned(
                                             bottom: 0,
@@ -383,7 +492,12 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                             child: Container(
                                               height: 14,
                                               width: 14,
-                                              decoration: BoxDecoration(color: const Color.fromRGBO(255, 145, 0, 1), borderRadius: BorderRadius.circular(20)),
+                                              decoration: BoxDecoration(
+                                                  color: const Color.fromRGBO(
+                                                      255, 145, 0, 1),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
                                               child: const Padding(
                                                 padding: EdgeInsets.all(2.0),
                                                 child: CustomImage(
@@ -400,14 +514,25 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                         children: [
                                           Text(
                                             "Team A",
-                                            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
                                                   fontSize: 8,
                                                   fontWeight: FontWeight.w400,
                                                 ),
                                           ),
                                           Text(
-                                            homePageController.groundsDetail?.groundKingChallenge?.team?.name ?? "Name",
-                                            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                            homePageController
+                                                    .groundsDetail
+                                                    ?.groundKingChallenge
+                                                    ?.team
+                                                    ?.name ??
+                                                "",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.w700,
                                                 ),
@@ -416,10 +541,14 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                       ),
                                       Text(
                                         "Vs",
-                                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .copyWith(
                                               fontSize: 26,
                                               fontWeight: FontWeight.w700,
-                                              color: const Color.fromRGBO(217, 217, 217, 1),
+                                              color: const Color.fromRGBO(
+                                                  217, 217, 217, 1),
                                             ),
                                       ),
                                       Column(
@@ -427,14 +556,32 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                           Text(
                                             "Team B",
                                             // textAlign: TextAlign.end,
-                                            style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 8, fontWeight: FontWeight.w400, color: const Color(0xFFA5A5A5)),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
+                                                    fontSize: 8,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: const Color(
+                                                        0xFFA5A5A5)),
                                           ),
                                           Text(
-                                            kingChallengeController.groundTeamList[index].teamId == kingChallengeController.teamId
+                                            kingChallengeController
+                                                        .groundTeamList[index]
+                                                        .teamId ==
+                                                    kingChallengeController
+                                                        .teamId
                                                 ? "Waiting for \nopponent"
                                                 : "Challenge \nGround King",
                                             textAlign: TextAlign.end,
-                                            style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11, fontWeight: FontWeight.w700, color: const Color(0xFFA5A5A5)),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
+                                                    fontSize: 11,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: const Color(
+                                                        0xFFA5A5A5)),
                                           ),
                                         ],
                                       ),
@@ -442,7 +589,8 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                           height: 40,
                                           width: 40,
                                           decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(20),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
                                               border: Border.all(
                                                 color: const Color(0xFFE0E0E0),
                                                 width: 1,
@@ -456,62 +604,94 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                             Container(
                               height: 30,
                               decoration: const BoxDecoration(
-                                  color: Color.fromRGBO(255, 145, 0, 0.1), borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
+                                  color: Color.fromRGBO(255, 145, 0, 0.1),
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10))),
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     RichText(
                                       text: TextSpan(
-                                        text: kingChallengeController.groundTeamList[index].teamId == kingChallengeController.teamId
+                                        text: kingChallengeController
+                                                    .groundTeamList[index]
+                                                    .teamId ==
+                                                kingChallengeController.teamId
                                             ? "Wait for opponent"
                                             : _opponentTeamId == null
                                                 ? "Accept Challenge?"
                                                 : "Confirmation (${kingChallengeController.groundTeamList.where((element) => element.teamId == _opponentTeamId).toList()[0].team?.name} ):",
-                                        style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 9, fontWeight: FontWeight.w500),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .copyWith(
+                                                fontSize: 9,
+                                                fontWeight: FontWeight.w500),
                                       ),
                                     ),
                                     const SizedBox(
                                       width: 10,
                                     ),
-                                    kingChallengeController.groundTeamList[index].teamId == kingChallengeController.teamId
+                                    kingChallengeController
+                                                .groundTeamList[index].teamId ==
+                                            kingChallengeController.teamId
                                         ? const SizedBox.shrink()
                                         : _opponentTeamId == null
                                             ? (isAccepted)
                                                 ? Row(
                                                     children: [
                                                       Padding(
-                                                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                vertical: 5.0),
                                                         child: CustomButton(
                                                           onTap: () {
                                                             showDialog<void>(
                                                               context: context,
-                                                              barrierDismissible: false, // user must tap button for close dialog!
-                                                              builder: (BuildContext context) {
+                                                              barrierDismissible:
+                                                                  false, // user must tap button for close dialog!
+                                                              builder:
+                                                                  (BuildContext
+                                                                      context) {
                                                                 return AlertDialog(
-                                                                  title: Text('Confirmation'),
-                                                                  content: SingleChildScrollView(
-                                                                    child: ListBody(
+                                                                  title: Text(
+                                                                      'Confirmation'),
+                                                                  content:
+                                                                      SingleChildScrollView(
+                                                                    child:
+                                                                        ListBody(
                                                                       children: <Widget>[
-                                                                        Text('Do you want to proceed?'),
+                                                                        Text(
+                                                                            'Do you want to proceed?'),
                                                                       ],
                                                                     ),
                                                                   ),
                                                                   actions: <Widget>[
                                                                     TextButton(
-                                                                      child: Text('Yes'),
-                                                                      onPressed: () {
-                                                                        setState(() {
-                                                                          isAccepted = false;
+                                                                      child: Text(
+                                                                          'Yes'),
+                                                                      onPressed:
+                                                                          () {
+                                                                        setState(
+                                                                            () {
+                                                                          isAccepted =
+                                                                              false;
                                                                         });
-                                                                        Navigator.pop(context);
+                                                                        Navigator.pop(
+                                                                            context);
                                                                       },
                                                                     ),
                                                                     TextButton(
-                                                                      child: Text('No'),
-                                                                      onPressed: () {
-                                                                        Navigator.of(context).pop();
+                                                                      child: Text(
+                                                                          'No'),
+                                                                      onPressed:
+                                                                          () {
+                                                                        Navigator.of(context)
+                                                                            .pop();
                                                                       },
                                                                     ),
                                                                   ],
@@ -521,7 +701,14 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                           },
                                                           child: Text(
                                                             "Yes",
-                                                            style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 9, color: Colors.white),
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .labelLarge!
+                                                                .copyWith(
+                                                                    fontSize: 9,
+                                                                    color: Colors
+                                                                        .white),
                                                           ),
                                                         ),
                                                       ),
@@ -529,7 +716,10 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                         width: 5,
                                                       ),
                                                       Padding(
-                                                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                vertical: 5.0),
                                                         child: CustomButton(
                                                           color: Colors.red,
                                                           onTap: () {
@@ -539,42 +729,83 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                           },
                                                           child: Text(
                                                             "No",
-                                                            style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 9, color: Colors.white),
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .labelLarge!
+                                                                .copyWith(
+                                                                    fontSize: 9,
+                                                                    color: Colors
+                                                                        .white),
                                                           ),
                                                         ),
                                                       ),
                                                     ],
                                                   )
                                                 : Padding(
-                                                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        vertical: 5.0),
                                                     child: Container(
-                                                      padding: EdgeInsets.symmetric(horizontal: 7),
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 7),
                                                       decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(5),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
                                                         color: Colors.green,
                                                       ),
-                                                      child: DropdownButtonHideUnderline(
+                                                      child:
+                                                          DropdownButtonHideUnderline(
                                                         child: DropdownButton(
-                                                          iconDisabledColor: Colors.white,
-                                                          iconEnabledColor: Colors.white,
-                                                          dropdownColor: Colors.white,
-                                                          value: _opponentTeamId,
+                                                          iconDisabledColor:
+                                                              Colors.white,
+                                                          iconEnabledColor:
+                                                              Colors.white,
+                                                          dropdownColor:
+                                                              Colors.white,
+                                                          value:
+                                                              _opponentTeamId,
                                                           hint: Text(
                                                             'Select Team',
-                                                            style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 10, color: Colors.white),
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .labelLarge!
+                                                                .copyWith(
+                                                                    fontSize:
+                                                                        10,
+                                                                    color: Colors
+                                                                        .white),
                                                           ),
-                                                          items: kingChallengeController.groundTeamList.map((GroundTeam item) {
+                                                          items: kingChallengeController
+                                                              .groundTeamList
+                                                              .map((GroundTeam
+                                                                  item) {
                                                             return DropdownMenuItem(
-                                                              value: item.team?.id,
+                                                              value:
+                                                                  item.team?.id,
                                                               child: Text(
-                                                                item.team?.name ?? "",
-                                                                style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 10),
+                                                                item.team
+                                                                        ?.name ??
+                                                                    "",
+                                                                style: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .labelLarge!
+                                                                    .copyWith(
+                                                                        fontSize:
+                                                                            10),
                                                               ),
                                                             );
                                                           }).toList(),
-                                                          onChanged: (newValue) {
+                                                          onChanged:
+                                                              (newValue) {
                                                             setState(() {
-                                                              _opponentTeamId = newValue as int;
+                                                              _opponentTeamId =
+                                                                  newValue
+                                                                      as int;
                                                             });
                                                           },
                                                         ),
@@ -582,19 +813,34 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                     ),
                                                   )
                                             : Padding(
-                                                padding: const EdgeInsets.symmetric(vertical: 5.0),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 5.0),
                                                 child: Row(
                                                   children: [
                                                     CustomButton(
                                                       height: 28,
                                                       onTap: () {
                                                         kingChallengeController
-                                                            .setOpponent(groundId: widget.groundId, teamId: kingChallengeController.teamId!, opponentTeamId: _opponentTeamId!)
+                                                            .setOpponent(
+                                                                groundId: widget
+                                                                    .groundId,
+                                                                teamId:
+                                                                    kingChallengeController
+                                                                        .teamId!,
+                                                                opponentTeamId:
+                                                                    _opponentTeamId!)
                                                             .then((value) {
                                                           if (value.isSuccess) {
-                                                            Fluttertoast.showToast(msg: value.message);
+                                                            Fluttertoast
+                                                                .showToast(
+                                                                    msg: value
+                                                                        .message);
                                                             // Navigator.pop(context);
-                                                            homePageController.getgroundsDetail(groundId: widget.groundId);
+                                                            homePageController
+                                                                .getgroundsDetail(
+                                                                    groundId: widget
+                                                                        .groundId);
                                                           }
                                                         });
                                                       },
@@ -604,13 +850,22 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                         children: [
                                                           Text(
                                                             "Submit",
-                                                            style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white, fontSize: 10),
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .labelLarge!
+                                                                .copyWith(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        10),
                                                           ),
                                                           const SizedBox(
                                                             width: 5,
                                                           ),
                                                           const Icon(
-                                                            Icons.check_circle_outline,
+                                                            Icons
+                                                                .check_circle_outline,
                                                             color: Colors.white,
                                                             size: 12,
                                                           )
@@ -627,19 +882,29 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                         setState(() {});
                                                       },
                                                       type: ButtonType.primary,
-                                                      color: const Color(0xFFFF6B6B),
+                                                      color: const Color(
+                                                          0xFFFF6B6B),
                                                       radius: 10,
                                                       child: Row(
                                                         children: [
                                                           Text(
                                                             "Cancel",
-                                                            style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white, fontSize: 10),
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .labelLarge!
+                                                                .copyWith(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        10),
                                                           ),
                                                           const SizedBox(
                                                             width: 5,
                                                           ),
                                                           const Icon(
-                                                            Icons.check_circle_outline,
+                                                            Icons
+                                                                .check_circle_outline,
                                                             color: Colors.white,
                                                             size: 12,
                                                           )
@@ -656,40 +921,54 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                           ],
                         ),
                       );
-              } else if (homePageController.groundsDetail?.groundKingChallenge?.scheduledStatus == "rejected") {
+              } else if (homePageController
+                      .groundsDetail?.groundKingChallenge?.scheduledStatus ==
+                  "rejected") {
                 return homePageController.isLoading
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
                     : Container(
                         height: 150,
-                        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                        decoration: BoxDecoration(boxShadow: [
-                          BoxShadow(
-                            blurRadius: 4,
-                            offset: const Offset(0, 4),
-                            color: Colors.black.withOpacity(0.25),
-                          ),
-                        ], color: Colors.white, borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color.fromRGBO(196, 196, 196, 1))),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 16),
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 4,
+                                offset: const Offset(0, 4),
+                                color: Colors.black.withOpacity(0.25),
+                              ),
+                            ],
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                color: const Color.fromRGBO(196, 196, 196, 1))),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 5.0, vertical: 15),
                               child: Column(
                                 children: [
                                   Align(
                                     alignment: Alignment.center,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           "Match schedule is in process",
-                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w600,
-                                                color: const Color.fromRGBO(255, 145, 0, 1),
+                                                color: const Color.fromRGBO(
+                                                    255, 145, 0, 1),
                                               ),
                                         ),
                                       ],
@@ -699,23 +978,27 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                     height: 10,
                                   ),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Stack(
                                         children: [
                                           Container(
                                             decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(20),
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
                                                 border: Border.all(
                                                   width: 2,
-                                                  color: const Color.fromRGBO(255, 145, 0, 1),
+                                                  color: const Color.fromRGBO(
+                                                      255, 145, 0, 1),
                                                 )),
                                             child: CustomImage(
                                                 radius: 20,
                                                 height: 40,
                                                 width: 40,
                                                 fit: BoxFit.fill,
-                                                path: '${AppConstants.baseUrl}${homePageController.groundsDetail?.groundKingChallenge?.team?.logo ?? ""}'),
+                                                path:
+                                                    '${AppConstants.baseUrl}${homePageController.groundsDetail?.groundKingChallenge?.team?.logo ?? ""}'),
                                           ),
                                           Positioned(
                                             bottom: 0,
@@ -723,7 +1006,12 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                             child: Container(
                                               height: 14,
                                               width: 14,
-                                              decoration: BoxDecoration(color: const Color.fromRGBO(255, 145, 0, 1), borderRadius: BorderRadius.circular(20)),
+                                              decoration: BoxDecoration(
+                                                  color: const Color.fromRGBO(
+                                                      255, 145, 0, 1),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
                                               child: const Padding(
                                                 padding: EdgeInsets.all(2.0),
                                                 child: CustomImage(
@@ -740,14 +1028,25 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                         children: [
                                           Text(
                                             "Team A",
-                                            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
                                                   fontSize: 8,
                                                   fontWeight: FontWeight.w400,
                                                 ),
                                           ),
                                           Text(
-                                            homePageController.groundsDetail?.groundKingChallenge?.team?.name ?? "",
-                                            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                            homePageController
+                                                    .groundsDetail
+                                                    ?.groundKingChallenge
+                                                    ?.team
+                                                    ?.name ??
+                                                "",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.w700,
                                                 ),
@@ -756,10 +1055,14 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                       ),
                                       Text(
                                         "Vs",
-                                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .copyWith(
                                               fontSize: 26,
                                               fontWeight: FontWeight.w700,
-                                              color: const Color.fromRGBO(217, 217, 217, 1),
+                                              color: const Color.fromRGBO(
+                                                  217, 217, 217, 1),
                                             ),
                                       ),
                                       Column(
@@ -767,12 +1070,29 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                           Text(
                                             "Team B",
                                             // textAlign: TextAlign.end,
-                                            style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 8, fontWeight: FontWeight.w400),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
+                                                    fontSize: 8,
+                                                    fontWeight:
+                                                        FontWeight.w400),
                                           ),
                                           Text(
-                                            Get.find<HomePageController>().groundsDetail?.groundKingChallenge?.opponentTeam?.name ?? "",
+                                            Get.find<HomePageController>()
+                                                    .groundsDetail
+                                                    ?.groundKingChallenge
+                                                    ?.opponentTeam
+                                                    ?.name ??
+                                                "",
                                             textAlign: TextAlign.end,
-                                            style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11, fontWeight: FontWeight.w700),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
+                                                    fontSize: 11,
+                                                    fontWeight:
+                                                        FontWeight.w700),
                                           ),
                                         ],
                                       ),
@@ -780,7 +1100,8 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                         height: 40,
                                         width: 40,
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(20),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                             border: Border.all(
                                               color: const Color(0xFFE0E0E0),
                                               width: 1,
@@ -790,7 +1111,8 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                             height: 40,
                                             width: 40,
                                             fit: BoxFit.fill,
-                                            path: '${AppConstants.baseUrl}${homePageController.groundsDetail?.groundKingChallenge?.opponentTeam?.logo ?? ""}'),
+                                            path:
+                                                '${AppConstants.baseUrl}${homePageController.groundsDetail?.groundKingChallenge?.opponentTeam?.logo ?? ""}'),
                                       ),
                                     ],
                                   )
@@ -800,47 +1122,94 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                             Container(
                               height: 30,
                               decoration: const BoxDecoration(
-                                  color: Color.fromRGBO(255, 145, 0, 0.1), borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
+                                  color: Color.fromRGBO(255, 145, 0, 0.1),
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10))),
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     RichText(
                                       text: TextSpan(
-                                        text: kingChallengeController.groundTeamList[index].teamId != homePageController.groundsDetail?.groundKingChallenge?.scheduledBy &&
-                                                homePageController.groundsDetail?.groundKingChallenge?.scheduledBy != null
+                                        text: kingChallengeController
+                                                        .groundTeamList[index]
+                                                        .teamId !=
+                                                    homePageController
+                                                        .groundsDetail
+                                                        ?.groundKingChallenge
+                                                        ?.scheduledBy &&
+                                                homePageController
+                                                        .groundsDetail
+                                                        ?.groundKingChallenge
+                                                        ?.scheduledBy !=
+                                                    null
                                             ? "${DateTime.parse(homePageController.groundsDetail?.groundKingChallenge?.scheduledTime).dayDateTime}?"
-                                            : homePageController.groundsDetail?.groundKingChallenge?.scheduledTime != null
-                                                ? "Match Date: ${DateTime.parse(homePageController.groundsDetail?.groundKingChallenge?.scheduledTime).dayDateTime ?? ""}. Waiting for response "
+                                            : homePageController
+                                                        .groundsDetail
+                                                        ?.groundKingChallenge
+                                                        ?.scheduledTime !=
+                                                    null
+                                                ? "${DateTime.parse(homePageController.groundsDetail?.groundKingChallenge?.scheduledTime).dayDateTime}. Waiting for response "
                                                 : "Please select a date for the match",
-                                        style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 8, color: Colors.black),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge!
+                                            .copyWith(
+                                                fontSize: 8,
+                                                color: Colors.black),
                                       ),
                                     ),
                                     const SizedBox(
                                       width: 5,
                                     ),
-                                    if (kingChallengeController.groundTeamList[index].teamId != homePageController.groundsDetail?.groundKingChallenge?.scheduledBy)
+                                    if (kingChallengeController
+                                            .groundTeamList[index].teamId !=
+                                        homePageController.groundsDetail
+                                            ?.groundKingChallenge?.scheduledBy)
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5.0),
                                         child: CustomDatePicker(
                                           getTime: true,
                                           onChanged: (value) {
-                                            if (kingChallengeController.groundTeamList[index].teamId != homePageController.groundsDetail?.groundKingChallenge?.scheduledBy) {
+                                            if (kingChallengeController
+                                                    .groundTeamList[index]
+                                                    .teamId !=
+                                                homePageController
+                                                    .groundsDetail
+                                                    ?.groundKingChallenge
+                                                    ?.scheduledBy) {
                                               kingChallengeController
                                                   .scheduleTime(
-                                                      groundId: homePageController.groundsDetail!.groundKingChallenge!.id!,
-                                                      scheduledBy: kingChallengeController.groundTeamList[index].teamId!,
-                                                      scheduledTime: value!.toString())
+                                                      groundId: homePageController
+                                                          .groundsDetail!
+                                                          .groundKingChallenge!
+                                                          .id!,
+                                                      scheduledBy:
+                                                          kingChallengeController
+                                                              .groundTeamList[
+                                                                  index]
+                                                              .teamId!,
+                                                      scheduledTime:
+                                                          value!.toString())
                                                   .then((value) {
                                                 if (value.isSuccess) {
-                                                  Fluttertoast.showToast(msg: value.message);
+                                                  Fluttertoast.showToast(
+                                                      msg: value.message);
                                                   // Navigator.pop(context);
-                                                  homePageController.getgroundsDetail(groundId: widget.groundId);
+                                                  homePageController
+                                                      .getgroundsDetail(
+                                                          groundId:
+                                                              widget.groundId);
                                                 }
                                               });
                                             } else {
-                                              Fluttertoast.showToast(msg: "Please wait for the opponent to set the schedule");
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "Please wait for the opponent to set the schedule");
                                             }
 
                                             // log(value.toString());
@@ -849,17 +1218,34 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                           child: Container(
                                             padding: const EdgeInsets.all(4),
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(5),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
                                               color: const Color(0xFF40424E),
                                             ),
                                             child: Row(
                                               children: [
                                                 Text(
-                                                  kingChallengeController.groundTeamList[index].teamId != homePageController.groundsDetail?.groundKingChallenge?.scheduledBy &&
-                                                          homePageController.groundsDetail?.groundKingChallenge?.scheduledBy != null
+                                                  kingChallengeController
+                                                                  .groundTeamList[
+                                                                      index]
+                                                                  .teamId !=
+                                                              homePageController
+                                                                  .groundsDetail
+                                                                  ?.groundKingChallenge
+                                                                  ?.scheduledBy &&
+                                                          homePageController
+                                                                  .groundsDetail
+                                                                  ?.groundKingChallenge
+                                                                  ?.scheduledBy !=
+                                                              null
                                                       ? "Reschedule"
                                                       : "Select Time Slot",
-                                                  style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white, fontSize: 9),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .labelLarge!
+                                                      .copyWith(
+                                                          color: Colors.white,
+                                                          fontSize: 9),
                                                 ),
                                                 const SizedBox(
                                                   width: 5,
@@ -877,16 +1263,37 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                     const SizedBox(
                                       width: 5,
                                     ),
-                                    if (kingChallengeController.groundTeamList[index].teamId != homePageController.groundsDetail?.groundKingChallenge?.scheduledBy &&
-                                        homePageController.groundsDetail?.groundKingChallenge?.scheduledBy != null)
+                                    if (kingChallengeController
+                                                .groundTeamList[index].teamId !=
+                                            homePageController
+                                                .groundsDetail
+                                                ?.groundKingChallenge
+                                                ?.scheduledBy &&
+                                        homePageController
+                                                .groundsDetail
+                                                ?.groundKingChallenge
+                                                ?.scheduledBy !=
+                                            null)
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5.0),
                                         child: CustomButton(
                                           onTap: () {
-                                            kingChallengeController.approveSchedule(groundChallengeId: homePageController.groundsDetail!.groundKingChallenge!.id!).then((value) {
+                                            kingChallengeController
+                                                .approveSchedule(
+                                                    groundChallengeId:
+                                                        homePageController
+                                                            .groundsDetail!
+                                                            .groundKingChallenge!
+                                                            .id!)
+                                                .then((value) {
                                               if (value.isSuccess) {
-                                                Fluttertoast.showToast(msg: value.message);
-                                                homePageController.getgroundsDetail(groundId: widget.groundId);
+                                                Fluttertoast.showToast(
+                                                    msg: value.message);
+                                                homePageController
+                                                    .getgroundsDetail(
+                                                        groundId:
+                                                            widget.groundId);
                                                 // Navigator.pop(context);
                                               }
                                             });
@@ -897,7 +1304,12 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                             children: [
                                               Text(
                                                 "Accept",
-                                                style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white, fontSize: 10),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelLarge!
+                                                    .copyWith(
+                                                        color: Colors.white,
+                                                        fontSize: 10),
                                               ),
                                               const SizedBox(
                                                 width: 5,
@@ -925,33 +1337,45 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                       )
                     : Container(
                         height: 150,
-                        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                        decoration: BoxDecoration(boxShadow: [
-                          BoxShadow(
-                            blurRadius: 4,
-                            offset: const Offset(0, 4),
-                            color: Colors.black.withOpacity(0.25),
-                          ),
-                        ], color: Colors.white, borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color.fromRGBO(196, 196, 196, 1))),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 16),
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 4,
+                                offset: const Offset(0, 4),
+                                color: Colors.black.withOpacity(0.25),
+                              ),
+                            ],
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                color: const Color.fromRGBO(196, 196, 196, 1))),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 5.0, vertical: 15),
                               child: Column(
                                 children: [
                                   Align(
                                     alignment: Alignment.centerLeft,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           "Match has been scheduled",
-                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w600,
-                                                color: const Color.fromRGBO(255, 145, 0, 1),
+                                                color: const Color.fromRGBO(
+                                                    255, 145, 0, 1),
                                               ),
                                         ),
                                       ],
@@ -961,23 +1385,27 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                     height: 10,
                                   ),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Stack(
                                         children: [
                                           Container(
                                             decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(20),
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
                                                 border: Border.all(
                                                   width: 2,
-                                                  color: const Color.fromRGBO(255, 145, 0, 1),
+                                                  color: const Color.fromRGBO(
+                                                      255, 145, 0, 1),
                                                 )),
                                             child: CustomImage(
                                                 radius: 20,
                                                 height: 40,
                                                 width: 40,
                                                 fit: BoxFit.fill,
-                                                path: '${AppConstants.baseUrl}${homePageController.groundsDetail?.groundKingChallenge?.team?.logo ?? ""}'),
+                                                path:
+                                                    '${AppConstants.baseUrl}${homePageController.groundsDetail?.groundKingChallenge?.team?.logo ?? ""}'),
                                           ),
                                           Positioned(
                                             bottom: 0,
@@ -985,7 +1413,12 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                             child: Container(
                                               height: 14,
                                               width: 14,
-                                              decoration: BoxDecoration(color: const Color.fromRGBO(255, 145, 0, 1), borderRadius: BorderRadius.circular(20)),
+                                              decoration: BoxDecoration(
+                                                  color: const Color.fromRGBO(
+                                                      255, 145, 0, 1),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
                                               child: const Padding(
                                                 padding: EdgeInsets.all(2.0),
                                                 child: CustomImage(
@@ -1002,14 +1435,25 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                         children: [
                                           Text(
                                             "Team A",
-                                            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
                                                   fontSize: 8,
                                                   fontWeight: FontWeight.w400,
                                                 ),
                                           ),
                                           Text(
-                                            homePageController.groundsDetail?.groundKingChallenge?.team?.name ?? "",
-                                            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                            homePageController
+                                                    .groundsDetail
+                                                    ?.groundKingChallenge
+                                                    ?.team
+                                                    ?.name ??
+                                                "",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
                                                   fontSize: 11,
                                                   fontWeight: FontWeight.w700,
                                                 ),
@@ -1018,10 +1462,14 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                       ),
                                       Text(
                                         "Vs",
-                                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .copyWith(
                                               fontSize: 26,
                                               fontWeight: FontWeight.w700,
-                                              color: const Color.fromRGBO(217, 217, 217, 1),
+                                              color: const Color.fromRGBO(
+                                                  217, 217, 217, 1),
                                             ),
                                       ),
                                       Column(
@@ -1029,12 +1477,29 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                           Text(
                                             "Team B",
                                             // textAlign: TextAlign.end,
-                                            style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 8, fontWeight: FontWeight.w400),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
+                                                    fontSize: 8,
+                                                    fontWeight:
+                                                        FontWeight.w400),
                                           ),
                                           Text(
-                                            Get.find<HomePageController>().groundsDetail?.groundKingChallenge?.opponentTeam?.name ?? "",
+                                            Get.find<HomePageController>()
+                                                    .groundsDetail
+                                                    ?.groundKingChallenge
+                                                    ?.opponentTeam
+                                                    ?.name ??
+                                                "",
                                             textAlign: TextAlign.end,
-                                            style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11, fontWeight: FontWeight.w700),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
+                                                    fontSize: 11,
+                                                    fontWeight:
+                                                        FontWeight.w700),
                                           ),
                                         ],
                                       ),
@@ -1042,7 +1507,8 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                         height: 40,
                                         width: 40,
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(20),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                             border: Border.all(
                                               color: const Color(0xFFE0E0E0),
                                               width: 1,
@@ -1052,7 +1518,8 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                             height: 40,
                                             width: 40,
                                             fit: BoxFit.fill,
-                                            path: '${AppConstants.baseUrl}${homePageController.groundsDetail?.groundKingChallenge?.opponentTeam?.logo ?? ""}'),
+                                            path:
+                                                '${AppConstants.baseUrl}${homePageController.groundsDetail?.groundKingChallenge?.opponentTeam?.logo ?? ""}'),
                                       ),
                                     ],
                                   )
@@ -1062,20 +1529,37 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                             Container(
                               height: 30,
                               decoration: const BoxDecoration(
-                                  color: Color.fromRGBO(255, 145, 0, 0.1), borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
+                                  color: Color.fromRGBO(255, 145, 0, 0.1),
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(10),
+                                      bottomRight: Radius.circular(10))),
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     RichText(
                                       text: TextSpan(
                                           text: "Match Scheduled on ",
-                                          style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 8, color: Colors.black),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge!
+                                              .copyWith(
+                                                  fontSize: 8,
+                                                  color: Colors.black),
                                           children: [
                                             TextSpan(
-                                              text: "${DateTime.parse(homePageController.groundsDetail?.groundKingChallenge?.scheduledTime).dayDateTime}",
-                                              style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 8, color: Colors.black, fontWeight: FontWeight.bold),
+                                              text:
+                                                  "${DateTime.parse(homePageController.groundsDetail?.groundKingChallenge?.scheduledTime).dayDateTime}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelLarge!
+                                                  .copyWith(
+                                                      fontSize: 8,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                             )
                                           ]),
                                     ),

@@ -12,10 +12,12 @@ import 'package:football_shuru/data/models/response/grounds_model.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/game_slot.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/ground_chatroom.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/ground_king_champion_tile.dart';
+import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/setwinner_screen.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/tournament_stats_section.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 
+import '../../../../services/route_helper.dart';
 import '../../../base/custom_image.dart';
 import '../../../base/snack_bar.dart';
 
@@ -23,13 +25,15 @@ class SelectGroundChatScreen extends StatefulWidget {
   final int groundId;
   final Grounds? selectedGround;
 
-  const SelectGroundChatScreen({super.key, required this.groundId, this.selectedGround});
+  const SelectGroundChatScreen(
+      {super.key, required this.groundId, this.selectedGround});
 
   @override
   State<SelectGroundChatScreen> createState() => _SelectGroundChatScreenState();
 }
 
-class _SelectGroundChatScreenState extends State<SelectGroundChatScreen> with SingleTickerProviderStateMixin {
+class _SelectGroundChatScreenState extends State<SelectGroundChatScreen>
+    with SingleTickerProviderStateMixin {
   int totalGameSlot = 0;
   Grounds? _ground;
 
@@ -47,18 +51,23 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen> with Si
     _ground = widget.selectedGround;
     Timer.run(() async {
       await Get.find<ChatController>().loadChats(groundId: widget.groundId);
-      await Get.find<GameSlotController>().getGameSlotDetails(groundId: widget.groundId).then((value) {
+      await Get.find<GameSlotController>()
+          .getGameSlotDetails(groundId: widget.groundId)
+          .then((value) {
         if (value.isSuccess) {
           totalGameSlot = Get.find<GameSlotController>().gameSlotDetail.length;
         }
       });
-      Get.find<HomePageController>().getgroundsDetail(groundId: widget.groundId).then((value) {
+      Get.find<HomePageController>()
+          .getgroundsDetail(groundId: widget.groundId)
+          .then((value) {
         if (value.isSuccess) {
           _ground = Get.find<HomePageController>().groundsDetail;
           isLoading = false;
         }
       });
-      await Get.find<KingChallengeController>().getGroundTeamList(groundId: widget.groundId);
+      await Get.find<KingChallengeController>()
+          .getGroundTeamList(groundId: widget.groundId);
       setState(() {});
     });
     _tabController = TabController(vsync: this, length: 3);
@@ -106,22 +115,41 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen> with Si
                 pinned: true,
                 surfaceTintColor: const Color(0xFF263238),
                 backgroundColor: const Color(0xFF263238),
-                title: Text(
-                  _ground?.title ?? "Ground",
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+                title: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        getCustomRoute(
+                            child: SetWinnerScreen(
+                          groundId: _ground?.id ?? 0,
+                        )));
+                  },
+                  child: Text(
+                    _ground?.title ?? "Ground",
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(color: Colors.white),
+                  ),
                 ),
                 actions: [
                   if (homePageController.logoutloading)
-                    Container(padding: const EdgeInsets.all(10), child: const CircularProgressIndicator())
+                    Container(
+                        padding: const EdgeInsets.all(10),
+                        child: const CircularProgressIndicator())
                   else
                     IconButton(
                         onPressed: () {
-                          homePageController.leaveGround(groundId: widget.groundId).then((value) {
+                          homePageController
+                              .leaveGround(groundId: widget.groundId)
+                              .then((value) {
                             if (value.isSuccess) {
                               Get.find<AuthController>().getgrounds();
                               Get.find<HomePageController>().getJoinedGrounds();
                               Navigator.pop(context);
-                              Fluttertoast.showToast(msg: value.message, toastLength: Toast.LENGTH_LONG);
+                              Fluttertoast.showToast(
+                                  msg: value.message,
+                                  toastLength: Toast.LENGTH_LONG);
                             } else {
                               showSnackBar(context, content: value.message);
                             }
@@ -160,15 +188,25 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen> with Si
                                 RichText(
                                     text: TextSpan(
                                         text: "TROPHY",
-                                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .copyWith(
                                               fontSize: 30,
                                               fontWeight: FontWeight.w600,
-                                              color: const Color.fromRGBO(255, 200, 57, 1),
+                                              color: const Color.fromRGBO(
+                                                  255, 200, 57, 1),
                                             ),
                                         children: [
                                       TextSpan(
                                         text: "\nfor leading the board",
-                                        style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.white),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .copyWith(
+                                                fontSize: 11,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white),
                                       )
                                     ])),
                               ],
@@ -221,10 +259,15 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen> with Si
                         indicatorColor: Colors.black,
                         dividerColor: Colors.grey.shade200,
                         indicatorSize: TabBarIndicatorSize.tab,
-                        labelStyle: Theme.of(context).textTheme.titleSmall!.copyWith(fontWeight: FontWeight.w700, fontSize: 13),
+                        labelStyle: Theme.of(context)
+                            .textTheme
+                            .titleSmall!
+                            .copyWith(
+                                fontWeight: FontWeight.w700, fontSize: 13),
                         indicatorWeight: 3.0,
                         labelColor: Colors.black,
-                        unselectedLabelStyle: Theme.of(context).textTheme.titleSmall,
+                        unselectedLabelStyle:
+                            Theme.of(context).textTheme.titleSmall,
                         unselectedLabelColor: Colors.grey.shade500,
                         controller: _tabController,
                         tabs: <Tab>[
@@ -233,13 +276,21 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen> with Si
                               child: Row(
                             children: [
                               const Text("Game Slot"),
-                              if (totalGameSlot.isGreaterThan(0)) const SizedBox(width: 6),
+                              if (totalGameSlot.isGreaterThan(0))
+                                const SizedBox(width: 6),
                               if (totalGameSlot.isGreaterThan(0))
                                 Container(
                                     height: 16,
                                     width: 16,
-                                    decoration: const BoxDecoration(shape: BoxShape.circle, color: Color(0xffFF4343)),
-                                    child: Center(child: Text("$totalGameSlot", textAlign: TextAlign.center, style: const TextStyle(color: Colors.white, fontSize: 10)))),
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Color(0xffFF4343)),
+                                    child: Center(
+                                        child: Text("$totalGameSlot",
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 10)))),
                             ],
                           )),
                           const Tab(child: Text("Players Stats")),
