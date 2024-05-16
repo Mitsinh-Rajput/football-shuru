@@ -17,14 +17,18 @@ class HomeRepo {
           .getData("${AppConstants.groundDetail}?ground_id=$groundId");
   Future<Response> setWinner(
           {required int challengeId,
-          required int teamGoals,
-          required int opponentTeamGoals,
-          required int winnerTeamId}) async =>
+          int? teamGoals,
+          int? opponentTeamGoals,
+          int? winnerTeamId,
+          String? isCancelled,
+          int? isDraw}) async =>
       await apiClient.postData(AppConstants.setWinner, {
         "challenge_id": challengeId,
         "team_goals": teamGoals,
         "opponent_team_goals": opponentTeamGoals,
-        "winner_team_id": winnerTeamId
+        "winner_team_id": winnerTeamId,
+        "is_cancelled": isCancelled,
+        "is_draw": isDraw
       });
 
   Future<Response> joinGround({required int groundId}) async => await apiClient

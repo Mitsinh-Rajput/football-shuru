@@ -6,12 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:football_shuru/views/screens/auth_screens/signup_screen.dart';
 import 'package:get/get.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../services/custom_snackbar.dart';
 import '../services/route_helper.dart';
 import '../views/base/dialogs/failed_dialog.dart';
 import '../views/screens/dashboard/dashboard_screen.dart';
+import '../views/screens/initial_screens/pending_match_screen.dart';
 import 'auth_controller.dart';
+import 'kingchallenge_controller.dart';
 
 class FirebaseController extends GetxController implements GetxService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -72,7 +75,9 @@ class FirebaseController extends GetxController implements GetxService {
     //
     verificationCompleted(PhoneAuthCredential phoneAuthCredential) async {
       try {
-        await _firebaseAuth.signInWithCredential(phoneAuthCredential).then((value) async {
+        await _firebaseAuth
+            .signInWithCredential(phoneAuthCredential)
+            .then((value) async {
           if (value.user != null) {
             isNavigate(context); // Navigator
             String? token = await value.user!.getIdToken();
@@ -86,14 +91,16 @@ class FirebaseController extends GetxController implements GetxService {
       } catch (e) {
         _isLoading = false;
         update();
-        log('++++++++++++++++++ ${e.toString()} ++++++++++++++++', name: "ERROR AT verificationCompleted()");
+        log('++++++++++++++++++ ${e.toString()} ++++++++++++++++',
+            name: "ERROR AT verificationCompleted()");
       }
     }
 
     //
     verificationFailed(FirebaseAuthException authException) {
       try {
-        _message = 'Phone number verification failed. Code: ${authException.code}. '
+        _message =
+            'Phone number verification failed. Code: ${authException.code}. '
             'Message: ${authException.message}';
         log(_message, name: "verificationFailed");
         startTimer();
@@ -104,7 +111,8 @@ class FirebaseController extends GetxController implements GetxService {
         _isLoading = false;
         update();
 
-        log('+++++++++++++ ${e.toString()} +++++++++++++++', name: "ERROR AT verificationFailed()");
+        log('+++++++++++++ ${e.toString()} +++++++++++++++',
+            name: "ERROR AT verificationFailed()");
       }
     }
 
@@ -123,7 +131,8 @@ class FirebaseController extends GetxController implements GetxService {
       } catch (e) {
         _isLoading = false;
         update();
-        log('++++++++++++++++++ ${e.toString()} ++++++++++++++++++++', name: "ERROR AT codeSent()");
+        log('++++++++++++++++++ ${e.toString()} ++++++++++++++++++++',
+            name: "ERROR AT codeSent()");
       }
     }
 
@@ -131,13 +140,15 @@ class FirebaseController extends GetxController implements GetxService {
     codeAutoRetrievalTimeout(String verificationId) {
       try {
         _verificationId = verificationId;
-        log("$verificationId   \n\n $_verificationId", name: 'codeAutoRetrievalTimeout');
+        log("$verificationId   \n\n $_verificationId",
+            name: 'codeAutoRetrievalTimeout');
         _isLoading = false;
         update();
       } catch (e) {
         _isLoading = false;
         update();
-        log('++++++++++++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++++++++++', name: "ERROR AT codeAutoRetrievalTimeout()");
+        log('++++++++++++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++++++++++',
+            name: "ERROR AT codeAutoRetrievalTimeout()");
       }
     }
 
@@ -168,7 +179,8 @@ class FirebaseController extends GetxController implements GetxService {
         verificationId: _verificationId,
         smsCode: otpController.text,
       );
-      final User user = (await _firebaseAuth.signInWithCredential(credential)).user!;
+      final User user =
+          (await _firebaseAuth.signInWithCredential(credential)).user!;
       // Todo: Login Api hit then Redirect to home page --
       isNavigate(context);
     } catch (e) {
@@ -200,11 +212,36 @@ class FirebaseController extends GetxController implements GetxService {
         if (value.data["type"] == "old") {
           _isLoading = false;
           update();
-          Navigator.pushAndRemoveUntil(context, getCustomRoute(child: const DashboardScreen()), (route) => false); //old user
+          Get.find<KingChallengeController>().getPendingList().then((value) {
+            if (Get.find<KingChallengeController>()
+                .pendingMatchResultList
+                .isEmpty) {
+              Navigator.pushReplacement(
+                context,
+                getCustomRoute(
+                  type: PageTransitionType.fade,
+                  duration: const Duration(milliseconds: 600),
+                  child: const DashboardScreen(),
+                ),
+              );
+            } else {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  getCustomRoute(child: const PendingMatchScreen()),
+                  (route) => false);
+            }
+          });
+          // Navigator.pushAndRemoveUntil(
+          //     context,
+          //     getCustomRoute(child: const DashboardScreen()),
+          //     (route) => false); //old user
         } else {
           _isLoading = false;
           update();
-          Navigator.pushAndRemoveUntil(context, getCustomRoute(child: const SignUpScreen()), (route) => false); //old user
+          Navigator.pushAndRemoveUntil(
+              context,
+              getCustomRoute(child: const SignUpScreen()),
+              (route) => false); //old user
         }
       } else {
         _isLoading = false;

@@ -98,22 +98,26 @@ class HomePageController extends GetxController implements GetxService {
 
   Future<ResponseModel> setWinner({
     required int challengeId,
-    required int teamGoals,
-    required int opponentTeamGoals,
-    required int winnerTeamId,
+    int? teamGoals,
+    int? opponentTeamGoals,
+    int? winnerTeamId,
+    int? isDraw,
+    String? isCancelled,
   }) async {
     ResponseModel responseModel;
+
     _isLoading = true;
     update();
     log("response.body.toString()${AppConstants.baseUrl}${AppConstants.setWinner}",
         name: "setWinner");
     try {
       Response response = await homeRepo.setWinner(
-        challengeId: challengeId,
-        teamGoals: teamGoals,
-        opponentTeamGoals: opponentTeamGoals,
-        winnerTeamId: winnerTeamId,
-      );
+          challengeId: challengeId,
+          teamGoals: teamGoals,
+          opponentTeamGoals: opponentTeamGoals,
+          winnerTeamId: winnerTeamId,
+          isCancelled: isCancelled,
+          isDraw: isDraw);
       log(response.statusCode.toString());
       log(jsonEncode(response.body), name: "setWinner");
       if (response.statusCode == 200) {

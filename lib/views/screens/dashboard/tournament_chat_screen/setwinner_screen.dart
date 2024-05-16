@@ -1,8 +1,10 @@
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/controllers/homepage_controller.dart';
 import 'package:football_shuru/services/route_helper.dart';
 import 'package:football_shuru/views/base/common_button.dart';
@@ -26,6 +28,7 @@ class SetWinnerScreen extends StatefulWidget {
 class _SetWinnerScreenState extends State<SetWinnerScreen> {
   TextEditingController teamAGoalCount = TextEditingController(text: "0");
   TextEditingController teamBGoalCount = TextEditingController(text: "0");
+  bool enableEdit = false;
   bool isSelected = false;
 
   List<RadioModel> RadioList = [];
@@ -33,16 +36,23 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     teamAGoalCount.text = widget.MatchData.teamGoals != null
         ? widget.MatchData.teamGoals.toString()
         : "0";
     teamBGoalCount.text = widget.MatchData.opponentTeamGoals != null
         ? widget.MatchData.opponentTeamGoals.toString()
         : "0";
-    RadioList.add(RadioModel(false, widget.MatchData.team?.name ?? "",
-        widget.MatchData.team?.logo ?? "", "Team A"));
-    RadioList.add(RadioModel(false, widget.MatchData.opponentTeam?.name ?? "",
-        widget.MatchData.opponentTeam?.logo ?? "", "Team B"));
+    RadioList.add(RadioModel(
+        widget.MatchData.winnerTeam == widget.MatchData.team?.id,
+        widget.MatchData.team?.name ?? "",
+        widget.MatchData.team?.logo ?? "",
+        "Team A"));
+    RadioList.add(RadioModel(
+        widget.MatchData.winnerTeam == widget.MatchData.opponentTeam?.id,
+        widget.MatchData.opponentTeam?.name ?? "",
+        widget.MatchData.opponentTeam?.logo ?? "",
+        "Team B"));
   }
 
   @override
@@ -68,12 +78,18 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                   const SizedBox(
                     width: 5,
                   ),
-                  Text(
-                    "Champions League",
-                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: const Color(0xFF40424E)),
+                  GestureDetector(
+                    onTap: () {
+                      log((Get.find<AuthController>().profile?.id ?? 0)
+                          .toString());
+                    },
+                    child: Text(
+                      "Champions League",
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: const Color(0xFF40424E)),
+                    ),
                   ),
                 ],
               ),
@@ -107,20 +123,27 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                 itemBuilder: (BuildContext context, int index) {
                   return InkWell(
                     splashColor: Colors.white,
-                    onTap: () {
-                      setState(() {
-                        RadioList.forEach(
-                            (element) => element.isSelected = false);
-                        RadioList[index].isSelected = true;
-                        if (index == 0) {
-                          teamAGoalCount.text =
-                              (int.parse(teamBGoalCount.text) + 1).toString();
-                        } else {
-                          teamBGoalCount.text =
-                              (int.parse(teamAGoalCount.text) + 1).toString();
-                        }
-                      });
-                    },
+                    onTap: enableEdit
+                        ? () {
+                            setState(() {
+                              RadioList.forEach(
+                                  (element) => element.isSelected = false);
+                              RadioList[index].isSelected = true;
+                              if (index == 0) {
+                                teamAGoalCount.text =
+                                    (int.parse(teamBGoalCount.text) + 1)
+                                        .toString();
+                              } else {
+                                teamBGoalCount.text =
+                                    (int.parse(teamAGoalCount.text) + 1)
+                                        .toString();
+                              }
+                            });
+                          }
+                        : () {
+                            Fluttertoast.showToast(
+                                msg: "Wait for Opponent's Response");
+                          },
                     child: RadioItem(item: RadioList[index]),
                   );
                 },
@@ -144,6 +167,13 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                         height: 100,
                         width: 40,
                         child: TextFormField(
+                          onTap: () {
+                            if (enableEdit) {
+                              Fluttertoast.showToast(
+                                  msg: "Wait for Opponent's Response");
+                            }
+                          },
+                          enabled: enableEdit,
                           controller: teamAGoalCount,
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
@@ -191,7 +221,26 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                         height: 100,
                         width: 40,
                         child: TextField(
+                          onTap: () {
+                            if (enableEdit) {
+                              Fluttertoast.showToast(
+                                  msg: "Wait for Opponent's Response");
+                            }
+                          },
+                          enabled: enableEdit,
                           controller: teamBGoalCount,
+                          onChanged: (value) {
+                            setState(() {
+                              if (RadioList[1].isSelected) {
+                                if (int.parse(value) <
+                                    int.parse(teamAGoalCount.text)) {
+                                  teamBGoalCount.text =
+                                      (int.parse(teamAGoalCount.text) + 1)
+                                          .toString();
+                                }
+                              }
+                            });
+                          },
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
                                     // letterSpacing: 2,
@@ -371,44 +420,45 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
             ),
             CustomButton(
               color: const Color(0xFF263238),
-              onTap: () {
-                int winnerId = RadioList[0].isSelected
-                    ? widget.MatchData.team?.id ?? 0
-                    : widget.MatchData.opponentTeam?.id ?? 0;
-                Get.find<HomePageController>()
-                    .setWinner(
-                  challengeId: Get.find<HomePageController>()
-                          .groundsDetail
-                          ?.groundKingChallenge
-                          ?.id ??
-                      0,
-                  teamGoals: int.parse(teamAGoalCount.text),
-                  opponentTeamGoals: int.parse(teamBGoalCount.text),
-                  winnerTeamId: winnerId,
-                )
-                    .then((value) {
-                  log(value.message);
-                  if (value.isSuccess) {
-                    if (value.message == "Winner is Decided") {
-                      Navigator.push(
-                          context,
-                          getCustomRoute(
-                              child: ScoreCardScreen(
-                            isTeamAWinner: RadioList[0].isSelected,
-                          )));
-                    }
-                  }
+              onTap: enableEdit
+                  ? () {
+                      int winnerId = RadioList[0].isSelected
+                          ? widget.MatchData.team?.id ?? 0
+                          : widget.MatchData.opponentTeam?.id ?? 0;
+                      Get.find<HomePageController>()
+                          .setWinner(
+                        challengeId: widget.MatchData.id ?? 0,
+                        teamGoals: int.parse(teamAGoalCount.text),
+                        opponentTeamGoals: int.parse(teamBGoalCount.text),
+                        winnerTeamId: winnerId,
+                      )
+                          .then((value) {
+                        if (value.isSuccess) {
+                          Navigator.pop(context);
+                          if (value.message == "Winner is Decided") {
+                            Navigator.push(
+                                context,
+                                getCustomRoute(
+                                    child: ScoreCardScreen(
+                                  isTeamAWinner: RadioList[0].isSelected,
+                                )));
+                          }
+                        }
 
-                  /// Remove this navigation before building apk
-                  // Navigator.push(
-                  //     context,
-                  //     getCustomRoute(
-                  //         child: ScoreCardScreen(
-                  //       isTeamAWinner: RadioList[0].isSelected,
-                  //     )));
-                  Fluttertoast.showToast(msg: value.message);
-                });
-              },
+                        /// Remove this navigation before building apk
+                        // Navigator.push(
+                        //     context,
+                        //     getCustomRoute(
+                        //         child: ScoreCardScreen(
+                        //       isTeamAWinner: RadioList[0].isSelected,
+                        //     )));
+                        Fluttertoast.showToast(msg: value.message);
+                      });
+                    }
+                  : () {
+                      Fluttertoast.showToast(
+                          msg: "Wait for Opponent's Response");
+                    },
               radius: 10,
               height: 50,
               child: Text(
@@ -418,6 +468,113 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                     fontWeight: FontWeight.w600,
                     color: Colors.white),
               ),
+            ),
+            // if (widget.MatchData.winnerTeam == null &&
+            //     widget.MatchData.winnerTeamResponseByUser == null)
+            Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    CustomButton(
+                      color: Colors.orange,
+                      onTap: () {
+                        int winnerId = RadioList[0].isSelected
+                            ? widget.MatchData.team?.id ?? 0
+                            : widget.MatchData.opponentTeam?.id ?? 0;
+                        Get.find<HomePageController>()
+                            .setWinner(
+                          challengeId: widget.MatchData.id ?? 0,
+                          teamGoals: int.parse(teamAGoalCount.text),
+                          opponentTeamGoals: int.parse(teamBGoalCount.text),
+                          winnerTeamId: winnerId,
+                        )
+                            .then((value) {
+                          log(value.message);
+                          if (value.isSuccess) {
+                            Navigator.pop(context);
+                            if (value.message == "Winner is Decided") {
+                              Navigator.push(
+                                  context,
+                                  getCustomRoute(
+                                      child: ScoreCardScreen(
+                                    isTeamAWinner: RadioList[0].isSelected,
+                                  )));
+                            }
+                          }
+
+                          if (kDebugMode) {
+                            Navigator.push(
+                                context,
+                                getCustomRoute(
+                                    child: ScoreCardScreen(
+                                  isTeamAWinner: RadioList[0].isSelected,
+                                )));
+                          }
+                          Fluttertoast.showToast(msg: value.message);
+                        });
+                      },
+                      radius: 10,
+                      height: 50,
+                      child: Text(
+                        "Match Draw",
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                      ),
+                    ),
+                    CustomButton(
+                      color: Colors.orange,
+                      onTap: () {
+                        int winnerId = RadioList[0].isSelected
+                            ? widget.MatchData.team?.id ?? 0
+                            : widget.MatchData.opponentTeam?.id ?? 0;
+                        Get.find<HomePageController>()
+                            .setWinner(
+                          challengeId: widget.MatchData.id ?? 0,
+                          isCancelled: "1",
+                        )
+                            .then((value) {
+                          log(value.message);
+                          if (value.isSuccess) {
+                            Navigator.pop(context);
+                            if (value.message == "Winner is Decided") {
+                              Navigator.push(
+                                  context,
+                                  getCustomRoute(
+                                      child: ScoreCardScreen(
+                                    isTeamAWinner: RadioList[0].isSelected,
+                                  )));
+                            }
+                          }
+
+                          /// Remove this navigation before building apk
+                          // Navigator.push(
+                          //     context,
+                          //     getCustomRoute(
+                          //         child: ScoreCardScreen(
+                          //       isTeamAWinner: RadioList[0].isSelected,
+                          //     )));
+                          Fluttertoast.showToast(msg: value.message);
+                        });
+                      },
+                      radius: 10,
+                      height: 50,
+                      child: Text(
+                        "Match Cancel",
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                      ),
+                    )
+                  ],
+                ),
+              ],
             )
           ],
         ),
