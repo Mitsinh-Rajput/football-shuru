@@ -8,7 +8,6 @@ import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/home_widgets/communitynear_screen.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/home_widgets/nearbygrounds_widget.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/league_and_tour_tile.dart';
-import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/setwinner_screen.dart';
 import 'package:football_shuru/views/screens/widgets/changepincode_bottomsheet.dart';
 import 'package:football_shuru/views/screens/widgets/primarybanner_widget.dart';
 import 'package:get/get.dart';
@@ -89,8 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           GestureDetector(
             onTap: () {
-              Navigator.push(
-                  context, getCustomRoute(child: SetWinnerScreen(groundId: 0)));
+              // Navigator.push(
+              //     context, getCustomRoute(child: SetWinnerScreen(groundId: 0)));
             },
             child: Image.asset(
               Assets.imagesSearch,

@@ -45,4 +45,7 @@ class KingChallengeRepo {
         "ground_king_challenge_id": data["ground_king_challenge_id"],
         "scores": data["scores"]
       });
+
+  Future<Response> getPendingMatchResult() async =>
+      await apiClient.getData(AppConstants.pendingList);
 }

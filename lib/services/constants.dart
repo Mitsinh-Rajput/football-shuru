@@ -79,6 +79,7 @@ class AppConstants {
       'api/v1/ground/king-challenge/approve-schedule';
   static const String setWinner = 'api/v1/ground/king-challenge/set-winner';
   static const String scorecard = 'api/v1/ground/scorecard/store';
+  static const String pendingList = 'api/v1/ground/king-challenge/pending-list';
 
   /// Team
 

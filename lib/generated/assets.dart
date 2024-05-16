@@ -9,7 +9,8 @@ class Assets {
   static const String imagesArrowLeft = 'assets/images/arrow-left.png';
   static const String imagesArrowRight = 'assets/images/arrow-right.png';
   static const String imagesAward1 = 'assets/images/award1.png';
-  static const String imagesBackgroundImage = 'assets/images/BackgroundImage.png';
+  static const String imagesBackgroundImage =
+      'assets/images/BackgroundImage.png';
   static const String imagesBarcode = 'assets/images/barcode.png';
   static const String imagesCalendarTick = 'assets/images/calendar-tick.png';
   static const String imagesCallCalling = 'assets/images/call-calling.png';
@@ -17,6 +18,7 @@ class Assets {
   static const String imagesChats = 'assets/images/chats.png';
   static const String imagesContctUs = 'assets/images/contct_us.png';
   static const String imagesCopy = 'assets/images/copy.png';
+  static const String imagesCrown1 = 'assets/images/crown1.png';
   static const String imagesDribbble = 'assets/images/dribbble.png';
   static const String imagesEllipse68 = 'assets/images/Ellipse68.png';
   static const String imagesEmailId = 'assets/images/email_id.png';
@@ -33,7 +35,8 @@ class Assets {
   static const String imagesLogout = 'assets/images/Logout.png';
   static const String imagesMap = 'assets/images/map.png';
   static const String imagesMenu = 'assets/images/menu.png';
-  static const String imagesMessageQuestion = 'assets/images/message-question.png';
+  static const String imagesMessageQuestion =
+      'assets/images/message-question.png';
   static const String imagesMobileNum = 'assets/images/mobile_num.png';
   static const String imagesNameofground = 'assets/images/nameofground.png';
   static const String imagesNotification = 'assets/images/notification.png';
@@ -52,7 +55,8 @@ class Assets {
   static const String imagesSupport = 'assets/images/support.png';
   static const String imagesTeamlistplayer = 'assets/images/teamlistplayer.png';
   static const String imagesTeams = 'assets/images/teams.png';
-  static const String imagesTermAndCondition = 'assets/images/term_and_condition.png';
+  static const String imagesTermAndCondition =
+      'assets/images/term_and_condition.png';
   static const String imagesUser = 'assets/images/user.png';
   static const String imagesYourName = 'assets/images/your_name.png';
   static const String lottiesEmpty = 'assets/lotties/empty.json';

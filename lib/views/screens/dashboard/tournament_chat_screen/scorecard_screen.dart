@@ -48,8 +48,8 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                 "user_id": i.user?.id,
                 "goals": 0,
                 "assist": 0,
-                "best_midfield": "",
-                "best_defender": ""
+                "best_midfield": "No",
+                "best_defender": "No"
               });
             }
           }
@@ -237,10 +237,10 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                               child: const Padding(
                                 padding: EdgeInsets.all(2.0),
                                 child: CustomImage(
-                                    height: 8,
-                                    width: 8,
-                                    path:
-                                        "https://s3-alpha-sig.figma.com/img/c204/f10b/24cfa8d945c30d47cf12a3615b909ff1?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KtgSPjADbFef0XclcRL4-HfqDdzt0Peoi~9I2iBlSq-deQeJtZb6RcisiIdvgKaOnTNXKo5x8wMEzgUWFAe4YTh2omCmwJH6x1HqTsCaouEZbEP1VWSb1d14gjiz1zMpVlmdFqCXvKodrACJAffKBKmUumRbXItn5W2jTw4dX-6tBk6b4-CskgkBKl-dZImpgJ0B1MnUgYYp8X0H7kTJeE9Gmrx9ofHkLHarlbeApCnvwVa-QqKK2JajNJlrsJLBN1zZEUwC2t70GmqpD-Mbb3MnPtL4tugqrCCrMELmOGjVp2phbwhNZ6YB7YHOsbWpjoQ8FPIowv64esDaKaUGJQ__"),
+                                  height: 8,
+                                  width: 8,
+                                  path: Assets.imagesCrown1,
+                                ),
                               ),
                             ),
                           )
@@ -340,10 +340,10 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                               child: const Padding(
                                 padding: EdgeInsets.all(2.0),
                                 child: CustomImage(
-                                    height: 8,
-                                    width: 8,
-                                    path:
-                                        "https://s3-alpha-sig.figma.com/img/c204/f10b/24cfa8d945c30d47cf12a3615b909ff1?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KtgSPjADbFef0XclcRL4-HfqDdzt0Peoi~9I2iBlSq-deQeJtZb6RcisiIdvgKaOnTNXKo5x8wMEzgUWFAe4YTh2omCmwJH6x1HqTsCaouEZbEP1VWSb1d14gjiz1zMpVlmdFqCXvKodrACJAffKBKmUumRbXItn5W2jTw4dX-6tBk6b4-CskgkBKl-dZImpgJ0B1MnUgYYp8X0H7kTJeE9Gmrx9ofHkLHarlbeApCnvwVa-QqKK2JajNJlrsJLBN1zZEUwC2t70GmqpD-Mbb3MnPtL4tugqrCCrMELmOGjVp2phbwhNZ6YB7YHOsbWpjoQ8FPIowv64esDaKaUGJQ__"),
+                                  height: 8,
+                                  width: 8,
+                                  path: Assets.imagesCrown1,
+                                ),
                               ),
                             ),
                           )

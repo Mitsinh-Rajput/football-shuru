@@ -9,12 +9,15 @@ import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/scorecard_screen.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
+import '../../../../data/models/response/PendingMatchListModel.dart';
 import '../../../../services/theme.dart';
 
 class SetWinnerScreen extends StatefulWidget {
-  final int groundId;
-  const SetWinnerScreen({super.key, required this.groundId});
+  final PendingMatchListModel MatchData;
+  // final int groundId;
+  const SetWinnerScreen({super.key, required this.MatchData});
 
   @override
   State<SetWinnerScreen> createState() => _SetWinnerScreenState();
@@ -30,36 +33,16 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    RadioList.add(RadioModel(
-        false,
-        Get.find<HomePageController>()
-                .groundsDetail
-                ?.groundKingChallenge
-                ?.team
-                ?.name ??
-            "",
-        Get.find<HomePageController>()
-                .groundsDetail
-                ?.groundKingChallenge
-                ?.team
-                ?.logo ??
-            "",
-        "Team A"));
-    RadioList.add(RadioModel(
-        false,
-        Get.find<HomePageController>()
-                .groundsDetail
-                ?.groundKingChallenge
-                ?.opponentTeam
-                ?.name ??
-            "",
-        Get.find<HomePageController>()
-                .groundsDetail
-                ?.groundKingChallenge
-                ?.opponentTeam
-                ?.logo ??
-            "",
-        "Team B"));
+    teamAGoalCount.text = widget.MatchData.teamGoals != null
+        ? widget.MatchData.teamGoals.toString()
+        : "0";
+    teamBGoalCount.text = widget.MatchData.opponentTeamGoals != null
+        ? widget.MatchData.opponentTeamGoals.toString()
+        : "0";
+    RadioList.add(RadioModel(false, widget.MatchData.team?.name ?? "",
+        widget.MatchData.team?.logo ?? "", "Team A"));
+    RadioList.add(RadioModel(false, widget.MatchData.opponentTeam?.name ?? "",
+        widget.MatchData.opponentTeam?.logo ?? "", "Team B"));
   }
 
   @override
@@ -94,9 +77,12 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 5,
+              ),
               Center(
                 child: Text(
-                  "Thursday, 5 April • Ground king champion first leg",
+                  "${DateFormat('EEEE, d MMMM').format(widget.MatchData.scheduledTime ?? DateTime.now())} • Ground king champion Result",
                   style: Theme.of(context)
                       .textTheme
                       .labelLarge!
@@ -104,7 +90,7 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                 ),
               ),
               const SizedBox(
-                height: 70,
+                height: 30,
               ),
               Text(
                 "Who is the winner?",
@@ -114,6 +100,7 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                     color: const Color(0xFF40424E)),
               ),
               ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 itemCount: RadioList.length,
@@ -125,6 +112,13 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                         RadioList.forEach(
                             (element) => element.isSelected = false);
                         RadioList[index].isSelected = true;
+                        if (index == 0) {
+                          teamAGoalCount.text =
+                              (int.parse(teamBGoalCount.text) + 1).toString();
+                        } else {
+                          teamBGoalCount.text =
+                              (int.parse(teamAGoalCount.text) + 1).toString();
+                        }
                       });
                     },
                     child: RadioItem(item: RadioList[index]),
@@ -132,7 +126,7 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                 },
               ),
               const SizedBox(
-                height: 40,
+                height: 20,
               ),
               Text(
                 "Please enter the score of match",
@@ -149,7 +143,7 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                       SizedBox(
                         height: 100,
                         width: 40,
-                        child: TextField(
+                        child: TextFormField(
                           controller: teamAGoalCount,
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
@@ -158,7 +152,18 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                                     fontWeight: FontWeight.w600,
                                     color: textPrimary,
                                   ),
-                          onChanged: (value) {},
+                          onChanged: (value) {
+                            setState(() {
+                              if (RadioList[0].isSelected) {
+                                if (int.parse(value) <
+                                    int.parse(teamBGoalCount.text)) {
+                                  teamAGoalCount.text =
+                                      (int.parse(teamBGoalCount.text) + 1)
+                                          .toString();
+                                }
+                              }
+                            });
+                          },
                           keyboardType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
@@ -166,12 +171,7 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                         ),
                       ),
                       Text(
-                        Get.find<HomePageController>()
-                                .groundsDetail
-                                ?.groundKingChallenge
-                                ?.team
-                                ?.name ??
-                            "",
+                        widget.MatchData.team?.name ?? "",
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.labelLarge!.copyWith(
                             fontSize: 16, fontWeight: FontWeight.w700),
@@ -199,7 +199,6 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                                     fontWeight: FontWeight.w600,
                                     color: textPrimary,
                                   ),
-                          onChanged: (value) {},
                           keyboardType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
@@ -207,12 +206,7 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                         ),
                       ),
                       Text(
-                        Get.find<HomePageController>()
-                                .groundsDetail
-                                ?.groundKingChallenge
-                                ?.opponentTeam
-                                ?.name ??
-                            "",
+                        widget.MatchData.opponentTeam?.name ?? "",
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.labelLarge!.copyWith(
                             fontSize: 16, fontWeight: FontWeight.w700),
@@ -256,12 +250,7 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                         height: 40,
                         width: 40,
                         fit: BoxFit.fill,
-                        path: Get.find<HomePageController>()
-                                .groundsDetail
-                                ?.groundKingChallenge
-                                ?.team
-                                ?.logo ??
-                            "",
+                        path: widget.MatchData.team?.logo ?? "",
                       ),
                     ),
                     RadioList[0].isSelected
@@ -277,10 +266,10 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                               child: const Padding(
                                 padding: EdgeInsets.all(2.0),
                                 child: CustomImage(
-                                    height: 8,
-                                    width: 8,
-                                    path:
-                                        "https://s3-alpha-sig.figma.com/img/c204/f10b/24cfa8d945c30d47cf12a3615b909ff1?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KtgSPjADbFef0XclcRL4-HfqDdzt0Peoi~9I2iBlSq-deQeJtZb6RcisiIdvgKaOnTNXKo5x8wMEzgUWFAe4YTh2omCmwJH6x1HqTsCaouEZbEP1VWSb1d14gjiz1zMpVlmdFqCXvKodrACJAffKBKmUumRbXItn5W2jTw4dX-6tBk6b4-CskgkBKl-dZImpgJ0B1MnUgYYp8X0H7kTJeE9Gmrx9ofHkLHarlbeApCnvwVa-QqKK2JajNJlrsJLBN1zZEUwC2t70GmqpD-Mbb3MnPtL4tugqrCCrMELmOGjVp2phbwhNZ6YB7YHOsbWpjoQ8FPIowv64esDaKaUGJQ__"),
+                                  height: 8,
+                                  width: 8,
+                                  path: Assets.imagesCrown1,
+                                ),
                               ),
                             ),
                           )
@@ -297,12 +286,7 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                           ),
                     ),
                     Text(
-                      Get.find<HomePageController>()
-                              .groundsDetail
-                              ?.groundKingChallenge
-                              ?.team
-                              ?.name ??
-                          "",
+                      widget.MatchData.team?.name ?? "",
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
@@ -329,12 +313,7 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                           color: const Color(0xFFA5A5A5)),
                     ),
                     Text(
-                      Get.find<HomePageController>()
-                              .groundsDetail
-                              ?.groundKingChallenge
-                              ?.opponentTeam
-                              ?.name ??
-                          "",
+                      widget.MatchData.opponentTeam?.name ?? "",
                       textAlign: TextAlign.end,
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           fontSize: 11,
@@ -359,12 +338,7 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                         height: 40,
                         width: 40,
                         fit: BoxFit.fill,
-                        path: Get.find<HomePageController>()
-                                .groundsDetail
-                                ?.groundKingChallenge
-                                ?.opponentTeam
-                                ?.logo ??
-                            "",
+                        path: widget.MatchData.opponentTeam?.logo ?? "",
                       ),
                     ),
                     RadioList[1].isSelected
@@ -380,10 +354,10 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                               child: const Padding(
                                 padding: EdgeInsets.all(2.0),
                                 child: CustomImage(
-                                    height: 8,
-                                    width: 8,
-                                    path:
-                                        "https://s3-alpha-sig.figma.com/img/c204/f10b/24cfa8d945c30d47cf12a3615b909ff1?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KtgSPjADbFef0XclcRL4-HfqDdzt0Peoi~9I2iBlSq-deQeJtZb6RcisiIdvgKaOnTNXKo5x8wMEzgUWFAe4YTh2omCmwJH6x1HqTsCaouEZbEP1VWSb1d14gjiz1zMpVlmdFqCXvKodrACJAffKBKmUumRbXItn5W2jTw4dX-6tBk6b4-CskgkBKl-dZImpgJ0B1MnUgYYp8X0H7kTJeE9Gmrx9ofHkLHarlbeApCnvwVa-QqKK2JajNJlrsJLBN1zZEUwC2t70GmqpD-Mbb3MnPtL4tugqrCCrMELmOGjVp2phbwhNZ6YB7YHOsbWpjoQ8FPIowv64esDaKaUGJQ__"),
+                                  height: 8,
+                                  width: 8,
+                                  path: Assets.imagesCrown1,
+                                ),
                               ),
                             ),
                           )
@@ -399,18 +373,8 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
               color: const Color(0xFF263238),
               onTap: () {
                 int winnerId = RadioList[0].isSelected
-                    ? Get.find<HomePageController>()
-                            .groundsDetail
-                            ?.groundKingChallenge
-                            ?.team
-                            ?.id ??
-                        0
-                    : Get.find<HomePageController>()
-                            .groundsDetail
-                            ?.groundKingChallenge
-                            ?.opponentTeam
-                            ?.id ??
-                        0;
+                    ? widget.MatchData.team?.id ?? 0
+                    : widget.MatchData.opponentTeam?.id ?? 0;
                 Get.find<HomePageController>()
                     .setWinner(
                   challengeId: Get.find<HomePageController>()
@@ -434,12 +398,14 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                           )));
                     }
                   }
-                  Navigator.push(
-                      context,
-                      getCustomRoute(
-                          child: ScoreCardScreen(
-                        isTeamAWinner: RadioList[0].isSelected,
-                      )));
+
+                  /// Remove this navigation before building apk
+                  // Navigator.push(
+                  //     context,
+                  //     getCustomRoute(
+                  //         child: ScoreCardScreen(
+                  //       isTeamAWinner: RadioList[0].isSelected,
+                  //     )));
                   Fluttertoast.showToast(msg: value.message);
                 });
               },
@@ -544,10 +510,10 @@ class _RadioItemState extends State<RadioItem> {
                             child: const Padding(
                               padding: EdgeInsets.all(2.0),
                               child: CustomImage(
-                                  height: 8,
-                                  width: 8,
-                                  path:
-                                      "https://s3-alpha-sig.figma.com/img/c204/f10b/24cfa8d945c30d47cf12a3615b909ff1?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KtgSPjADbFef0XclcRL4-HfqDdzt0Peoi~9I2iBlSq-deQeJtZb6RcisiIdvgKaOnTNXKo5x8wMEzgUWFAe4YTh2omCmwJH6x1HqTsCaouEZbEP1VWSb1d14gjiz1zMpVlmdFqCXvKodrACJAffKBKmUumRbXItn5W2jTw4dX-6tBk6b4-CskgkBKl-dZImpgJ0B1MnUgYYp8X0H7kTJeE9Gmrx9ofHkLHarlbeApCnvwVa-QqKK2JajNJlrsJLBN1zZEUwC2t70GmqpD-Mbb3MnPtL4tugqrCCrMELmOGjVp2phbwhNZ6YB7YHOsbWpjoQ8FPIowv64esDaKaUGJQ__"),
+                                height: 8,
+                                width: 8,
+                                path: Assets.imagesCrown1,
+                              ),
                             ),
                           ),
                         )

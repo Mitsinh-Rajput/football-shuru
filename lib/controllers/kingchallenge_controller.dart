@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:football_shuru/data/models/response/PendingMatchListModel.dart';
 import 'package:football_shuru/data/models/response/grounds_model.dart';
 import 'package:football_shuru/data/models/response/groundteam_model.dart';
 import 'package:football_shuru/data/repositories/kingchallenge_repo.dart';
@@ -50,33 +51,6 @@ class KingChallengeController extends GetxController implements GetxService {
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
       log('++++ ${e.toString()} +++++++', name: "ERROR AT getTeamList()");
-    }
-    _isLoading = false;
-    update();
-    return responseModel;
-  }
-
-  Future<ResponseModel> scorecard(Map<String, dynamic> data) async {
-    ResponseModel responseModel;
-    _isLoading = true;
-    update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.scorecard}",
-        name: "scorecard Details");
-    try {
-      Response response = await kingChallengeRepo.scorecard(data);
-      log(response.statusCode.toString());
-      log(response.body.toString(), name: "scorecard");
-      if (response.statusCode == 200) {
-        responseModel =
-            ResponseModel(true, '${response.body['message']}', response.body);
-        update();
-      } else {
-        responseModel =
-            ResponseModel(false, '${response.body['message']}', response.body);
-      }
-    } catch (e) {
-      responseModel = ResponseModel(false, "CATCH");
-      log('++++ ${e.toString()} +++++++', name: "ERROR AT scorecard()");
     }
     _isLoading = false;
     update();
@@ -208,6 +182,64 @@ class KingChallengeController extends GetxController implements GetxService {
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
       log('++++ ${e.toString()} +++++++', name: "ERROR AT scheduleTime()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> scorecard(Map<String, dynamic> data) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.scorecard}",
+        name: "scorecard Details");
+    try {
+      Response response = await kingChallengeRepo.scorecard(data);
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "scorecard");
+      if (response.statusCode == 200) {
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
+        update();
+      } else {
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT scorecard()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  List<PendingMatchListModel> pendingMatchResultList = [];
+
+  Future<ResponseModel> getPendingList() async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.pendingList}",
+        name: "getPendingList Details");
+    try {
+      Response response = await kingChallengeRepo.getPendingMatchResult();
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "getPendingList");
+      if (response.statusCode == 200) {
+        pendingMatchResultList =
+            pendingMatchListModelFromJson(jsonEncode(response.body['data']));
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
+        update();
+      } else {
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT getPendingList()");
     }
     _isLoading = false;
     update();

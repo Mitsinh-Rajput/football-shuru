@@ -12,12 +12,10 @@ import 'package:football_shuru/data/models/response/grounds_model.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/game_slot.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/ground_chatroom.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/ground_king_champion_tile.dart';
-import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/setwinner_screen.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/tournament_stats_section.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 
-import '../../../../services/route_helper.dart';
 import '../../../base/custom_image.dart';
 import '../../../base/snack_bar.dart';
 
@@ -117,12 +115,12 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen>
                 backgroundColor: const Color(0xFF263238),
                 title: GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        getCustomRoute(
-                            child: SetWinnerScreen(
-                          groundId: _ground?.id ?? 0,
-                        )));
+                    // Navigator.push(
+                    //     context,
+                    //     getCustomRoute(
+                    //         child: SetWinnerScreen(
+                    //       groundId: _ground?.id ?? 0,
+                    //     )));
                   },
                   child: Text(
                     _ground?.title ?? "Ground",
