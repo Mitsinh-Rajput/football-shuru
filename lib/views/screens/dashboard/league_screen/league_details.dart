@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:football_shuru/data/models/response/league_model.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/knock_out_matches.dart';
@@ -10,7 +11,9 @@ import 'package:football_shuru/views/screens/dashboard/league_screen/teams_secti
 
 class LeagueDetailsPage extends StatefulWidget {
   final String typesOfLeague;
-  const LeagueDetailsPage({super.key, required this.typesOfLeague});
+  final LeagueModel league;
+  const LeagueDetailsPage(
+      {super.key, required this.typesOfLeague, required this.league});
 
   @override
   State<LeagueDetailsPage> createState() => _LeagueDetailsPageState();
@@ -128,7 +131,7 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
                       path: Assets.imagesEllipse68,
                     ),
                   ),
-                  Text("Ground King League’s",
+                  Text(widget.league.name ?? "",
                       style: Theme.of(context)
                           .textTheme
                           .labelLarge!
