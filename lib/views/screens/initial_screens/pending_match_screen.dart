@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/controllers/kingchallenge_controller.dart';
+import 'package:football_shuru/controllers/team_controller.dart';
 import 'package:football_shuru/views/base/common_button.dart';
+import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/scorecard_screen.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/setwinner_screen.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
@@ -20,6 +22,15 @@ class PendingMatchScreen extends StatefulWidget {
 }
 
 class _PendingMatchScreenState extends State<PendingMatchScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Get.find<TeamControllor>().getJoinedTeam();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,18 +65,29 @@ class _PendingMatchScreenState extends State<PendingMatchScreen> {
         child: GetBuilder<KingChallengeController>(
           builder: (kingChallengeController) {
             return ListView.separated(
+                shrinkWrap: true,
+                reverse: true,
                 itemBuilder: (context, index) {
                   final matchData =
                       kingChallengeController.pendingMatchResultList[index];
 
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          getCustomRoute(
-                              child: SetWinnerScreen(
-                            MatchData: matchData,
-                          )));
+                      if (matchData.winningTeamConfirmation == "confirmed") {
+                        Navigator.push(
+                            context,
+                            getCustomRoute(
+                                child: ScoreCardScreen(
+                              MatchData: matchData,
+                            )));
+                      } else {
+                        Navigator.push(
+                            context,
+                            getCustomRoute(
+                                child: SetWinnerScreen(
+                              MatchData: matchData,
+                            )));
+                      }
                     },
                     child: Container(
                       height: 150,
@@ -105,7 +127,7 @@ class _PendingMatchScreenState extends State<PendingMatchScreen> {
                                             .copyWith(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
-                                              color: const Color.fromRGBO(
+                                              color: Color.fromRGBO(
                                                   255, 145, 0, 1),
                                             ),
                                       ),
@@ -127,8 +149,13 @@ class _PendingMatchScreenState extends State<PendingMatchScreen> {
                                                   BorderRadius.circular(20),
                                               border: Border.all(
                                                 width: 2,
-                                                color: const Color.fromRGBO(
-                                                    255, 145, 0, 1),
+                                                color: ((matchData.winnerTeam ??
+                                                            0) ==
+                                                        (matchData.team?.id ??
+                                                            0))
+                                                    ? Color.fromRGBO(
+                                                        255, 145, 0, 1)
+                                                    : Colors.grey,
                                               )),
                                           child: CustomImage(
                                               radius: 20,
@@ -138,27 +165,33 @@ class _PendingMatchScreenState extends State<PendingMatchScreen> {
                                               path:
                                                   '${AppConstants.baseUrl}${matchData.team?.logo ?? ""}'),
                                         ),
-                                        Positioned(
-                                          bottom: 0,
-                                          right: 0,
-                                          child: Container(
-                                            height: 14,
-                                            width: 14,
-                                            decoration: BoxDecoration(
-                                                color: const Color.fromRGBO(
-                                                    255, 145, 0, 1),
-                                                borderRadius:
-                                                    BorderRadius.circular(20)),
-                                            child: const Padding(
-                                              padding: EdgeInsets.all(2.0),
-                                              child: CustomImage(
-                                                height: 8,
-                                                width: 8,
-                                                path: Assets.imagesCrown1,
-                                              ),
-                                            ),
-                                          ),
-                                        )
+                                        ((matchData.winnerTeam ?? 0) ==
+                                                (matchData.team?.id ?? 0))
+                                            ? Positioned(
+                                                bottom: 0,
+                                                right: 0,
+                                                child: Container(
+                                                  height: 14,
+                                                  width: 14,
+                                                  decoration: BoxDecoration(
+                                                      color:
+                                                          const Color.fromRGBO(
+                                                              255, 145, 0, 1),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20)),
+                                                  child: const Padding(
+                                                    padding:
+                                                        EdgeInsets.all(2.0),
+                                                    child: CustomImage(
+                                                      height: 8,
+                                                      width: 8,
+                                                      path: Assets.imagesCrown1,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            : SizedBox.shrink(),
                                       ],
                                     ),
                                     Column(
@@ -251,23 +284,60 @@ class _PendingMatchScreenState extends State<PendingMatchScreen> {
                                         ),
                                       ],
                                     ),
-                                    Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          border: Border.all(
-                                            color: const Color(0xFFE0E0E0),
-                                            width: 1,
-                                          )),
-                                      child: CustomImage(
-                                          radius: 20,
-                                          height: 40,
-                                          width: 40,
-                                          fit: BoxFit.fill,
-                                          path:
-                                              '${AppConstants.baseUrl}${matchData.opponentTeam?.logo ?? ""}'),
+                                    Stack(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              border: Border.all(
+                                                width: 2,
+                                                color: ((matchData.winnerTeam ??
+                                                            0) ==
+                                                        (matchData.opponentTeam
+                                                                ?.id ??
+                                                            0))
+                                                    ? Color.fromRGBO(
+                                                        255, 145, 0, 1)
+                                                    : Colors.grey,
+                                              )),
+                                          child: CustomImage(
+                                              radius: 20,
+                                              height: 40,
+                                              width: 40,
+                                              fit: BoxFit.fill,
+                                              path:
+                                                  '${AppConstants.baseUrl}${matchData.opponentTeam?.logo ?? ""}'),
+                                        ),
+                                        ((matchData.winnerTeam ?? 0) ==
+                                                (matchData.opponentTeam?.id ??
+                                                    0))
+                                            ? Positioned(
+                                                bottom: 0,
+                                                right: 0,
+                                                child: Container(
+                                                  height: 14,
+                                                  width: 14,
+                                                  decoration: BoxDecoration(
+                                                      color:
+                                                          const Color.fromRGBO(
+                                                              255, 145, 0, 1),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20)),
+                                                  child: const Padding(
+                                                    padding:
+                                                        EdgeInsets.all(2.0),
+                                                    child: CustomImage(
+                                                      height: 8,
+                                                      width: 8,
+                                                      path: Assets.imagesCrown1,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            : SizedBox.shrink(),
+                                      ],
                                     ),
                                   ],
                                 )

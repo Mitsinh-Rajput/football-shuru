@@ -4,24 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:football_shuru/data/models/response/joinedteam_model.dart';
+import 'package:football_shuru/services/route_helper.dart';
+import 'package:football_shuru/views/screens/dashboard/dashboard_screen.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/scorecar_player_tile.dart';
 import 'package:get/get.dart';
 
-import '../../../../controllers/homepage_controller.dart';
 import '../../../../controllers/kingchallenge_controller.dart';
 import '../../../../controllers/team_controller.dart';
+import '../../../../data/models/response/PendingMatchListModel.dart';
+import '../../../../services/constants.dart';
 import '../../../base/common_button.dart';
 import '../../../base/custom_image.dart';
 
 class ScoreCardScreen extends StatefulWidget {
-  final bool isTeamAWinner;
-  const ScoreCardScreen({super.key, required this.isTeamAWinner});
+  final PendingMatchListModel MatchData;
+  const ScoreCardScreen({super.key, required this.MatchData});
 
   @override
   State<ScoreCardScreen> createState() => _ScoreCardScreenState();
 }
 
 class _ScoreCardScreenState extends State<ScoreCardScreen> {
+  int? totalgoals;
   @override
   void initState() {
     // TODO: implement initState
@@ -30,20 +34,17 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
       await Get.find<TeamControllor>().getJoinedTeam().then((value) {
         Get.find<KingChallengeController>().scorecardDataList.clear();
         for (var j = 0; j < Get.find<TeamControllor>().joinedTeam.length; j++) {
-          if (Get.find<TeamControllor>().joinedTeam[j].team?.id ==
-                  Get.find<HomePageController>()
-                      .groundsDetail
-                      ?.groundKingChallenge
-                      ?.team
-                      ?.id! ||
-              Get.find<TeamControllor>().joinedTeam[j].team?.id ==
-                  Get.find<HomePageController>()
-                      .groundsDetail
-                      ?.groundKingChallenge
-                      ?.opponentTeam
-                      ?.id!) {
+          // print("dssdasd" +
+          //     (Get.find<TeamControllor>().joinedTeam[j].team?.id ?? "")
+          //         .toString());
+          // print("dssdasd" + (widget.MatchData.team?.id ?? "").toString());
+          if (Get.find<TeamControllor>().joinedTeam[j].team?.id.toString() ==
+                  (widget.MatchData.team?.id ?? 0).toString() ||
+              Get.find<TeamControllor>().joinedTeam[j].team?.id.toString() ==
+                  (widget.MatchData.opponentTeam?.id ?? 0).toString()) {
             for (UserElement i
                 in Get.find<TeamControllor>().joinedTeam[j].team?.users ?? []) {
+              print(i.user?.name ?? "");
               Get.find<KingChallengeController>().scorecardDataList.add({
                 "user_id": i.user?.id,
                 "goals": 0,
@@ -138,24 +139,22 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
       body: GetBuilder<TeamControllor>(builder: (teamControllor) {
         int? i;
         for (var j = 0; j < teamControllor.joinedTeam.length; j++) {
-          if (teamControllor.joinedTeam[j].team?.id ==
-                  Get.find<HomePageController>()
-                      .groundsDetail
-                      ?.groundKingChallenge
-                      ?.team
-                      ?.id! ||
-              teamControllor.joinedTeam[j].team?.id ==
-                  Get.find<HomePageController>()
-                      .groundsDetail
-                      ?.groundKingChallenge
-                      ?.opponentTeam
-                      ?.id!) {
+          if (Get.find<TeamControllor>().joinedTeam[j].team?.id.toString() ==
+                  (widget.MatchData.team?.id ?? 0).toString() ||
+              Get.find<TeamControllor>().joinedTeam[j].team?.id.toString() ==
+                  (widget.MatchData.opponentTeam?.id ?? 0).toString()) {
             i = j;
           }
         }
+
         if (i == null) {
           return const SizedBox.shrink();
         } else {
+          totalgoals =
+              (Get.find<TeamControllor>().joinedTeam[i].team?.id.toString() ==
+                      (widget.MatchData.team?.id ?? 0).toString())
+                  ? widget.MatchData.teamGoals
+                  : widget.MatchData.opponentTeamGoals;
           return ListView.builder(
               padding: const EdgeInsets.symmetric(vertical: 20),
               itemCount:
@@ -181,6 +180,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                   }
                 }
                 return ScoreCardPlayerTile(
+                  totalgoals: totalgoals ?? 0,
                   index: index,
                   member: member ?? UserElement(),
                   memberIndex: memberIndex,
@@ -207,24 +207,21 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
                             width: 2,
-                            color: widget.isTeamAWinner
+                            color: ((widget.MatchData.winnerTeam ?? 0) ==
+                                    (widget.MatchData.team?.id ?? 0))
                                 ? const Color.fromRGBO(255, 145, 0, 1)
-                                : const Color(0xFFA5A5A5),
+                                : Colors.grey,
                           )),
                       child: CustomImage(
-                        radius: 20,
-                        height: 40,
-                        width: 40,
-                        fit: BoxFit.fill,
-                        path: Get.find<HomePageController>()
-                                .groundsDetail
-                                ?.groundKingChallenge
-                                ?.team
-                                ?.logo ??
-                            "",
-                      ),
+                          radius: 20,
+                          height: 40,
+                          width: 40,
+                          fit: BoxFit.fill,
+                          path:
+                              '${AppConstants.baseUrl}${widget.MatchData.team?.logo ?? ""}'),
                     ),
-                    widget.isTeamAWinner
+                    ((widget.MatchData.winnerTeam ?? 0) ==
+                            (widget.MatchData.team?.id ?? 0))
                         ? Positioned(
                             bottom: 0,
                             right: 0,
@@ -244,29 +241,29 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                               ),
                             ),
                           )
-                        : const SizedBox.shrink()
+                        : const SizedBox.shrink(),
                   ],
                 ),
                 Column(
                   children: [
                     Text(
-                      "Team A",
+                      widget.MatchData.teamGoals == null
+                          ? "Team A"
+                          : (widget.MatchData.teamGoals ?? 0).toString(),
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            fontSize: 8,
-                            fontWeight: FontWeight.w400,
-                          ),
+                          fontSize: widget.MatchData.teamGoals == null ? 8 : 22,
+                          fontWeight: widget.MatchData.teamGoals == null
+                              ? FontWeight.w400
+                              : FontWeight.w700),
                     ),
                     Text(
-                      Get.find<HomePageController>()
-                              .groundsDetail
-                              ?.groundKingChallenge
-                              ?.team
-                              ?.name ??
-                          "",
+                      widget.MatchData.team?.name ?? "",
+                      textAlign: TextAlign.end,
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w700,
-                          ),
+                          fontSize: 11,
+                          fontWeight: widget.MatchData.teamGoals == null
+                              ? FontWeight.w700
+                              : FontWeight.w400),
                     ),
                   ],
                 ),
@@ -281,25 +278,27 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                 Column(
                   children: [
                     Text(
-                      "Team B",
+                      widget.MatchData.opponentTeamGoals == null
+                          ? "Team B"
+                          : (widget.MatchData.opponentTeamGoals ?? 0)
+                              .toString(),
                       // textAlign: TextAlign.end,
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                          fontSize: 8,
-                          fontWeight: FontWeight.w400,
-                          color: const Color(0xFFA5A5A5)),
+                          fontSize: widget.MatchData.opponentTeamGoals == null
+                              ? 8
+                              : 22,
+                          fontWeight: widget.MatchData.opponentTeamGoals == null
+                              ? FontWeight.w400
+                              : FontWeight.w700),
                     ),
                     Text(
-                      Get.find<HomePageController>()
-                              .groundsDetail
-                              ?.groundKingChallenge
-                              ?.opponentTeam
-                              ?.name ??
-                          "",
+                      widget.MatchData.opponentTeam?.name ?? "",
                       textAlign: TextAlign.end,
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           fontSize: 11,
-                          fontWeight: FontWeight.w700,
-                          color: const Color(0xFFA5A5A5)),
+                          fontWeight: widget.MatchData.opponentTeamGoals == null
+                              ? FontWeight.w700
+                              : FontWeight.w400),
                     ),
                   ],
                 ),
@@ -310,24 +309,21 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
                             width: 2,
-                            color: !widget.isTeamAWinner
+                            color: ((widget.MatchData.winnerTeam ?? 0) ==
+                                    (widget.MatchData.opponentTeam?.id ?? 0))
                                 ? const Color.fromRGBO(255, 145, 0, 1)
-                                : const Color(0xFFA5A5A5),
+                                : Colors.grey,
                           )),
                       child: CustomImage(
-                        radius: 20,
-                        height: 40,
-                        width: 40,
-                        fit: BoxFit.fill,
-                        path: Get.find<HomePageController>()
-                                .groundsDetail
-                                ?.groundKingChallenge
-                                ?.opponentTeam
-                                ?.logo ??
-                            "",
-                      ),
+                          radius: 20,
+                          height: 40,
+                          width: 40,
+                          fit: BoxFit.fill,
+                          path:
+                              '${AppConstants.baseUrl}${widget.MatchData.opponentTeam?.logo ?? ""}'),
                     ),
-                    !widget.isTeamAWinner
+                    ((widget.MatchData.winnerTeam ?? 0) ==
+                            (widget.MatchData.opponentTeam?.id ?? 0))
                         ? Positioned(
                             bottom: 0,
                             right: 0,
@@ -347,7 +343,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                               ),
                             ),
                           )
-                        : const SizedBox.shrink()
+                        : const SizedBox.shrink(),
                   ],
                 ),
               ],
@@ -363,20 +359,15 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                 //     .toString());
 
                 Map<String, dynamic> data = {
-                  "team_id": Get.find<HomePageController>()
-                      .groundsDetail
-                      ?.groundKingChallenge
-                      ?.team
-                      ?.id,
-                  "ground_id": Get.find<HomePageController>().groundsDetail?.id,
-                  "ground_king_challenge_id": Get.find<HomePageController>()
-                      .groundsDetail
-                      ?.groundKingChallenge
-                      ?.id,
+                  "team_id": widget.MatchData.team?.id,
+                  "ground_id": widget.MatchData.groundId,
+                  "ground_king_challenge_id": widget.MatchData.id,
                 };
+                int totalPlayerGoals = 0;
                 List<Map<String, dynamic>> scores = [];
                 for (var i
                     in Get.find<KingChallengeController>().scorecardDataList) {
+                  totalPlayerGoals += int.parse(i["goals"] ?? 0);
                   scores.add({
                     i["user_id"].toString(): {
                       "goals": i["goals"],
@@ -386,16 +377,23 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                     }
                   });
                 }
-                print(scores);
                 data.addAll({"scores": scores});
-                print(data);
-                Get.find<KingChallengeController>()
-                    .scorecard(data)
-                    .then((value) {
-                  if (value.isSuccess) {
-                    Fluttertoast.showToast(msg: value.message);
-                  }
-                });
+                if (totalPlayerGoals > (totalgoals ?? 0)) {
+                  Fluttertoast.showToast(
+                      msg: "Number of Goals cannot be more than total goal");
+                } else {
+                  Get.find<KingChallengeController>()
+                      .scorecard(data)
+                      .then((value) {
+                    if (value.isSuccess) {
+                      Fluttertoast.showToast(msg: value.message);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          getCustomRoute(child: const DashboardScreen()),
+                          (route) => false);
+                    }
+                  });
+                }
               },
               radius: 10,
               height: 50,

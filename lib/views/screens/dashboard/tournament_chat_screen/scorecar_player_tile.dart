@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:football_shuru/controllers/kingchallenge_controller.dart';
 import 'package:get/get.dart';
 
 import '../../../../data/models/response/joinedteam_model.dart';
 
 class ScoreCardPlayerTile extends StatefulWidget {
+  final int totalgoals;
   final int index;
   final int memberIndex;
   final UserElement member;
@@ -12,7 +14,8 @@ class ScoreCardPlayerTile extends StatefulWidget {
       {super.key,
       required this.index,
       required this.member,
-      required this.memberIndex});
+      required this.memberIndex,
+      required this.totalgoals});
 
   @override
   State<ScoreCardPlayerTile> createState() => _ScoreCardPlayerTileState();
@@ -45,6 +48,16 @@ class _ScoreCardPlayerTileState extends State<ScoreCardPlayerTile> {
               keyboardType: TextInputType.number,
               textAlign: TextAlign.center,
               onChanged: (val) {
+                setState(() {
+                  if (val != "") {
+                    if (int.parse(val) > widget.totalgoals) {
+                      noOfGoal.text = widget.totalgoals.toString();
+                      Fluttertoast.showToast(
+                          msg:
+                              "Number of Goals cannot be more than total goals");
+                    }
+                  }
+                });
                 Get.find<KingChallengeController>()
                     .scorecardDataList[widget.memberIndex]["goals"] = val;
               },
