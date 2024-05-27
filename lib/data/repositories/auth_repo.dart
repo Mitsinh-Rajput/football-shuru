@@ -79,8 +79,6 @@ class AuthRepo {
   Future<Response> storeGround(Map<String, dynamic> data) async =>
       await apiClient.postData(AppConstants.ground, FormData(data));
 
-  Future<Response> createLeague(Map<String, dynamic> data) async =>
-      await apiClient.postData(AppConstants.createLeague, FormData(data));
   Future<Response> updateLastSeen({required int groundId}) async =>
       await apiClient
           .postData(AppConstants.updateLastSeen, {"ground_id": groundId});

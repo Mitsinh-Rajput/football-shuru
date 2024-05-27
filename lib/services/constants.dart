@@ -91,7 +91,7 @@ class AppConstants {
   ///League
   static const String createLeague = 'api/v1/league/';
   static const String getLeague = 'api/v1/league';
-  static const String assignTeam = 'api/v1/league';
+  static const String assignTeamToLeague = 'api/v1/league/assign-team';
   static const String leagueScorecard = 'api/v1/league/scorecard';
 
   /// Home

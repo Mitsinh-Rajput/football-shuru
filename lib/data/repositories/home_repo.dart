@@ -36,7 +36,4 @@ class HomeRepo {
 
   Future<Response> leaveGround({required int groundId}) async => await apiClient
       .postData(AppConstants.leaveGround, {"ground_id": groundId});
-
-  Future<Response> getLeague() async =>
-      await apiClient.getData(AppConstants.getLeague);
 }

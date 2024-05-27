@@ -294,62 +294,6 @@ class AuthController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  Future<ResponseModel> createLeague(
-      {required String pincode,
-      required String name,
-      String? desc,
-      required String numberOfParticipants,
-      List<File>? images}) async {
-    ResponseModel responseModel;
-    _isLoading = true;
-    update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.createLeague}",
-        name: "createLeague");
-    try {
-      Map<String, dynamic> data = {};
-      data.addAll({
-        "pincode": pincode,
-      });
-      data.addAll({
-        "name": name,
-      });
-      data.addAll({
-        "number_of_participants": numberOfParticipants,
-      });
-      data.addAll({
-        "description": desc,
-      });
-      log(images.toString(), name: "Images");
-      if ((images ?? []).isNotEmpty) {
-        for (int i = 0; i < (images ?? []).length; i++) {
-          data.addAll({
-            'images[$i]':
-                MultipartFile(images?[i], filename: images![i].path.fileName),
-          });
-        }
-      }
-      print(data);
-      log(data.toString(), name: "Data");
-      Response response = await authRepo.createLeague(data);
-      log(response.statusCode.toString());
-      log(response.body.toString(), name: "createLeague");
-      if (response.statusCode == 200) {
-        getgrounds();
-        responseModel =
-            ResponseModel(true, '${response.body['message']}', response.body);
-      } else {
-        responseModel =
-            ResponseModel(false, '${response.body['message']}', response.body);
-      }
-    } catch (e) {
-      responseModel = ResponseModel(false, "CATCH");
-      log('++++ ${e.toString()} +++++++', name: "ERROR AT createLeague()");
-    }
-    _isLoading = false;
-    update();
-    return responseModel;
-  }
-
   // void selectLocation(int? id) {
   //   for (var element in grounds) {
   //     if (element.id == id) {

@@ -6,10 +6,12 @@ import 'package:football_shuru/controllers/gameslot_controller.dart';
 import 'package:football_shuru/controllers/homepage_controller.dart';
 import 'package:football_shuru/controllers/kingchallenge_controller.dart';
 import 'package:football_shuru/controllers/team_controller.dart';
+import 'package:football_shuru/controllers/tournament_league_controller.dart';
 import 'package:football_shuru/data/repositories/gameslot_repo.dart';
 import 'package:football_shuru/data/repositories/home_repo.dart';
 import 'package:football_shuru/data/repositories/kingchallenge_repo.dart';
 import 'package:football_shuru/data/repositories/team_repo.dart';
+import 'package:football_shuru/data/repositories/tournament_league_repo.dart';
 import 'package:get/instance_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,7 +26,10 @@ import 'constants.dart';
 class Init {
   getBaseUrl() async {
     ApiCalls calls = ApiCalls();
-    await calls.apiCallWithResponseGet('https://fishcary.com/fishcary/api/link2.php?for=true').then((value) {
+    await calls
+        .apiCallWithResponseGet(
+            'https://fishcary.com/fishcary/api/link2.php?for=true')
+        .then((value) {
       log(value.toString());
       AppConstants().setBaseUrl = jsonDecode(value)['link'];
       log(AppConstants().getBaseUrl, name: 'BASE');
@@ -36,12 +41,15 @@ class Init {
     Get.lazyPut<SharedPreferences>(() => sharedPreferences);
 
     try {
-      Get.lazyPut(() => ApiClient(appBaseUrl: AppConstants.baseUrl, sharedPreferences: Get.find()));
-      Get.lazyPut(() => AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+      Get.lazyPut(() => ApiClient(
+          appBaseUrl: AppConstants.baseUrl, sharedPreferences: Get.find()));
+      Get.lazyPut(
+          () => AuthRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
       Get.lazyPut(() => HomeRepo(apiClient: Get.find()));
       Get.lazyPut(() => TeamRepo(apiClient: Get.find()));
       Get.lazyPut(() => GameSlotRepo(apiClient: Get.find()));
       Get.lazyPut(() => KingChallengeRepo(apiClient: Get.find()));
+      Get.lazyPut(() => TournamentLeagueRepo(apiClient: Get.find()));
       // Get.lazyPut(() => LeadsRepo(apiClient: Get.find()));
       // Get.lazyPut(() => AdminRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
       // Get.lazyPut(() => CartRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
@@ -55,6 +63,8 @@ class Init {
       Get.lazyPut(() => GameSlotController(gameSlotRepo: Get.find()));
       Get.lazyPut(() => FirebaseController());
       Get.lazyPut(() => KingChallengeController(kingChallengeRepo: Get.find()));
+      Get.lazyPut(
+          () => TournamentLeagueController(tournamentLeagueRepo: Get.find()));
       // Get.lazyPut(() => LeadsController(leadsRepo: Get.find()));
       // Get.lazyPut(() => AdminController(adminRepo: Get.find()));
       // Get.lazyPut(() => ChatAgoraController(agoraChatRepo: Get.find()));

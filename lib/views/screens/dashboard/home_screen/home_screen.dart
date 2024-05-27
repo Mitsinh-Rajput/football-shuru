@@ -13,6 +13,7 @@ import 'package:football_shuru/views/screens/widgets/primarybanner_widget.dart';
 import 'package:get/get.dart';
 
 import '../../../../controllers/homepage_controller.dart';
+import '../../../../controllers/tournament_league_controller.dart';
 import '../../../../services/route_helper.dart';
 import '../../initial_screens/location_screen.dart';
 
@@ -159,6 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onRefresh: () async {
           await Get.find<HomePageController>().getSlider();
           await Get.find<AuthController>().getgrounds();
+          await Get.find<TournamentLeagueController>().getLeague();
         },
         child: const SingleChildScrollView(
           child: Column(

@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 
 import '../../../controllers/chat_controller.dart';
 import '../../../controllers/homepage_controller.dart';
+import '../../../controllers/tournament_league_controller.dart';
 import '../../base/dialogs/exit_dialog.dart';
 import 'drawer.dart';
 
@@ -36,7 +37,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             .initilizePusher(userID: Get.find<AuthController>().profile!.id!);
       });
       await Get.find<AuthController>().getgrounds();
-      await Get.find<HomePageController>().getLeague();
+      await Get.find<TournamentLeagueController>().getLeague();
     });
   }
 

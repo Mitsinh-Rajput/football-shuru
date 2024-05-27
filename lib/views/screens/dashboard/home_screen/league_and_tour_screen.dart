@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:football_shuru/controllers/homepage_controller.dart';
+import 'package:football_shuru/controllers/tournament_league_controller.dart';
 import 'package:football_shuru/data/models/response/league_model.dart';
 import 'package:football_shuru/services/route_helper.dart';
 import 'package:football_shuru/views/base/shimmer.dart';
+import 'package:football_shuru/views/screens/dashboard/home_screen/selected_team_for_tournament.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/league_details.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
@@ -82,8 +83,9 @@ class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
           const SizedBox(
             height: 14,
           ),
-          GetBuilder<HomePageController>(builder: (homePageController) {
-            if (homePageController.isLoading) {
+          GetBuilder<TournamentLeagueController>(
+              builder: (tournamentLeagueController) {
+            if (tournamentLeagueController.isLoading) {
               return ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
@@ -107,9 +109,9 @@ class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
             return ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: homePageController.league.length,
+                itemCount: (tournamentLeagueController.league ?? []).length,
                 itemBuilder: (context, index) {
-                  LeagueModel league = homePageController.league[index];
+                  LeagueModel league = tournamentLeagueController.league[index];
                   return Container(
                     margin: const EdgeInsets.only(bottom: 16),
                     decoration: BoxDecoration(
@@ -250,7 +252,7 @@ class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
                                             child: LeagueDetailsPage(
                                               typesOfLeague:
                                                   typesOfLeaguelist[index],
-                                              league: homePageController
+                                              league: tournamentLeagueController
                                                   .league[index],
                                             ),
                                           ),
@@ -268,7 +270,51 @@ class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
                                         elevation: 0,
                                         radius: 6,
                                         type: ButtonType.primary,
-                                        onTap: () {},
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return AlertDialog(
+                                                  title: Text("Confimation"),
+                                                  content: Text(
+                                                      "Are you sure you want to participate?"),
+                                                  actions: [
+                                                    Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child: CustomButton(
+                                                            elevation: 0,
+                                                            onTap: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                              TeamSelectionDialogue()
+                                                                  .dialogue(
+                                                                      context,
+                                                                      league.id ??
+                                                                          0);
+                                                            },
+                                                            child: Text("Yes"),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Expanded(
+                                                          child: CustomButton(
+                                                            elevation: 0,
+                                                            onTap: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            child: Text("No"),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                );
+                                              });
+                                        },
                                         // title: "23/40 Team • Participate Now",
                                         child: Text(
                                           "0/${league.numberOfParticipants} Team • Participate Now",

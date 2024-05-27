@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/services/extensions.dart';
 import 'package:football_shuru/services/input_decoration.dart';
 import 'package:football_shuru/views/base/common_button.dart';
@@ -11,6 +10,7 @@ import 'package:football_shuru/views/base/snack_bar.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 
+import '../../../../controllers/tournament_league_controller.dart';
 import '../../../base/image_picker_sheet.dart';
 
 class AddLeague extends StatefulWidget {
@@ -300,8 +300,8 @@ class _AddLeagueState extends State<AddLeague> {
           ),
         ),
       ),
-      bottomNavigationBar:
-          GetBuilder<AuthController>(builder: (authController) {
+      bottomNavigationBar: GetBuilder<TournamentLeagueController>(
+          builder: (tournamentLeagueController) {
         return Container(
           height: 80,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -317,7 +317,7 @@ class _AddLeagueState extends State<AddLeague> {
             ],
           ),
           child: CustomButton(
-              isLoading: authController.isLoading,
+              isLoading: tournamentLeagueController.isLoading,
               elevation: 0,
               radius: 50,
               color: const Color(0xFF263238),
@@ -331,7 +331,7 @@ class _AddLeagueState extends State<AddLeague> {
               onTap: () {
                 if (_formKey.currentState!.validate()) {
                   if (images.isNotEmpty) {
-                    authController
+                    tournamentLeagueController
                         .createLeague(
                       pincode: pincodeController.text,
                       name: nameController.text,
