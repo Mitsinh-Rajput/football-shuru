@@ -32,9 +32,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
     Timer.run(() async {
       await Get.find<HomePageController>().getSlider();
       await Get.find<AuthController>().getProfile().then((value) {
-        Get.find<ChatController>().initilizePusher(userID: Get.find<AuthController>().profile!.id!);
+        Get.find<ChatController>()
+            .initilizePusher(userID: Get.find<AuthController>().profile!.id!);
       });
       await Get.find<AuthController>().getgrounds();
+      await Get.find<HomePageController>().getLeague();
     });
   }
 
@@ -58,7 +60,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               return const ExitDialog();
             },
           );
-          return shouldPop ?? false; // Return false if showDialog() returned null
+          return shouldPop ??
+              false; // Return false if showDialog() returned null
         }
       },
       child: Scaffold(

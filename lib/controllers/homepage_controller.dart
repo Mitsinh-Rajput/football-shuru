@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/controllers/kingchallenge_controller.dart';
 import 'package:football_shuru/data/models/response/grounds_model.dart';
+import 'package:football_shuru/data/models/response/league_model.dart';
 import 'package:football_shuru/data/models/response/slider_model.dart';
 import 'package:football_shuru/data/repositories/home_repo.dart';
 import 'package:football_shuru/main.dart';
@@ -101,7 +102,7 @@ class HomePageController extends GetxController implements GetxService {
     int? teamGoals,
     int? opponentTeamGoals,
     int? winnerTeamId,
-    int? isDraw,
+    String? isDraw,
     String? isCancelled,
   }) async {
     ResponseModel responseModel;
@@ -232,6 +233,36 @@ class HomePageController extends GetxController implements GetxService {
       log('++++ ${e.toString()} +++++++', name: "ERROR AT leaveGround()");
     }
     logoutloading = false;
+    update();
+    return responseModel;
+  }
+
+  List<LeagueModel> league = [];
+
+  Future<ResponseModel> getLeague() async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.getLeague}",
+        name: "getLeague");
+    try {
+      Response response = await homeRepo.getLeague();
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "getLeague");
+      if (response.statusCode == 200) {
+        league.clear();
+        league = leagueModelFromJson(jsonEncode(response.body['data']));
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT getLeague()");
+    }
+    _isLoading = false;
     update();
     return responseModel;
   }

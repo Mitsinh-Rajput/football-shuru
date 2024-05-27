@@ -7,7 +7,7 @@ import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/home_widgets/communitynear_screen.dart';
 import 'package:football_shuru/views/screens/dashboard/home_screen/home_widgets/nearbygrounds_widget.dart';
-import 'package:football_shuru/views/screens/dashboard/home_screen/league_and_tour_tile.dart';
+import 'package:football_shuru/views/screens/dashboard/home_screen/league_and_tour_screen.dart';
 import 'package:football_shuru/views/screens/widgets/changepincode_bottomsheet.dart';
 import 'package:football_shuru/views/screens/widgets/primarybanner_widget.dart';
 import 'package:get/get.dart';
@@ -30,13 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     Timer.run(() {});
   }
-
-  List typesOfLeaguelist = [
-    "League’s match",
-    "Knock out",
-    "Round robins",
-    "League’s match"
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -167,77 +160,21 @@ class _HomeScreenState extends State<HomeScreen> {
           await Get.find<HomePageController>().getSlider();
           await Get.find<AuthController>().getgrounds();
         },
-        child: SingleChildScrollView(
+        child: const SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(
+              SizedBox(
                 height: 16,
               ),
               // banner
-              const PrimaryBannerWidget(), const SizedBox(height: 15),
+              PrimaryBannerWidget(), SizedBox(height: 15),
 
               //! Community ground --
               CommunityNearMeScreen(),
               //! Nearby ground --
-              const NearbyGrounds(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    Text(
-                      "League’s / Tournament",
-                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey.shade800,
-                          ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                      ),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.add,
-                            size: 20,
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            "Add League",
-                            style: Theme.of(context).textTheme.labelSmall,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 14,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: typesOfLeaguelist.length,
-                  itemBuilder: (context, index) {
-                    return LeagueAndTourTile(
-                      typesOfLeague: typesOfLeaguelist[index],
-                    );
-                  },
-                ),
-              ),
-              // bottom
-              const SizedBox(
+              NearbyGrounds(),
+              LeagueAndTourScreen(),
+              SizedBox(
                 height: 30,
               ),
             ],

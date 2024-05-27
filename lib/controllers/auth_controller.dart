@@ -36,7 +36,8 @@ class AuthController extends GetxController implements GetxService {
 
   Future<ResponseModel> login({required String token}) async {
     ResponseModel responseModel;
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.loginUri}", name: "login");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.loginUri}",
+        name: "login");
     try {
       Response response = await authRepo.login(token: token);
       log(response.statusCode.toString());
@@ -47,18 +48,21 @@ class AuthController extends GetxController implements GetxService {
         if (response.body.containsKey('errors')) {
           _isLoading = false;
           update();
-          return ResponseModel(false, response.statusText!, response.body['errors']);
+          return ResponseModel(
+              false, response.statusText!, response.body['errors']);
         }
         if (response.body.containsKey('token')) {
           authRepo.saveUserToken(response.body['token'].toString());
         }
-        responseModel = ResponseModel(true, '${response.body['msg']}', response.body);
+        responseModel =
+            ResponseModel(true, '${response.body['msg']}', response.body);
       } else {
         responseModel = ResponseModel(false, response.statusText!);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
-      log('++++++++++++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++++++++++', name: "ERROR AT login()");
+      log('++++++++++++++++++++++++++++++++++++++++++++ ${e.toString()} +++++++++++++++++++++++++++++++++++++++++++++',
+          name: "ERROR AT login()");
     }
     _isLoading = false;
     update();
@@ -76,15 +80,24 @@ class AuthController extends GetxController implements GetxService {
     ResponseModel responseModel;
     _isLoading = true;
     update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.register}", name: "register");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.register}",
+        name: "register");
     try {
-      Response response = await authRepo.register(pincode: pincode, name: name, gender: gender, email: email, dob: dob, about: about);
+      Response response = await authRepo.register(
+          pincode: pincode,
+          name: name,
+          gender: gender,
+          email: email,
+          dob: dob,
+          about: about);
       log(response.statusCode.toString());
       log(response.body.toString(), name: "register");
       if (response.statusCode == 200) {
-        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
       } else {
-        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
@@ -106,16 +119,25 @@ class AuthController extends GetxController implements GetxService {
     ResponseModel responseModel;
     _isLoading = true;
     update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.updateProfile}", name: "updateProfile");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.updateProfile}",
+        name: "updateProfile");
     try {
-      Response response = await authRepo.updateProfile(pincode: pincode, name: name, gender: gender, email: email, dob: dob, about: about);
+      Response response = await authRepo.updateProfile(
+          pincode: pincode,
+          name: name,
+          gender: gender,
+          email: email,
+          dob: dob,
+          about: about);
       log(response.statusCode.toString());
       log(response.body.toString(), name: "register");
       if (response.statusCode == 200) {
         getProfile();
-        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
       } else {
-        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
@@ -130,7 +152,8 @@ class AuthController extends GetxController implements GetxService {
     ResponseModel responseModel;
     _isLoading = true;
     update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.updatePincode}", name: "updatePincode");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.updatePincode}",
+        name: "updatePincode");
     try {
       Response response = await authRepo.updatePincode(pincode: pincode);
       log(response.statusCode.toString());
@@ -138,9 +161,11 @@ class AuthController extends GetxController implements GetxService {
       if (response.statusCode == 200) {
         getProfile();
 
-        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
       } else {
-        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
@@ -157,16 +182,19 @@ class AuthController extends GetxController implements GetxService {
     ResponseModel responseModel;
     _isLoading = true;
     update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.getProfile}", name: "myPackageBookings");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.getProfile}",
+        name: "myPackageBookings");
     try {
       Response response = await authRepo.profile();
       log(response.statusCode.toString());
       log(response.body.toString(), name: "getProfile");
       if (response.statusCode == 200) {
         profile = profileFromJson(jsonEncode(response.body['data']));
-        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
       } else {
-        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
@@ -183,16 +211,19 @@ class AuthController extends GetxController implements GetxService {
     ResponseModel responseModel;
     _isLoading = true;
     update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.ground}", name: "getgrounds");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.ground}",
+        name: "getgrounds");
     try {
       Response response = await authRepo.groundPincode(pincode: pincode);
       log(response.statusCode.toString());
       log(response.body.toString(), name: "getgrounds");
       if (response.statusCode == 200) {
         grounds = groundsListFromJson(jsonEncode(response.body['data']));
-        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
       } else {
-        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
@@ -204,11 +235,17 @@ class AuthController extends GetxController implements GetxService {
   }
 
   Future<ResponseModel> storeGround(
-      {required String pincode, required String name, required String address, required String desc, required String location, required List<File> images}) async {
+      {required String pincode,
+      required String name,
+      required String address,
+      required String desc,
+      required String location,
+      required List<File> images}) async {
     ResponseModel responseModel;
     _isLoading = true;
     update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.ground}", name: "storeGround");
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.ground}",
+        name: "storeGround");
     try {
       Map<String, dynamic> data = {};
       data.addAll({
@@ -230,7 +267,8 @@ class AuthController extends GetxController implements GetxService {
       if (images.isNotEmpty) {
         for (int i = 0; i < images.length; i++) {
           data.addAll({
-            'images[$i]': MultipartFile(images[i], filename: images[i].path.fileName),
+            'images[$i]':
+                MultipartFile(images[i], filename: images[i].path.fileName),
           });
         }
       }
@@ -241,13 +279,71 @@ class AuthController extends GetxController implements GetxService {
       log(response.body.toString(), name: "storeGround");
       if (response.statusCode == 200) {
         getgrounds();
-        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
       } else {
-        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
       }
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
       log('++++ ${e.toString()} +++++++', name: "ERROR AT storeGround()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> createLeague(
+      {required String pincode,
+      required String name,
+      String? desc,
+      required String numberOfParticipants,
+      List<File>? images}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.createLeague}",
+        name: "createLeague");
+    try {
+      Map<String, dynamic> data = {};
+      data.addAll({
+        "pincode": pincode,
+      });
+      data.addAll({
+        "name": name,
+      });
+      data.addAll({
+        "number_of_participants": numberOfParticipants,
+      });
+      data.addAll({
+        "description": desc,
+      });
+      log(images.toString(), name: "Images");
+      if ((images ?? []).isNotEmpty) {
+        for (int i = 0; i < (images ?? []).length; i++) {
+          data.addAll({
+            'images[$i]':
+                MultipartFile(images?[i], filename: images![i].path.fileName),
+          });
+        }
+      }
+      print(data);
+      log(data.toString(), name: "Data");
+      Response response = await authRepo.createLeague(data);
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "createLeague");
+      if (response.statusCode == 200) {
+        getgrounds();
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT createLeague()");
     }
     _isLoading = false;
     update();

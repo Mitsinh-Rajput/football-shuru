@@ -16,16 +16,19 @@ class AuthRepo {
 
   /// Methods to deal with Remote Data ///
 
-  Future<Response> login({required String token}) async => await apiClient.postData(AppConstants.loginUri, {
+  Future<Response> login({required String token}) async =>
+      await apiClient.postData(AppConstants.loginUri, {
         "token": token,
         "device_id": await getDeviceId(),
       });
 
-  Future<Response> updatePincode({required String pincode}) async => await apiClient.postData(AppConstants.updatePincode, {
+  Future<Response> updatePincode({required String pincode}) async =>
+      await apiClient.postData(AppConstants.updatePincode, {
         "pincode": pincode,
       });
 
-  Future<Response> profile() async => await apiClient.getData(AppConstants.getProfile);
+  Future<Response> profile() async =>
+      await apiClient.getData(AppConstants.getProfile);
 
   Future<Response> register({
     required String name,
@@ -61,15 +64,26 @@ class AuthRepo {
         "about": about,
       });
 
-  Future<Response> groundPincode({String? pincode}) async => await apiClient.getData("${AppConstants.ground}${pincode != null ? "?pincode=$pincode" : ""}");
+  Future<Response> groundPincode({String? pincode}) async =>
+      await apiClient.getData(
+          "${AppConstants.ground}${pincode != null ? "?pincode=$pincode" : ""}");
 
-  Future<Response> loadChats({required int groundId}) async => await apiClient.getData("${AppConstants.loadChats}?ground_id=$groundId");
+  Future<Response> loadChats({required int groundId}) async =>
+      await apiClient.getData("${AppConstants.loadChats}?ground_id=$groundId");
 
-  Future<Response> sendMessage({required int groundId, required String message}) async =>
-      await apiClient.postData(AppConstants.sendMessage, {"ground_id": groundId, "message": message});
+  Future<Response> sendMessage(
+          {required int groundId, required String message}) async =>
+      await apiClient.postData(AppConstants.sendMessage,
+          {"ground_id": groundId, "message": message});
 
-  Future<Response> storeGround(Map<String, dynamic> data) async => await apiClient.postData(AppConstants.ground, FormData(data));
-  Future<Response> updateLastSeen({required int groundId}) async => await apiClient.postData(AppConstants.updateLastSeen, {"ground_id": groundId});
+  Future<Response> storeGround(Map<String, dynamic> data) async =>
+      await apiClient.postData(AppConstants.ground, FormData(data));
+
+  Future<Response> createLeague(Map<String, dynamic> data) async =>
+      await apiClient.postData(AppConstants.createLeague, FormData(data));
+  Future<Response> updateLastSeen({required int groundId}) async =>
+      await apiClient
+          .postData(AppConstants.updateLastSeen, {"ground_id": groundId});
 
   /// Methods to deal with Local Data ///
   Future<bool> saveUserToken(String token) async {
@@ -95,10 +109,14 @@ class AuthRepo {
 
   Future<String> getDeviceId() async {
     // OneSignal.initialize('5f0b072e-529f-4df9-af7b-86a35a0259cb');
-    log('${OneSignal.User.pushSubscription.optedIn}', name: "OneSignal.User.pushSubscription.optedIn");
-    log('${OneSignal.User.pushSubscription.token}', name: "OneSignal.User.pushSubscription.token");
+    log('${OneSignal.User.pushSubscription.optedIn}',
+        name: "OneSignal.User.pushSubscription.optedIn");
+    log('${OneSignal.User.pushSubscription.token}',
+        name: "OneSignal.User.pushSubscription.token");
 
-    return OneSignal.User.pushSubscription.id.isValid ? OneSignal.User.pushSubscription.id! : 'null';
+    return OneSignal.User.pushSubscription.id.isValid
+        ? OneSignal.User.pushSubscription.id!
+        : 'null';
   }
 
   /// Methods to deal with Local Data ///

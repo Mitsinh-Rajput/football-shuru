@@ -4,10 +4,12 @@
 
 import 'dart:convert';
 
-List<Grounds> groundsListFromJson(String str) => List<Grounds>.from(json.decode(str).map((x) => Grounds.fromJson(x)));
+List<Grounds> groundsListFromJson(String str) =>
+    List<Grounds>.from(json.decode(str).map((x) => Grounds.fromJson(x)));
 Grounds groundsFromJson(String str) => Grounds.fromJson(json.decode(str));
 
-String groundsToJson(List<Grounds> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String groundsToJson(List<Grounds> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Grounds {
   final int? id;
@@ -19,7 +21,7 @@ class Grounds {
   final List<String> images; // Changed to List<String> type
   final String? description;
   final String? groundKing;
-  final dynamic groundKingTeam;
+  final Team? groundKingTeam;
   final GroundKingChallenge? groundKingChallenge;
 
   final HasUser? hasUser;
@@ -51,14 +53,22 @@ class Grounds {
         unReadMessages: json["unread_messages_count"],
         address: json["address"],
         pincode: json["pincode"],
-        images: json['image'] == null ? [] : (json["image"] as String).split(','),
+        images:
+            json['image'] == null ? [] : (json["image"] as String).split(','),
         // Splitting the image string into a list of URLs
         description: json["description"],
         groundKing: json["ground_king"],
-        groundKingTeam: json["ground_king_team"],
-        groundKingChallenge: json["ground_king_challenge"] == null ? null : GroundKingChallenge.fromJson(json["ground_king_challenge"]),
-        hasUser: json["hasUser"] == null ? null : HasUser.fromJson(json["hasUser"]),
-        lastMessageDate: json["last_message_date"] == null ? null : LastMessageDate.fromJson(json["last_message_date"]),
+        groundKingTeam: json["ground_king_team"] == null
+            ? null
+            : Team.fromJson(json["ground_king_team"]),
+        groundKingChallenge: json["ground_king_challenge"] == null
+            ? null
+            : GroundKingChallenge.fromJson(json["ground_king_challenge"]),
+        hasUser:
+            json["hasUser"] == null ? null : HasUser.fromJson(json["hasUser"]),
+        lastMessageDate: json["last_message_date"] == null
+            ? null
+            : LastMessageDate.fromJson(json["last_message_date"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -70,7 +80,7 @@ class Grounds {
         "pincode": pincode,
         "image": images, // Joining the list of image URLs into a single string
         "description": description,
-        "ground_king_team": groundKingTeam,
+        "ground_king_team": groundKingTeam?.toJson(),
         "ground_king_challenge": groundKingChallenge?.toJson(),
         "ground_king": groundKing, "hasUser": hasUser?.toJson(),
         "last_message_date": lastMessageDate?.toJson(),
@@ -96,8 +106,12 @@ class HasUser {
         id: json["id"],
         userId: json["user_id"],
         groundId: json["ground_id"],
-        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -128,14 +142,19 @@ class LastMessageDate {
     this.updatedAt,
   });
 
-  factory LastMessageDate.fromJson(Map<String, dynamic> json) => LastMessageDate(
+  factory LastMessageDate.fromJson(Map<String, dynamic> json) =>
+      LastMessageDate(
         id: json["id"],
         message: json["message"],
         groundId: json["ground_id"],
         userId: json["user_id"],
         file: json["file"],
-        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]).toLocal(),
-        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]).toLocal(),
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]).toLocal(),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]).toLocal(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -149,9 +168,11 @@ class LastMessageDate {
       };
 }
 
-GroundKingChallenge groundKingChallengeFromJson(String str) => GroundKingChallenge.fromJson(json.decode(str));
+GroundKingChallenge groundKingChallengeFromJson(String str) =>
+    GroundKingChallenge.fromJson(json.decode(str));
 
-String groundKingChallengeToJson(GroundKingChallenge data) => json.encode(data.toJson());
+String groundKingChallengeToJson(GroundKingChallenge data) =>
+    json.encode(data.toJson());
 
 class GroundKingChallenge {
   final int? id;
@@ -186,7 +207,8 @@ class GroundKingChallenge {
     this.team,
   });
 
-  factory GroundKingChallenge.fromJson(Map<String, dynamic> json) => GroundKingChallenge(
+  factory GroundKingChallenge.fromJson(Map<String, dynamic> json) =>
+      GroundKingChallenge(
         id: json["id"],
         teamId: json["team_id"],
         groundId: json["ground_id"],
@@ -197,9 +219,15 @@ class GroundKingChallenge {
         winnerTeam: json["winner_team"],
         winnerTeamResponseByUser: json["winner_team_response_by_user"],
         winningTeamConfirmation: json["winning_team_confirmation"],
-        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-        opponentTeam: json["opponent_team"] == null ? null : Team.fromJson(json["opponent_team"]),
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        opponentTeam: json["opponent_team"] == null
+            ? null
+            : Team.fromJson(json["opponent_team"]),
         team: json["team"] == null ? null : Team.fromJson(json["team"]),
       );
 
@@ -249,8 +277,12 @@ class Team {
         code: json["code"],
         captain: json["captain"],
         createdBy: json["created_by"],
-        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
       );
 
   Map<String, dynamic> toJson() => {

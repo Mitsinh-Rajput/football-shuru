@@ -489,6 +489,7 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                         if (value.isSuccess) {
                           await Get.find<KingChallengeController>()
                               .getPendingList();
+                          Get.find<KingChallengeController>().update();
                           Navigator.pop(context);
                         }
 

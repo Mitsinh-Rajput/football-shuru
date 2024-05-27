@@ -29,7 +29,9 @@ class _NearbyGroundsState extends State<NearbyGrounds> {
                 child: Row(
                   children: [
                     Container(
-                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)),
                       child: Text(
                         "Nearby ground’s",
                         style: Theme.of(context).textTheme.labelLarge!.copyWith(
@@ -43,8 +45,11 @@ class _NearbyGroundsState extends State<NearbyGrounds> {
                       width: 16,
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 6),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)),
                       child: Row(
                         children: [
                           const Icon(
@@ -87,17 +92,22 @@ class _NearbyGroundsState extends State<NearbyGrounds> {
                   itemCount: 8,
                   itemBuilder: (context, index) {
                     return Container(
-                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)),
                       child: Column(
                         children: [
                           Container(
                             padding: const EdgeInsets.all(10),
-                            decoration: const BoxDecoration(color: Color(0xffD6F5E3), shape: BoxShape.circle),
+                            decoration: const BoxDecoration(
+                                color: Color(0xffD6F5E3),
+                                shape: BoxShape.circle),
                             child: const CustomImage(
                               height: 50,
                               width: 50,
                               radius: 50,
-                              path: "https://5.imimg.com/data5/SELLER/Default/2021/3/TU/VP/FT/125148535/cricket-ground-development-500x500.jpg",
+                              path:
+                                  "https://5.imimg.com/data5/SELLER/Default/2021/3/TU/VP/FT/125148535/cricket-ground-development-500x500.jpg",
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -153,7 +163,8 @@ class _NearbyGroundsState extends State<NearbyGrounds> {
                     );
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                     decoration: BoxDecoration(
                       color: Colors.grey.shade200,
                     ),
@@ -197,7 +208,7 @@ class _NearbyGroundsState extends State<NearbyGrounds> {
                 mainAxisSpacing: 16,
                 crossAxisSpacing: 16,
               ),
-              itemCount: authController.grounds.length.isGreaterThan(8) ? 8 : authController.grounds.length,
+              itemCount: authController.grounds.length,
               itemBuilder: (context, index) {
                 final ground = authController.grounds[index];
                 return GestureDetector(
@@ -219,7 +230,8 @@ class _NearbyGroundsState extends State<NearbyGrounds> {
                       children: [
                         Container(
                           padding: const EdgeInsets.all(5),
-                          decoration: const BoxDecoration(color: Color(0xffD6F5E3), shape: BoxShape.circle),
+                          decoration: const BoxDecoration(
+                              color: Color(0xffD6F5E3), shape: BoxShape.circle),
                           child: CustomImage(
                             height: 60,
                             width: 60,

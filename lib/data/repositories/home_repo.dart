@@ -21,7 +21,7 @@ class HomeRepo {
           int? opponentTeamGoals,
           int? winnerTeamId,
           String? isCancelled,
-          int? isDraw}) async =>
+          String? isDraw}) async =>
       await apiClient.postData(AppConstants.setWinner, {
         "challenge_id": challengeId,
         "team_goals": teamGoals,
@@ -36,4 +36,7 @@ class HomeRepo {
 
   Future<Response> leaveGround({required int groundId}) async => await apiClient
       .postData(AppConstants.leaveGround, {"ground_id": groundId});
+
+  Future<Response> getLeague() async =>
+      await apiClient.getData(AppConstants.getLeague);
 }
