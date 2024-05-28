@@ -22,6 +22,7 @@ class LeagueAndTourScreen extends StatefulWidget {
 class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
   List typesOfLeaguelist = [
     "League’s match",
+    "League’s match",
     "Knock out",
     "Round robins",
     "League’s match"
@@ -317,7 +318,7 @@ class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
                                         },
                                         // title: "23/40 Team • Participate Now",
                                         child: Text(
-                                          "0/${league.numberOfParticipants} Team • Participate Now",
+                                          "${(league.teams ?? []).length}/${league.numberOfParticipants} Team • ${((league.teams ?? []).length == int.parse(league.numberOfParticipants ?? "0")) ? "Team Full" : "Participate Now"}",
                                           style: Theme.of(context)
                                               .textTheme
                                               .labelSmall!

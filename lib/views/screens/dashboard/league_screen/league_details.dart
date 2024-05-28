@@ -33,8 +33,14 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
           title: "Matches",
           content: (widget.typesOfLeague == "Knock out")
               ? const KnockOutPage()
-              : const MatchesPage()),
-      SliderList(title: "Teams", content: const Teams()),
+              : MatchesPage(
+                  leagueMatches: (widget.league.leagueMatchSchedules ?? []),
+                )),
+      SliderList(
+          title: "Teams",
+          content: Teams(
+            teams: (widget.league.teams ?? []),
+          )),
       SliderList(title: "Tables", content: const TableSection()),
       SliderList(title: "Stats", content: const Stats()),
     ];

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:football_shuru/controllers/tournament_league_controller.dart';
-import 'package:football_shuru/views/base/snack_bar.dart';
 import 'package:get/get.dart';
 
 import '../../../../controllers/team_controller.dart';
@@ -349,7 +349,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
                             .then((value) {
                           if (value.isSuccess) {
                             Navigator.pop(context);
-                            showSnackBar(context, content: value.message);
+                            Fluttertoast.showToast(msg: value.message);
                           }
                         });
                       }

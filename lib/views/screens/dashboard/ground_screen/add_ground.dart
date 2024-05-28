@@ -56,7 +56,10 @@ class _AddGroundState extends State<AddGround> {
         ),
         title: Text(
           "Add Ground",
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 16, fontWeight: FontWeight.w600, color: const Color(0xFF40424E)),
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: const Color(0xFF40424E)),
         ),
         bottom: PreferredSize(
           preferredSize: Size(size.width, 1),
@@ -95,7 +98,8 @@ class _AddGroundState extends State<AddGround> {
                   decoration: CustomDecoration.inputDecoration(
                     icon: const Padding(
                       padding: EdgeInsets.all(12.0),
-                      child: CustomImage(height: 24, width: 24, path: Assets.imagesPincode),
+                      child: CustomImage(
+                          height: 24, width: 24, path: Assets.imagesPincode),
                     ),
                     floating: true,
                     label: "Enter pincode",
@@ -118,7 +122,10 @@ class _AddGroundState extends State<AddGround> {
                   decoration: CustomDecoration.inputDecoration(
                     icon: const Padding(
                       padding: EdgeInsets.all(12.0),
-                      child: CustomImage(height: 24, width: 24, path: Assets.imagesNameofground),
+                      child: CustomImage(
+                          height: 24,
+                          width: 24,
+                          path: Assets.imagesNameofground),
                     ),
                     floating: true,
                     label: "Name of ground",
@@ -141,11 +148,13 @@ class _AddGroundState extends State<AddGround> {
                   decoration: CustomDecoration.inputDecoration(
                     icon: const Padding(
                       padding: EdgeInsets.all(12.0),
-                      child: CustomImage(height: 24, width: 24, path: Assets.imagesAddress),
+                      child: CustomImage(
+                          height: 24, width: 24, path: Assets.imagesAddress),
                     ),
                     floating: true,
                     label: "Ground address",
-                    hint: "Ex. Vashi Sector 9a, Navi Mumbai - 400703 (Behind Father Agnel Basket Ball Court)",
+                    hint:
+                        "Ex. Vashi Sector 9a, Navi Mumbai - 400703 (Behind Father Agnel Basket Ball Court)",
                     hintStyle: const TextStyle(fontSize: 14),
                   ),
                 ),
@@ -167,7 +176,7 @@ class _AddGroundState extends State<AddGround> {
                     label: "Ground Description",
                     hintStyle: const TextStyle(fontSize: 14),
                     hint:
-                        "Ex. Located in Navi Mumbai, Father Agnel Sports Complex is a distinguished sports club. Situated in Vashi Sector 9a, this establishment brings years of expertise to the realm of health, fitness, and sports, establishing itself as a trusted destination for individuals seeking a holistic approach to wellness.",
+                        "Ex. Located in Navi Mumbai, Father Angel Sports Complex is a distinguished sports club. Situated in Vashi Sector 9a, this establishment brings years of expertise to the realm of health, fitness, and sports, establishing itself as a trusted destination for individuals seeking a holistic approach to wellness.",
                   ),
                 ),
                 const SizedBox(
@@ -185,7 +194,8 @@ class _AddGroundState extends State<AddGround> {
                   decoration: CustomDecoration.inputDecoration(
                     icon: const Padding(
                       padding: EdgeInsets.all(12.0),
-                      child: CustomImage(height: 24, width: 24, path: Assets.imagesMap),
+                      child: CustomImage(
+                          height: 24, width: 24, path: Assets.imagesMap),
                     ),
                     floating: true,
                     label: "Google Map Location",
@@ -198,7 +208,10 @@ class _AddGroundState extends State<AddGround> {
                 ),
                 Text(
                   "Ground Images",
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(
                   height: 15,
@@ -212,7 +225,8 @@ class _AddGroundState extends State<AddGround> {
                         if (images.isNotEmpty)
                           ...List.generate(images.length, (index) {
                             return Container(
-                              margin: const EdgeInsets.only(top: 0, right: 10, bottom: 25),
+                              margin: const EdgeInsets.only(
+                                  top: 0, right: 10, bottom: 25),
                               child: Stack(
                                 clipBehavior: Clip.none,
                                 children: [
@@ -254,7 +268,8 @@ class _AddGroundState extends State<AddGround> {
                           }),
                         GestureDetector(
                           onTap: () async {
-                            File? groundPic = await getImageBottomSheet(context);
+                            File? groundPic =
+                                await getImageBottomSheet(context);
                             if (groundPic != null) {
                               images.add(groundPic);
                             }
@@ -263,7 +278,10 @@ class _AddGroundState extends State<AddGround> {
                           child: Container(
                               width: 100,
                               height: 100,
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: Colors.grey.shade300)),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border:
+                                      Border.all(color: Colors.grey.shade300)),
                               child: const Center(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -305,7 +323,8 @@ class _AddGroundState extends State<AddGround> {
           ),
         ),
       ),
-      bottomNavigationBar: GetBuilder<AuthController>(builder: (authController) {
+      bottomNavigationBar:
+          GetBuilder<AuthController>(builder: (authController) {
         return Container(
           height: 80,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -327,7 +346,10 @@ class _AddGroundState extends State<AddGround> {
               color: const Color(0xFF263238),
               child: Text(
                 "Submit",
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white),
               ),
               onTap: () {
                 if (_formKey.currentState!.validate()) {
@@ -348,10 +370,12 @@ class _AddGroundState extends State<AddGround> {
                       }
                     });
                   } else {
-                    showSnackBar(context, content: "Please add at least one image");
+                    showSnackBar(context,
+                        content: "Please add at least one image");
                   }
                 } else {
-                  showSnackBar(context, content: "Please fill in all required fields");
+                  showSnackBar(context,
+                      content: "Please fill in all required fields");
                 }
               }),
         );
