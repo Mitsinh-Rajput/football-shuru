@@ -84,7 +84,7 @@ class TournamentLeagueController extends GetxController implements GetxService {
     try {
       Response response = await tournamentLeagueRepo.getLeagueList();
       log(response.statusCode.toString());
-      log(response.body.toString(), name: "getLeague");
+      log(jsonEncode(response.body), name: "getLeague");
       if (response.statusCode == 200) {
         league.clear();
         league = leagueModelFromJson(jsonEncode(response.body['data']));

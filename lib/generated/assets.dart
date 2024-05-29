@@ -60,5 +60,6 @@ class Assets {
   static const String imagesUser = 'assets/images/user.png';
   static const String imagesYourName = 'assets/images/your_name.png';
   static const String lottiesEmpty = 'assets/lotties/empty.json';
+  static const String lottiesFootballWait = 'assets/lotties/football_wait.json';
   static const String lottiesNoInternet = 'assets/lotties/no_internet.json';
 }
