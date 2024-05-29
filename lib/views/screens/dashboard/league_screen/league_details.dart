@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:football_shuru/controllers/tournament_league_controller.dart';
 import 'package:football_shuru/data/models/response/league_model.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
@@ -8,6 +9,7 @@ import 'package:football_shuru/views/screens/dashboard/league_screen/matches_sec
 import 'package:football_shuru/views/screens/dashboard/league_screen/stats_section.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/tables_section.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/teams_section.dart';
+import 'package:get/get.dart';
 
 class LeagueDetailsPage extends StatefulWidget {
   final String typesOfLeague;
@@ -28,18 +30,23 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await Get.find<TournamentLeagueController>()
+          .getLeagueDetail(leagueId: widget.league.id ?? 0);
+      Get.find<TournamentLeagueController>().update();
+    });
     introList = [
       SliderList(
           title: "Matches",
           content: (widget.typesOfLeague == "Knock out")
               ? const KnockOutPage()
-              : MatchesPage(
-                  leagueMatches: (widget.league.leagueMatchSchedules ?? []),
-                )),
+              : MatchesPage()),
       SliderList(
           title: "Teams",
           content: Teams(
-            teams: (widget.league.teams ?? []),
+            teams:
+                (Get.find<TournamentLeagueController>().leagueDetails?.teams ??
+                    []),
           )),
       SliderList(title: "Tables", content: const TableSection()),
       SliderList(title: "Stats", content: const Stats()),

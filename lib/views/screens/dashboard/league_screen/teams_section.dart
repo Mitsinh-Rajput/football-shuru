@@ -33,6 +33,7 @@ class _TeamsState extends State<Teams> {
               height: 10,
             ),
             ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: widget.teams.length,
                 itemBuilder: (context, index) {

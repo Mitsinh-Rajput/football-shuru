@@ -4,6 +4,7 @@ import 'package:football_shuru/controllers/tournament_league_controller.dart';
 import 'package:get/get.dart';
 
 import '../../../../controllers/team_controller.dart';
+import '../../../../data/models/response/league_model.dart';
 import '../../../../services/date_formatters_and_converters.dart';
 import '../../../../services/theme.dart';
 import '../../../base/common_button.dart';
@@ -11,7 +12,7 @@ import '../../../base/custom_image.dart';
 import '../../../base/shimmer.dart';
 
 class TeamSelectionDialogue {
-  dialogue(context, int leagueId) {
+  dialogue(context, LeagueModel league) {
     return showModalBottomSheet(
         isDismissible: false,
         isScrollControlled: true,
@@ -21,7 +22,7 @@ class TeamSelectionDialogue {
           return PopScope(
             canPop: false,
             child: TeamSelectionScreen(
-              leagueId: leagueId,
+              league: league,
             ),
           );
         }));
@@ -29,10 +30,10 @@ class TeamSelectionDialogue {
 }
 
 class TeamSelectionScreen extends StatefulWidget {
-  final int leagueId;
+  final LeagueModel league;
   const TeamSelectionScreen({
     super.key,
-    required this.leagueId,
+    required this.league,
   });
 
   @override
@@ -246,7 +247,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
                       onTap: () {
                         setState(() {
                           _showButton = true;
-                          teamId = team.id;
+                          teamId = team.team?.id;
                         });
                       },
                       child: Container(
@@ -259,7 +260,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
                             width: 1,
-                            color: team.id == teamId
+                            color: team.team?.id == teamId
                                 ? Colors.green
                                 : Colors.grey.shade300,
                           ),
@@ -342,16 +343,27 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
                     elevation: 0,
                     onTap: () async {
                       if (teamId != null) {
-                        await Get.find<TournamentLeagueController>()
-                            .assignLeague(
-                                teamId: teamId.toString(),
-                                leagueId: widget.leagueId.toString())
-                            .then((value) {
-                          if (value.isSuccess) {
-                            Navigator.pop(context);
-                            Fluttertoast.showToast(msg: value.message);
+                        bool exists = false;
+                        for (TeamElement i in (widget.league.teams ?? [])) {
+                          if (i.teamId == teamId) {
+                            exists = true;
+                            break;
                           }
-                        });
+                        }
+                        if (exists) {
+                          Fluttertoast.showToast(msg: "Team already exists");
+                        } else {
+                          await Get.find<TournamentLeagueController>()
+                              .assignLeague(
+                                  teamId: teamId.toString(),
+                                  leagueId: widget.league.id.toString())
+                              .then((value) {
+                            Fluttertoast.showToast(msg: value.message);
+                            if (value.isSuccess) {
+                              Navigator.pop(context);
+                            }
+                          });
+                        }
                       }
                     },
                     child: Text("Submit"),

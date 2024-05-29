@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/controllers/homepage_controller.dart';
 import 'package:football_shuru/services/constants.dart';
 import 'package:football_shuru/services/extensions.dart';
@@ -29,7 +30,6 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
   bool isAccepted = true;
   bool isUserTeam = false;
   @override
-  @override
   Widget build(BuildContext context) {
     return GetBuilder<KingChallengeController>(
         builder: (kingChallengeController) {
@@ -38,6 +38,21 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
               alignment: Alignment.topCenter,
               child: CircularProgressIndicator())
           : GetBuilder<HomePageController>(builder: (homePageController) {
+              bool isCaptain = false;
+              if (homePageController.groundsDetail?.groundKingTeam?.captain ==
+                  Get.find<AuthController>().profile?.id) {
+                isCaptain = true;
+              } else if (homePageController
+                      .groundsDetail?.groundKingChallenge?.team?.captain ==
+                  Get.find<AuthController>().profile?.id) {
+                isCaptain = true;
+              } else if (homePageController.groundsDetail?.groundKingChallenge
+                      ?.opponentTeam?.captain ==
+                  Get.find<AuthController>().profile?.id) {
+                isCaptain = true;
+              } else if (kingChallengeController.groundTeamList == []) {
+                isCaptain = false;
+              }
               if (homePageController.groundsDetail?.groundKingChallenge ==
                   null) {
                 if (homePageController.groundsDetail?.groundKingTeam == null) {
@@ -1738,7 +1753,9 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                         ?.scheduledTime !=
                                                     null
                                                 ? "${DateTime.parse(homePageController.groundsDetail?.groundKingChallenge?.scheduledTime).dayDateTime}. Waiting for response "
-                                                : "Please select a date for the match",
+                                                : isCaptain
+                                                    ? "Please select a date for the match"
+                                                    : "Date selection in process",
                                         style: Theme.of(context)
                                             .textTheme
                                             .labelLarge!
@@ -1750,93 +1767,162 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                     const SizedBox(
                                       width: 5,
                                     ),
-                                    if (kingChallengeController
-                                            .groundTeamList[index].teamId !=
-                                        homePageController.groundsDetail
-                                            ?.groundKingChallenge?.scheduledBy)
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5.0),
-                                        child: CustomDatePicker(
-                                          getTime: true,
-                                          onChanged: (value) {
-                                            if (kingChallengeController
-                                                    .groundTeamList[index]
-                                                    .teamId !=
-                                                homePageController
-                                                    .groundsDetail
-                                                    ?.groundKingChallenge
-                                                    ?.scheduledBy) {
+                                    if (isCaptain)
+                                      if (kingChallengeController
+                                              .groundTeamList[index].teamId !=
+                                          homePageController
+                                              .groundsDetail
+                                              ?.groundKingChallenge
+                                              ?.scheduledBy)
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5.0),
+                                          child: CustomDatePicker(
+                                            getTime: true,
+                                            onChanged: (value) {
+                                              if (kingChallengeController
+                                                      .groundTeamList[index]
+                                                      .teamId !=
+                                                  homePageController
+                                                      .groundsDetail
+                                                      ?.groundKingChallenge
+                                                      ?.scheduledBy) {
+                                                kingChallengeController
+                                                    .scheduleTime(
+                                                        groundId: homePageController
+                                                            .groundsDetail!
+                                                            .groundKingChallenge!
+                                                            .id!,
+                                                        scheduledBy:
+                                                            kingChallengeController
+                                                                .groundTeamList[
+                                                                    index]
+                                                                .teamId!,
+                                                        scheduledTime:
+                                                            value!.toString())
+                                                    .then((value) {
+                                                  if (value.isSuccess) {
+                                                    Fluttertoast.showToast(
+                                                        msg: value.message);
+                                                    // Navigator.pop(context);
+                                                    homePageController
+                                                        .getgroundsDetail(
+                                                            groundId: widget
+                                                                .groundId);
+                                                  }
+                                                });
+                                              } else {
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        "Please wait for the opponent to set the schedule");
+                                              }
+
+                                              // log(value.toString());
+                                            },
+                                            today: false,
+                                            child: Container(
+                                              padding: const EdgeInsets.all(4),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: const Color(0xFF40424E),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    kingChallengeController
+                                                                    .groundTeamList[
+                                                                        index]
+                                                                    .teamId !=
+                                                                homePageController
+                                                                    .groundsDetail
+                                                                    ?.groundKingChallenge
+                                                                    ?.scheduledBy &&
+                                                            homePageController
+                                                                    .groundsDetail
+                                                                    ?.groundKingChallenge
+                                                                    ?.scheduledBy !=
+                                                                null
+                                                        ? "Reschedule"
+                                                        : "Select Time Slot",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .labelLarge!
+                                                        .copyWith(
+                                                            color: Colors.white,
+                                                            fontSize: 9),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  const Icon(
+                                                    Icons.calendar_month,
+                                                    color: Colors.white,
+                                                    size: 12,
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    if (isCaptain)
+                                      if (kingChallengeController
+                                                  .groundTeamList[index]
+                                                  .teamId !=
+                                              homePageController
+                                                  .groundsDetail
+                                                  ?.groundKingChallenge
+                                                  ?.scheduledBy &&
+                                          homePageController
+                                                  .groundsDetail
+                                                  ?.groundKingChallenge
+                                                  ?.scheduledBy !=
+                                              null)
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5.0),
+                                          child: CustomButton(
+                                            onTap: () {
                                               kingChallengeController
-                                                  .scheduleTime(
-                                                      groundId: homePageController
-                                                          .groundsDetail!
-                                                          .groundKingChallenge!
-                                                          .id!,
-                                                      scheduledBy:
-                                                          kingChallengeController
-                                                              .groundTeamList[
-                                                                  index]
-                                                              .teamId!,
-                                                      scheduledTime:
-                                                          value!.toString())
+                                                  .approveSchedule(
+                                                      groundChallengeId:
+                                                          homePageController
+                                                              .groundsDetail!
+                                                              .groundKingChallenge!
+                                                              .id!)
                                                   .then((value) {
                                                 if (value.isSuccess) {
                                                   Fluttertoast.showToast(
                                                       msg: value.message);
-                                                  // Navigator.pop(context);
                                                   homePageController
                                                       .getgroundsDetail(
                                                           groundId:
                                                               widget.groundId);
+                                                  // Navigator.pop(context);
                                                 }
                                               });
-                                            } else {
-                                              Fluttertoast.showToast(
-                                                  msg:
-                                                      "Please wait for the opponent to set the schedule");
-                                            }
-
-                                            // log(value.toString());
-                                          },
-                                          today: false,
-                                          child: Container(
-                                            padding: const EdgeInsets.all(4),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: const Color(0xFF40424E),
-                                            ),
+                                            },
+                                            type: ButtonType.primary,
+                                            radius: 5,
                                             child: Row(
                                               children: [
                                                 Text(
-                                                  kingChallengeController
-                                                                  .groundTeamList[
-                                                                      index]
-                                                                  .teamId !=
-                                                              homePageController
-                                                                  .groundsDetail
-                                                                  ?.groundKingChallenge
-                                                                  ?.scheduledBy &&
-                                                          homePageController
-                                                                  .groundsDetail
-                                                                  ?.groundKingChallenge
-                                                                  ?.scheduledBy !=
-                                                              null
-                                                      ? "Reschedule"
-                                                      : "Select Time Slot",
+                                                  "Accept",
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .labelLarge!
                                                       .copyWith(
                                                           color: Colors.white,
-                                                          fontSize: 9),
+                                                          fontSize: 10),
                                                 ),
                                                 const SizedBox(
                                                   width: 5,
                                                 ),
                                                 const Icon(
-                                                  Icons.calendar_month,
+                                                  Icons.check_circle_outline,
                                                   color: Colors.white,
                                                   size: 12,
                                                 )
@@ -1844,70 +1930,6 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    if (kingChallengeController
-                                                .groundTeamList[index].teamId !=
-                                            homePageController
-                                                .groundsDetail
-                                                ?.groundKingChallenge
-                                                ?.scheduledBy &&
-                                        homePageController
-                                                .groundsDetail
-                                                ?.groundKingChallenge
-                                                ?.scheduledBy !=
-                                            null)
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 5.0),
-                                        child: CustomButton(
-                                          onTap: () {
-                                            kingChallengeController
-                                                .approveSchedule(
-                                                    groundChallengeId:
-                                                        homePageController
-                                                            .groundsDetail!
-                                                            .groundKingChallenge!
-                                                            .id!)
-                                                .then((value) {
-                                              if (value.isSuccess) {
-                                                Fluttertoast.showToast(
-                                                    msg: value.message);
-                                                homePageController
-                                                    .getgroundsDetail(
-                                                        groundId:
-                                                            widget.groundId);
-                                                // Navigator.pop(context);
-                                              }
-                                            });
-                                          },
-                                          type: ButtonType.primary,
-                                          radius: 5,
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "Accept",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .labelLarge!
-                                                    .copyWith(
-                                                        color: Colors.white,
-                                                        fontSize: 10),
-                                              ),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              const Icon(
-                                                Icons.check_circle_outline,
-                                                color: Colors.white,
-                                                size: 12,
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
                                   ],
                                 ),
                               ),

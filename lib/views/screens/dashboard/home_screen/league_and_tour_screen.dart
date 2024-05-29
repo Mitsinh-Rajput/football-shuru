@@ -243,7 +243,16 @@ class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
                                       borderColor: Colors.grey.shade800,
                                       title: "View Details",
                                       fontSize: 10,
-                                      onTap: () {
+                                      onTap: () async {
+                                        await Get.find<
+                                                TournamentLeagueController>()
+                                            .getLeagueDetail(
+                                                leagueId:
+                                                    tournamentLeagueController
+                                                            .league[index].id ??
+                                                        0);
+                                        Get.find<TournamentLeagueController>()
+                                            .update();
                                         Navigator.push(
                                           context,
                                           getCustomRoute(
@@ -271,51 +280,59 @@ class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
                                         elevation: 0,
                                         radius: 6,
                                         type: ButtonType.primary,
-                                        onTap: () {
-                                          showDialog(
-                                              context: context,
-                                              builder: (context) {
-                                                return AlertDialog(
-                                                  title: Text("Confimation"),
-                                                  content: Text(
-                                                      "Are you sure you want to participate?"),
-                                                  actions: [
-                                                    Row(
-                                                      children: [
-                                                        Expanded(
-                                                          child: CustomButton(
-                                                            elevation: 0,
-                                                            onTap: () {
-                                                              Navigator.pop(
-                                                                  context);
-                                                              TeamSelectionDialogue()
-                                                                  .dialogue(
-                                                                      context,
-                                                                      league.id ??
-                                                                          0);
-                                                            },
-                                                            child: Text("Yes"),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 10,
-                                                        ),
-                                                        Expanded(
-                                                          child: CustomButton(
-                                                            elevation: 0,
-                                                            onTap: () {
-                                                              Navigator.pop(
-                                                                  context);
-                                                            },
-                                                            child: Text("No"),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
-                                                );
-                                              });
-                                        },
+                                        onTap: ((league.teams ?? []).length ==
+                                                int.parse(league
+                                                        .numberOfParticipants ??
+                                                    "0"))
+                                            ? null
+                                            : () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDialog(
+                                                        title:
+                                                            Text("Confimation"),
+                                                        content: Text(
+                                                            "Are you sure you want to participate?"),
+                                                        actions: [
+                                                          Row(
+                                                            children: [
+                                                              Expanded(
+                                                                child:
+                                                                    CustomButton(
+                                                                  elevation: 0,
+                                                                  onTap: () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    TeamSelectionDialogue().dialogue(
+                                                                        context,
+                                                                        league);
+                                                                  },
+                                                                  child: Text(
+                                                                      "Yes"),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              Expanded(
+                                                                child:
+                                                                    CustomButton(
+                                                                  elevation: 0,
+                                                                  onTap: () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  child: Text(
+                                                                      "No"),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      );
+                                                    });
+                                              },
                                         // title: "23/40 Team • Participate Now",
                                         child: Text(
                                           "${(league.teams ?? []).length}/${league.numberOfParticipants} Team • ${((league.teams ?? []).length == int.parse(league.numberOfParticipants ?? "0")) ? "Team Full" : "Participate Now"}",

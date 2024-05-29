@@ -79,10 +79,10 @@ class TournamentLeagueController extends GetxController implements GetxService {
     ResponseModel responseModel;
     _isLoading = true;
     update();
-    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.getLeague}",
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.getLeagueList}",
         name: "getLeague");
     try {
-      Response response = await tournamentLeagueRepo.getLeague();
+      Response response = await tournamentLeagueRepo.getLeagueList();
       log(response.statusCode.toString());
       log(response.body.toString(), name: "getLeague");
       if (response.statusCode == 200) {
@@ -97,6 +97,37 @@ class TournamentLeagueController extends GetxController implements GetxService {
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
       log('++++ ${e.toString()} +++++++', name: "ERROR AT getLeague()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  LeagueModel? leagueDetails;
+
+  Future<ResponseModel> getLeagueDetail({required int leagueId}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.getLeagueList}",
+        name: "getLeagueDetail");
+    try {
+      Response response =
+          await tournamentLeagueRepo.getLeague(leagueId: leagueId);
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "getLeagueDetail");
+      if (response.statusCode == 200) {
+        leagueDetails = LeagueModel.fromJson(
+            json.decode(jsonEncode(response.body['data'])));
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT getLeagueDetail()");
     }
     _isLoading = false;
     update();
@@ -132,6 +163,70 @@ class TournamentLeagueController extends GetxController implements GetxService {
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
       log('++++ ${e.toString()} +++++++', name: "ERROR AT assignLeague()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> scheduleTime(
+      {required int leagueMatchScheduleId,
+      required int scheduledBy,
+      required String scheduledTime}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.leagueMatchScheduleTime}",
+        name: "scheduleTime Details");
+    try {
+      Response response = await tournamentLeagueRepo.scheduleTime(
+        leagueMatchScheduleId: leagueMatchScheduleId,
+        scheduledBy: scheduledBy,
+        scheduledTime: scheduledTime,
+      );
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "scheduleTime");
+      if (response.statusCode == 200) {
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
+        update();
+      } else {
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT scheduleTime()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> approveSchedule(
+      {required int leagueMatchScheduleId}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.leagueMatchApproveSchedule}",
+        name: "approveSchedule Details");
+    try {
+      Response response = await tournamentLeagueRepo.approveSchedule(
+        leagueMatchScheduleId: leagueMatchScheduleId,
+      );
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "approveSchedule");
+      if (response.statusCode == 200) {
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
+        update();
+      } else {
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT approveSchedule()");
     }
     _isLoading = false;
     update();
