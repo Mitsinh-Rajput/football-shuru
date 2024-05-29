@@ -91,9 +91,9 @@ class _LeagueMatchTileState extends State<LeagueMatchTile> {
                 decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        blurRadius: 4,
+                        blurRadius: 2,
                         offset: const Offset(0, 4),
-                        color: Colors.black.withOpacity(0.25),
+                        color: Colors.black.withOpacity(0.10),
                       ),
                     ],
                     color: Colors.white,

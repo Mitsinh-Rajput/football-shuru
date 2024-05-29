@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../data/models/response/league_model.dart';
 import '../../../../services/constants.dart';
+import '../../../../services/date_formatters_and_converters.dart';
 import '../../../base/custom_image.dart';
 
 class Teams extends StatefulWidget {
@@ -121,7 +122,8 @@ class _TeamsState extends State<Teams> {
                                                 fontWeight: FontWeight.w600),
                                         children: [
                                           TextSpan(
-                                            text: "\n12 Feb 2024 / 10:12 AM",
+                                            text:
+                                                "\n${DateFormatters().dateTime.format(team.createdAt ?? DateTime.now())}",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleSmall!

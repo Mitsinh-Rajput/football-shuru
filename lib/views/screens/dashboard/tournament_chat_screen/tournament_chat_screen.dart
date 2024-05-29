@@ -113,22 +113,12 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen>
                 pinned: true,
                 surfaceTintColor: const Color(0xFF263238),
                 backgroundColor: const Color(0xFF263238),
-                title: GestureDetector(
-                  onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     getCustomRoute(
-                    //         child: SetWinnerScreen(
-                    //       groundId: _ground?.id ?? 0,
-                    //     )));
-                  },
-                  child: Text(
-                    _ground?.title ?? "Ground",
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium!
-                        .copyWith(color: Colors.white),
-                  ),
+                title: Text(
+                  _ground?.title ?? "Ground",
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(color: Colors.white),
                 ),
                 actions: [
                   if (homePageController.logoutloading)

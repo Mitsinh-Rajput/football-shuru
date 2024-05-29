@@ -13,7 +13,6 @@ import '../../../../data/models/response/groundteam_model.dart';
 import '../../../base/custom_image.dart';
 
 class GroundKingChampion extends StatefulWidget {
-  // final GroundKingChallenge? groundKingChallenge;
   final int groundId;
   const GroundKingChampion({super.key, required this.groundId});
 

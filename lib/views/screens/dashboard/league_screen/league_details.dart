@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:football_shuru/controllers/tournament_league_controller.dart';
 import 'package:football_shuru/data/models/response/league_model.dart';
-import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/knock_out_matches.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/matches_section.dart';
@@ -10,6 +9,8 @@ import 'package:football_shuru/views/screens/dashboard/league_screen/stats_secti
 import 'package:football_shuru/views/screens/dashboard/league_screen/tables_section.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/teams_section.dart';
 import 'package:get/get.dart';
+
+import '../../../base/common_button.dart';
 
 class LeagueDetailsPage extends StatefulWidget {
   final String typesOfLeague;
@@ -30,11 +31,6 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await Get.find<TournamentLeagueController>()
-          .getLeagueDetail(leagueId: widget.league.id ?? 0);
-      Get.find<TournamentLeagueController>().update();
-    });
     introList = [
       SliderList(
           title: "Matches",
@@ -76,29 +72,55 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
             ),
           ),
         ),
-        title: Text(
-          "League/Tournament",
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge!
-              .copyWith(fontSize: 16, color: Colors.white),
+        titleSpacing: 0,
+        title: Row(
+          children: [
+            CustomImage(
+              height: 24,
+              width: 24,
+              path: Assets.imagesEllipse68,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              widget.league.name ?? "",
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge!
+                  .copyWith(fontSize: 16, color: Colors.white),
+            ),
+          ],
         ),
         actions: [
-          Image.asset(
-            Assets.imagesShareIconUIA,
-            height: 22,
-            width: 22,
-          ),
-          const SizedBox(
-            width: 26,
-          ),
-          Image.asset(
-            Assets.imagesChat,
-            height: 22,
-            width: 22,
-          ),
-          const SizedBox(
-            width: 16,
+          // Image.asset(
+          //   Assets.imagesShareIconUIA,
+          //   height: 22,
+          //   width: 22,
+          // ),
+          // const SizedBox(
+          //   width: 26,
+          // ),
+          // Image.asset(
+          //   Assets.imagesChat,
+          //   height: 22,
+          //   width: 22,
+          // ),
+          // const SizedBox(
+          //   width: 16,
+          // ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0, right: 8, bottom: 10),
+            child: CustomButton(
+                radius: 4,
+                color: const Color.fromRGBO(255, 200, 57, 1),
+                child: Text(
+                  widget.typesOfLeague,
+                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                        fontSize: 10,
+                      ),
+                ),
+                onTap: () {}),
           ),
         ],
         //
@@ -106,121 +128,13 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
       body: Column(
         children: [
           Container(
-            color: const Color.fromRGBO(38, 50, 56, 1),
-            height: 270,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      CustomButton(
-                          height: 30,
-                          radius: 4,
-                          color: const Color.fromRGBO(255, 200, 57, 1),
-                          child: Text(
-                            widget.typesOfLeague,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall!
-                                .copyWith(
-                                  fontSize: 11,
-                                ),
-                          ),
-                          onTap: () {}),
-                    ],
-                  ),
-                  Container(
-                    height: 90,
-                    width: 90,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      color: const Color.fromRGBO(255, 255, 255, 0.1),
-                    ),
-                    child: const CustomImage(
-                      height: 50,
-                      width: 50,
-                      path: Assets.imagesEllipse68,
-                    ),
-                  ),
-                  Text(widget.league.name ?? "",
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelLarge!
-                          .copyWith(fontSize: 20, color: Colors.white)),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    "10 Feb 2024 to 22 Feb 2024 • 276k Participant",
-                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                          fontSize: 11,
-                        ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomButton(
-                          radius: 0,
-                          child: Row(
-                            children: [
-                              const CustomImage(path: Assets.imagesAdd),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "Join Tournament",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(
-                                        fontSize: 12, color: Colors.white),
-                              )
-                            ],
-                          ),
-                          onTap: () {}),
-                      CustomButton(
-                          color: Colors.white,
-                          radius: 0,
-                          child: Row(
-                            children: [
-                              const CustomImage(
-                                  height: 24,
-                                  width: 24,
-                                  path: Assets.imagesReceiptText),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "Join Tournament",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(
-                                      fontSize: 12,
-                                    ),
-                              )
-                            ],
-                          ),
-                          onTap: () {})
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            height: 30,
+            height: 50,
             color: const Color.fromRGBO(38, 50, 56, 1),
             child: Column(
               children: [
+                SizedBox(
+                  height: 15,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
