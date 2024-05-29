@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:football_shuru/controllers/tournament_league_controller.dart';
 import 'package:football_shuru/data/models/response/league_model.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
+import 'package:football_shuru/views/base/lottie_builder.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/knock_out_matches.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/matches_section.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/stats_section.dart';
@@ -31,6 +32,10 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await Get.find<TournamentLeagueController>()
+          .getLeagueDetail(leagueId: widget.league.id ?? 0);
+    });
     introList = [
       SliderList(
           title: "Matches",
@@ -125,94 +130,106 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
         ],
         //
       ),
-      body: Column(
-        children: [
-          Container(
-            height: 50,
-            color: const Color.fromRGBO(38, 50, 56, 1),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 15,
+      body: GetBuilder<TournamentLeagueController>(
+          builder: (tournamentLeagueController) {
+        return tournamentLeagueController.isLoading
+            ? Center(
+                child: CustomLottie(
+                  assetLottie: Assets.lottiesFootball,
+                  height: 50,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    for (var i = 0; i < introList.length; i++)
-                      GestureDetector(
-                        onTap: () {
-                          pageController
-                              .animateToPage(
-                            i,
-                            duration: const Duration(milliseconds: 400),
-                            curve: Curves.linear,
-                          )
-                              .then((value) {
-                            setState(() {
-                              index = i;
-                            });
-                          });
-                        },
-                        child: Container(
-                          color: Colors.transparent,
-                          child: Column(
-                            children: [
-                              Text(
-                                introList[i].title,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.white),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Container(
-                                height: 2,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                  color: (i == index)
-                                      ? const Color.fromRGBO(255, 200, 57, 1)
-                                      : const Color.fromRGBO(38, 50, 56, 1),
-                                )),
-                              )
-                            ],
-                          ),
+              )
+            : Column(
+                children: [
+                  Container(
+                    height: 50,
+                    color: const Color.fromRGBO(38, 50, 56, 1),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 15,
                         ),
-                      ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-              child: PageView.builder(
-                  onPageChanged: (index) {
-                    setState(() {
-                      this.index = index;
-                    });
-                  },
-                  controller: pageController,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: introList.length,
-                  itemBuilder: (context, index) {
-                    return introList[index].content;
-                  }))
-          // Expanded(
-          //   child: Padding(
-          //     padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          //     child: KnockOutPage(),
-          //   ),
-          // )
-        ],
-      ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            for (var i = 0; i < introList.length; i++)
+                              GestureDetector(
+                                onTap: () {
+                                  pageController
+                                      .animateToPage(
+                                    i,
+                                    duration: const Duration(milliseconds: 400),
+                                    curve: Curves.linear,
+                                  )
+                                      .then((value) {
+                                    setState(() {
+                                      index = i;
+                                    });
+                                  });
+                                },
+                                child: Container(
+                                  color: Colors.transparent,
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        introList[i].title,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .copyWith(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.white),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      Container(
+                                        height: 2,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                          color: (i == index)
+                                              ? const Color.fromRGBO(
+                                                  255, 200, 57, 1)
+                                              : const Color.fromRGBO(
+                                                  38, 50, 56, 1),
+                                        )),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                      child: PageView.builder(
+                          onPageChanged: (index) {
+                            setState(() {
+                              this.index = index;
+                            });
+                          },
+                          controller: pageController,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: introList.length,
+                          itemBuilder: (context, index) {
+                            return introList[index].content;
+                          }))
+                  // Expanded(
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  //     child: KnockOutPage(),
+                  //   ),
+                  // )
+                ],
+              );
+      }),
     );
   }
 }

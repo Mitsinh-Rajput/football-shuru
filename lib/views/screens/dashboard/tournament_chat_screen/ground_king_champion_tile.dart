@@ -329,6 +329,7 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                       .getgroundsDetail(
                                                           groundId:
                                                               widget.groundId);
+                                                  homePageController.update();
                                                 }
                                               });
                                             },
@@ -920,6 +921,8 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                                       groundId:
                                                                           widget
                                                                               .groundId);
+                                                              homePageController
+                                                                  .update();
                                                             }
                                                           });
                                                         },
@@ -1440,6 +1443,8 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                                 .getgroundsDetail(
                                                                     groundId: widget
                                                                         .groundId);
+                                                            homePageController
+                                                                .update();
                                                           }
                                                         });
                                                       },
@@ -1808,6 +1813,7 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                         .getgroundsDetail(
                                                             groundId: widget
                                                                 .groundId);
+                                                    homePageController.update();
                                                   }
                                                 });
                                               } else {
@@ -1900,6 +1906,7 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                       .getgroundsDetail(
                                                           groundId:
                                                               widget.groundId);
+                                                  homePageController.update();
                                                   // Navigator.pop(context);
                                                 }
                                               });

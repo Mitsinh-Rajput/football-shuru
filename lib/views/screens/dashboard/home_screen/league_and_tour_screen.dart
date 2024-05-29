@@ -244,15 +244,6 @@ class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
                                       title: "View Details",
                                       fontSize: 10,
                                       onTap: () async {
-                                        await Get.find<
-                                                TournamentLeagueController>()
-                                            .getLeagueDetail(
-                                                leagueId:
-                                                    tournamentLeagueController
-                                                            .league[index].id ??
-                                                        0);
-                                        Get.find<TournamentLeagueController>()
-                                            .update();
                                         Navigator.push(
                                           context,
                                           getCustomRoute(
