@@ -83,13 +83,19 @@ class _PromoteTeamState extends State<PromoteTeam> {
           ),
           Text(
             "Select team",
-            style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
+            style: Theme.of(context)
+                .textTheme
+                .labelLarge!
+                .copyWith(fontSize: 16, fontWeight: FontWeight.w600),
           ),
           const SizedBox(
             height: 16,
           ),
           Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color.fromRGBO(196, 196, 196, 1))),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border:
+                    Border.all(color: const Color.fromRGBO(196, 196, 196, 1))),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,9 +119,16 @@ class _PromoteTeamState extends State<PromoteTeam> {
                                         borderRadius: BorderRadius.circular(20),
                                         border: Border.all(
                                           width: 2,
-                                          color: const Color.fromRGBO(255, 145, 0, 1),
+                                          color: const Color.fromRGBO(
+                                              255, 145, 0, 1),
                                         )),
-                                    child: CustomImage(radius: 20, height: 40, width: 40, fit: BoxFit.fill, path: widget.selectedTeam?.team?.logo ?? ""),
+                                    child: CustomImage(
+                                        radius: 20,
+                                        height: 40,
+                                        width: 40,
+                                        fit: BoxFit.fill,
+                                        path: widget.selectedTeam.team?.logo ??
+                                            ""),
                                   ),
                                   Positioned(
                                     bottom: 0,
@@ -123,7 +136,11 @@ class _PromoteTeamState extends State<PromoteTeam> {
                                     child: Container(
                                       height: 14,
                                       width: 14,
-                                      decoration: BoxDecoration(color: const Color.fromRGBO(255, 145, 0, 1), borderRadius: BorderRadius.circular(20)),
+                                      decoration: BoxDecoration(
+                                          color: const Color.fromRGBO(
+                                              255, 145, 0, 1),
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
                                       child: const Padding(
                                         padding: EdgeInsets.all(2.0),
                                         child: CustomImage(
@@ -149,8 +166,11 @@ class _PromoteTeamState extends State<PromoteTeam> {
                                   //       ),
                                   // ),
                                   Text(
-                                    widget.selectedTeam?.team?.name ?? "",
-                                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                    widget.selectedTeam.team?.name ?? "",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
                                           fontSize: 11,
                                           fontWeight: FontWeight.w700,
                                         ),
@@ -160,12 +180,26 @@ class _PromoteTeamState extends State<PromoteTeam> {
                             ],
                           ),
                           RichText(
-                            text: TextSpan(text: "Created At - ", style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11, fontWeight: FontWeight.w600), children: [
-                              TextSpan(
-                                text: "\n${widget.selectedTeam?.createdAt!.dateTime}",
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11, fontWeight: FontWeight.w400),
-                              ),
-                            ]),
+                            text: TextSpan(
+                                text: "Created At - ",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600),
+                                children: [
+                                  TextSpan(
+                                    text:
+                                        "\n${widget.selectedTeam.createdAt!.dateTime}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w400),
+                                  ),
+                                ]),
                           )
                         ],
                       )
@@ -180,7 +214,10 @@ class _PromoteTeamState extends State<PromoteTeam> {
           ),
           Text(
             "Team join code",
-            style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.w600, fontSize: 16),
+            style: Theme.of(context)
+                .textTheme
+                .labelLarge!
+                .copyWith(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           const SizedBox(
             height: 16,
@@ -198,23 +235,26 @@ class _PromoteTeamState extends State<PromoteTeam> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const CustomImage(height: 24, width: 24, path: Assets.imagesBarcode),
+                const CustomImage(
+                    height: 24, width: 24, path: Assets.imagesBarcode),
                 Text(
-                  "${widget.selectedTeam?.team?.code ?? ""}",
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall!
-                      .copyWith(fontSize: 26, fontWeight: FontWeight.w700, letterSpacing: 3, color: const Color(0xFF40424E).withOpacity(0.8)),
+                  "${widget.selectedTeam.team?.code ?? ""}",
+                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      fontSize: 26,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 3,
+                      color: const Color(0xFF40424E).withOpacity(0.8)),
                 ),
                 GestureDetector(
                     onTap: () async {
                       await Clipboard.setData(ClipboardData(
-                        text: '${widget.selectedTeam?.team?.code ?? ""}',
+                        text: '${widget.selectedTeam.team?.code ?? ""}',
                       )).then((value) {
                         Fluttertoast.showToast(msg: "Text Copied");
                       });
                     },
-                    child: CustomImage(height: 24, width: 24, path: Assets.imagesCopy)),
+                    child: CustomImage(
+                        height: 24, width: 24, path: Assets.imagesCopy)),
               ],
             ),
           ),

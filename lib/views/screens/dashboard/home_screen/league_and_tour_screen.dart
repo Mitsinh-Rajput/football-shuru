@@ -54,7 +54,7 @@ class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
                       getCustomRoute(
                           type: PageTransitionType.fade,
                           duration: const Duration(milliseconds: 600),
-                          child: AddLeague()));
+                          child: const AddLeague()));
                 },
                 child: Container(
                   padding:
@@ -281,9 +281,9 @@ class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
                                                     context: context,
                                                     builder: (context) {
                                                       return AlertDialog(
-                                                        title:
-                                                            Text("Confimation"),
-                                                        content: Text(
+                                                        title: const Text(
+                                                            "Confimation"),
+                                                        content: const Text(
                                                             "Are you sure you want to participate?"),
                                                         actions: [
                                                           Row(
@@ -299,11 +299,12 @@ class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
                                                                         context,
                                                                         league);
                                                                   },
-                                                                  child: Text(
-                                                                      "Yes"),
+                                                                  child:
+                                                                      const Text(
+                                                                          "Yes"),
                                                                 ),
                                                               ),
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                 width: 10,
                                                               ),
                                                               Expanded(
@@ -314,8 +315,9 @@ class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
                                                                     Navigator.pop(
                                                                         context);
                                                                   },
-                                                                  child: Text(
-                                                                      "No"),
+                                                                  child:
+                                                                      const Text(
+                                                                          "No"),
                                                                 ),
                                                               ),
                                                             ],

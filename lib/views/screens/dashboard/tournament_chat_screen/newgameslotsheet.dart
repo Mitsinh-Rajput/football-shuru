@@ -71,15 +71,18 @@ class _NewGameSlotScreenState extends State<NewGameSlotScreen> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.arrow_back)),
-                SizedBox(
+                    icon: const Icon(Icons.arrow_back)),
+                const SizedBox(
                   width: 20,
                 ),
                 Text(
                   "Create a new game slot",
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 18, fontWeight: FontWeight.w500),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall!
+                      .copyWith(fontSize: 18, fontWeight: FontWeight.w500),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
               ],
@@ -101,14 +104,18 @@ class _NewGameSlotScreenState extends State<NewGameSlotScreen> {
               keyboardType: TextInputType.multiline,
               decoration: CustomDecoration.inputDecoration(
                 hint: "Ex. lets play",
-                hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFFE0E0E0)),
+                hintStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xFFE0E0E0)),
                 label: "Title",
               ),
             ),
             const SizedBox(height: 15),
             CustomDatePicker(
               onChanged: (DateTime? dateTime) {
-                scheduleDateController.text = DateFormatters().dateTime.format(dateTime!);
+                scheduleDateController.text =
+                    DateFormatters().dateTime.format(dateTime!);
                 setState(() {});
               },
               today: true,
@@ -124,13 +131,15 @@ class _NewGameSlotScreenState extends State<NewGameSlotScreen> {
                 controller: scheduleDateController,
                 enabled: false,
                 readOnly: true,
-                decoration: CustomDecoration.inputDecoration(label: "Schedule Date & Time", suffix: Icon(Icons.calendar_month)),
+                decoration: CustomDecoration.inputDecoration(
+                    label: "Schedule Date & Time",
+                    suffix: const Icon(Icons.calendar_month)),
               ),
             ),
             const SizedBox(
               height: 15,
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             GetBuilder<GameSlotController>(builder: (gameSlotController) {
               return CustomButton(
                 isLoading: gameSlotController.isLoading,
@@ -141,12 +150,19 @@ class _NewGameSlotScreenState extends State<NewGameSlotScreen> {
                   if (_formKey.currentState!.validate()) {
                     gameSlotController
                         .createGameSlot(
-                            datetime: DateFormatters().dateTime.parse(scheduleDateController.text!).toString(), title: titleController.text.trim(), groundId: widget.groundId)
+                            datetime: DateFormatters()
+                                .dateTime
+                                .parse(scheduleDateController.text)
+                                .toString(),
+                            title: titleController.text.trim(),
+                            groundId: widget.groundId)
                         .then((value) {
                       if (value.isSuccess) {
                         Navigator.pop(context);
-                        gameSlotController.getGameSlotDetails(groundId: widget.groundId);
-                        Fluttertoast.showToast(msg: value.message, toastLength: Toast.LENGTH_LONG);
+                        gameSlotController.getGameSlotDetails(
+                            groundId: widget.groundId);
+                        Fluttertoast.showToast(
+                            msg: value.message, toastLength: Toast.LENGTH_LONG);
                       } else {
                         showSnackBar(context, content: value.message);
                       }
@@ -155,7 +171,10 @@ class _NewGameSlotScreenState extends State<NewGameSlotScreen> {
                 },
                 child: Text(
                   "Submit",
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white),
+                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white),
                 ),
               );
             })

@@ -43,12 +43,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       await Get.find<AuthController>().getProfile().then((value) {
         if (value.isSuccess) {
           nameController.text = Get.find<AuthController>().profile?.name ?? "";
-          phoneController.text = Get.find<AuthController>().profile?.phone ?? "";
-          emailIdController.text = Get.find<AuthController>().profile?.email ?? "";
+          phoneController.text =
+              Get.find<AuthController>().profile?.phone ?? "";
+          emailIdController.text =
+              Get.find<AuthController>().profile?.email ?? "";
           bioController.text = Get.find<AuthController>().profile?.about ?? "";
-          dateOfBirthController.text = Get.find<AuthController>().profile?.dob != null ? DateFormatters().yMD.format(Get.find<AuthController>().profile!.dob!) : "";
-          pincodeController.text = Get.find<AuthController>().profile?.pincode ?? "";
-          _gender = (Get.find<AuthController>().profile?.gender == 'male') ? Gender.male : Gender.female;
+          dateOfBirthController.text =
+              Get.find<AuthController>().profile?.dob != null
+                  ? DateFormatters()
+                      .yMD
+                      .format(Get.find<AuthController>().profile!.dob!)
+                  : "";
+          pincodeController.text =
+              Get.find<AuthController>().profile?.pincode ?? "";
+          _gender = (Get.find<AuthController>().profile?.gender == 'male')
+              ? Gender.male
+              : Gender.female;
           setState(() {});
         } else {
           Fluttertoast.showToast(msg: value.message);
@@ -69,14 +79,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.black,
           ),
         ),
         title: Text(
           "Profile",
-          style: Theme.of(context).textTheme.labelLarge!.copyWith(fontWeight: FontWeight.w700, fontSize: 18, color: Colors.black87),
+          style: Theme.of(context).textTheme.labelLarge!.copyWith(
+              fontWeight: FontWeight.w700, fontSize: 18, color: Colors.black87),
         ),
       ),
       body: SafeArea(
@@ -93,7 +104,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
 
                   TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction, // Added autovalidateMode
+                    autovalidateMode: AutovalidateMode
+                        .onUserInteraction, // Added autovalidateMode
 
                     validator: (value) {
                       if (value == null || value.isNotValid) {
@@ -105,12 +117,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     decoration: CustomDecoration.inputDecoration(
                       borderColor: Colors.grey.shade300,
                       floating: true,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 20),
                       label: "Your Name",
                       hint: "Ex. name",
-                      hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                            color: Colors.grey.shade300,
-                          ),
+                      hintStyle:
+                          Theme.of(context).textTheme.labelLarge!.copyWith(
+                                color: Colors.grey.shade300,
+                              ),
                       icon: const Padding(
                         padding: EdgeInsets.all(15),
                         child: CustomImage(
@@ -134,15 +148,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         borderColor: Colors.grey.shade300,
                         suffix: const Padding(
                           padding: EdgeInsets.all(15),
-                          child: CustomImage(height: 5, width: 5, path: Assets.imagesLockCircle),
+                          child: CustomImage(
+                              height: 5,
+                              width: 5,
+                              path: Assets.imagesLockCircle),
                         ),
                         floating: true,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 20),
                         label: "Phone Number",
                         hint: "Ex. +91 9876543210",
-                        hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                              color: Colors.grey.shade300,
-                            ),
+                        hintStyle:
+                            Theme.of(context).textTheme.labelLarge!.copyWith(
+                                  color: Colors.grey.shade300,
+                                ),
                         icon: const Padding(
                           padding: EdgeInsets.all(15),
                           child: CustomImage(
@@ -157,7 +176,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     height: 20,
                   ),
                   TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction, // Added autovalidateMode
+                    autovalidateMode: AutovalidateMode
+                        .onUserInteraction, // Added autovalidateMode
                     validator: (value) {
                       if (value == null || value.isNotValid) {
                         return 'Enter Your Email Address';
@@ -170,12 +190,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     decoration: CustomDecoration.inputDecoration(
                       borderColor: Colors.grey.shade300,
                       floating: true,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 20),
                       label: "Email Id",
                       hint: "Ex. my.name@gmail.com",
-                      hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                            color: Colors.grey.shade300,
-                          ),
+                      hintStyle:
+                          Theme.of(context).textTheme.labelLarge!.copyWith(
+                                color: Colors.grey.shade300,
+                              ),
                       icon: const Padding(
                         padding: EdgeInsets.all(15),
                         child: CustomImage(
@@ -206,16 +228,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     decoration: CustomDecoration.inputDecoration(
                       borderColor: Colors.grey.shade300,
                       floating: true,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 20),
                       icon: const Padding(
                         padding: EdgeInsets.all(15),
-                        child: CustomImage(height: 5, width: 5, path: Assets.imagesPincode),
+                        child: CustomImage(
+                            height: 5, width: 5, path: Assets.imagesPincode),
                       ),
                       label: "Enter pincode",
                       hint: "Ex. 4143905",
-                      hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                            color: Colors.grey.shade300,
-                          ),
+                      hintStyle:
+                          Theme.of(context).textTheme.labelLarge!.copyWith(
+                                color: Colors.grey.shade300,
+                              ),
                     ),
                   ),
                   const SizedBox(
@@ -223,7 +248,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                   Text(
                     "Gender selection",
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 16, fontWeight: FontWeight.w400),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(fontSize: 16, fontWeight: FontWeight.w400),
                   ),
                   // const SizedBox(
                   //   height: 10,
@@ -233,7 +261,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       Row(
                         children: [
                           Radio(
-                              fillColor: MaterialStateColor.resolveWith((states) => const Color.fromRGBO(255, 154, 108, 1)),
+                              fillColor: MaterialStateColor.resolveWith(
+                                  (states) =>
+                                      const Color.fromRGBO(255, 154, 108, 1)),
                               value: Gender.male,
                               groupValue: _gender,
                               onChanged: (value) {
@@ -247,7 +277,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       Row(
                         children: [
                           Radio(
-                              fillColor: MaterialStateColor.resolveWith((states) => const Color.fromRGBO(255, 154, 108, 1)),
+                              fillColor: MaterialStateColor.resolveWith(
+                                  (states) =>
+                                      const Color.fromRGBO(255, 154, 108, 1)),
                               value: Gender.female,
                               groupValue: _gender,
                               onChanged: (value) {
@@ -265,7 +297,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                   CustomDatePicker(
                     onChanged: (DateTime? dateTime) {
-                      dateOfBirthController.text = DateFormatters().yMD.format(dateTime!);
+                      dateOfBirthController.text =
+                          DateFormatters().yMD.format(dateTime!);
                       setState(() {});
                     },
                     today: false,
@@ -285,12 +318,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       decoration: CustomDecoration.inputDecoration(
                         borderColor: Colors.grey.shade300,
                         floating: true,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 20),
                         label: "Date of Birth",
                         hint: "Ex. dd / mm / yyyy",
-                        hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                              color: Colors.grey.shade300,
-                            ),
+                        hintStyle:
+                            Theme.of(context).textTheme.labelLarge!.copyWith(
+                                  color: Colors.grey.shade300,
+                                ),
                         icon: const Padding(
                           padding: EdgeInsets.all(15),
                           child: CustomImage(
@@ -325,9 +360,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ),
                       label: "About Bio",
                       hint: "Ex. type short bio",
-                      hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                            color: Colors.grey.shade300,
-                          ),
+                      hintStyle:
+                          Theme.of(context).textTheme.labelLarge!.copyWith(
+                                color: Colors.grey.shade300,
+                              ),
                     ),
                   ),
 
@@ -388,7 +424,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       }
                     });
                   } else {
-                    Fluttertoast.showToast(msg: "Above Field Empty", toastLength: Toast.LENGTH_LONG);
+                    Fluttertoast.showToast(
+                        msg: "Above Field Empty",
+                        toastLength: Toast.LENGTH_LONG);
                   }
                 },
                 child: Row(

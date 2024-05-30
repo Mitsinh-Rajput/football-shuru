@@ -31,7 +31,10 @@ class _KnockOutPageState extends State<KnockOutPage> {
                     radius: 15,
                     child: Text(
                       "Fixtures",
-                      style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 12, color: Colors.white),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(fontSize: 12, color: Colors.white),
                     ),
                     onTap: () {}),
                 const SizedBox(
@@ -52,7 +55,8 @@ class _KnockOutPageState extends State<KnockOutPage> {
               ],
             ),
             Theme(
-              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+              data:
+                  Theme.of(context).copyWith(dividerColor: Colors.transparent),
               child: ExpansionTile(
                   title: Text(
                     "League round robin 1",
@@ -71,7 +75,11 @@ class _KnockOutPageState extends State<KnockOutPage> {
                           return Container(
                             height: 150,
                             margin: const EdgeInsets.symmetric(vertical: 10),
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color.fromRGBO(196, 196, 196, 1))),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                    color: const Color.fromRGBO(
+                                        196, 196, 196, 1))),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,26 +90,35 @@ class _KnockOutPageState extends State<KnockOutPage> {
                                     children: [
                                       Text(
                                         "Tournament: Group Match 1",
-                                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .copyWith(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
-                                              color: const Color.fromRGBO(255, 145, 0, 1),
+                                              color: const Color.fromRGBO(
+                                                  255, 145, 0, 1),
                                             ),
                                       ),
                                       const SizedBox(
                                         height: 10,
                                       ),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Stack(
                                             children: [
                                               Container(
                                                 decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(20),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
                                                     border: Border.all(
                                                       width: 2,
-                                                      color: const Color.fromRGBO(255, 145, 0, 1),
+                                                      color:
+                                                          const Color.fromRGBO(
+                                                              255, 145, 0, 1),
                                                     )),
                                                 child: const CustomImage(
                                                     radius: 20,
@@ -117,9 +134,16 @@ class _KnockOutPageState extends State<KnockOutPage> {
                                                 child: Container(
                                                   height: 14,
                                                   width: 14,
-                                                  decoration: BoxDecoration(color: const Color.fromRGBO(255, 145, 0, 1), borderRadius: BorderRadius.circular(20)),
+                                                  decoration: BoxDecoration(
+                                                      color:
+                                                          const Color.fromRGBO(
+                                                              255, 145, 0, 1),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20)),
                                                   child: const Padding(
-                                                    padding: EdgeInsets.all(2.0),
+                                                    padding:
+                                                        EdgeInsets.all(2.0),
                                                     child: CustomImage(
                                                         height: 8,
                                                         width: 8,
@@ -134,26 +158,38 @@ class _KnockOutPageState extends State<KnockOutPage> {
                                             children: [
                                               Text(
                                                 "Team Ground king",
-                                                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .copyWith(
                                                       fontSize: 8,
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                     ),
                                               ),
                                               Text(
                                                 "Club Of Thane \nCenter",
-                                                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .copyWith(
                                                       fontSize: 11,
-                                                      fontWeight: FontWeight.w700,
+                                                      fontWeight:
+                                                          FontWeight.w700,
                                                     ),
                                               ),
                                             ],
                                           ),
                                           Text(
                                             "V/s",
-                                            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
                                                   fontSize: 26,
                                                   fontWeight: FontWeight.w700,
-                                                  color: const Color.fromRGBO(217, 217, 217, 1),
+                                                  color: const Color.fromRGBO(
+                                                      217, 217, 217, 1),
                                                 ),
                                           ),
                                           Column(
@@ -161,17 +197,25 @@ class _KnockOutPageState extends State<KnockOutPage> {
                                               Text(
                                                 "other Team",
                                                 textAlign: TextAlign.end,
-                                                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .copyWith(
                                                       fontSize: 8,
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                     ),
                                               ),
                                               Text(
                                                 "Club of madras \nKnights",
                                                 textAlign: TextAlign.end,
-                                                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .copyWith(
                                                       fontSize: 11,
-                                                      fontWeight: FontWeight.w700,
+                                                      fontWeight:
+                                                          FontWeight.w700,
                                                     ),
                                               ),
                                             ],
@@ -180,7 +224,8 @@ class _KnockOutPageState extends State<KnockOutPage> {
                                             decoration: BoxDecoration(
                                                 boxShadow: const [
                                                   BoxShadow(
-                                                    color: Color.fromRGBO(0, 0, 0, 0.25),
+                                                    color: Color.fromRGBO(
+                                                        0, 0, 0, 0.25),
                                                     offset: Offset(
                                                       1.0,
                                                       1.0,
@@ -189,7 +234,8 @@ class _KnockOutPageState extends State<KnockOutPage> {
                                                     spreadRadius: 1.0,
                                                   )
                                                 ],
-                                                borderRadius: BorderRadius.circular(20),
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
                                                 border: Border.all(
                                                   color: Colors.white,
                                                   width: 1,
@@ -210,26 +256,39 @@ class _KnockOutPageState extends State<KnockOutPage> {
                                 Container(
                                   height: 30,
                                   decoration: const BoxDecoration(
-                                      color: Color.fromRGBO(255, 145, 0, 0.25), borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
+                                      color: Color.fromRGBO(255, 145, 0, 0.25),
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10))),
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10.0),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           "Started date 10 feb 2024, 10 AM to 5 PM",
-                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.w600,
-                                                color: const Color.fromRGBO(64, 66, 78, 1),
+                                                color: const Color.fromRGBO(
+                                                    64, 66, 78, 1),
                                               ),
                                         ),
                                         Text(
                                           "Started at. 0:10:26",
-                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.w600,
-                                                color: const Color.fromRGBO(43, 63, 108, 1),
+                                                color: const Color.fromRGBO(
+                                                    43, 63, 108, 1),
                                               ),
                                         ),
                                       ],
@@ -245,7 +304,8 @@ class _KnockOutPageState extends State<KnockOutPage> {
                   ]),
             ),
             Theme(
-              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+              data:
+                  Theme.of(context).copyWith(dividerColor: Colors.transparent),
               child: ExpansionTile(
                 title: Text(
                   "Semi-Final Match",
@@ -259,13 +319,18 @@ class _KnockOutPageState extends State<KnockOutPage> {
                     height: 350,
                     child: ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 2, // Replace itemCount with your actual item count
+                      itemCount:
+                          2, // Replace itemCount with your actual item count
                       itemBuilder: (BuildContext context, int index) {
                         // Replace this with your itemBuilder function
                         return Container(
                           height: 150,
                           margin: const EdgeInsets.symmetric(vertical: 10),
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), border: Border.all(color: const Color.fromRGBO(196, 196, 196, 1))),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                  color:
+                                      const Color.fromRGBO(196, 196, 196, 1))),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,26 +341,33 @@ class _KnockOutPageState extends State<KnockOutPage> {
                                   children: [
                                     Text(
                                       "Tournament: Group Match 1",
-                                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!
+                                          .copyWith(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600,
-                                            color: const Color.fromRGBO(255, 145, 0, 1),
+                                            color: const Color.fromRGBO(
+                                                255, 145, 0, 1),
                                           ),
                                     ),
                                     const SizedBox(
                                       height: 10,
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Stack(
                                           children: [
                                             Container(
                                               decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(20),
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
                                                   border: Border.all(
                                                     width: 2,
-                                                    color: const Color.fromRGBO(255, 145, 0, 1),
+                                                    color: const Color.fromRGBO(
+                                                        255, 145, 0, 1),
                                                   )),
                                               child: const CustomImage(
                                                   radius: 20,
@@ -311,7 +383,12 @@ class _KnockOutPageState extends State<KnockOutPage> {
                                               child: Container(
                                                 height: 14,
                                                 width: 14,
-                                                decoration: BoxDecoration(color: const Color.fromRGBO(255, 145, 0, 1), borderRadius: BorderRadius.circular(20)),
+                                                decoration: BoxDecoration(
+                                                    color: const Color.fromRGBO(
+                                                        255, 145, 0, 1),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
                                                 child: const Padding(
                                                   padding: EdgeInsets.all(2.0),
                                                   child: CustomImage(
@@ -328,14 +405,20 @@ class _KnockOutPageState extends State<KnockOutPage> {
                                           children: [
                                             Text(
                                               "Team Ground king",
-                                              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .copyWith(
                                                     fontSize: 8,
                                                     fontWeight: FontWeight.w400,
                                                   ),
                                             ),
                                             Text(
                                               "Club Of Thane \nCenter",
-                                              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .copyWith(
                                                     fontSize: 11,
                                                     fontWeight: FontWeight.w700,
                                                   ),
@@ -344,10 +427,14 @@ class _KnockOutPageState extends State<KnockOutPage> {
                                         ),
                                         Text(
                                           "V/s",
-                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
                                                 fontSize: 26,
                                                 fontWeight: FontWeight.w700,
-                                                color: const Color.fromRGBO(217, 217, 217, 1),
+                                                color: const Color.fromRGBO(
+                                                    217, 217, 217, 1),
                                               ),
                                         ),
                                         Column(
@@ -355,7 +442,10 @@ class _KnockOutPageState extends State<KnockOutPage> {
                                             Text(
                                               "other Team",
                                               textAlign: TextAlign.end,
-                                              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .copyWith(
                                                     fontSize: 8,
                                                     fontWeight: FontWeight.w400,
                                                   ),
@@ -363,7 +453,10 @@ class _KnockOutPageState extends State<KnockOutPage> {
                                             Text(
                                               "Club of madras \nKnights",
                                               textAlign: TextAlign.end,
-                                              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleSmall!
+                                                  .copyWith(
                                                     fontSize: 11,
                                                     fontWeight: FontWeight.w700,
                                                   ),
@@ -374,7 +467,8 @@ class _KnockOutPageState extends State<KnockOutPage> {
                                           decoration: BoxDecoration(
                                               boxShadow: const [
                                                 BoxShadow(
-                                                  color: Color.fromRGBO(0, 0, 0, 0.25),
+                                                  color: Color.fromRGBO(
+                                                      0, 0, 0, 0.25),
                                                   offset: Offset(
                                                     1.0,
                                                     1.0,
@@ -383,7 +477,8 @@ class _KnockOutPageState extends State<KnockOutPage> {
                                                   spreadRadius: 1.0,
                                                 )
                                               ],
-                                              borderRadius: BorderRadius.circular(20),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
                                               border: Border.all(
                                                 color: Colors.white,
                                                 width: 1,
@@ -404,26 +499,39 @@ class _KnockOutPageState extends State<KnockOutPage> {
                               Container(
                                 height: 30,
                                 decoration: const BoxDecoration(
-                                    color: Color.fromRGBO(255, 145, 0, 0.25), borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))),
+                                    color: Color.fromRGBO(255, 145, 0, 0.25),
+                                    borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(10),
+                                        bottomRight: Radius.circular(10))),
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         "Started date 10 feb 2024, 10 AM to 5 PM",
-                                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .copyWith(
                                               fontSize: 10,
                                               fontWeight: FontWeight.w600,
-                                              color: const Color.fromRGBO(64, 66, 78, 1),
+                                              color: const Color.fromRGBO(
+                                                  64, 66, 78, 1),
                                             ),
                                       ),
                                       Text(
                                         "Started at. 0:10:26",
-                                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .copyWith(
                                               fontSize: 10,
                                               fontWeight: FontWeight.w600,
-                                              color: const Color.fromRGBO(43, 63, 108, 1),
+                                              color: const Color.fromRGBO(
+                                                  43, 63, 108, 1),
                                             ),
                                       ),
                                     ],
@@ -440,7 +548,8 @@ class _KnockOutPageState extends State<KnockOutPage> {
               ),
             ),
             Theme(
-              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+              data:
+                  Theme.of(context).copyWith(dividerColor: Colors.transparent),
               child: ExpansionTile(
                 title: Text(
                   "Final Match",
@@ -457,7 +566,8 @@ class _KnockOutPageState extends State<KnockOutPage> {
                     height: 125,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      border: RDottedLineBorder.all(color: const Color.fromRGBO(196, 196, 196, 1)),
+                      border: RDottedLineBorder.all(
+                          color: const Color.fromRGBO(196, 196, 196, 1)),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
@@ -468,7 +578,7 @@ class _KnockOutPageState extends State<KnockOutPage> {
                             children: [
                               Row(
                                 children: [
-                                  CustomImage(
+                                  const CustomImage(
                                     height: 46,
                                     width: 46,
                                     path: Assets.imagesAward1,
@@ -479,15 +589,22 @@ class _KnockOutPageState extends State<KnockOutPage> {
                                   RichText(
                                       text: TextSpan(
                                           text: "TROPHY",
-                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
                                                 fontSize: 30,
                                                 fontWeight: FontWeight.w600,
-                                                color: const Color.fromRGBO(255, 200, 57, 1),
+                                                color: const Color.fromRGBO(
+                                                    255, 200, 57, 1),
                                               ),
                                           children: [
                                         TextSpan(
                                           text: "\nfor leading the board",
-                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
                                                 fontSize: 11,
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -500,14 +617,22 @@ class _KnockOutPageState extends State<KnockOutPage> {
                               ),
                               Text(
                                 "Tournament winner team",
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11, fontWeight: FontWeight.w600, color: primaryColor),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600,
+                                        color: primaryColor),
                               ),
                             ],
                           ),
                           Container(
                             width: 1,
                             decoration: BoxDecoration(
-                              border: RDottedLineBorder(left: const BorderSide(color: Color.fromRGBO(196, 196, 196, 1))),
+                              border: RDottedLineBorder(
+                                  left: const BorderSide(
+                                      color: Color.fromRGBO(196, 196, 196, 1))),
                             ),
                           ),
                           Column(
@@ -520,7 +645,10 @@ class _KnockOutPageState extends State<KnockOutPage> {
                               Text(
                                 "Club of Thane \nCanter",
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                     ),

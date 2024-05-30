@@ -109,7 +109,7 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Center(
@@ -161,7 +161,7 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                 ],
               ),
               ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 itemCount: RadioList.length,
@@ -471,7 +471,7 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
               height: 10,
             ),
             CustomButton(
-              color: enableEdit ? Color(0xFF263238) : Colors.grey,
+              color: enableEdit ? const Color(0xFF263238) : Colors.grey,
               onTap: enableEdit
                   ? () {
                       int winnerId = RadioList[0].isSelected
@@ -526,7 +526,7 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                 widget.MatchData.winnerTeamResponseByUser == null)
               Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -629,7 +629,7 @@ class _SetWinnerScreenState extends State<SetWinnerScreen> {
                     Get.find<AuthController>().profile?.id)
               Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -839,7 +839,7 @@ class _RadioItemState extends State<RadioItem> {
                 width: 100,
                 decoration: BoxDecoration(
                     color: widget.enableEdit ? Colors.green : Colors.grey,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(10),
                         bottomRight: Radius.circular(10))),
                 child: Center(

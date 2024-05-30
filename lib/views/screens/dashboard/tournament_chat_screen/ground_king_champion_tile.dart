@@ -730,10 +730,10 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                                     (BuildContext
                                                                         context) {
                                                                   return AlertDialog(
-                                                                    title: Text(
+                                                                    title: const Text(
                                                                         'Confirmation'),
                                                                     content:
-                                                                        SingleChildScrollView(
+                                                                        const SingleChildScrollView(
                                                                       child:
                                                                           ListBody(
                                                                         children: <Widget>[
@@ -744,7 +744,7 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                                     ),
                                                                     actions: <Widget>[
                                                                       TextButton(
-                                                                        child: Text(
+                                                                        child: const Text(
                                                                             'Yes'),
                                                                         onPressed:
                                                                             () {
@@ -758,7 +758,7 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                                         },
                                                                       ),
                                                                       TextButton(
-                                                                        child: Text(
+                                                                        child: const Text(
                                                                             'No'),
                                                                         onPressed:
                                                                             () {
@@ -823,8 +823,9 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                           .symmetric(
                                                           vertical: 5.0),
                                                       child: Container(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
                                                                 horizontal: 7),
                                                         decoration:
                                                             BoxDecoration(
@@ -1260,10 +1261,10 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                                   (BuildContext
                                                                       context) {
                                                                 return AlertDialog(
-                                                                  title: Text(
+                                                                  title: const Text(
                                                                       'Confirmation'),
                                                                   content:
-                                                                      SingleChildScrollView(
+                                                                      const SingleChildScrollView(
                                                                     child:
                                                                         ListBody(
                                                                       children: <Widget>[
@@ -1274,7 +1275,7 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                                   ),
                                                                   actions: <Widget>[
                                                                     TextButton(
-                                                                      child: Text(
+                                                                      child: const Text(
                                                                           'Yes'),
                                                                       onPressed:
                                                                           () {
@@ -1288,7 +1289,7 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                                       },
                                                                     ),
                                                                     TextButton(
-                                                                      child: Text(
+                                                                      child: const Text(
                                                                           'No'),
                                                                       onPressed:
                                                                           () {
@@ -1349,9 +1350,9 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                                         .symmetric(
                                                         vertical: 5.0),
                                                     child: Container(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 7),
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 7),
                                                       decoration: BoxDecoration(
                                                         borderRadius:
                                                             BorderRadius

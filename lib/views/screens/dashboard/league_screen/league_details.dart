@@ -41,7 +41,7 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
           title: "Matches",
           content: (widget.typesOfLeague == "Knock out")
               ? const KnockOutPage()
-              : MatchesPage()),
+              : const MatchesPage()),
       SliderList(
           title: "Teams",
           content: Teams(
@@ -80,12 +80,12 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
         titleSpacing: 0,
         title: Row(
           children: [
-            CustomImage(
+            const CustomImage(
               height: 24,
               width: 24,
               path: Assets.imagesEllipse68,
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Text(
@@ -133,7 +133,7 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
       body: GetBuilder<TournamentLeagueController>(
           builder: (tournamentLeagueController) {
         return tournamentLeagueController.isLoading
-            ? Center(
+            ? const Center(
                 child: CustomLottie(
                   assetLottie: Assets.lottiesFootball,
                   height: 50,
@@ -146,7 +146,7 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
                     color: const Color.fromRGBO(38, 50, 56, 1),
                     child: Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         Row(

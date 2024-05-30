@@ -104,18 +104,20 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         ),
                         Text(
                           authController.profile?.name ?? "",
-                          style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                                color: Colors.white,
-                                fontSize: 20,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
                         ),
                         Text(
                           authController.profile?.email ?? '',
-                          style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                                color: Colors.white,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w300,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.labelLarge!.copyWith(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w300,
+                                  ),
                         ),
                         const SizedBox(
                           height: 10,
@@ -150,7 +152,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                 ),
                                 Text(
                                   "Edit Profile",
-                                  style: Theme.of(context).textTheme.labelMedium,
+                                  style:
+                                      Theme.of(context).textTheme.labelMedium,
                                 ),
                               ],
                             ),
@@ -175,7 +178,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       //
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushAndRemoveUntil(context, getCustomRoute(child: const DashboardScreen()), (route) => false);
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              getCustomRoute(child: const DashboardScreen()),
+                              (route) => false);
                         },
                         child: Container(
                           color: Colors.transparent,
@@ -389,7 +395,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
             ),
           );
         }),
-        bottomNavigationBar: GetBuilder<AuthController>(builder: (authController) {
+        bottomNavigationBar:
+            GetBuilder<AuthController>(builder: (authController) {
           // if (authController.isLoading) {
           //   return const SizedBox.shrink();
           // }
@@ -404,7 +411,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   },
                   child: Container(
                     margin: const EdgeInsets.symmetric(vertical: 4),
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     color: Colors.transparent,
                     child: Row(
                       children: [
@@ -430,11 +438,15 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     authController.clearSharedData();
                     authController.profile = null;
                     Fluttertoast.showToast(msg: "Logout Successful");
-                    Navigator.pushAndRemoveUntil(context, getCustomRoute(child: const MobileAuthScreen()), (route) => false);
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        getCustomRoute(child: const MobileAuthScreen()),
+                        (route) => false);
                   },
                   child: Container(
                     margin: const EdgeInsets.symmetric(vertical: 4),
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     color: Colors.transparent,
                     child: Row(
                       children: [
@@ -468,11 +480,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(vertical: 4),
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 6),
                       color: Colors.transparent,
                       child: Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.delete,
                             size: 24,
                           ),
@@ -481,7 +494,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           ),
                           Text(
                             "Delete Account",
-                            style: Theme.of(context).textTheme.labelLarge!.copyWith(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(),
                           )
                         ],
                       ),

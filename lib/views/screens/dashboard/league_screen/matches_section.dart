@@ -25,7 +25,7 @@ class _MatchesPageState extends State<MatchesPage> {
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CustomLottie(
+              const CustomLottie(
                 assetLottie: Assets.lottiesFootballWait,
                 height: 200,
               ),
@@ -57,7 +57,7 @@ class _MatchesPageState extends State<MatchesPage> {
                   height: 10,
                 ),
                 ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: (Get.find<TournamentLeagueController>()
                                 .leagueDetails

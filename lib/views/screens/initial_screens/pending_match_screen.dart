@@ -35,7 +35,7 @@ class _PendingMatchScreenState extends State<PendingMatchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Pending Matches"),
+        title: const Text("Pending Matches"),
         centerTitle: true,
         actions: [
           if (kDebugMode)
@@ -127,7 +127,7 @@ class _PendingMatchScreenState extends State<PendingMatchScreen> {
                                             .copyWith(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600,
-                                              color: Color.fromRGBO(
+                                              color: const Color.fromRGBO(
                                                   255, 145, 0, 1),
                                             ),
                                       ),
@@ -153,7 +153,7 @@ class _PendingMatchScreenState extends State<PendingMatchScreen> {
                                                             0) ==
                                                         (matchData.team?.id ??
                                                             0))
-                                                    ? Color.fromRGBO(
+                                                    ? const Color.fromRGBO(
                                                         255, 145, 0, 1)
                                                     : Colors.grey,
                                               )),
@@ -191,7 +191,7 @@ class _PendingMatchScreenState extends State<PendingMatchScreen> {
                                                   ),
                                                 ),
                                               )
-                                            : SizedBox.shrink(),
+                                            : const SizedBox.shrink(),
                                       ],
                                     ),
                                     Column(
@@ -297,7 +297,7 @@ class _PendingMatchScreenState extends State<PendingMatchScreen> {
                                                         (matchData.opponentTeam
                                                                 ?.id ??
                                                             0))
-                                                    ? Color.fromRGBO(
+                                                    ? const Color.fromRGBO(
                                                         255, 145, 0, 1)
                                                     : Colors.grey,
                                               )),
@@ -336,7 +336,7 @@ class _PendingMatchScreenState extends State<PendingMatchScreen> {
                                                   ),
                                                 ),
                                               )
-                                            : SizedBox.shrink(),
+                                            : const SizedBox.shrink(),
                                       ],
                                     ),
                                   ],
@@ -396,7 +396,7 @@ class _PendingMatchScreenState extends State<PendingMatchScreen> {
                     ),
                   );
                 },
-                separatorBuilder: (context, index) => SizedBox(
+                separatorBuilder: (context, index) => const SizedBox(
                       height: 8,
                     ),
                 itemCount:

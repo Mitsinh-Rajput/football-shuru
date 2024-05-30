@@ -78,7 +78,11 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10.0),
-            child: CustomImage(color: isScroll ? Colors.black : Colors.white, height: 24, width: 24, path: Assets.imagesShareapp),
+            child: CustomImage(
+                color: isScroll ? Colors.black : Colors.white,
+                height: 24,
+                width: 24,
+                path: Assets.imagesShareapp),
           )
         ],
         // title: Text(
@@ -104,7 +108,9 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                   },
                   height: 400.0,
                   viewportFraction: 1.0,
-                  scrollPhysics: widget.selectedGround.images.length == 1 ? const NeverScrollableScrollPhysics() : const AlwaysScrollableScrollPhysics()),
+                  scrollPhysics: widget.selectedGround.images.length == 1
+                      ? const NeverScrollableScrollPhysics()
+                      : const AlwaysScrollableScrollPhysics()),
               items: widget.selectedGround.images.map((i) {
                 return Builder(
                   builder: (BuildContext context) {
@@ -125,14 +131,18 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      for (int i = 0; i < widget.selectedGround.images.length; i++)
+                      for (int i = 0;
+                          i < widget.selectedGround.images.length;
+                          i++)
                         Container(
                           margin: const EdgeInsets.symmetric(horizontal: 3),
                           height: _currentPage == i ? 12 : 8,
                           width: _currentPage == i ? 12 : 8,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: _currentPage == i ? Colors.grey.shade800 : Colors.grey.shade200,
+                            color: _currentPage == i
+                                ? Colors.grey.shade800
+                                : Colors.grey.shade200,
                           ),
                         ),
                     ],
@@ -146,14 +156,20 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                 children: [
                   Text(
                     widget.selectedGround.title ?? "",
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 24, fontWeight: FontWeight.w700),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontSize: 24, fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(
                     height: 6,
                   ),
                   Text(
                     widget.selectedGround.address ?? '',
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
                   ),
                   const SizedBox(
                     height: 15,
@@ -162,11 +178,15 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "${widget.selectedGround?.userCount ?? "1"} Members",
-                        style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 16, color: const Color.fromRGBO(255, 145, 0, 1), fontWeight: FontWeight.w400),
+                        "${widget.selectedGround.userCount ?? "1"} Members",
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            fontSize: 16,
+                            color: const Color.fromRGBO(255, 145, 0, 1),
+                            fontWeight: FontWeight.w400),
                       ),
                       if (widget.selectedGround.hasUser == null)
-                        GetBuilder<HomePageController>(builder: (homePageController) {
+                        GetBuilder<HomePageController>(
+                            builder: (homePageController) {
                           return CustomButton(
                               isLoading: homePageController.isLoading,
                               height: 35,
@@ -174,10 +194,19 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                               radius: 0,
                               child: Text(
                                 "Join Now",
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w600),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600),
                               ),
                               onTap: () {
-                                homePageController.joinGround(groundId: widget.selectedGround.id!).then((value) {
+                                homePageController
+                                    .joinGround(
+                                        groundId: widget.selectedGround.id!)
+                                    .then((value) {
                                   if (value.isSuccess) {
                                     Navigator.pushReplacement(
                                         context,
@@ -186,7 +215,9 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                                           groundId: widget.selectedGround.id!,
                                         )));
                                   } else {
-                                    Fluttertoast.showToast(msg: value.message, toastLength: Toast.LENGTH_LONG);
+                                    Fluttertoast.showToast(
+                                        msg: value.message,
+                                        toastLength: Toast.LENGTH_LONG);
                                   }
                                 });
                               });
@@ -198,21 +229,30 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                   ),
                   Text(
                     "Description",
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(
                     height: 5,
                   ),
                   Text(
                     widget.selectedGround.description ?? "",
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
                   ),
                   const SizedBox(
                     height: 30,
                   ),
                   Text(
                     "Ground King",
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 16, fontWeight: FontWeight.w500),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(
                     height: 15,
@@ -221,7 +261,8 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                     height: 125,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: const Color.fromRGBO(196, 196, 196, 1)),
+                      border: Border.all(
+                          color: const Color.fromRGBO(196, 196, 196, 1)),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
@@ -232,7 +273,7 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                             children: [
                               Row(
                                 children: [
-                                  CustomImage(
+                                  const CustomImage(
                                     height: 46,
                                     width: 46,
                                     path: Assets.imagesAward1,
@@ -243,15 +284,22 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                                   RichText(
                                       text: TextSpan(
                                           text: "TROPHY",
-                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
                                                 fontSize: 30,
                                                 fontWeight: FontWeight.w600,
-                                                color: const Color.fromRGBO(255, 200, 57, 1),
+                                                color: const Color.fromRGBO(
+                                                    255, 200, 57, 1),
                                               ),
                                           children: [
                                         TextSpan(
                                           text: "\nfor leading the board",
-                                          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
                                                 fontSize: 11,
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -264,20 +312,33 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                               ),
                               Text(
                                 "Tournament winner team",
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 11, fontWeight: FontWeight.w600, color: primaryColor),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w600,
+                                        color: primaryColor),
                               ),
                             ],
                           ),
                           Container(
                             width: 1,
                             decoration: BoxDecoration(
-                              border: RDottedLineBorder(left: const BorderSide(color: Color.fromRGBO(196, 196, 196, 1))),
+                              border: RDottedLineBorder(
+                                  left: const BorderSide(
+                                      color: Color.fromRGBO(196, 196, 196, 1))),
                             ),
                           ),
                           Column(
                             children: [
                               Container(
-                                decoration: BoxDecoration(border: Border.all(color: const Color.fromRGBO(255, 200, 57, 1), width: 2), borderRadius: BorderRadius.circular(20)),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: const Color.fromRGBO(
+                                            255, 200, 57, 1),
+                                        width: 2),
+                                    borderRadius: BorderRadius.circular(20)),
                                 child: const CustomImage(
                                     radius: 20,
                                     height: 35,
@@ -288,7 +349,10 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                               Text(
                                 "Club of Madras \nKnights",
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -306,7 +370,8 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
           ],
         ),
       ),
-      bottomNavigationBar: GetBuilder<HomePageController>(builder: (homePageController) {
+      bottomNavigationBar:
+          GetBuilder<HomePageController>(builder: (homePageController) {
         if (widget.selectedGround.hasUser == null) {
           return const SizedBox.shrink();
           // return Container(

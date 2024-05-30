@@ -71,7 +71,8 @@ class _AddTeamScreenState extends State<AddTeamScreen> {
               const SizedBox(
                 height: 16,
               ),
-              const Text("Note: Upload your new ground team name and related logo"),
+              const Text(
+                  "Note: Upload your new ground team name and related logo"),
               const SizedBox(
                 height: 20,
               ),
@@ -166,11 +167,13 @@ class _AddTeamScreenState extends State<AddTeamScreen> {
                 height: 50,
                 onTap: () {
                   if (_formKey.currentState!.validate()) {
-                    print(logo);
-                    teamController.createTeam(name: team_name.text.trim(), image: logo!).then((value) {
+                    teamController
+                        .createTeam(name: team_name.text.trim(), image: logo!)
+                        .then((value) {
                       if (value.isSuccess) {
                         teamController.getJoinedTeam();
-                        Fluttertoast.showToast(msg: value.message, toastLength: Toast.LENGTH_LONG);
+                        Fluttertoast.showToast(
+                            msg: value.message, toastLength: Toast.LENGTH_LONG);
                         Navigator.pop(context);
                       } else {
                         showSnackBar(navigatorKey.currentContext!,
@@ -178,7 +181,9 @@ class _AddTeamScreenState extends State<AddTeamScreen> {
                             snackBarAction: SnackBarAction(
                               label: 'Close',
                               onPressed: () {
-                                ScaffoldMessenger.of(navigatorKey.currentContext!).hideCurrentSnackBar();
+                                ScaffoldMessenger.of(
+                                        navigatorKey.currentContext!)
+                                    .hideCurrentSnackBar();
                               },
                             ));
                       }

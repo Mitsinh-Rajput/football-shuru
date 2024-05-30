@@ -366,7 +366,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
                         }
                       }
                     },
-                    child: Text("Submit"),
+                    child: const Text("Submit"),
                   ),
               ],
             );

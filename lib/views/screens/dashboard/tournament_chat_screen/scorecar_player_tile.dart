@@ -32,7 +32,7 @@ class _ScoreCardPlayerTileState extends State<ScoreCardPlayerTile> {
   Widget build(BuildContext context) {
     return Container(
       height: 50,
-      color: widget.index % 2 == 0 ? Color(0xFFF5F5F5) : Colors.white,
+      color: widget.index % 2 == 0 ? const Color(0xFFF5F5F5) : Colors.white,
       child: Row(
         children: [
           Expanded(

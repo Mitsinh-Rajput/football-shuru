@@ -34,7 +34,7 @@ class _TeamsState extends State<Teams> {
               height: 10,
             ),
             ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: widget.teams.length,
                 itemBuilder: (context, index) {
@@ -143,7 +143,7 @@ class _TeamsState extends State<Teams> {
                     ),
                   );
                 }),
-            SizedBox(
+            const SizedBox(
               height: 40,
             )
           ],
