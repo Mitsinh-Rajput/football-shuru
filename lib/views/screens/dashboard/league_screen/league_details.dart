@@ -35,6 +35,14 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await Get.find<TournamentLeagueController>()
           .getLeagueDetail(leagueId: widget.league.id ?? 0);
+      await Get.find<TournamentLeagueController>()
+          .getStatisticData(leagueId: widget.league.id ?? 0, type: "goal");
+      await Get.find<TournamentLeagueController>()
+          .getStatisticData(leagueId: widget.league.id ?? 0, type: "assist");
+      await Get.find<TournamentLeagueController>().getStatisticData(
+          leagueId: widget.league.id ?? 0, type: "best_defender");
+      await Get.find<TournamentLeagueController>().getStatisticData(
+          leagueId: widget.league.id ?? 0, type: "best_midfield");
     });
     introList = [
       SliderList(

@@ -35,8 +35,11 @@ class _SplashScreenState extends State<SplashScreen> {
               .getPendingList()
               .then((value) {
             if (Get.find<KingChallengeController>()
-                .pendingMatchResultList
-                .isEmpty) {
+                    .pendingMatchResultList
+                    .isEmpty &&
+                Get.find<KingChallengeController>()
+                    .pendingLeagueMatchList
+                    .isEmpty) {
               Navigator.pushReplacement(
                 context,
                 getCustomRoute(

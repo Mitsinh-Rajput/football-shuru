@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:football_shuru/controllers/tournament_league_controller.dart';
+import 'package:get/get.dart';
 
+import '../../../../data/models/response/statistic_model.dart';
+import '../../../../services/constants.dart';
 import '../../../base/common_button.dart';
 import '../../../base/custom_image.dart';
 
@@ -13,6 +17,16 @@ class Stats extends StatefulWidget {
 class _StatsState extends State<Stats> {
   List titles = ["Goals", "Assist", "Best Defenders", "Best Midfielders"];
   int buttonIndex = 0;
+  List<StatisticModel> data = [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      data = Get.find<TournamentLeagueController>().leagueGoals;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -52,7 +66,24 @@ class _StatsState extends State<Stats> {
                                         ? Colors.white
                                         : Colors.black),
                           ),
-                          onTap: () {}),
+                          onTap: () {
+                            setState(() {
+                              buttonIndex = index;
+                              if (index == 0) {
+                                data = Get.find<TournamentLeagueController>()
+                                    .leagueGoals;
+                              } else if (index == 1) {
+                                data = Get.find<TournamentLeagueController>()
+                                    .leagueAssists;
+                              } else if (index == 2) {
+                                data = Get.find<TournamentLeagueController>()
+                                    .leagueBestDefenders;
+                              } else if (index == 3) {
+                                data = Get.find<TournamentLeagueController>()
+                                    .leagueBestMidfielders;
+                              }
+                            });
+                          }),
                     );
                   }),
             ),
@@ -61,8 +92,9 @@ class _StatsState extends State<Stats> {
             ),
             ListView.builder(
                 shrinkWrap: true,
-                itemCount: 5,
+                itemCount: data.length,
                 itemBuilder: (context, index) {
+                  StatisticModel player = data[index];
                   return Container(
                     height: 90,
                     margin: const EdgeInsets.symmetric(vertical: 8),
@@ -107,13 +139,13 @@ class _StatsState extends State<Stats> {
                                               width: 2,
                                               color: Colors.white,
                                             )),
-                                        child: const CustomImage(
+                                        child: CustomImage(
                                             radius: 20,
                                             height: 40,
                                             width: 40,
                                             fit: BoxFit.fill,
                                             path:
-                                                "https://s3-alpha-sig.figma.com/img/5209/3bd4/d799d9dcdef8bed39a1a5c13b8b1653c?Expires=1711929600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=awJSj4nF6CXJlSx9mV2rHmWG1jC1xpMvIkptuHN752P8Y68-qef73tshTt1JRxw30n5CeYD-gmXlZ3VVfxYcrCV3ZhInjcMQgWddzzC3LJLTZuPnpxwrvOQbDcmOF~fLaeGpJ1olJ0LXr9-6MlJpo7WHQKvEK7mOsHRnRX7Y242DgpvzdtGrev-tt~Q1s10PDnM0A3EByPRzRoh4ypN769S0zWq-ID0d3TDvlQ4xxmttGoqRNSoPL9oDrGBnDoN3gvSlEaZaWC18jsJO8FaYXRkmONNP1mhnMLkjSAviqb4oQeE2l7hxhmc9oOshK~avi3cI0Ab~qSyiEnwqHCJ1Cw__"),
+                                                '${AppConstants.baseUrl}${player.team?.logo ?? ""}'),
                                       ),
                                       const SizedBox(
                                         width: 10,
@@ -121,7 +153,7 @@ class _StatsState extends State<Stats> {
                                       Column(
                                         children: [
                                           Text(
-                                            "Club Of Thane Center",
+                                            player.team?.name ?? "",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleSmall!
@@ -131,7 +163,7 @@ class _StatsState extends State<Stats> {
                                                 ),
                                           ),
                                           Text(
-                                            "Ralph Edwards",
+                                            player.user?.name ?? "",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleSmall!
@@ -145,17 +177,20 @@ class _StatsState extends State<Stats> {
                                     ],
                                   ),
                                   RichText(
+                                    textAlign: TextAlign.center,
                                     text: TextSpan(
-                                        text: "Joined Date - ",
+                                        text:
+                                            "Number of ${buttonIndex == 0 ? "Goals" : buttonIndex == 1 ? "Assists" : buttonIndex == 0 ? "Best Defender Awards" : "Best Midfielder Awards"} - ",
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleSmall!
                                             .copyWith(
-                                                fontSize: 11,
+                                                fontSize: 9,
                                                 fontWeight: FontWeight.w600),
                                         children: [
                                           TextSpan(
-                                            text: "\n12 Feb 2024 / 10:12 AM",
+                                            text:
+                                                "\n${(player.count ?? 0).toString()}",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleSmall!

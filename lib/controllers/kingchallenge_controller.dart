@@ -7,6 +7,7 @@ import 'package:football_shuru/data/models/response/groundteam_model.dart';
 import 'package:football_shuru/data/repositories/kingchallenge_repo.dart';
 import 'package:get/get.dart';
 
+import '../data/models/response/PendingLeagueMatchModel.dart';
 import '../data/models/response/response_model.dart';
 import '../services/constants.dart';
 
@@ -216,6 +217,7 @@ class KingChallengeController extends GetxController implements GetxService {
   }
 
   List<PendingMatchListModel> pendingMatchResultList = [];
+  List<PendingLeagueMatchModel> pendingLeagueMatchList = [];
 
   Future<ResponseModel> getPendingList() async {
     ResponseModel responseModel;
@@ -226,10 +228,12 @@ class KingChallengeController extends GetxController implements GetxService {
     try {
       Response response = await kingChallengeRepo.getPendingMatchResult();
       log(response.statusCode.toString());
-      log(response.body.toString(), name: "getPendingList");
+      log(jsonEncode(response.body), name: "getPendingList");
       if (response.statusCode == 200) {
         pendingMatchResultList =
             pendingMatchListModelFromJson(jsonEncode(response.body['data']));
+        pendingLeagueMatchList = pendingLeagueMatchModelFromJson(
+            jsonEncode(response.body['league_matches']));
         responseModel =
             ResponseModel(true, '${response.body['message']}', response.body);
         update();

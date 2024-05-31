@@ -25,8 +25,40 @@ class TournamentLeagueRepo {
         "scheduled_time": scheduledTime
       });
 
+  Future<Response> leagueStatistic(
+          {required int leagueId, required String type}) async =>
+      await apiClient.postData(AppConstants.leagueStatistic, {
+        "league_id": leagueId,
+        "type": type,
+      });
+
   Future<Response> approveSchedule(
           {required int leagueMatchScheduleId}) async =>
       await apiClient.postData(AppConstants.leagueMatchApproveSchedule,
           {"league_match_schedule_id": leagueMatchScheduleId});
+
+  Future<Response> setWinner(
+          {required int leagueMatchId,
+          int? teamGoals,
+          int? opponentTeamGoals,
+          int? winnerTeamId,
+          String? isCancelled,
+          String? isDraw}) async =>
+      await apiClient.postData(AppConstants.leagueMatchSetWinner, {
+        "league_match_schedule_id": leagueMatchId,
+        "team_goals": teamGoals,
+        "opponent_team_goals": opponentTeamGoals,
+        "winner_team_id": winnerTeamId,
+        "is_cancelled": isCancelled,
+        "is_draw": isDraw
+      });
+
+  Future<Response> scorecard(Map<String, dynamic> data) async =>
+      await apiClient.postData(AppConstants.leagueScorecard, {
+        "league_match_schedule_id": data["league_match_schedule_id"],
+        "team_id": data["team_id"],
+        "league_id": data["league_id"],
+        "ground_king_challenge_id": data["ground_king_challenge_id"],
+        "scores": data["scores"]
+      });
 }

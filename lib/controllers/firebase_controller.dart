@@ -214,8 +214,11 @@ class FirebaseController extends GetxController implements GetxService {
           update();
           Get.find<KingChallengeController>().getPendingList().then((value) {
             if (Get.find<KingChallengeController>()
-                .pendingMatchResultList
-                .isEmpty) {
+                    .pendingMatchResultList
+                    .isEmpty &&
+                Get.find<KingChallengeController>()
+                    .pendingLeagueMatchList
+                    .isEmpty) {
               Navigator.pushReplacement(
                 context,
                 getCustomRoute(

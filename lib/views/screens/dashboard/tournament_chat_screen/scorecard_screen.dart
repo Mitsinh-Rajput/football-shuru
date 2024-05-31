@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:football_shuru/controllers/tournament_league_controller.dart';
 import 'package:football_shuru/data/models/response/joinedteam_model.dart';
 import 'package:football_shuru/services/route_helper.dart';
 import 'package:football_shuru/views/screens/dashboard/dashboard_screen.dart';
@@ -11,14 +12,15 @@ import 'package:get/get.dart';
 
 import '../../../../controllers/kingchallenge_controller.dart';
 import '../../../../controllers/team_controller.dart';
-import '../../../../data/models/response/PendingMatchListModel.dart';
 import '../../../../services/constants.dart';
 import '../../../base/common_button.dart';
 import '../../../base/custom_image.dart';
 
 class ScoreCardScreen extends StatefulWidget {
-  final PendingMatchListModel MatchData;
-  const ScoreCardScreen({super.key, required this.MatchData});
+  final MatchData;
+  final bool isLeague;
+  const ScoreCardScreen(
+      {super.key, required this.MatchData, this.isLeague = false});
 
   @override
   State<ScoreCardScreen> createState() => _ScoreCardScreenState();
@@ -360,8 +362,6 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
 
                 Map<String, dynamic> data = {
                   "team_id": widget.MatchData.team?.id,
-                  "ground_id": widget.MatchData.groundId,
-                  "ground_king_challenge_id": widget.MatchData.id,
                 };
                 int totalPlayerGoals = 0;
                 List<Map<String, dynamic>> scores = [];
@@ -382,17 +382,39 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                   Fluttertoast.showToast(
                       msg: "Number of Goals cannot be more than total goal");
                 } else {
-                  Get.find<KingChallengeController>()
-                      .scorecard(data)
-                      .then((value) {
-                    if (value.isSuccess) {
-                      Fluttertoast.showToast(msg: value.message);
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          getCustomRoute(child: const DashboardScreen()),
-                          (route) => false);
-                    }
-                  });
+                  if (widget.isLeague) {
+                    data.addAll({
+                      "league_id": widget.MatchData.leagueId,
+                      "league_match_schedule_id": widget.MatchData.id,
+                    });
+                    Get.find<TournamentLeagueController>()
+                        .scorecard(data)
+                        .then((value) {
+                      if (value.isSuccess) {
+                        Fluttertoast.showToast(msg: value.message);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            getCustomRoute(child: const DashboardScreen()),
+                            (route) => false);
+                      }
+                    });
+                  } else {
+                    data.addAll({
+                      "ground_id": widget.MatchData.groundId,
+                      "ground_king_challenge_id": widget.MatchData.id,
+                    });
+                    Get.find<KingChallengeController>()
+                        .scorecard(data)
+                        .then((value) {
+                      if (value.isSuccess) {
+                        Fluttertoast.showToast(msg: value.message);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            getCustomRoute(child: const DashboardScreen()),
+                            (route) => false);
+                      }
+                    });
+                  }
                 }
               },
               radius: 10,

@@ -6,7 +6,9 @@ import 'package:football_shuru/services/extensions.dart';
 import 'package:get/get.dart';
 
 import '../data/models/response/league_model.dart';
+import '../data/models/response/league_table_model.dart';
 import '../data/models/response/response_model.dart';
+import '../data/models/response/statistic_model.dart';
 import '../data/repositories/tournament_league_repo.dart';
 import '../services/constants.dart';
 
@@ -105,6 +107,8 @@ class TournamentLeagueController extends GetxController implements GetxService {
 
   LeagueModel? leagueDetails;
 
+  List<LeagueTableModel> leagueTableList = [];
+
   Future<ResponseModel> getLeagueDetail({required int leagueId}) async {
     ResponseModel responseModel;
     _isLoading = true;
@@ -114,11 +118,59 @@ class TournamentLeagueController extends GetxController implements GetxService {
     try {
       Response response =
           await tournamentLeagueRepo.getLeague(leagueId: leagueId);
-      log(response.statusCode.toString());
-      log(response.body.toString(), name: "getLeagueDetail");
+      // log(response.statusCode.toString());
+      log(jsonEncode(response.body), name: "getLeagueDetail");
       if (response.statusCode == 200) {
         leagueDetails = LeagueModel.fromJson(
             json.decode(jsonEncode(response.body['data'])));
+        leagueTableList =
+            leagueTableModelFromJson(jsonEncode(response.body['tables']));
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT getLeagueDetail()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  List<StatisticModel> leagueGoals = [];
+  List<StatisticModel> leagueAssists = [];
+  List<StatisticModel> leagueBestDefenders = [];
+  List<StatisticModel> leagueBestMidfielders = [];
+
+  Future<ResponseModel> getStatisticData(
+      {required int leagueId, required String type}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.leagueStatistic}",
+        name: "getStatisticData");
+    try {
+      Response response = await tournamentLeagueRepo.leagueStatistic(
+          leagueId: leagueId, type: type);
+      // log(response.statusCode.toString());
+      log(jsonEncode(response.body), name: "getStatisticData");
+      if (response.statusCode == 200) {
+        if (type == "goal") {
+          leagueGoals =
+              statisticModelFromJson(jsonEncode(response.body["data"]));
+        } else if (type == "assist") {
+          leagueAssists =
+              statisticModelFromJson(jsonEncode(response.body["data"]));
+        } else if (type == "best_defender") {
+          leagueBestDefenders =
+              statisticModelFromJson(jsonEncode(response.body["data"]));
+        } else {
+          leagueBestMidfielders =
+              statisticModelFromJson(jsonEncode(response.body["data"]));
+        }
         responseModel =
             ResponseModel(true, '${response.body['message']}', response.body);
       } else {
@@ -227,6 +279,73 @@ class TournamentLeagueController extends GetxController implements GetxService {
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
       log('++++ ${e.toString()} +++++++', name: "ERROR AT approveSchedule()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> setWinner({
+    required int leagueMatchId,
+    int? teamGoals,
+    int? opponentTeamGoals,
+    int? winnerTeamId,
+    String? isDraw,
+    String? isCancelled,
+  }) async {
+    ResponseModel responseModel;
+
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.leagueMatchSetWinner}",
+        name: "setWinner");
+    try {
+      Response response = await tournamentLeagueRepo.setWinner(
+          teamGoals: teamGoals,
+          opponentTeamGoals: opponentTeamGoals,
+          winnerTeamId: winnerTeamId,
+          isCancelled: isCancelled,
+          isDraw: isDraw,
+          leagueMatchId: leagueMatchId);
+      log(response.statusCode.toString());
+      log(jsonEncode(response.body), name: "setWinner");
+      if (response.statusCode == 200) {
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT setWinner()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> scorecard(Map<String, dynamic> data) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.scorecard}",
+        name: "scorecard Details");
+    try {
+      Response response = await tournamentLeagueRepo.scorecard(data);
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "scorecard");
+      if (response.statusCode == 200) {
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
+        update();
+      } else {
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT scorecard()");
     }
     _isLoading = false;
     update();
