@@ -33,7 +33,8 @@ void main() async {
 }
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-final GlobalKey<ScaffoldMessengerState> snackBarKey = GlobalKey<ScaffoldMessengerState>();
+final GlobalKey<ScaffoldMessengerState> snackBarKey =
+    GlobalKey<ScaffoldMessengerState>();
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -52,7 +53,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   //
   initPlatForm() async {
-    log("${await Permission.notification.status}", name: "OneSignal Notification Status");
+    log("${await Permission.notification.status}",
+        name: "OneSignal Notification Status");
 
     OneSignal.initialize("a61ed62c-595d-4652-9459-6de427215bc6");
     await Future.delayed(const Duration(seconds: 10), () async {
@@ -73,17 +75,19 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     // });
   }
 
-  late StreamSubscription<ConnectivityResult> subscription;
+  late StreamSubscription<List<ConnectivityResult>> subscription;
   bool isConnected = true;
   bool isUpdateVisible = false;
   String? fcmToken;
 
   checkConnection() async {
-    subscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult connectivityResult) {
-      if (connectivityResult == ConnectivityResult.mobile) {
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((List<ConnectivityResult> connectivityResult) async {
+      if (connectivityResult.contains(ConnectivityResult.mobile)) {
         log("InterNet is here!"); //? ---------------++- InterNet is hare!
         isConnected = true;
-      } else if (connectivityResult == ConnectivityResult.wifi) {
+      } else if (connectivityResult.contains(ConnectivityResult.wifi)) {
         log("Wifi is here!!"); //? ------------------++- Wifi is hare!
         isConnected = true;
       } else {
