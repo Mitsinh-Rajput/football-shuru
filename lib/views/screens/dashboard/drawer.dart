@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:football_shuru/services/extensions.dart';
 import 'package:football_shuru/views/screens/auth_screens/mobile_auth_screen.dart';
+import 'package:football_shuru/views/screens/initial_screens/pending_match_screen.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -211,7 +212,39 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       ),
                       //
 
-                      //
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            getCustomRoute(
+                              child: const PendingMatchScreen(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          color: Colors.transparent,
+                          padding: const EdgeInsets.all(10),
+                          child: Row(
+                            children: [
+                              Icon(Icons.list),
+                              const SizedBox(
+                                width: 16,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  "Pending Results",
+                                  style: Theme.of(context).textTheme.labelLarge,
+                                ),
+                              ),
+                              Image.asset(
+                                Assets.imagesArrowRight,
+                                height: 24,
+                                width: 24,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
 
                       GestureDetector(
                         onTap: () {

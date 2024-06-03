@@ -119,6 +119,24 @@ class _StatsState extends State<Stats> {
                                 children: [
                                   Row(
                                     children: [
+                                      Text(
+                                        "${index + 1}.",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .copyWith(fontSize: 18),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Container(
+                                        height: 40,
+                                        width: 1,
+                                        color: Colors.grey.shade500,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
                                       Container(
                                         decoration: BoxDecoration(
                                             borderRadius:
@@ -176,30 +194,39 @@ class _StatsState extends State<Stats> {
                                       ),
                                     ],
                                   ),
-                                  RichText(
-                                    textAlign: TextAlign.center,
-                                    text: TextSpan(
-                                        text:
-                                            "Number of ${buttonIndex == 0 ? "Goals" : buttonIndex == 1 ? "Assists" : buttonIndex == 2 ? "Best Defender Awards" : "Best Midfielder Awards"} - ",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .copyWith(
-                                                fontSize: 9,
-                                                fontWeight: FontWeight.w600),
-                                        children: [
-                                          TextSpan(
-                                            text: "\n${(player.count ?? "0")}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleSmall!
-                                                .copyWith(
-                                                    fontSize: 11,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                          ),
-                                        ]),
+                                  Text(
+                                    (player.count ?? "0"),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600),
                                   )
+                                  // RichText(
+                                  //   textAlign: TextAlign.center,
+                                  //   text: TextSpan(
+                                  //       text:
+                                  //           "Number of ${buttonIndex == 0 ? "Goals" : buttonIndex == 1 ? "Assists" : buttonIndex == 2 ? "Best Defender Awards" : "Best Midfielder Awards"} - ",
+                                  //       style: Theme.of(context)
+                                  //           .textTheme
+                                  //           .titleSmall!
+                                  //           .copyWith(
+                                  //               fontSize: 9,
+                                  //               fontWeight: FontWeight.w600),
+                                  //       children: [
+                                  //         TextSpan(
+                                  //           text: "\n${(player.count ?? "0")}",
+                                  //           style: Theme.of(context)
+                                  //               .textTheme
+                                  //               .titleSmall!
+                                  //               .copyWith(
+                                  //                   fontSize: 11,
+                                  //                   fontWeight:
+                                  //                       FontWeight.w400),
+                                  //         ),
+                                  //       ]),
+                                  // )
                                 ],
                               )
                             ],

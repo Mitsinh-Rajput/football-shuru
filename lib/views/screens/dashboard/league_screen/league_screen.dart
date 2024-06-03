@@ -197,286 +197,301 @@ class _LeagueScreenState extends State<LeagueScreen> {
                                       assetLottie: Assets.lottiesFootball,
                                     ),
                                   )
-                                : Container(
-                                    margin: const EdgeInsets.only(
-                                      bottom: 16,
-                                      left: 16,
-                                      right: 16,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                          width: 1,
-                                          color: Colors.grey.shade200),
-                                    ),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          margin:
-                                              const EdgeInsets.only(top: 12),
-                                          height: 115,
-                                          width: 3,
-                                          color: primaryColor,
+                                : GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        getCustomRoute(
+                                          child: LeagueDetailsPage(
+                                            typesOfLeague: "League’s match",
+                                            league: league,
+                                          ),
                                         ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 12),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const SizedBox(
-                                                  height: 14,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Expanded(
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            league.name ?? "",
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .labelLarge!
-                                                                .copyWith(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w900,
-                                                                  fontSize: 16,
-                                                                  color: Colors
-                                                                      .black87,
-                                                                ),
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 4,
-                                                          ),
-                                                          Text(
-                                                            "Publish date: ${(league.createdAt ?? DateTime.now()).dayDMY}",
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .labelLarge!
-                                                                .copyWith(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w300,
-                                                                  fontSize: 9,
-                                                                  color: Colors
-                                                                      .black87,
-                                                                ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  horizontal:
-                                                                      14,
-                                                                  vertical: 4),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Colors
-                                                                .grey.shade200,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                              0,
-                                                            ),
-                                                          ),
-                                                          child: Text(
-                                                            "League’s match",
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .labelSmall,
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 2,
-                                                        ),
-                                                        Text(
-                                                          "Participate ${league.numberOfParticipants} Team",
-                                                          style:
-                                                              Theme.of(context)
+                                      );
+                                    },
+                                    child: Container(
+                                      margin: const EdgeInsets.only(
+                                        bottom: 16,
+                                        left: 16,
+                                        right: 16,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            width: 1,
+                                            color: Colors.grey.shade200),
+                                      ),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            margin:
+                                                const EdgeInsets.only(top: 12),
+                                            height: 115,
+                                            width: 3,
+                                            color: primaryColor,
+                                          ),
+                                          Expanded(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  const SizedBox(
+                                                    height: 14,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Expanded(
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              league.name ?? "",
+                                                              style: Theme.of(
+                                                                      context)
                                                                   .textTheme
-                                                                  .labelSmall!
+                                                                  .labelLarge!
                                                                   .copyWith(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w900,
                                                                     fontSize:
-                                                                        10,
-                                                                    color: const Color(
-                                                                        0xffFF9100),
+                                                                        16,
+                                                                    color: Colors
+                                                                        .black87,
                                                                   ),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                                //
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                RichText(
-                                                  text: TextSpan(
-                                                      text: "Description : ",
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .labelSmall!
-                                                          .copyWith(
-                                                            fontSize: 11,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                      children: [
-                                                        TextSpan(
-                                                          text: league
-                                                                  .description ??
-                                                              "",
-                                                          style:
-                                                              Theme.of(context)
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 4,
+                                                            ),
+                                                            Text(
+                                                              "Publish date: ${(league.createdAt ?? DateTime.now()).dayDMY}",
+                                                              style: Theme.of(
+                                                                      context)
                                                                   .textTheme
-                                                                  .labelSmall!
+                                                                  .labelLarge!
                                                                   .copyWith(
-                                                                    fontSize:
-                                                                        11,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w300,
+                                                                    fontSize: 9,
+                                                                    color: Colors
+                                                                        .black87,
                                                                   ),
-                                                        ),
-                                                      ]),
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    CustomButton(
-                                                      height: 34,
-                                                      elevation: 0,
-                                                      radius: 6,
-                                                      type:
-                                                          ButtonType.secondary,
-                                                      borderColor:
-                                                          Colors.grey.shade800,
-                                                      title: "View Details",
-                                                      fontSize: 10,
-                                                      onTap: () {
-                                                        Navigator.push(
-                                                          context,
-                                                          getCustomRoute(
-                                                            child:
-                                                                LeagueDetailsPage(
-                                                              typesOfLeague:
-                                                                  "League’s match",
-                                                              league: league,
                                                             ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 16,
-                                                    ),
-                                                    (index == 0)
-                                                        ? Expanded(
-                                                            child: CustomButton(
-                                                              color:
-                                                                  primaryColor,
-                                                              height: 34,
-                                                              elevation: 0,
-                                                              radius: 6,
-                                                              type: ButtonType
-                                                                  .primary,
-
-                                                              onTap: ((league.teams ??
-                                                                              [])
-                                                                          .length ==
-                                                                      int.parse(
-                                                                          league.numberOfParticipants ??
-                                                                              "0"))
-                                                                  ? null
-                                                                  : () {
-                                                                      showDialog(
-                                                                          context:
-                                                                              context,
-                                                                          builder:
-                                                                              (context) {
-                                                                            return AlertDialog(
-                                                                              title: const Text("Confimation"),
-                                                                              content: const Text("Are you sure you want to participate?"),
-                                                                              actions: [
-                                                                                Row(
-                                                                                  children: [
-                                                                                    Expanded(
-                                                                                      child: CustomButton(
-                                                                                        elevation: 0,
-                                                                                        onTap: () {
-                                                                                          Navigator.pop(context);
-                                                                                          TeamSelectionDialogue().dialogue(context, league);
-                                                                                        },
-                                                                                        child: const Text("Yes"),
-                                                                                      ),
-                                                                                    ),
-                                                                                    const SizedBox(
-                                                                                      width: 10,
-                                                                                    ),
-                                                                                    Expanded(
-                                                                                      child: CustomButton(
-                                                                                        elevation: 0,
-                                                                                        onTap: () {
-                                                                                          Navigator.pop(context);
-                                                                                        },
-                                                                                        child: const Text("No"),
-                                                                                      ),
-                                                                                    ),
-                                                                                  ],
-                                                                                )
-                                                                              ],
-                                                                            );
-                                                                          });
-                                                                    },
-                                                              // title:
-                                                              //     "23/40 Team • Participate Now",
-                                                              child: Text(
-                                                                "${(league.teams ?? []).length}/${league.numberOfParticipants} Team • ${((league.teams ?? []).length == int.parse(league.numberOfParticipants ?? "0")) ? "Team Full" : "Participate Now"}",
-                                                                style: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .labelSmall!
-                                                                    .copyWith(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontSize:
-                                                                            10),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Column(
+                                                        children: [
+                                                          Container(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                                    horizontal:
+                                                                        14,
+                                                                    vertical:
+                                                                        4),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: Colors.grey
+                                                                  .shade200,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                0,
                                                               ),
                                                             ),
-                                                          )
-                                                        : Text(
-                                                            "${(league.teams ?? []).length}/${league.numberOfParticipants} Team"),
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  height: 12,
-                                                ),
-                                              ],
+                                                            child: Text(
+                                                              "League’s match",
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .labelSmall,
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 2,
+                                                          ),
+                                                          Text(
+                                                            "Participate ${league.numberOfParticipants} Team",
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .labelSmall!
+                                                                .copyWith(
+                                                                  fontSize: 10,
+                                                                  color: const Color(
+                                                                      0xffFF9100),
+                                                                ),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                  //
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  RichText(
+                                                    text: TextSpan(
+                                                        text: "Description : ",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .labelSmall!
+                                                            .copyWith(
+                                                              fontSize: 11,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600,
+                                                            ),
+                                                        children: [
+                                                          TextSpan(
+                                                            text: league
+                                                                    .description ??
+                                                                "",
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .labelSmall!
+                                                                .copyWith(
+                                                                  fontSize: 11,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w300,
+                                                                ),
+                                                          ),
+                                                        ]),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      CustomButton(
+                                                        height: 34,
+                                                        elevation: 0,
+                                                        radius: 6,
+                                                        type: ButtonType
+                                                            .secondary,
+                                                        borderColor: Colors
+                                                            .grey.shade800,
+                                                        title: "View Details",
+                                                        fontSize: 10,
+                                                        onTap: () {
+                                                          Navigator.push(
+                                                            context,
+                                                            getCustomRoute(
+                                                              child:
+                                                                  LeagueDetailsPage(
+                                                                typesOfLeague:
+                                                                    "League’s match",
+                                                                league: league,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 16,
+                                                      ),
+                                                      (index == 0)
+                                                          ? Expanded(
+                                                              child:
+                                                                  CustomButton(
+                                                                color:
+                                                                    primaryColor,
+                                                                height: 34,
+                                                                elevation: 0,
+                                                                radius: 6,
+                                                                type: ButtonType
+                                                                    .primary,
+
+                                                                onTap: ((league.teams ??
+                                                                                [])
+                                                                            .length ==
+                                                                        int.parse(league.numberOfParticipants ??
+                                                                            "0"))
+                                                                    ? null
+                                                                    : () {
+                                                                        showDialog(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (context) {
+                                                                              return AlertDialog(
+                                                                                title: const Text("Confimation"),
+                                                                                content: const Text("Are you sure you want to participate?"),
+                                                                                actions: [
+                                                                                  Row(
+                                                                                    children: [
+                                                                                      Expanded(
+                                                                                        child: CustomButton(
+                                                                                          elevation: 0,
+                                                                                          onTap: () {
+                                                                                            Navigator.pop(context);
+                                                                                            TeamSelectionDialogue().dialogue(context, league);
+                                                                                          },
+                                                                                          child: const Text("Yes"),
+                                                                                        ),
+                                                                                      ),
+                                                                                      const SizedBox(
+                                                                                        width: 10,
+                                                                                      ),
+                                                                                      Expanded(
+                                                                                        child: CustomButton(
+                                                                                          elevation: 0,
+                                                                                          onTap: () {
+                                                                                            Navigator.pop(context);
+                                                                                          },
+                                                                                          child: const Text("No"),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ],
+                                                                                  )
+                                                                                ],
+                                                                              );
+                                                                            });
+                                                                      },
+                                                                // title:
+                                                                //     "23/40 Team • Participate Now",
+                                                                child: Text(
+                                                                  "${(league.teams ?? []).length}/${league.numberOfParticipants} Team • ${((league.teams ?? []).length == int.parse(league.numberOfParticipants ?? "0")) ? "Team Full" : "Participate Now"}",
+                                                                  style: Theme.of(
+                                                                          context)
+                                                                      .textTheme
+                                                                      .labelSmall!
+                                                                      .copyWith(
+                                                                          color: Colors
+                                                                              .white,
+                                                                          fontSize:
+                                                                              10),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : Text(
+                                                              "${(league.teams ?? []).length}/${league.numberOfParticipants} Team"),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 12,
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        )
-                                      ],
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   );
                           });

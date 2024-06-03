@@ -360,6 +360,9 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
                               .then((value) {
                             Fluttertoast.showToast(msg: value.message);
                             if (value.isSuccess) {
+                              Get.find<TournamentLeagueController>()
+                                  .getLeague();
+                              Get.find<TournamentLeagueController>().update();
                               Navigator.pop(context);
                             }
                           });

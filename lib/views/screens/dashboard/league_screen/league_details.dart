@@ -64,6 +64,13 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    Get.find<TournamentLeagueController>().leagueDetails = null;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

@@ -49,7 +49,7 @@ class _TableSectionState extends State<TableSection> {
                           .copyWith(fontSize: 13, fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(
-                      width: 30,
+                      width: 25,
                     ),
                     Text(
                       "W",
@@ -59,7 +59,7 @@ class _TableSectionState extends State<TableSection> {
                           .copyWith(fontSize: 13, fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(
-                      width: 30,
+                      width: 28,
                     ),
                     Text(
                       "D",
