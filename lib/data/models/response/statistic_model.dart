@@ -15,7 +15,7 @@ class StatisticModel {
   int? leagueId;
   int? teamId;
   int? userId;
-  int? count;
+  dynamic count;
   User? user;
   League? league;
   Team? team;
@@ -34,7 +34,7 @@ class StatisticModel {
         leagueId: json["league_id"],
         teamId: json["team_id"],
         userId: json["user_id"],
-        count: json["count"],
+        count: json["count"]?.toString(),
         user: json["user"] == null ? null : User.fromJson(json["user"]),
         league: json["league"] == null ? null : League.fromJson(json["league"]),
         team: json["team"] == null ? null : Team.fromJson(json["team"]),

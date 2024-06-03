@@ -3,18 +3,19 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:football_shuru/controllers/tournament_league_controller.dart';
+import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/data/models/response/joinedteam_model.dart';
-import 'package:football_shuru/services/route_helper.dart';
-import 'package:football_shuru/views/screens/dashboard/dashboard_screen.dart';
 import 'package:football_shuru/views/screens/dashboard/tournament_chat_screen/scorecar_player_tile.dart';
 import 'package:get/get.dart';
 
 import '../../../../controllers/kingchallenge_controller.dart';
 import '../../../../controllers/team_controller.dart';
+import '../../../../controllers/tournament_league_controller.dart';
 import '../../../../services/constants.dart';
+import '../../../../services/route_helper.dart';
 import '../../../base/common_button.dart';
 import '../../../base/custom_image.dart';
+import '../dashboard_screen.dart';
 
 class ScoreCardScreen extends StatefulWidget {
   final MatchData;
@@ -36,17 +37,12 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
       await Get.find<TeamControllor>().getJoinedTeam().then((value) {
         Get.find<KingChallengeController>().scorecardDataList.clear();
         for (var j = 0; j < Get.find<TeamControllor>().joinedTeam.length; j++) {
-          // print("dssdasd" +
-          //     (Get.find<TeamControllor>().joinedTeam[j].team?.id ?? "")
-          //         .toString());
-          // print("dssdasd" + (widget.MatchData.team?.id ?? "").toString());
           if (Get.find<TeamControllor>().joinedTeam[j].team?.id.toString() ==
                   (widget.MatchData.team?.id ?? 0).toString() ||
               Get.find<TeamControllor>().joinedTeam[j].team?.id.toString() ==
                   (widget.MatchData.opponentTeam?.id ?? 0).toString()) {
             for (UserElement i
                 in Get.find<TeamControllor>().joinedTeam[j].team?.users ?? []) {
-              print(i.user?.name ?? "");
               Get.find<KingChallengeController>().scorecardDataList.add({
                 "user_id": i.user?.id,
                 "goals": 0,
@@ -356,12 +352,11 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
             CustomButton(
               color: const Color(0xFF263238),
               onTap: () {
-                // log(Get.find<KingChallengeController>()
-                //     .scorecardDataList
-                //     .toString());
-
                 Map<String, dynamic> data = {
-                  "team_id": widget.MatchData.team?.id,
+                  "team_id": (Get.find<AuthController>().profile?.id ==
+                          widget.MatchData.team?.captain)
+                      ? widget.MatchData.team?.id
+                      : widget.MatchData.opponentTeam?.id,
                 };
                 int totalPlayerGoals = 0;
                 List<Map<String, dynamic>> scores = [];

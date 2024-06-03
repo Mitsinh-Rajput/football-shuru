@@ -35,13 +35,13 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await Get.find<TournamentLeagueController>()
           .getLeagueDetail(leagueId: widget.league.id ?? 0);
-      await Get.find<TournamentLeagueController>()
+      Get.find<TournamentLeagueController>()
           .getStatisticData(leagueId: widget.league.id ?? 0, type: "goal");
-      await Get.find<TournamentLeagueController>()
+      Get.find<TournamentLeagueController>()
           .getStatisticData(leagueId: widget.league.id ?? 0, type: "assist");
-      await Get.find<TournamentLeagueController>().getStatisticData(
+      Get.find<TournamentLeagueController>().getStatisticData(
           leagueId: widget.league.id ?? 0, type: "best_defender");
-      await Get.find<TournamentLeagueController>().getStatisticData(
+      Get.find<TournamentLeagueController>().getStatisticData(
           leagueId: widget.league.id ?? 0, type: "best_midfield");
     });
     introList = [
@@ -55,6 +55,7 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
           content: Teams(
             teams:
                 (Get.find<TournamentLeagueController>().leagueDetails?.teams ??
+                    widget.league.teams ??
                     []),
           )),
       SliderList(title: "Tables", content: const TableSection()),

@@ -125,6 +125,8 @@ class TournamentLeagueController extends GetxController implements GetxService {
             json.decode(jsonEncode(response.body['data'])));
         leagueTableList =
             leagueTableModelFromJson(jsonEncode(response.body['tables']));
+        leagueTableList.sort(
+            (a, b) => b.totalMatchesPlayed!.compareTo(a.totalMatchesPlayed!));
         responseModel =
             ResponseModel(true, '${response.body['message']}', response.body);
       } else {

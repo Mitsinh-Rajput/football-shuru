@@ -180,7 +180,7 @@ class _StatsState extends State<Stats> {
                                     textAlign: TextAlign.center,
                                     text: TextSpan(
                                         text:
-                                            "Number of ${buttonIndex == 0 ? "Goals" : buttonIndex == 1 ? "Assists" : buttonIndex == 0 ? "Best Defender Awards" : "Best Midfielder Awards"} - ",
+                                            "Number of ${buttonIndex == 0 ? "Goals" : buttonIndex == 1 ? "Assists" : buttonIndex == 2 ? "Best Defender Awards" : "Best Midfielder Awards"} - ",
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleSmall!
@@ -189,8 +189,7 @@ class _StatsState extends State<Stats> {
                                                 fontWeight: FontWeight.w600),
                                         children: [
                                           TextSpan(
-                                            text:
-                                                "\n${(player.count ?? 0).toString()}",
+                                            text: "\n${(player.count ?? "0")}",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleSmall!

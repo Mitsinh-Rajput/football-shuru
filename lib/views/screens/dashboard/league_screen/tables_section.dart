@@ -25,12 +25,19 @@ class _TableSectionState extends State<TableSection> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Teams",
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall!
-                      .copyWith(fontSize: 13, fontWeight: FontWeight.w600),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Text(
+                      "Teams",
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(fontSize: 13, fontWeight: FontWeight.w600),
+                    ),
+                  ],
                 ),
                 Row(
                   children: [
@@ -71,16 +78,6 @@ class _TableSectionState extends State<TableSection> {
                           .titleSmall!
                           .copyWith(fontSize: 13, fontWeight: FontWeight.w600),
                     ),
-                    // const SizedBox(
-                    //   width: 30,
-                    // ),
-                    // Text(
-                    //   "PTS",
-                    //   style: Theme.of(context)
-                    //       .textTheme
-                    //       .titleSmall!
-                    //       .copyWith(fontSize: 13, fontWeight: FontWeight.w600),
-                    // ),
                   ],
                 ),
               ],

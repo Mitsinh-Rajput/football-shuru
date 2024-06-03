@@ -73,9 +73,9 @@ class _LeagueMatchTileState extends State<LeagueMatchTile> {
                   decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          blurRadius: 4,
+                          blurRadius: 2,
                           offset: const Offset(0, 4),
-                          color: Colors.black.withOpacity(0.25),
+                          color: Colors.black.withOpacity(0.10),
                         ),
                       ],
                       color: Colors.white,
@@ -139,7 +139,7 @@ class _LeagueMatchTileState extends State<LeagueMatchTile> {
                                 children: [
                                   Container(
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(50),
                                         border: Border.all(
                                           width: 2,
                                           color: Colors.grey,
@@ -230,7 +230,7 @@ class _LeagueMatchTileState extends State<LeagueMatchTile> {
                                 height: 40,
                                 width: 40,
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(50),
                                     border: Border.all(
                                       color: const Color(0xFFE0E0E0),
                                       width: 1,
@@ -457,7 +457,11 @@ class _LeagueMatchTileState extends State<LeagueMatchTile> {
                   ],
                 ),
               );
-      } else {
+      } else if (Get.find<TournamentLeagueController>()
+              .leagueDetails
+              ?.leagueMatchSchedules?[widget.index]
+              .winningTeamConfirmation ==
+          "rejected") {
         return tournamentLeagueController.isLoading
             ? CustomShimmer(
                 child: Container(
@@ -467,9 +471,9 @@ class _LeagueMatchTileState extends State<LeagueMatchTile> {
                   decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          blurRadius: 4,
+                          blurRadius: 2,
                           offset: const Offset(0, 4),
-                          color: Colors.black.withOpacity(0.25),
+                          color: Colors.black.withOpacity(0.10),
                         ),
                       ],
                       color: Colors.white,
@@ -485,9 +489,9 @@ class _LeagueMatchTileState extends State<LeagueMatchTile> {
                 decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        blurRadius: 4,
+                        blurRadius: 2,
                         offset: const Offset(0, 4),
-                        color: Colors.black.withOpacity(0.25),
+                        color: Colors.black.withOpacity(0.10),
                       ),
                     ],
                     color: Colors.white,
@@ -533,7 +537,7 @@ class _LeagueMatchTileState extends State<LeagueMatchTile> {
                                 children: [
                                   Container(
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(50),
                                         border: Border.all(
                                           width: 2,
                                           color: Colors.grey,
@@ -624,7 +628,7 @@ class _LeagueMatchTileState extends State<LeagueMatchTile> {
                                 height: 40,
                                 width: 40,
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
+                                    borderRadius: BorderRadius.circular(50),
                                     border: Border.all(
                                       color: const Color(0xFFE0E0E0),
                                       width: 1,
@@ -675,6 +679,451 @@ class _LeagueMatchTileState extends State<LeagueMatchTile> {
                                               fontWeight: FontWeight.bold),
                                     )
                                   ]),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+      } else {
+        return tournamentLeagueController.isLoading
+            ? CustomShimmer(
+                child: Container(
+                  height: 150,
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 2,
+                          offset: const Offset(0, 4),
+                          color: Colors.black.withOpacity(0.10),
+                        ),
+                      ],
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                          color: const Color.fromRGBO(196, 196, 196, 1))),
+                ),
+              )
+            : Container(
+                height: 150,
+                margin:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 2,
+                        offset: const Offset(0, 4),
+                        color: Colors.black.withOpacity(0.10),
+                      ),
+                    ],
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                        color: const Color.fromRGBO(196, 196, 196, 1))),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5.0, vertical: 15),
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                      text:
+                                          Get.find<TournamentLeagueController>()
+                                                      .leagueDetails
+                                                      ?.leagueMatchSchedules?[
+                                                          widget.index]
+                                                      .winningTeamConfirmation ==
+                                                  "confirmed"
+                                              ? "Match Winner : "
+                                              : "Result in process",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!
+                                          .copyWith(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black54,
+                                          ),
+                                      children: [
+                                        TextSpan(
+                                          text: Get.find<TournamentLeagueController>()
+                                                      .leagueDetails
+                                                      ?.leagueMatchSchedules?[
+                                                          widget.index]
+                                                      .winningTeamConfirmation ==
+                                                  "confirmed"
+                                              ? "${(Get.find<TournamentLeagueController>().leagueDetails?.leagueMatchSchedules?[widget.index].winnerTeam == Get.find<TournamentLeagueController>().leagueDetails?.leagueMatchSchedules?[widget.index].teamId) ? (Get.find<TournamentLeagueController>().leagueDetails?.leagueMatchSchedules?[widget.index].team?.name) : (Get.find<TournamentLeagueController>().leagueDetails?.leagueMatchSchedules?[widget.index].opponentTeam?.name)}"
+                                              : "",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleSmall!
+                                              .copyWith(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                color: const Color.fromRGBO(
+                                                    255, 145, 0, 1),
+                                              ),
+                                        )
+                                      ]),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Stack(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        border: Border.all(
+                                          width: 2,
+                                          color: ((Get.find<TournamentLeagueController>()
+                                                          .leagueDetails
+                                                          ?.leagueMatchSchedules?[
+                                                              widget.index]
+                                                          .winnerTeam ??
+                                                      0) ==
+                                                  (Get.find<TournamentLeagueController>()
+                                                          .leagueDetails
+                                                          ?.leagueMatchSchedules?[
+                                                              widget.index]
+                                                          .team
+                                                          ?.id ??
+                                                      0))
+                                              ? const Color.fromRGBO(
+                                                  255, 145, 0, 1)
+                                              : Colors.grey,
+                                        )),
+                                    child: CustomImage(
+                                        radius: 20,
+                                        height: 40,
+                                        width: 40,
+                                        fit: BoxFit.fill,
+                                        path:
+                                            '${AppConstants.baseUrl}${Get.find<TournamentLeagueController>().leagueDetails?.leagueMatchSchedules?[widget.index].team?.logo ?? ""}'),
+                                  ),
+                                  ((Get.find<TournamentLeagueController>()
+                                                  .leagueDetails
+                                                  ?.leagueMatchSchedules?[
+                                                      widget.index]
+                                                  .winnerTeam ??
+                                              0) ==
+                                          (Get.find<TournamentLeagueController>()
+                                                  .leagueDetails
+                                                  ?.leagueMatchSchedules?[
+                                                      widget.index]
+                                                  .team
+                                                  ?.id ??
+                                              0))
+                                      ? Positioned(
+                                          bottom: 0,
+                                          right: 0,
+                                          child: Container(
+                                            height: 14,
+                                            width: 14,
+                                            decoration: BoxDecoration(
+                                                color: const Color.fromRGBO(
+                                                    255, 145, 0, 1),
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            child: const Padding(
+                                              padding: EdgeInsets.all(2.0),
+                                              child: CustomImage(
+                                                height: 8,
+                                                width: 8,
+                                                path: Assets.imagesCrown1,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : const SizedBox.shrink(),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    Get.find<TournamentLeagueController>()
+                                                .leagueDetails
+                                                ?.leagueMatchSchedules?[
+                                                    widget.index]
+                                                .teamGoals ==
+                                            null
+                                        ? "Team A"
+                                        : (Get.find<TournamentLeagueController>()
+                                                    .leagueDetails
+                                                    ?.leagueMatchSchedules?[
+                                                        widget.index]
+                                                    .teamGoals ??
+                                                0)
+                                            .toString(),
+                                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                        fontSize:
+                                            Get.find<TournamentLeagueController>()
+                                                        .leagueDetails
+                                                        ?.leagueMatchSchedules?[
+                                                            widget.index]
+                                                        .teamGoals ==
+                                                    null
+                                                ? 8
+                                                : 22,
+                                        fontWeight:
+                                            Get.find<TournamentLeagueController>()
+                                                        .leagueDetails
+                                                        ?.leagueMatchSchedules?[
+                                                            widget.index]
+                                                        .teamGoals ==
+                                                    null
+                                                ? FontWeight.w400
+                                                : FontWeight.w700),
+                                  ),
+                                  Text(
+                                    Get.find<TournamentLeagueController>()
+                                            .leagueDetails
+                                            ?.leagueMatchSchedules?[
+                                                widget.index]
+                                            .team
+                                            ?.name ??
+                                        "",
+                                    textAlign: TextAlign.end,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                            fontSize: 11,
+                                            fontWeight: Get.find<
+                                                            TournamentLeagueController>()
+                                                        .leagueDetails
+                                                        ?.leagueMatchSchedules?[
+                                                            widget.index]
+                                                        .teamGoals ==
+                                                    null
+                                                ? FontWeight.w700
+                                                : FontWeight.w400),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                "Vs",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall!
+                                    .copyWith(
+                                      fontSize: 26,
+                                      fontWeight: FontWeight.w700,
+                                      color: const Color.fromRGBO(
+                                          217, 217, 217, 1),
+                                    ),
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    Get.find<TournamentLeagueController>()
+                                                .leagueDetails
+                                                ?.leagueMatchSchedules?[
+                                                    widget.index]
+                                                .opponentTeamGoals ==
+                                            null
+                                        ? "Team B"
+                                        : (Get.find<TournamentLeagueController>()
+                                                    .leagueDetails
+                                                    ?.leagueMatchSchedules?[
+                                                        widget.index]
+                                                    .opponentTeamGoals ??
+                                                0)
+                                            .toString(),
+                                    // textAlign: TextAlign.end,
+                                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                                        fontSize:
+                                            Get.find<TournamentLeagueController>()
+                                                        .leagueDetails
+                                                        ?.leagueMatchSchedules?[
+                                                            widget.index]
+                                                        .opponentTeamGoals ==
+                                                    null
+                                                ? 8
+                                                : 22,
+                                        fontWeight:
+                                            Get.find<TournamentLeagueController>()
+                                                        .leagueDetails
+                                                        ?.leagueMatchSchedules?[
+                                                            widget.index]
+                                                        .opponentTeamGoals ==
+                                                    null
+                                                ? FontWeight.w400
+                                                : FontWeight.w700),
+                                  ),
+                                  Text(
+                                    Get.find<TournamentLeagueController>()
+                                            .leagueDetails
+                                            ?.leagueMatchSchedules?[
+                                                widget.index]
+                                            .opponentTeam
+                                            ?.name ??
+                                        "",
+                                    textAlign: TextAlign.end,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                            fontSize: 11,
+                                            fontWeight: Get.find<
+                                                            TournamentLeagueController>()
+                                                        .leagueDetails
+                                                        ?.leagueMatchSchedules?[
+                                                            widget.index]
+                                                        .opponentTeamGoals ==
+                                                    null
+                                                ? FontWeight.w700
+                                                : FontWeight.w400),
+                                  ),
+                                ],
+                              ),
+                              Stack(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        border: Border.all(
+                                          width: 2,
+                                          color: ((Get.find<TournamentLeagueController>()
+                                                          .leagueDetails
+                                                          ?.leagueMatchSchedules?[
+                                                              widget.index]
+                                                          .winnerTeam ??
+                                                      0) ==
+                                                  (Get.find<TournamentLeagueController>()
+                                                          .leagueDetails
+                                                          ?.leagueMatchSchedules?[
+                                                              widget.index]
+                                                          .opponentTeam
+                                                          ?.id ??
+                                                      0))
+                                              ? const Color.fromRGBO(
+                                                  255, 145, 0, 1)
+                                              : Colors.grey,
+                                        )),
+                                    child: CustomImage(
+                                        radius: 20,
+                                        height: 40,
+                                        width: 40,
+                                        fit: BoxFit.fill,
+                                        path:
+                                            '${AppConstants.baseUrl}${Get.find<TournamentLeagueController>().leagueDetails?.leagueMatchSchedules?[widget.index].opponentTeam?.logo ?? ""}'),
+                                  ),
+                                  ((Get.find<TournamentLeagueController>()
+                                                  .leagueDetails
+                                                  ?.leagueMatchSchedules?[
+                                                      widget.index]
+                                                  .winnerTeam ??
+                                              0) ==
+                                          (Get.find<TournamentLeagueController>()
+                                                  .leagueDetails
+                                                  ?.leagueMatchSchedules?[
+                                                      widget.index]
+                                                  .opponentTeam
+                                                  ?.id ??
+                                              0))
+                                      ? Positioned(
+                                          bottom: 0,
+                                          right: 0,
+                                          child: Container(
+                                            height: 14,
+                                            width: 14,
+                                            decoration: BoxDecoration(
+                                                color: const Color.fromRGBO(
+                                                    255, 145, 0, 1),
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            child: const Padding(
+                                              padding: EdgeInsets.all(2.0),
+                                              child: CustomImage(
+                                                height: 8,
+                                                width: 8,
+                                                path: Assets.imagesCrown1,
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      : const SizedBox.shrink(),
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 30,
+                      decoration: BoxDecoration(
+                          color: Get.find<TournamentLeagueController>()
+                                      .leagueDetails
+                                      ?.leagueMatchSchedules?[widget.index]
+                                      .winningTeamConfirmation ==
+                                  "confirmed"
+                              ? Colors.green.shade50
+                              : Color.fromRGBO(255, 145, 0, 0.1),
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10))),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                text: (Get.find<TournamentLeagueController>().leagueDetails?.leagueMatchSchedules?[widget.index].winningTeamConfirmation ==
+                                        "confirmed")
+                                    ? "Match Completed"
+                                    : (Get.find<TournamentLeagueController>()
+                                                    .leagueDetails
+                                                    ?.leagueMatchSchedules?[
+                                                        widget.index]
+                                                    .winningTeamConfirmation ==
+                                                "pending" &&
+                                            Get.find<TournamentLeagueController>().leagueDetails?.leagueMatchSchedules?[widget.index].winnerTeam ==
+                                                null &&
+                                            Get.find<TournamentLeagueController>().leagueDetails?.leagueMatchSchedules?[widget.index].teamGoals ==
+                                                null &&
+                                            Get.find<TournamentLeagueController>().leagueDetails?.leagueMatchSchedules?[widget.index].opponentTeamGoals ==
+                                                null)
+                                        ? "Result not declared"
+                                        : (Get.find<TournamentLeagueController>()
+                                                        .leagueDetails
+                                                        ?.leagueMatchSchedules?[
+                                                            widget.index]
+                                                        .winningTeamConfirmation ==
+                                                    "pending" &&
+                                                Get.find<TournamentLeagueController>()
+                                                        .leagueDetails
+                                                        ?.leagueMatchSchedules?[widget.index]
+                                                        .winnerTeamResponseByUser ==
+                                                    Get.find<AuthController>().profile?.id)
+                                            ? "Waiting for opponent's confirmation"
+                                            : "Your confirmation is pending",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge!
+                                    .copyWith(fontSize: 8, color: Colors.black),
+                              ),
                             ),
                           ],
                         ),
