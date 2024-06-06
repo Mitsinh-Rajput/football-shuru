@@ -6,6 +6,7 @@ import '../../../../data/models/response/statistic_model.dart';
 import '../../../../services/constants.dart';
 import '../../../base/common_button.dart';
 import '../../../base/custom_image.dart';
+import '../../../base/lottie_builder.dart';
 
 class Stats extends StatefulWidget {
   const Stats({super.key});
@@ -90,7 +91,25 @@ class _StatsState extends State<Stats> {
             const SizedBox(
               height: 14,
             ),
-            ListView.builder(
+            data.isEmpty
+                ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+       crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const CustomLottie(
+                  assetLottie: Assets.lottiesFootballWait,
+                  height: 200,
+                ),
+                Text(
+                  "Please wait, ${titles[buttonIndex]} are being calculated...",
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelMedium!
+                      .copyWith(fontSize: 16),
+                )
+              ],
+            )
+                : ListView.builder(
                 shrinkWrap: true,
                 itemCount: data.length,
                 itemBuilder: (context, index) {
