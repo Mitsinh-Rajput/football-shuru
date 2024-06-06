@@ -48,4 +48,11 @@ class KingChallengeRepo {
 
   Future<Response> getPendingMatchResult() async =>
       await apiClient.getData(AppConstants.pendingList);
+
+  Future<Response> groundStatistic(
+      {required int groundId, required String type}) async =>
+      await apiClient.postData(AppConstants.groundStatistic, {
+        "ground_id": groundId,
+        "type": type,
+      });
 }

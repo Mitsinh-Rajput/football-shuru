@@ -17,6 +17,7 @@ import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 
 import '../../../base/custom_image.dart';
+import '../../../base/lottie_builder.dart';
 import '../../../base/snack_bar.dart';
 
 class SelectGroundChatScreen extends StatefulWidget {
@@ -67,21 +68,16 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen>
       await Get.find<KingChallengeController>()
           .getGroundTeamList(groundId: widget.groundId);
       setState(() {});
+      Get.find<KingChallengeController>()
+          .getGroundStatisticData(groundId: widget.groundId, type: "goal");
+      Get.find<KingChallengeController>()
+          .getGroundStatisticData(groundId: widget.groundId, type: "assist");
+      Get.find<KingChallengeController>()
+          .getGroundStatisticData(groundId: widget.groundId, type: "best_defender");
+      Get.find<KingChallengeController>()
+          .getGroundStatisticData(groundId: widget.groundId,type: "best_midfield");
     });
     _tabController = TabController(vsync: this, length: 3);
-
-    // _scrollController.addListener(() {
-    //   if (_scrollController.offset > 25 && !isScroll) {
-    //     setState(() {
-    //       isScroll = true;
-    //     });
-    //   } else if (_scrollController.offset <= 25 && isScroll) {
-    //     setState(() {
-    //       isScroll = false;
-    //     });
-    //   }
-    // });
-    // print(isScroll);
   }
 
   @override
@@ -206,8 +202,12 @@ class _SelectGroundChatScreenState extends State<SelectGroundChatScreen>
                           //   },
                           //   child: Text("Set Winner"),
                           // ),
-                          isLoading
-                              ? const Center(child: CircularProgressIndicator())
+                          isLoading ?  Center(
+                            child: CustomLottie(
+                              assetLottie: Assets.lottiesFootball,
+                              height: 50,
+                            ),
+                          )
                               : Positioned(
                                   bottom: 0,
                                   left: 0,

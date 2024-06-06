@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import '../../../../controllers/kingchallenge_controller.dart';
 import '../../../../data/models/response/groundteam_model.dart';
 import '../../../base/custom_image.dart';
+import '../../../base/lottie_builder.dart';
 
 class GroundKingChampion extends StatefulWidget {
   final int groundId;
@@ -33,10 +34,13 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
     return GetBuilder<KingChallengeController>(
         builder: (kingChallengeController) {
       return kingChallengeController.isLoading
-          ? const Align(
-              alignment: Alignment.topCenter,
-              child: CircularProgressIndicator())
-          : GetBuilder<HomePageController>(builder: (homePageController) {
+          ?  Center(
+          child: CustomLottie(
+          assetLottie: Assets.lottiesFootball,
+          height: 50,
+          ),
+          )
+              : GetBuilder<HomePageController>(builder: (homePageController) {
               bool isCaptain = false;
               if (homePageController.groundsDetail?.groundKingTeam?.captain ==
                   Get.find<AuthController>().profile?.id) {
@@ -56,9 +60,12 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                   null) {
                 if (homePageController.groundsDetail?.groundKingTeam == null) {
                   return homePageController.isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
+                      ?  Center(
+                    child: CustomLottie(
+                      assetLottie: Assets.lottiesFootball,
+                      height: 50,
+                    ),
+                  )
                       : Container(
                           height: 150,
                           margin: const EdgeInsets.symmetric(
@@ -455,10 +462,13 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                     }
                   }
                   return homePageController.isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : Container(
+                      ?  Center(
+                    child: CustomLottie(
+                      assetLottie: Assets.lottiesFootball,
+                      height: 50,
+                    ),
+                  )
+                      :  Container(
                           height: 150,
                           margin: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 16),
@@ -1014,9 +1024,12 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                       .groundsDetail?.groundKingChallenge?.opponentTeamId ==
                   null) {
                 return homePageController.isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
+                    ?  Center(
+                  child: CustomLottie(
+                    assetLottie: Assets.lottiesFootball,
+                    height: 50,
+                  ),
+                )
                     : Container(
                         height: 150,
                         margin: const EdgeInsets.symmetric(
@@ -1530,9 +1543,12 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                       .groundsDetail?.groundKingChallenge?.scheduledStatus ==
                   "rejected") {
                 return homePageController.isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
+                    ?  Center(
+                  child: CustomLottie(
+                    assetLottie: Assets.lottiesFootball,
+                    height: 50,
+                  ),
+                )
                     : Container(
                         height: 150,
                         margin: const EdgeInsets.symmetric(
@@ -1946,9 +1962,12 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                       );
               } else {
                 return homePageController.isLoading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
+                    ?  Center(
+                  child: CustomLottie(
+                    assetLottie: Assets.lottiesFootball,
+                    height: 50,
+                  ),
+                )
                     : Container(
                         height: 150,
                         margin: const EdgeInsets.symmetric(

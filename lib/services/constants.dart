@@ -67,6 +67,7 @@ class AppConstants {
   static const String gameSlot = 'api/v1/ground/game-slot';
   static const String createGameSlot = 'api/v1/ground/game-slot/create';
   static const String gameSlotAttenance = 'api/v1/ground/game-slot/attendance';
+  static const String groundStatistic = "api/v1/ground/statistics";
 
   /// Ground King Challenge
 
@@ -80,6 +81,7 @@ class AppConstants {
   static const String setWinner = 'api/v1/ground/king-challenge/set-winner';
   static const String scorecard = 'api/v1/ground/scorecard/store';
   static const String pendingList = 'api/v1/ground/king-challenge/pending-list';
+
 
   /// Team
   static const String createTeam = 'api/v1/team';

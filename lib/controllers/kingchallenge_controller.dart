@@ -7,6 +7,7 @@ import 'package:football_shuru/data/models/response/groundteam_model.dart';
 import 'package:football_shuru/data/repositories/kingchallenge_repo.dart';
 import 'package:get/get.dart';
 
+import '../data/models/response/GroundStatisticModel.dart';
 import '../data/models/response/PendingLeagueMatchModel.dart';
 import '../data/models/response/response_model.dart';
 import '../services/constants.dart';
@@ -52,6 +53,52 @@ class KingChallengeController extends GetxController implements GetxService {
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
       log('++++ ${e.toString()} +++++++', name: "ERROR AT getTeamList()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  List<GroundStatisticModel> groundGoals = [];
+  List<GroundStatisticModel> groundAssists = [];
+  List<GroundStatisticModel> groundBestDefender = [];
+  List<GroundStatisticModel> groundBestMidFielder = [];
+
+  Future<ResponseModel> getGroundStatisticData(
+      {required int groundId, required String type}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.groundStatistic}",
+        name: "getStatisticData");
+    try {
+      Response response = await kingChallengeRepo.groundStatistic(
+          groundId: groundId, type: type);
+      // log(response.statusCode.toString());
+      log(jsonEncode(response.body), name: "getStatisticData");
+      if (response.statusCode == 200) {
+        if (type == "goal") {
+          groundGoals =
+              groundStatisticModelFromJson(jsonEncode(response.body["data"]));
+        } else if (type == "assist") {
+          groundAssists =
+              groundStatisticModelFromJson(jsonEncode(response.body["data"]));
+        } else if (type == "best_defender") {
+          groundBestDefender =
+              groundStatisticModelFromJson(jsonEncode(response.body["data"]));
+        } else {
+          groundBestMidFielder =
+              groundStatisticModelFromJson(jsonEncode(response.body["data"]));
+        }
+        responseModel =
+            ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel =
+            ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT getLeagueDetail()");
     }
     _isLoading = false;
     update();
