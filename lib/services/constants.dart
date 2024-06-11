@@ -40,7 +40,7 @@ class AppConstants {
 
   //TODO: Change Base Url
   // static String baseUrl = 'https://footballshuru.heenahealth.in/';
-  static String baseUrl = 'http://192.168.1.4:8001/';
+  static String baseUrl = 'http://192.168.1.19:8001/';
 
   ///USE FOR LOCAL
   //TODO: Change Base Url
