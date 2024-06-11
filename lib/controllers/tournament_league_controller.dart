@@ -126,7 +126,7 @@ class TournamentLeagueController extends GetxController implements GetxService {
     });
 
     for(var i=0;i<(leagueDetails?.leagueMatchSchedules ?? []).length;i++){
-      if(leagueDetails?.leagueMatchSchedules?[i].team?.captain != Get.find<AuthController>().profile?.id ||
+      if(leagueDetails?.leagueMatchSchedules?[i].team?.captain != Get.find<AuthController>().profile?.id &&
           leagueDetails?.leagueMatchSchedules?[i].opponentTeam?.captain != Get.find<AuthController>().profile?.id){
         temp.add(leagueDetails?.leagueMatchSchedules?[i] ?? LeagueMatchSchedule());
       }
