@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/services/extensions.dart';
 import 'package:get/get.dart';
 
@@ -54,7 +55,6 @@ class TournamentLeagueController extends GetxController implements GetxService {
           });
         }
       }
-      print(data);
       log(data.toString(), name: "Data");
       Response response = await tournamentLeagueRepo.createLeague(data);
       log(response.statusCode.toString());
@@ -109,6 +109,31 @@ class TournamentLeagueController extends GetxController implements GetxService {
 
   List<LeagueTableModel> leagueTableList = [];
 
+  void sortByUserId(){
+    List<LeagueMatchSchedule> temp = [];
+    for(var i=0;i<(leagueDetails?.leagueMatchSchedules ?? []).length;i++){
+      if(leagueDetails?.leagueMatchSchedules?[i].team?.captain == Get.find<AuthController>().profile?.id ||
+          leagueDetails?.leagueMatchSchedules?[i].opponentTeam?.captain == Get.find<AuthController>().profile?.id){
+        temp.add(leagueDetails?.leagueMatchSchedules?[i] ?? LeagueMatchSchedule());
+      }
+    }
+    temp.sort((a, b) {
+      if ((a.scheduledTimeStatus == "rejected" && a.scheduledBy!=null) && (b.scheduledTimeStatus != "rejected" && a.scheduledBy!=null)) {
+        return 1;
+      }else {
+        return 0;
+      }
+    });
+
+    for(var i=0;i<(leagueDetails?.leagueMatchSchedules ?? []).length;i++){
+      if(leagueDetails?.leagueMatchSchedules?[i].team?.captain != Get.find<AuthController>().profile?.id ||
+          leagueDetails?.leagueMatchSchedules?[i].opponentTeam?.captain != Get.find<AuthController>().profile?.id){
+        temp.add(leagueDetails?.leagueMatchSchedules?[i] ?? LeagueMatchSchedule());
+      }
+    }
+    leagueDetails?.leagueMatchSchedules = temp;
+  }
+
   Future<ResponseModel> getLeagueDetail({required int leagueId}) async {
     ResponseModel responseModel;
     _isLoading = true;
@@ -127,6 +152,7 @@ class TournamentLeagueController extends GetxController implements GetxService {
             leagueTableModelFromJson(jsonEncode(response.body['tables']));
         leagueTableList.sort(
             (a, b) => b.totalMatchesPlayed!.compareTo(a.totalMatchesPlayed!));
+        sortByUserId();
         responseModel =
             ResponseModel(true, '${response.body['message']}', response.body);
       } else {

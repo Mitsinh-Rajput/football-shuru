@@ -195,6 +195,7 @@ class _LeagueScreenState extends State<LeagueScreen> {
                                 ? const Center(
                                     child: CustomLottie(
                                       assetLottie: Assets.lottiesFootball,
+                                      height: 50,
                                     ),
                                   )
                                 : GestureDetector(
