@@ -27,8 +27,13 @@ class _AddLeagueState extends State<AddLeague> {
   TextEditingController descController = TextEditingController();
   TextEditingController numberOfParticipantsController =
       TextEditingController();
+  TextEditingController minimumTeamSizeController =
+      TextEditingController();
+
   final List<int> participants = [4, 8, 16, 32];
+  final List<String> type = ["league","knockout"];
   int? selectedParticipant;
+  String? selectedType;
   List<File> images = [];
   final _formKey = GlobalKey<FormState>();
 
@@ -160,6 +165,27 @@ class _AddLeagueState extends State<AddLeague> {
                 const SizedBox(
                   height: 20,
                 ),
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value.isNotValid) {
+                      return 'Enter Minimum Team Size';
+                    }
+                    return null; // Return null if the value is valid
+                  },
+                  controller: minimumTeamSizeController,
+                  keyboardType: TextInputType.number,
+                  decoration: CustomDecoration.inputDecoration(
+                    floating: true,
+                    label: "Minimum Team Size",
+                    hintStyle: const TextStyle(fontSize: 14),
+                    hint:
+                    "Ex. 2",
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 DropdownButtonFormField<int>(
                   dropdownColor: Colors.white,
                   value: selectedParticipant,
@@ -188,6 +214,41 @@ class _AddLeagueState extends State<AddLeague> {
                   validator: (value) {
                     if (value == null) {
                       return 'Select number of participants';
+                    }
+                    return null; // Return null if the value is valid
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                DropdownButtonFormField<String>(
+                  dropdownColor: Colors.white,
+                  value: selectedType,
+                  decoration: CustomDecoration.inputDecoration(
+                    icon: const Padding(
+                      padding: EdgeInsets.all(12.0),
+                      child: CustomImage(
+                          height: 24, width: 24, path: Assets.imagesTeams),
+                    ),
+                    floating: true,
+                    label: "Type of Tournament",
+                    hint: "Select type of tournament",
+                    hintStyle: const TextStyle(fontSize: 14),
+                  ),
+                  items: type.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value.toString()),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedType = newValue;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Select type of tournament';
                     }
                     return null; // Return null if the value is valid
                   },
@@ -255,6 +316,7 @@ class _AddLeagueState extends State<AddLeague> {
                               ),
                             );
                           }),
+                        if (!images.isNotEmpty)
                         GestureDetector(
                           onTap: () async {
                             File? groundPic =
@@ -337,7 +399,8 @@ class _AddLeagueState extends State<AddLeague> {
                       name: nameController.text,
                       desc: descController.text,
                       images: images,
-                      numberOfParticipants: selectedParticipant.toString(),
+                      numberOfParticipants: selectedParticipant.toString(), type: selectedType ?? "",
+                      minimumTeamSize: int.parse(minimumTeamSizeController.text)
                     )
                         .then((value) {
                       if (value.isSuccess) {

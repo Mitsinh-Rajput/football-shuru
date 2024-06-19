@@ -47,7 +47,7 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
     introList = [
       SliderList(
           title: "Matches",
-          content: (widget.typesOfLeague == "Knock out")
+          content: (widget.typesOfLeague == "knockout")
               ? const KnockOutPage()
               : const MatchesPage()),
       SliderList(

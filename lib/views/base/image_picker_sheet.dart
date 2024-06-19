@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../controllers/service_controller.dart';
+import '../../services/camera.dart';
 
 getImageBottomSheet(context) {
   return showModalBottomSheet(
@@ -74,9 +75,13 @@ class ShowImageOptions extends StatelessWidget {
               GestureDetector(
                 onTap: () async {
                   var navigator = Navigator.of(context);
-                  File? data = await ServiceController().pickImage(ImageSource.camera, context);
+                  File? pickedFile = await navigator.push(MaterialPageRoute(
+                    builder: (context) => const CameraScreen(),
+                  ));
 
-                  navigator.pop(data);
+                  navigator.pop(pickedFile);
+
+
                 },
                 child: Row(
                   children: [

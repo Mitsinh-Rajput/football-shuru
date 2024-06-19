@@ -204,7 +204,7 @@ class _LeagueScreenState extends State<LeagueScreen> {
                                         context,
                                         getCustomRoute(
                                           child: LeagueDetailsPage(
-                                            typesOfLeague: "League’s match",
+                                            typesOfLeague: league.type ?? "",
                                             league: league,
                                           ),
                                         ),
@@ -311,7 +311,7 @@ class _LeagueScreenState extends State<LeagueScreen> {
                                                               ),
                                                             ),
                                                             child: Text(
-                                                              "League’s match",
+                                                              league.type ?? "",
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
@@ -396,7 +396,7 @@ class _LeagueScreenState extends State<LeagueScreen> {
                                                               child:
                                                                   LeagueDetailsPage(
                                                                 typesOfLeague:
-                                                                    "League’s match",
+                                                                league.type ?? "",
                                                                 league: league,
                                                               ),
                                                             ),

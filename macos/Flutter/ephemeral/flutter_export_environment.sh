@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/appdidinfotech/Downloads/Flutter/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/appdidinfotech/Deep Projects/football-shuru"
+export "FLUTTER_ROOT=C:\Flutter SDK\flutter_windows_3.16.9-stable\flutter"
+export "FLUTTER_APPLICATION_PATH=D:\Mit\football_shuru"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.0.0"

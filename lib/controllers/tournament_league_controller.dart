@@ -26,6 +26,8 @@ class TournamentLeagueController extends GetxController implements GetxService {
       required String name,
       String? desc,
       required String numberOfParticipants,
+        required String type,
+        required int minimumTeamSize,
       List<File>? images}) async {
     ResponseModel responseModel;
     _isLoading = true;
@@ -46,14 +48,20 @@ class TournamentLeagueController extends GetxController implements GetxService {
       data.addAll({
         "description": desc,
       });
+      data.addAll({
+        "type": type,
+      });
+      data.addAll({
+        "minimum_team_size": minimumTeamSize,
+      });
       log(images.toString(), name: "Images");
       if ((images ?? []).isNotEmpty) {
-        for (int i = 0; i < (images ?? []).length; i++) {
+        // for (int i = 0; i < (images ?? []).length; i++) {
           data.addAll({
-            'image[$i]':
-                MultipartFile(images?[i], filename: images![i].path.fileName),
+            'image':
+                MultipartFile(images?.first, filename: images!.first.path.fileName),
           });
-        }
+        // }
       }
       log(data.toString(), name: "Data");
       Response response = await tournamentLeagueRepo.createLeague(data);

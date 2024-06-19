@@ -20,13 +20,7 @@ class LeagueAndTourScreen extends StatefulWidget {
 }
 
 class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
-  List typesOfLeaguelist = [
-    "League’s match",
-    "League’s match",
-    "Knock out",
-    "Round robins",
-    "League’s match"
-  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +84,7 @@ class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
               return ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: typesOfLeaguelist.length,
+                  itemCount: 4,
                   itemBuilder: (context, index) {
                     return CustomShimmer(
                       child: Container(
@@ -121,7 +115,7 @@ class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
                           type: PageTransitionType.fade,
                           duration: const Duration(milliseconds: 600),
                           child: LeagueDetailsPage(
-                            typesOfLeague: typesOfLeaguelist[index],
+                            typesOfLeague: tournamentLeagueController.league[index].type ?? "",
                             league: tournamentLeagueController.league[index],
                           ),
                         ),
@@ -199,7 +193,7 @@ class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
                                                   BorderRadius.circular(4),
                                             ),
                                             child: Text(
-                                              typesOfLeaguelist[index],
+                                              tournamentLeagueController.league[index].type ?? "",
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .labelSmall,
@@ -269,7 +263,7 @@ class _LeagueAndTourScreenState extends State<LeagueAndTourScreen> {
                                                   milliseconds: 600),
                                               child: LeagueDetailsPage(
                                                 typesOfLeague:
-                                                    typesOfLeaguelist[index],
+                                                tournamentLeagueController.league[index].type ?? "",
                                                 league:
                                                     tournamentLeagueController
                                                         .league[index],

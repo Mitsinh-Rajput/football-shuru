@@ -103,6 +103,7 @@ class LeagueMatchSchedule {
   DateTime? updatedAt;
   OpponentTeamClass? opponentTeam;
   OpponentTeamClass? team;
+  int? level;
 
   LeagueMatchSchedule({
     this.id,
@@ -123,6 +124,7 @@ class LeagueMatchSchedule {
     this.updatedAt,
     this.opponentTeam,
     this.team,
+    this.level
   });
 
   factory LeagueMatchSchedule.fromJson(Map<String, dynamic> json) =>
@@ -139,6 +141,7 @@ class LeagueMatchSchedule {
         scheduledBy: json["scheduled_by"],
         scheduledTimeStatus: json["scheduled_time_status"],
         winnerTeam: json["winner_team"],
+        level: json["level"],
         winnerTeamResponseByUser: json["winner_team_response_by_user"],
         winningTeamConfirmation: json["winning_team_confirmation"],
         createdAt: json["created_at"] == null
@@ -166,6 +169,7 @@ class LeagueMatchSchedule {
         "is_cancelled": isCancelled,
         "scheduled_time": scheduledTime,
         "scheduled_by": scheduledBy,
+    "level": level,
         "scheduled_time_status": scheduledTimeStatus,
         "winner_team": winnerTeam,
         "winner_team_response_by_user": winnerTeamResponseByUser,
