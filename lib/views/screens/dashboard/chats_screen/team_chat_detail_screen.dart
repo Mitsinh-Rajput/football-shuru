@@ -46,7 +46,7 @@ class _TeamChatDetailScreenState extends State<TeamChatDetailScreen> {
   void initState() {
     super.initState();
     Timer.run(() async {
-      await Get.find<ChatController>().loadTeamChats(teamId: widget.team.id ?? 0);
+      await Get.find<ChatController>().loadTeamChats(teamId: widget.team.team?.id ?? 0);
 
     });
   }
@@ -239,7 +239,7 @@ class _TeamChatDetailScreenState extends State<TeamChatDetailScreen> {
                       if (messageController.text.isValid) {
                         if (chatController.isLoading) {
                         } else {
-                          chatController.sendTeamMessage(teamId: widget.team.id ?? 0, message: messageController.text).then((value) {
+                          chatController.sendTeamMessage(teamId: widget.team.team?.id ?? 0, message: messageController.text).then((value) {
                             if (value.isSuccess) {
                               messageController.clear();
                             }

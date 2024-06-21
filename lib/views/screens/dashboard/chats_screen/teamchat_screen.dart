@@ -33,6 +33,7 @@ class _TeamChatScreenState extends State<TeamChatScreen> {
         itemCount: teamControllor.joinedTeam.length,
         itemBuilder: (context, index) {
           final team = teamControllor.joinedTeam[index];
+          print(team.team?.id);
           return GestureDetector(
             onTap: (){
               Navigator.push(context, getCustomRoute(child: TeamChatDetailScreen(team: team)));
