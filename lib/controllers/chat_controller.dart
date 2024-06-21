@@ -6,6 +6,7 @@ import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/controllers/homepage_controller.dart';
 import 'package:football_shuru/data/models/response/chat_model.dart';
 import 'package:football_shuru/data/models/response/profile_model.dart';
+import 'package:football_shuru/data/models/response/team_chat_model.dart';
 import 'package:get/get.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
@@ -20,6 +21,7 @@ class ChatController extends GetxController implements GetxService {
   ChatController({required this.authRepo});
 
   List<ChatModel> _allChats = [];
+  List<TeamChatModel> teamChat = [];
 
   List<ChatModel> get allChats {
     return _allChats;
@@ -127,6 +129,68 @@ class ChatController extends GetxController implements GetxService {
             userId: Get.find<AuthController>().profile?.id,
             message: requiredData['message'],
             createdAt: DateTime.now(),
+          ),
+        );
+        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT sendMessage()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+
+  Future<ResponseModel> loadTeamChats({required int teamId}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.chatTeam}", name: "loadTeamChats");
+    try {
+      Response response = await authRepo.loadTeamChats(teamId: teamId);
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "loadTeamChats");
+      if (response.statusCode == 200) {
+        teamChat = teamChatModelFromJson(jsonEncode(response.body['data']));
+        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT loadTeamChats()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> sendTeamMessage({required int teamId, required String message}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.sendTeamMessage}", name: "sendTeamMessage");
+    try {
+      Response response = await authRepo.sendTeamMessage(teamId: teamId, message: message);
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "sendMessage");
+      if (response.statusCode == 200) {
+        final requiredData = response.body['data'];
+        log(Get.find<AuthController>().profile!.id.toString());
+        teamChat.insert(
+          0,
+          TeamChatModel(
+            id: requiredData['id'],
+            user: User(
+              id: Get.find<AuthController>().profile?.id,
+              name: Get.find<AuthController>().profile?.name,
+            ),
+            message: requiredData['message'],
+            createdAt: DateTime.now()
           ),
         );
         responseModel = ResponseModel(true, '${response.body['message']}', response.body);
