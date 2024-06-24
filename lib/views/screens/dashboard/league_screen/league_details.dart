@@ -5,6 +5,7 @@ import 'package:football_shuru/data/models/response/league_model.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/base/lottie_builder.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/knock_out_matches.dart';
+import 'package:football_shuru/views/screens/dashboard/league_screen/league_chat.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/matches_section.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/stats_section.dart';
 import 'package:football_shuru/views/screens/dashboard/league_screen/tables_section.dart';
@@ -61,6 +62,26 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
       SliderList(title: "Tables", content: const TableSection()),
       SliderList(title: "Stats", content: const Stats()),
     ];
+  }
+
+  void _openChatPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Chat'),
+          content: LeagueChat(leagueModel: widget.league,),
+          actions: [
+            TextButton(
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -246,6 +267,8 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
                 ],
               );
       }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: GestureDetector(onTap: () => _openChatPopup(context),child: const CustomImage(path: Assets.imagesChats,),),
     );
   }
 }

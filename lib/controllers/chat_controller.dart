@@ -6,10 +6,11 @@ import 'package:football_shuru/controllers/auth_controller.dart';
 import 'package:football_shuru/controllers/homepage_controller.dart';
 import 'package:football_shuru/data/models/response/chat_model.dart';
 import 'package:football_shuru/data/models/response/profile_model.dart';
-import 'package:football_shuru/data/models/response/team_chat_model.dart';
+import 'package:football_shuru/data/models/response/team_chat_model.dart' as teamModel;
 import 'package:get/get.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
+import '../data/models/response/LeagueChatModel.dart';
 import '../data/models/response/response_model.dart';
 import '../data/repositories/auth_repo.dart';
 import '../services/constants.dart';
@@ -21,7 +22,8 @@ class ChatController extends GetxController implements GetxService {
   ChatController({required this.authRepo});
 
   List<ChatModel> _allChats = [];
-  List<TeamChatModel> teamChat = [];
+  List<teamModel.TeamChatModel> teamChat = [];
+  List<LeagueChatModel> leagueChat = [];
 
   List<ChatModel> get allChats {
     return _allChats;
@@ -155,7 +157,7 @@ class ChatController extends GetxController implements GetxService {
       log(response.statusCode.toString());
       log(response.body.toString(), name: "loadTeamChats");
       if (response.statusCode == 200) {
-        teamChat = teamChatModelFromJson(jsonEncode(response.body['data']));
+        teamChat = teamModel.teamChatModelFromJson(jsonEncode(response.body['data']));
         responseModel = ResponseModel(true, '${response.body['message']}', response.body);
       } else {
         responseModel = ResponseModel(false, '${response.body['message']}', response.body);
@@ -183,9 +185,9 @@ class ChatController extends GetxController implements GetxService {
         log(Get.find<AuthController>().profile!.id.toString());
         teamChat.insert(
           0,
-          TeamChatModel(
+          teamModel.TeamChatModel(
             id: requiredData['id'],
-            user: User(
+            user: teamModel.User(
               id: Get.find<AuthController>().profile?.id,
               name: Get.find<AuthController>().profile?.name,
             ),
@@ -200,6 +202,67 @@ class ChatController extends GetxController implements GetxService {
     } catch (e) {
       responseModel = ResponseModel(false, "CATCH");
       log('++++ ${e.toString()} +++++++', name: "ERROR AT sendMessage()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> loadLeagueChats({required int leagueId}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.chatLeague}", name: "loadLeagueChats");
+    try {
+      Response response = await authRepo.loadLeagueChats( leagueId: leagueId);
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "loadLeagueChats");
+      if (response.statusCode == 200) {
+        leagueChat = leagueChatModelFromJson(jsonEncode(response.body['data']));
+        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT loadLeagueChats()");
+    }
+    _isLoading = false;
+    update();
+    return responseModel;
+  }
+
+  Future<ResponseModel> sendLeagueMessage({required int leagueId, required String message}) async {
+    ResponseModel responseModel;
+    _isLoading = true;
+    update();
+    log("response.body.toString()${AppConstants.baseUrl}${AppConstants.sendTeamMessage}", name: "sendLeagueMessage");
+    try {
+      Response response = await authRepo.sendLeagueMessage(leagueId: leagueId, message: message);
+      log(response.statusCode.toString());
+      log(response.body.toString(), name: "sendLeagueMessage");
+      if (response.statusCode == 200) {
+        final requiredData = response.body['data'];
+        log(Get.find<AuthController>().profile!.id.toString());
+        leagueChat.insert(
+          0,
+          LeagueChatModel(
+              id: requiredData['id'],
+              user: User(
+                id: Get.find<AuthController>().profile?.id,
+                name: Get.find<AuthController>().profile?.name,
+              ),
+              message: requiredData['message'],
+              createdAt: DateTime.now()
+          ),
+        );
+        responseModel = ResponseModel(true, '${response.body['message']}', response.body);
+      } else {
+        responseModel = ResponseModel(false, '${response.body['message']}', response.body);
+      }
+    } catch (e) {
+      responseModel = ResponseModel(false, "CATCH");
+      log('++++ ${e.toString()} +++++++', name: "ERROR AT sendLeagueMessage()");
     }
     _isLoading = false;
     update();

@@ -40,7 +40,7 @@ class AppConstants {
 
   //TODO: Change Base Url
   // static String baseUrl = 'https://footballshuru.heenahealth.in/';
-  static String baseUrl = 'http://192.168.1.13:8001/';
+  static String baseUrl = 'http://192.168.1.7:8001/';
 
   ///USE FOR LOCAL
   //TODO: Change Base Url
@@ -104,6 +104,8 @@ class AppConstants {
   static const String leagueMatchSetWinner = 'api/v1/league/match/set-winner';
   static const String leagueScorecard = 'api/v1/league/scorecard';
   static const String leagueStatistic = 'api/v1/league/statistics';
+  static const String chatLeague = 'api/v1/league/chat/messages/load';
+  static const String sendLeagueMessage = 'api/v1/league/chat/messages/send';
 
   /// Home
   static const String slider = 'api/v1/basic/slider';

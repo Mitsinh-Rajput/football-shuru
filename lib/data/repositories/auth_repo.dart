@@ -86,6 +86,15 @@ class AuthRepo {
       await apiClient.postData(AppConstants.sendTeamMessage,
           {"team_id": teamId, "message": message});
 
+  Future<Response> loadLeagueChats({required int leagueId}) async =>
+      await apiClient.getData("${AppConstants.chatLeague}?league_id=$leagueId");
+
+
+  Future<Response> sendLeagueMessage(
+      {required int leagueId, required String message}) async =>
+      await apiClient.postData(AppConstants.sendLeagueMessage,
+          {"league_id": leagueId, "message": message});
+
   Future<Response> storeGround(Map<String, dynamic> data) async =>
       await apiClient.postData(AppConstants.ground, FormData(data));
 

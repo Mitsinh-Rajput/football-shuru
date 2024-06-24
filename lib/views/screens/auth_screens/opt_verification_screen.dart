@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -5,6 +6,7 @@ import 'package:football_shuru/controllers/firebase_controller.dart';
 import 'package:football_shuru/views/screens/auth_screens/signup_screen.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../../services/route_helper.dart';
 import '../../../services/theme.dart';
@@ -123,7 +125,18 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 GestureDetector(
                   onTap: () {
                     if (_showButton) {
+                      if(kDebugMode){
+                        Navigator.pushReplacement(
+                          context,
+                          getCustomRoute(
+                            type: PageTransitionType.fade,
+                            duration: const Duration(milliseconds: 600),
+                            child: const DashboardScreen(),
+                          ),
+                        );
+                      }
                       Get.find<FirebaseController>().signInWithPhoneNumber(context);
+
                     } else {
                       Fluttertoast.showToast(
                         msg: "Enter Valid 6 Digit Code",
