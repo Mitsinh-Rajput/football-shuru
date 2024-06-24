@@ -69,16 +69,20 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Chat'),
+          title:  Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('League Chat',style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize:14),),
+              GestureDetector(
+                onTap: (){
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.close),
+              )
+            ],
+          ),
           content: LeagueChat(leagueModel: widget.league,),
-          actions: [
-            TextButton(
-              child: const Text('Close'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+
         );
       },
     );
@@ -268,7 +272,7 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
               );
       }),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: GestureDetector(onTap: () => _openChatPopup(context),child: const CustomImage(path: Assets.imagesChats,),),
+      floatingActionButton: GestureDetector(onTap: () => _openChatPopup(context),child: const CustomImage(path: Assets.imagesChats,height: 30,width: 30,),),
     );
   }
 }
