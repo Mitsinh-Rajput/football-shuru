@@ -51,42 +51,22 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
           content: (widget.typesOfLeague == "knockout")
               ? const KnockOutPage()
               : const MatchesPage()),
+      SliderList(title: "Tables", content: const TableSection()),
+      SliderList(title: "Stats", content: const Stats()),
       SliderList(
           title: "Teams",
           content: Teams(
             teams:
-                (Get.find<TournamentLeagueController>().leagueDetails?.teams ??
-                    widget.league.teams ??
-                    []),
+            (Get.find<TournamentLeagueController>().leagueDetails?.teams ??
+                widget.league.teams ??
+                []),
           )),
-      SliderList(title: "Tables", content: const TableSection()),
-      SliderList(title: "Stats", content: const Stats()),
+      SliderList(
+          title: "Chatroom",
+          content: LeagueChat(leagueModel: widget.league,)),
     ];
   }
 
-  void _openChatPopup(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title:  Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('League Chat',style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize:14),),
-              GestureDetector(
-                onTap: (){
-                  Navigator.pop(context);
-                },
-                child: Icon(Icons.close),
-              )
-            ],
-          ),
-          content: LeagueChat(leagueModel: widget.league,),
-
-        );
-      },
-    );
-  }
 
   @override
   void dispose() {
@@ -271,8 +251,16 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
                 ],
               );
       }),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: GestureDetector(onTap: () => _openChatPopup(context),child: const CustomImage(path: Assets.imagesChats,height: 30,width: 30,),),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      // floatingActionButton: Container(
+      //   width: 50,
+      //     height: 50,
+      //     padding: EdgeInsets.all(10),
+      //     decoration: BoxDecoration(
+      //       borderRadius: BorderRadius.circular(40),
+      //       color: Colors.black12
+      //     ),
+      //     child: GestureDetector(onTap: () => _openChatPopup(context),child: const CustomImage(path: Assets.imagesChats,height: 30,width: 30,),)),
     );
   }
 }

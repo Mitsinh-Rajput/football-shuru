@@ -102,19 +102,7 @@ class _TeamChatDetailScreenState extends State<TeamChatDetailScreen> {
             const SizedBox(
               height: 4,
             ),
-            if (widget.team.team?.lastMessage?.message != null)
-              Container(
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
-                child: Text(
-                  widget.team.team?.lastMessage?.message ?? "",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                    color: textPrimary,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
-              ),
+
             Container(
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
               child: Text(

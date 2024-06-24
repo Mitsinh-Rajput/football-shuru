@@ -117,7 +117,7 @@ class _ChatsScreenState extends State<ChatsScreen> with SingleTickerProviderStat
                   return const MyChatTile();
                 },
               ),
-              TeamChatScreen(),
+              const TeamChatScreen(),
             ]),
           ),
         ],

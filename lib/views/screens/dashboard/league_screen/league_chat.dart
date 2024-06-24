@@ -58,9 +58,8 @@ class _LeagueChatState extends State<LeagueChat> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.maxFinite,
-      height: 400,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 18),
       child: GetBuilder<ChatController>(builder: (chatController) {
         return Column(
           children: [
