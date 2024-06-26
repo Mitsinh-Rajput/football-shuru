@@ -159,7 +159,7 @@ class _StatsState extends State<Stats> {
                                       Container(
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                                BorderRadius.circular(20),
+                                                BorderRadius.circular(30),
                                             boxShadow: const [
                                               BoxShadow(
                                                 color: Color.fromRGBO(

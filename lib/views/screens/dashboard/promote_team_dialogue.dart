@@ -116,7 +116,7 @@ class _PromoteTeamState extends State<PromoteTeam> {
                                 children: [
                                   Container(
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(30),
                                         border: Border.all(
                                           width: 2,
                                           color: const Color.fromRGBO(
@@ -140,7 +140,7 @@ class _PromoteTeamState extends State<PromoteTeam> {
                                           color: const Color.fromRGBO(
                                               255, 145, 0, 1),
                                           borderRadius:
-                                              BorderRadius.circular(20)),
+                                              BorderRadius.circular(30)),
                                       child: const Padding(
                                         padding: EdgeInsets.all(2.0),
                                         child: CustomImage(

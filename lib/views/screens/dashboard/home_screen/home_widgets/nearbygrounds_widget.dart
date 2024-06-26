@@ -94,7 +94,7 @@ class _NearbyGroundsState extends State<NearbyGrounds> {
                     return Container(
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(20)),
+                          borderRadius: BorderRadius.circular(30)),
                       child: Column(
                         children: [
                           Container(

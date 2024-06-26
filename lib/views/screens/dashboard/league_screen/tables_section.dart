@@ -121,7 +121,7 @@ class _TableSectionState extends State<TableSection> {
                                           Container(
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(20),
+                                                    BorderRadius.circular(30),
                                                 border: Border.all(
                                                   width: 2,
                                                   color: const Color.fromRGBO(

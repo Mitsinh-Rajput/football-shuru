@@ -67,7 +67,7 @@ class _TeamsState extends State<Teams> {
                                           Container(
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(20),
+                                                    BorderRadius.circular(30),
                                                 border: Border.all(
                                                   width: 2,
                                                   color: Colors.grey,

@@ -46,41 +46,41 @@ class _KnockOutPageState extends State<KnockOutPage> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        CustomButton(
-                            color: const Color.fromRGBO(38, 50, 56, 1),
-                            height: 30,
-                            elevation: 0,
-                            radius: 15,
-                            child: Text(
-                              "Fixtures",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(fontSize: 12, color: Colors.white),
-                            ),
-                            onTap: () {}),
-                        // const SizedBox(
-                        //   width: 16,
-                        // ),
-                        // CustomButton(
-                        //     height: 30,
-                        //     elevation: 0,
-                        //     radius: 15,
-                        //     type: ButtonType.secondary,
-                        //     child: Text(
-                        //       "Result",
-                        //       style: Theme.of(context)
-                        //           .textTheme
-                        //           .titleSmall!
-                        //           .copyWith(
-                        //             fontSize: 12,
-                        //           ),
-                        //     ),
-                        //     onTap: () {})
-                      ],
-                    ),
+                    // Row(
+                    //   children: [
+                    //     CustomButton(
+                    //         color: const Color.fromRGBO(38, 50, 56, 1),
+                    //         height: 30,
+                    //         elevation: 0,
+                    //         radius: 15,
+                    //         child: Text(
+                    //           "Fixtures",
+                    //           style: Theme.of(context)
+                    //               .textTheme
+                    //               .titleSmall!
+                    //               .copyWith(fontSize: 12, color: Colors.white),
+                    //         ),
+                    //         onTap: () {}),
+                    //     // const SizedBox(
+                    //     //   width: 16,
+                    //     // ),
+                    //     // CustomButton(
+                    //     //     height: 30,
+                    //     //     elevation: 0,
+                    //     //     radius: 15,
+                    //     //     type: ButtonType.secondary,
+                    //     //     child: Text(
+                    //     //       "Result",
+                    //     //       style: Theme.of(context)
+                    //     //           .textTheme
+                    //     //           .titleSmall!
+                    //     //           .copyWith(
+                    //     //             fontSize: 12,
+                    //     //           ),
+                    //     //     ),
+                    //     //     onTap: () {})
+                    //   ],
+                    // ),
                     for (int i = 1; i <= numberOfLevels; i++)
                       Theme(
                         data: Theme.of(context)

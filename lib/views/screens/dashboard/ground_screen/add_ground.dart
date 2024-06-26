@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:football_shuru/services/input_decoration.dart';
 import 'package:football_shuru/views/base/common_button.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/base/snack_bar.dart';
+
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 
@@ -28,6 +30,46 @@ class _AddGroundState extends State<AddGround> {
   TextEditingController locationController = TextEditingController();
   List<File> images = [];
   final _formKey = GlobalKey<FormState>();
+
+  bool _isLoading = false;
+  // late Position position;
+
+
+  // Future<bool> getLocation() async {
+  //   _isLoading = true;
+  //
+  //
+  //   try {
+  //     // Request Location Permission..........
+  //     await Geolocator.checkPermission().then((value) async {
+  //       if (value != LocationPermission.always && value != LocationPermission.whileInUse) {
+  //         await Geolocator.requestPermission();
+  //       } else if(value == LocationPermission.denied || value == LocationPermission.deniedForever) {
+  //         await Geolocator.openAppSettings();
+  //       }
+  //     });
+  //
+  //     Geolocator.isLocationServiceEnabled().then((value) async {
+  //       if (!value) {
+  //         await Geolocator.openLocationSettings();
+  //       }
+  //     });
+  //
+  //     position = await Geolocator.getCurrentPosition(
+  //         desiredAccuracy: LocationAccuracy.high);
+  //
+  //     return true;
+  //
+  //   } catch(ex) {
+  //
+  //     log('---------------- Error in Location ----------------', name: 'Fetch Location Error [Address Controller]');
+  //     return false;
+  //   }
+  //
+  //   _isLoading = false;
+  //   return false;
+  //
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -183,6 +225,13 @@ class _AddGroundState extends State<AddGround> {
                   height: 20,
                 ),
                 TextFormField(
+                  onTap: ()async{
+                    // getLocation().then((value){
+                    //   setState(() {
+                    //     locationController.text = "${position.latitude}, ${position.longitude}";
+                    //   });
+                    // });
+                  },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value.isNotValid) {

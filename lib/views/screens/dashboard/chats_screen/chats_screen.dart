@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:football_shuru/controllers/team_controller.dart';
+import 'package:football_shuru/controllers/tournament_league_controller.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
 import 'package:football_shuru/views/screens/dashboard/chats_screen/chat_tile.dart';
@@ -12,6 +13,7 @@ import 'package:get/get.dart';
 
 import '../../../../controllers/homepage_controller.dart';
 import '../../../../generated/assets.dart';
+import 'leaguechat_screen.dart';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
@@ -35,6 +37,7 @@ class _ChatsScreenState extends State<ChatsScreen> with SingleTickerProviderStat
     Timer.run(() async {
       await Get.find<HomePageController>().getJoinedGrounds();
       await Get.find<TeamControllor>().getJoinedTeam();
+      await Get.find<TournamentLeagueController>().getLeague();
     });
     _tabController = TabController(vsync: this, length: myTabs.length);
   }
@@ -111,12 +114,7 @@ class _ChatsScreenState extends State<ChatsScreen> with SingleTickerProviderStat
             child: TabBarView(controller: _tabController, children: [
               // final String label = tab.text!.toLowerCase();
               const GroundChatScreen(),
-              ListView.builder(
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return const MyChatTile();
-                },
-              ),
+              LeagueChatScreen(),
               const TeamChatScreen(),
             ]),
           ),

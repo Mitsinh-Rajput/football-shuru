@@ -202,7 +202,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(30),
                           border: Border.all(
                             width: 2,
                             color: ((widget.MatchData.winnerTeam ?? 0) ==
@@ -228,7 +228,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                               width: 14,
                               decoration: BoxDecoration(
                                   color: const Color.fromRGBO(255, 145, 0, 1),
-                                  borderRadius: BorderRadius.circular(20)),
+                                  borderRadius: BorderRadius.circular(30)),
                               child: const Padding(
                                 padding: EdgeInsets.all(2.0),
                                 child: CustomImage(
@@ -304,7 +304,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(30),
                           border: Border.all(
                             width: 2,
                             color: ((widget.MatchData.winnerTeam ?? 0) ==
@@ -330,7 +330,7 @@ class _ScoreCardScreenState extends State<ScoreCardScreen> {
                               width: 14,
                               decoration: BoxDecoration(
                                   color: const Color.fromRGBO(255, 145, 0, 1),
-                                  borderRadius: BorderRadius.circular(20)),
+                                  borderRadius: BorderRadius.circular(30)),
                               child: const Padding(
                                 padding: EdgeInsets.all(2.0),
                                 child: CustomImage(

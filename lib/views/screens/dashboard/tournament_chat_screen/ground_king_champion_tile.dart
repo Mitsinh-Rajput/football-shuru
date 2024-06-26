@@ -527,7 +527,7 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                             Container(
                                               decoration: BoxDecoration(
                                                   borderRadius:
-                                                      BorderRadius.circular(20),
+                                                      BorderRadius.circular(30),
                                                   border: Border.all(
                                                     width: 2,
                                                     color: const Color.fromRGBO(
@@ -1088,7 +1088,7 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                           Container(
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(20),
+                                                    BorderRadius.circular(30),
                                                 border: Border.all(
                                                   width: 2,
                                                   color: const Color.fromRGBO(
@@ -1607,7 +1607,7 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                           Container(
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(20),
+                                                    BorderRadius.circular(30),
                                                 border: Border.all(
                                                   width: 2,
                                                   color: const Color.fromRGBO(
@@ -1722,7 +1722,7 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                         width: 40,
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                                BorderRadius.circular(20),
+                                                BorderRadius.circular(30),
                                             border: Border.all(
                                               color: const Color(0xFFE0E0E0),
                                               width: 1,
@@ -2026,7 +2026,7 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                           Container(
                                             decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(20),
+                                                    BorderRadius.circular(30),
                                                 border: Border.all(
                                                   width: 2,
                                                   color: const Color.fromRGBO(
@@ -2141,7 +2141,7 @@ class _GroundKingChampionState extends State<GroundKingChampion> {
                                         width: 40,
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                                BorderRadius.circular(20),
+                                                BorderRadius.circular(30),
                                             border: Border.all(
                                               color: const Color(0xFFE0E0E0),
                                               width: 1,

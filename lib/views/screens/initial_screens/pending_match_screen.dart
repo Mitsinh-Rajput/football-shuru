@@ -127,7 +127,7 @@ class _PendingMatchScreenState extends State<PendingMatchScreen>
                                       context,
                                       getCustomRoute(
                                           child: SetWinnerScreen(
-                                        MatchData: matchData,
+                                        matchData: matchData,
                                       )));
                                 }
                               },
@@ -195,7 +195,7 @@ class _PendingMatchScreenState extends State<PendingMatchScreen>
                                                     decoration: BoxDecoration(
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(20),
+                                                                .circular(30),
                                                         border: Border.all(
                                                           width: 2,
                                                           color: ((matchData
@@ -367,7 +367,7 @@ class _PendingMatchScreenState extends State<PendingMatchScreen>
                                                     decoration: BoxDecoration(
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(20),
+                                                                .circular(30),
                                                         border: Border.all(
                                                           width: 2,
                                                           color: ((matchData
@@ -532,7 +532,7 @@ class _PendingMatchScreenState extends State<PendingMatchScreen>
                                       context,
                                       getCustomRoute(
                                           child: SetWinnerScreen(
-                                        MatchData: matchData,
+                                        matchData: matchData,
                                         isLeague: true,
                                       )));
                                 }
@@ -601,7 +601,7 @@ class _PendingMatchScreenState extends State<PendingMatchScreen>
                                                     decoration: BoxDecoration(
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(20),
+                                                                .circular(30),
                                                         border: Border.all(
                                                           width: 2,
                                                           color: ((matchData
@@ -773,7 +773,7 @@ class _PendingMatchScreenState extends State<PendingMatchScreen>
                                                     decoration: BoxDecoration(
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(20),
+                                                                .circular(30),
                                                         border: Border.all(
                                                           width: 2,
                                                           color: ((matchData

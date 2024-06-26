@@ -147,7 +147,7 @@ class _TournamentStatsSectionState extends State<TournamentStatsSection> {
                                       Container(
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                            BorderRadius.circular(20),
+                                            BorderRadius.circular(30),
                                             boxShadow: const [
                                               BoxShadow(
                                                 color: Color.fromRGBO(

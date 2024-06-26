@@ -17,15 +17,16 @@ import '../../../base/common_button.dart';
 class LeagueDetailsPage extends StatefulWidget {
   final String typesOfLeague;
   final LeagueModel league;
+  final bool chatroom;
   const LeagueDetailsPage(
-      {super.key, required this.typesOfLeague, required this.league});
+      {super.key, required this.typesOfLeague, required this.league,  this.chatroom=false});
 
   @override
   State<LeagueDetailsPage> createState() => _LeagueDetailsPageState();
 }
 
 class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
-  final pageController = PageController();
+  late final PageController pageController;
   int index = 0;
 
   List<SliderList> introList = [];
@@ -33,6 +34,10 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    if(widget.chatroom){
+      index=4;
+    }
+    pageController = PageController(initialPage: index);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await Get.find<TournamentLeagueController>()
           .getLeagueDetail(leagueId: widget.league.id ?? 0);
@@ -106,7 +111,7 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
               width: 24,
               path: Assets.imagesEllipse68,
             ),
-            const SizedBox(
+      const SizedBox(
               width: 10,
             ),
             Text(
@@ -241,7 +246,7 @@ class _LeagueDetailsPageState extends State<LeagueDetailsPage> {
                           itemCount: introList.length,
                           itemBuilder: (context, index) {
                             return introList[index].content;
-                          }))
+                          },),),
                   // Expanded(
                   //   child: Padding(
                   //     padding: const EdgeInsets.symmetric(horizontal: 20.0),

@@ -27,7 +27,7 @@ class _TeamsScreenTileState extends State<TeamsScreenTile> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30)),
                 child: Text(
                   "My List of Teams",
                   style: Theme.of(context).textTheme.labelLarge!.copyWith(

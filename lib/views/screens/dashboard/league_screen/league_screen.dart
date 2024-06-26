@@ -105,8 +105,7 @@ class _LeagueScreenState extends State<LeagueScreen> {
                         .bodyLarge!
                         .copyWith(fontSize: 20, fontWeight: FontWeight.w700),
                   ),
-                  const CustomImage(
-                      height: 24, width: 24, path: Assets.imagesSetting5)
+
                 ],
               ),
             ),

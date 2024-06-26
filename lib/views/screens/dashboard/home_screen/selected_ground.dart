@@ -338,7 +338,7 @@ class _SelectedNearGroundState extends State<SelectedNearGround> {
                                         color: const Color.fromRGBO(
                                             255, 200, 57, 1),
                                         width: 2),
-                                    borderRadius: BorderRadius.circular(20)),
+                                    borderRadius: BorderRadius.circular(30)),
                                 child: const CustomImage(
                                     radius: 20,
                                     height: 35,

@@ -39,7 +39,7 @@ class _CommunityNearMeState extends State<CommunityNearMe> {
                 width: 16,
               ),
               Container(
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30)),
                 child: Text(
                   "Club of Madras Knights",
                   style: Theme.of(context).textTheme.labelLarge!.copyWith(
@@ -54,7 +54,7 @@ class _CommunityNearMeState extends State<CommunityNearMe> {
             height: 10,
           ),
           Container(
-            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30)),
             child: RichText(
               maxLines: 3,
               text: TextSpan(
@@ -78,7 +78,7 @@ class _CommunityNearMeState extends State<CommunityNearMe> {
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30)),
                 child: Text(
                   "Follow • 5.6 K",
                   style: Theme.of(context).textTheme.labelSmall,
@@ -89,7 +89,7 @@ class _CommunityNearMeState extends State<CommunityNearMe> {
                 width: 16,
               ),
               Container(
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30)),
                 child: Text(
                   "23K Members",
                   style: Theme.of(context).textTheme.labelSmall,

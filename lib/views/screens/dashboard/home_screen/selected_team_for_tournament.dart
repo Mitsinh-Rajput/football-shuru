@@ -145,7 +145,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
-                                              BorderRadius.circular(20)),
+                                              BorderRadius.circular(30)),
                                       child: Text(
                                         "Team Ground king 1".toUpperCase(),
                                         style: Theme.of(context)
@@ -163,7 +163,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
-                                              BorderRadius.circular(20)),
+                                              BorderRadius.circular(30)),
                                       child: Row(
                                         children: [
                                           Expanded(

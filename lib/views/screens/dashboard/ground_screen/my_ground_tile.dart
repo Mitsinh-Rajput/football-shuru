@@ -247,19 +247,19 @@ class _MyGroundsState extends State<MyGrounds> {
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Text(
-                              "Football Ground • Ground king • Argentina",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .copyWith(
-                                    color: Colors.green[600],
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                            ),
+                            // const SizedBox(
+                            //   height: 4,
+                            // ),
+                            // Text(
+                            //   "Football Ground • Ground king • Argentina",
+                            //   style: Theme.of(context)
+                            //       .textTheme
+                            //       .labelMedium!
+                            //       .copyWith(
+                            //         color: Colors.green[600],
+                            //         fontWeight: FontWeight.w400,
+                            //       ),
+                            // ),
                             const SizedBox(
                               height: 4,
                             ),
