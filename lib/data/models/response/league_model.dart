@@ -190,6 +190,7 @@ class OpponentTeamClass {
   int? createdBy;
   DateTime? createdAt;
   DateTime? updatedAt;
+  int? usersCount;
 
   OpponentTeamClass({
     this.id,
@@ -200,6 +201,7 @@ class OpponentTeamClass {
     this.createdBy,
     this.createdAt,
     this.updatedAt,
+    this.usersCount,
   });
 
   factory OpponentTeamClass.fromJson(Map<String, dynamic> json) =>
@@ -216,6 +218,8 @@ class OpponentTeamClass {
         updatedAt: json["updated_at"] == null
             ? null
             : DateTime.parse(json["updated_at"]),
+        usersCount: json["users_count"],
+
       );
 
   Map<String, dynamic> toJson() => {
@@ -227,6 +231,7 @@ class OpponentTeamClass {
         "created_by": createdBy,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
+    "users_count": usersCount,
       };
 }
 

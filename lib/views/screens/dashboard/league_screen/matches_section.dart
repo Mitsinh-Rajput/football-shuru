@@ -30,6 +30,7 @@ class _MatchesPageState extends State<MatchesPage> {
               .isEmpty
           ? Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const CustomLottie(
                   assetLottie: Assets.lottiesFootballWait,

@@ -9,26 +9,31 @@ import '../../../../data/models/response/league_model.dart';
 import '../../../../services/route_helper.dart';
 import '../../../../services/theme.dart';
 import '../../../base/custom_image.dart';
-import '../league_screen/league_screen.dart';
+import '../../../base/lottie_builder.dart';
 
 class LeagueChatScreen extends StatefulWidget {
-  const LeagueChatScreen({super.key});
+  final List memberCount;
+  const LeagueChatScreen({super.key, required this.memberCount});
 
   @override
   State<LeagueChatScreen> createState() => _LeagueChatScreenState();
 }
 
 class _LeagueChatScreenState extends State<LeagueChatScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Timer.run(() {});
-  }
+  bool isLoading = true;
+
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<TournamentLeagueController>(builder: (tournamentLeagueController) {
-      return ListView.builder(
+      return tournamentLeagueController.isLoading
+          ? Center(
+        child: CustomLottie(
+          assetLottie: Assets.lottiesFootball,
+          height: 50,
+        ),
+      )
+          : ListView.builder(
         itemCount: tournamentLeagueController.league.length,
         itemBuilder: (context, index) {
           final LeagueModel league = tournamentLeagueController.league[index];
@@ -96,7 +101,7 @@ class _LeagueChatScreenState extends State<LeagueChatScreen> {
                         Container(
                           decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
                           child: Text(
-                            "${league.teams?.length ?? ""} • members".toUpperCase(),
+                            "${widget.memberCount[index] ?? ""} • members".toUpperCase(),
                             style: Theme.of(context).textTheme.labelMedium!.copyWith(
                               color: const Color(0xffFF9100),
                               fontWeight: FontWeight.w600,

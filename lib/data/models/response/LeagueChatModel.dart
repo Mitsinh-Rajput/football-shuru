@@ -158,6 +158,7 @@ class TeamTeam {
   String? logo;
   String? code;
   int? captain;
+  int? usersCount;
   int? createdBy;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -173,6 +174,7 @@ class TeamTeam {
     this.createdAt,
     this.updatedAt,
     this.leagues,
+    this.usersCount
   });
 
   factory TeamTeam.fromJson(Map<String, dynamic> json) => TeamTeam(
@@ -182,6 +184,7 @@ class TeamTeam {
     code: json["code"],
     captain: json["captain"],
     createdBy: json["created_by"],
+    usersCount: json["users_count"],
     createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
     updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
     leagues: json["leagues"] == null ? [] : List<League>.from(json["leagues"]!.map((x) => League.fromJson(x))),
@@ -196,6 +199,7 @@ class TeamTeam {
     "created_by": createdBy,
     "created_at": createdAt?.toIso8601String(),
     "updated_at": updatedAt?.toIso8601String(),
+    "users_count": usersCount,
     "leagues": leagues == null ? [] : List<dynamic>.from(leagues!.map((x) => x.toJson())),
   };
 }

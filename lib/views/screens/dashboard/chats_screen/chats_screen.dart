@@ -6,12 +6,12 @@ import 'package:football_shuru/controllers/team_controller.dart';
 import 'package:football_shuru/controllers/tournament_league_controller.dart';
 import 'package:football_shuru/services/theme.dart';
 import 'package:football_shuru/views/base/custom_image.dart';
-import 'package:football_shuru/views/screens/dashboard/chats_screen/chat_tile.dart';
 import 'package:football_shuru/views/screens/dashboard/chats_screen/groundchats_screen.dart';
 import 'package:football_shuru/views/screens/dashboard/chats_screen/teamchat_screen.dart';
 import 'package:get/get.dart';
 
 import '../../../../controllers/homepage_controller.dart';
+import '../../../../data/models/response/league_model.dart' as leagueModel;
 import '../../../../generated/assets.dart';
 import 'leaguechat_screen.dart';
 
@@ -31,14 +31,24 @@ class _ChatsScreenState extends State<ChatsScreen> with SingleTickerProviderStat
 
   late TabController _tabController;
 
+  List leagueMemberCount = [];
+
   @override
   void initState() {
     super.initState();
     Timer.run(() async {
+      await Get.find<TournamentLeagueController>().getLeague();
       await Get.find<HomePageController>().getJoinedGrounds();
       await Get.find<TeamControllor>().getJoinedTeam();
-      await Get.find<TournamentLeagueController>().getLeague();
     });
+    leagueMemberCount.clear();
+    for(leagueModel.LeagueModel i in Get.find<TournamentLeagueController>().league){
+      int userCount = 0;
+      for(leagueModel.TeamElement j in (i.teams ?? [])){
+        userCount += j.team?.usersCount ?? 0;
+      }
+      leagueMemberCount.add(userCount);
+    }
     _tabController = TabController(vsync: this, length: myTabs.length);
   }
 
@@ -114,7 +124,7 @@ class _ChatsScreenState extends State<ChatsScreen> with SingleTickerProviderStat
             child: TabBarView(controller: _tabController, children: [
               // final String label = tab.text!.toLowerCase();
               const GroundChatScreen(),
-              LeagueChatScreen(),
+              LeagueChatScreen(memberCount:leagueMemberCount),
               const TeamChatScreen(),
             ]),
           ),

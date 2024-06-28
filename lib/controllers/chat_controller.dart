@@ -216,7 +216,7 @@ class ChatController extends GetxController implements GetxService {
     try {
       Response response = await authRepo.loadLeagueChats( leagueId: leagueId);
       log(response.statusCode.toString());
-      log(response.body.toString(), name: "loadLeagueChats");
+      log(jsonEncode(response.body), name: "loadLeagueChats");
       if (response.statusCode == 200) {
         leagueChat = leagueChatModelFromJson(jsonEncode(response.body['data']));
         responseModel = ResponseModel(true, '${response.body['message']}', response.body);
